@@ -326,6 +326,12 @@
 						url: "../pagesC/FlagshipSet"
 					})
 				}
+				// 我的直播
+				if (item.id == 4) {
+					uni.navigateTo({
+						url: "../pagesC/zhibo"
+					})
+				}
 			}
 		}
 	}

@@ -11,7 +11,7 @@
 						<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>
 					</view>
 					<block v-if="desinfo != ''">
-						<view class="text_bottom">
+						<view class="text_bottom" v-if="desinfo.bbs != null">
 							<text>{{desinfo.bbs.type}}</text>
 						</view>
 					</block>
@@ -189,7 +189,6 @@
 				if (data.data.code == 1) {
 					this.desinfo = data.data.data.myuser
 					uni.setStorageSync("des_info", data.data.data.myuser)
-
 				}
 			})
 			this.$api.desorders({

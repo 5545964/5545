@@ -7,7 +7,7 @@
 				</view>
 			</u-navbar>
 			<view class="navlist cet" style="justify-content: space-between;">
-				<view class="text" v-for="(item,index) in list" :key="index" @click="go(item.url)">
+				<view class="text" v-for="(item,index) in list" :key="index" @click="go(item.url,index)">
 					<view class="color_text hhnhb">
 						{{item.a}}
 					</view>
@@ -102,7 +102,6 @@
 				this.gosss(aa)
 			},
 			gosss(ev) {
-
 				switch (Number(ev.link)) {
 					case 0:
 						// 网页跳转
@@ -166,10 +165,19 @@
 					url: "./search/search"
 				})
 			},
-			go(ev) {
-				uni.navigateTo({
-					url: ev
-				})
+			go(ev, index) {
+				if (index == 3 || index == 4) {
+					uni.showToast({
+						title: "该功能正在开发中",
+						icon: "error",
+						duration: 1000
+					})
+				} else {
+					uni.navigateTo({
+						url: ev
+					})
+				}
+
 			},
 			goods() {
 				// 推荐商品
@@ -187,7 +195,7 @@
 							})
 						})
 						uni.stopPullDownRefresh();
-					} 
+					}
 				})
 				// 推荐商品
 			},
@@ -200,7 +208,7 @@
 						let aa = []
 						data.data.data.status.forEach(item => {
 							item.image = this.$imgPath + item.image
-							if(item.position == 0){
+							if (item.position == 0) {
 								aa.push(item)
 							}
 						})

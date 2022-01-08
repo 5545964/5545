@@ -69,7 +69,7 @@
 					</view>
 					<view class="asdsss">
 						<template>
-							<u-upload :imgUrl="imgtitle + avatarss" width="100" height="100" :action="action"
+							<u-upload :imgUrl="avatar" width="100" height="100" :action="action"
 								max-count="1" :header="header" @on-success="shangchuan" :form-data="formData"
 								name="image" size-type="compressed">
 							</u-upload>
@@ -262,11 +262,27 @@
 			}
 			if (ev.isdesign == 1) {
 				this.isdes = ev.isdesign
-				this.getdesData()
+				// this.getdesData()
 				this.getmode()
+				this.desinfo = uni.getStorageSync("des_info")
+				this.avatarss = this.desinfo.avatar
+				this.desinfo.avatar = this.$imgPath + this.desinfo.avatar
+				this.avatar = this.desinfo.avatar
+				this.list[1].inp = this.desinfo.nickname
+				this.list[2].inp = this.desinfo.myself
+				this.list[3].inp = this.desinfo.username
+				this.list[4].inp = this.desinfo.level
+				this.list[5].inp = this.desinfo.wechat
+				this.list[6].inp = this.desinfo.qq
+				this.list[7].inp = this.desinfo.yb
+				this.list[8].inp = this.desinfo.email
+				this.list[9].inp = this.desinfo.address
+				this.list[10].inp = this.desinfo.addressxq
+				this.actList = this.desinfo.label.split(",")
+				this.imgList = this.desinfo.work.split(",")
 			} else {
 				this.desinfo = uni.getStorageSync("user_info")
-				this.avatarss = this.desinfo.avatar
+				this.avatar = this.desinfo.avatar
 				this.list[1].inp = this.desinfo.nickname
 				this.list[2].inp = "暂未开通"
 				this.list[3].inp = this.desinfo.username
@@ -285,7 +301,12 @@
 
 			},
 			shangchuan(ev) {
-				this.avatar = ev.data.status
+				if(this.isdes == 1){
+					this.avatarss = ev.data.status
+					this.avatar = this.$imgPath +  ev.data.status
+				}else{
+					this.avatar = ev.data.status
+				}
 			},
 			// 选择城市
 			showcitys(item) {
@@ -304,7 +325,6 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function(res) {
-
 						// that.imgList = res.tempFilePaths
 						res.tempFilePaths.forEach(item => {
 							uni.uploadFile({
@@ -353,6 +373,7 @@
 					id: uni.getStorageSync("des_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
+						console.log(data.data.data.status);
 						this.desinfo = data.data.data.status
 						this.list[1].inp = this.desinfo.nickname
 						this.list[2].inp = this.desinfo.myself
@@ -365,7 +386,8 @@
 						this.list[9].inp = this.desinfo.address
 						this.list[10].inp = this.desinfo.addressxq
 						this.avatarss = this.desinfo.avatar
-						this.avatar = this.desinfo.avatar
+						this.avatar = this.$imgPath + this.desinfo.avatar
+						console.log(this.avatar);
 						this.actList = this.desinfo.label.split(",")
 						this.imgList = this.desinfo.work.split(",")
 					}
@@ -421,16 +443,22 @@
 						email: this.list[8].inp,
 						address: this.list[9].inp,
 						addressxq: this.list[10].inp,
-						avatar: this.avatar,
+						avatar: this.avatarss,
 						label: this.actList,
 						work: this.imgList
 					}).then(data => {
-
 						if (data.data.code == 1) {
 							uni.showToast({
 								title: data.data.msg,
 								duration: 1000,
 								icon: "success"
+							})
+							this.$api.desmyuser({
+								user_id: uni.getStorageSync("user_info").id,
+							}).then(data => {
+								if (data.data.code == 1) {
+									uni.setStorageSync("des_info", data.data.data.myuser)
+								}
 							})
 							setTimeout(() => {
 								uni.navigateBack(-1)
@@ -438,9 +466,6 @@
 						}
 					})
 				} else {
-					if(this.avatar == ''){
-						this.avatar = this.avatarss
-					}
 					this.$api.edituser({
 						id: uni.getStorageSync("user_info").id,
 						avatar: this.avatar,
