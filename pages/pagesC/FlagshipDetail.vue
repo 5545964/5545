@@ -133,12 +133,13 @@
 			};
 		},
 		onLoad(ev) {
-
 			this.shenme_id = ev.id
 		},
 		onShow() {
 			this.allss(this.shenme_id)
-			this.$api.setleft().then(data => {
+			this.$api.setleft({
+				setleft_id:this.shenme_id
+			}).then(data => {
 				if (data.data.code == 1) {
 					this.leftlist = [...data.data.data.status];
 					setTimeout(() => {
@@ -229,7 +230,8 @@
 				})
 			},
 			// 设计师详情
-			desDetails(ev) {
+			desDetails(ev) {  
+				console.log(ev,11111111111)
 				this.$api.desxq({
 					id: ev,
 					// id: 45,

@@ -530,14 +530,15 @@
 					order: ev
 				}).then(data => {
 					if (data.data.code == 1) {
-						data.data.data.status.data.forEach(item => {
+						console.log(data.data.data.status,"data.data.data.status");
+						data.data.data.status.forEach(item => {
+							console.log(item);
 							item.createtime = item.createtime * 1000
 							item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
 							item.label = item.label ? item.label.split(",") : ""
 							item.work = item.work ? item.work.split(",") : ""
 						})
-						this.designerList = []
-						this.designerList = data.data.data.status.data
+						this.designerList = data.data.data.status
 					}
 				})
 			},

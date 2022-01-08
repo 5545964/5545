@@ -106,7 +106,7 @@
 									delta: 1
 								})
 							}
-		
+
 						},
 						fail() {
 							uni.navigateBack({

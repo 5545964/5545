@@ -4,7 +4,7 @@
 		</u-navbar>
 		<view class="heard">
 			<view class="czxcxz">
-				<image class="img" v-if="user_info != ''" :src="img + user_info.avatar" mode=""></image>
+				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode=""></image>
 				<image class="img" v-else src="../../static/icon_me_bianji.png" mode=""></image>
 				<view class="center">
 					<view class="text">

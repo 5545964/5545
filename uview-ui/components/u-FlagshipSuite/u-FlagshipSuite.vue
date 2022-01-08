@@ -1,7 +1,7 @@
 <template>
 	<view class="" style="height: 100%;">
 		<view class="">
-			<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="false" :current="current"
+			<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 				@change="change"></u-tabs>
 		</view>
 		<view class="card_list" v-if="data_list != 0">

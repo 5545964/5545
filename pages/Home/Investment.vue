@@ -171,6 +171,7 @@
 </template>
 
 <script>
+	import dayjs from "dayjs"
 	export default {
 		data() {
 			return {
@@ -569,21 +570,27 @@
 				this.$api.dessel({
 					order: ev
 				}).then(data => {
-
+					// if (data.data.code == 1) {
+					// 	data.data.data.status.forEach(item => {
+					// 		item.createtime = new Date(parseInt(item.createtime) * 1000).toLocaleString()
+					// 			.replace(/:\d{1,2}$/, '');
+					// 		item.createtime = item.createtime.split(" ")
+					// 		item.createtime = item.createtime[0].split("/")
+					// 		item.createtime = item.createtime[0] + "-" + item.createtime[1] + "-" + item
+					// 			.createtime[2]
+					// 		item.label = item.label ? item.label.split(",") : ""
+					// 		item.work = item.work ? item.work.split(",") : ""
+					// 	})
+					// 	this.designerList = data.data.data.status
+					// }
 					if (data.data.code == 1) {
-
 						data.data.data.status.forEach(item => {
-							item.createtime = new Date(parseInt(item.createtime) * 1000).toLocaleString()
-								.replace(/:\d{1,2}$/, '');
-							item.createtime = item.createtime.split(" ")
-							item.createtime = item.createtime[0].split("/")
-							item.createtime = item.createtime[0] + "-" + item.createtime[1] + "-" + item
-								.createtime[2]
+							item.createtime = item.createtime * 1000
+							item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
 							item.label = item.label ? item.label.split(",") : ""
 							item.work = item.work ? item.work.split(",") : ""
 						})
 						this.designerList = data.data.data.status
-
 					}
 				})
 			},
