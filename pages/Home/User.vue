@@ -15,7 +15,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="bottms" @click="gomy">
+			<view class="bottms" @click="gomy" v-if="user_info.edit">
 				<image class="imgs" src="../../static/icon_me_bianji.png" mode=""></image>
 				<view class="kjjkk">
 					个人资料
