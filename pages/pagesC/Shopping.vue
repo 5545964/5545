@@ -406,6 +406,12 @@
 			};
 		},
 		onLoad(ev) {
+			if(ev.uid){
+				uni.setStorageSync("yaoqinguid",ev.uid)
+			}
+			if(ev.level){
+				uni.setStorageSync("yaoqinglevel",ev.level)
+			}
 			// 商品id
 			this.shopid = ev.shopid;
 			// 商品id
@@ -415,7 +421,7 @@
 		onShareAppMessage(res) {
 			return {
 				title: this.alls.name,
-				path: '/pages/pagesC/Shopping?shopid=' + this.shopid
+				path: '/pages/pagesC/Shopping?shopid=' + this.shopid + "&uid="+uni.getStorageSync("user_info").id+"&level="+uni.getStorageSync("user_info").bbs.id
 			}
 		},
 		methods: {
