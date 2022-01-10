@@ -43,10 +43,12 @@
 									<image class="img" :src="items.users.avatar" mode=""></image>
 									<view class="">
 										<view class="name">
-											<text v-if="items.users.username != ''">{{items.users.username}}</text><text v-else>未知昵称</text>
+											<text v-if="items.users.username != ''">{{items.users.username}}</text><text
+												v-else>未知昵称</text>
 										</view>
 										<view class="text">
-											<text v-if="items.users.mobile != ''">{{items.users.mobile}}</text><text v-else>无</text>
+											<text v-if="items.users.mobile != ''">{{items.users.mobile}}</text><text
+												v-else>无</text>
 										</view>
 									</view>
 								</view>
@@ -75,47 +77,73 @@
 				title: "",
 				man_num: 0,
 				mony: 0,
-				userList:[],
-				list: [
-					{name:"一级"},
-					{name:"二级"},
+				userList: [],
+				list: [{
+						name: "一级"
+					},
+					{
+						name: "二级"
+					},
 				],
-				current: 0
+				current: 0,
+				shejishi: 0
 			};
 		},
 		onLoad(ev) {
-			this.title = ev.title;
-			this.getdata(1)
+			if (ev.title) {
+				this.title = ev.title;
+			}
+			if (ev.shejishi) {
+				this.shejishi = ev.shejishi
+			}
 		},
 		onShow() {
+			this.getdata(1)
 			this.heigth = uni.getSystemInfoSync().windowHeight
 		},
 		methods: {
 			// 我的团队 
-			getdata(index){
-				this.userList=[]
-				this.$api.desmyteam({
-					user_id:uni.getStorageSync("user_info").id,
-					state:index
-				}).then(data=>{
+			getdata(index) {
+				this.userList = []
+				if (this.shejishi == 0) {
+					this.$api.myteam({
+						user_id:uni.getStorageSync("user_info").id,
+						state: index
+					}).then(data => {
+						if (data.data.code == 1) {
+							data.data.data.status.forEach(item => {
+								item.users.avatar = this.$imgs(item.users.avatar)
+							})
+							this.userList = data.data.data.status
+							this.man_num = data.data.data.count
+							this.mony = data.data.data.sum
+						}
+					})
+				} else {
+					this.$api.desmyteam({
+						user_id: uni.getStorageSync("user_info").id,
+						state: index
+					}).then(data => {
+						if (data.data.code == 1) {
+							data.data.data.status.forEach(item => {
+								item.users.avatar = this.$imgs(item.users.avatar)
+							})
+							this.userList = data.data.data.status
+							this.man_num = data.data.data.count
+							this.mony = data.data.data.sum
+						}
+					})
+				}
 
-					if(data.data.code==1){
-						data.data.data.status.forEach(item=>{
-							item.users.avatar=this.$imgs(item.users.avatar)
-						})
-						this.userList=data.data.data.status
-						this.man_num=data.data.data.count
-						this.mony=data.data.data.sum
-					}
-				})
+
 			},
 			lun_change(index) {
 				this.current = index.detail.current;
-				this.getdata(index.detail.current+1)
+				this.getdata(index.detail.current + 1)
 			},
 			change(index) {
 				this.current = index;
-				this.getdata(index+1)
+				this.getdata(index + 1)
 			},
 			back(ev) {
 				switch (ev) {

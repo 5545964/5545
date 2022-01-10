@@ -1,6 +1,6 @@
 import request from "./request.js"
 
-export default { 
+export default {
 	//bydidentity/star
 	star(params = {}) {
 		return request.post("/api/bydidentity/star", params);
@@ -30,7 +30,7 @@ export default {
 		return request.post("/api/bydidentity/desproMoenys", params);
 	},
 	// 咨询中心https://mp.weixin.qq.com/mp/appmsgalbum
-	
+
 	//删除地址/api/byd_user/addressdel
 	addressdel(params = {}) {
 		return request.post("/api/byd_user/addressdel", params);
@@ -44,7 +44,7 @@ export default {
 		return request.post("/api/bydshop/shopplhf", params);
 	},
 	//评论
-	indexPl(params = {}){
+	indexPl(params = {}) {
 		return request.post("/api/bydindex/pl", params);
 	},
 	// 回复评论 /api/bydindex/plhf
@@ -272,9 +272,13 @@ export default {
 	desorder(params = {}) {
 		return request.post("/api/bydidentity/desorder", params);
 	},
-	// 我的团队 /api/bydidentity/myteam
+	// 设计师我的团队 /api/bydidentity/myteam
 	desmyteam(params = {}) {
 		return request.post("/api/bydidentity/desmyteam", params);
+	},
+	// 我的团队 /api/bydidentity/myteam
+	myteam(params = {}) {
+		return request.post("/api/bydidentity/myteam", params);
 	},
 	// 我的佣金 /api/bydidentity/mysub
 	mysub(params = {}) {

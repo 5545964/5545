@@ -1,24 +1,29 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			if(ev.query.uid){
-				uni.setStorageSync("yaoqinguid",ev.query.uid)
+			if (ev.query.uid) {
+				uni.setStorageSync("yaoqinguid", ev.query.uid)
 			}
-			if(ev.query.level){
-				uni.setStorageSync("yaoqinglevel",ev.query.level)
+			if (ev.query.level) {
+				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-			uni.navigateTo({
-				url: "pages/pagesD/start"
-			})
+			if (ev.path == "pages/Home/Home") {
+				uni.navigateTo({
+					url: "pages/pagesD/start"
+				})
+			} else {
+				uni.navigateTo({
+					url: ev.path + "?shopid=" + ev.query.shopid
+				})
+			}
 		},
-		onLoad(ev) {
-		}
+		onLoad(ev) {}
 	}
 </script>
 
 <style lang="scss">
 	@import "uview-ui/index.scss";
-	
+
 
 	/*每个页面公共css */
 	page {

@@ -20,8 +20,6 @@
 				<u-search @click='seach_go' :disabled="true" v-model="keyword"></u-search>
 			</view>
 			<view class="wrap">
-				<!-- <u-swipers @click="lunbochang" img-mode="scaleToFill" :list="lun_list" :border-radius="20"
-					:autoplay="false" :height="300" indicator-pos="bottomLeft"></u-swipers> -->
 				<swiper @change="gaizhi"  :current="current" :indicator-dots="true"
 					:circular="true" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">

@@ -1,13 +1,7 @@
 <template>
 	<view class="start_page">
-		<video id="video_play" :src="videosrc" 
-		:vslide-gesture-in-fullscreen="false" 
-		:loop="false" 
-		:autoplay="true"
-		object-fit="cover" 
-		:page-gesture="false" 
-		:controls="false" 
-		style="height: 100%;width: 100%"></video>
+		<video id="video_play" :src="videosrc" :vslide-gesture-in-fullscreen="false" :loop="false" :autoplay="true"
+			object-fit="cover" :page-gesture="false" :controls="false" style="height: 100%;width: 100%"></video>
 
 
 		<view class="skip" @click="skipPage">
@@ -18,14 +12,24 @@
 
 <script>
 	export default {
-		onLoad() {
+		onLoad(ev) {
+			if (ev.url) {
+				this.path = ev.url
+			}
 			this.setInterval = setInterval(() => {
 				this.num--
 				if (this.num == 0) {
 					clearInterval(this.setInterval)
-					uni.switchTab({
-						url: "/pages/Home/Home"
-					})
+					if (ev.url) {
+						uni.navigateTo({
+							url: ev.url
+						})
+					} else {
+						uni.switchTab({
+							url: "/pages/Home/Home"
+						})
+					}
+
 				}
 			}, 1000)
 		},
@@ -34,9 +38,10 @@
 		},
 		data() {
 			return {
+				path: "",
 				videosrc: "https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/77b0e5c3c6ee5f8174fa72bb3a399d4d9124e811.m4v",
 				num: 10,
-				url:"https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/b3959f61a6554fd89c6364781032c0c76a92a018.mp4",
+				url: "https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/b3959f61a6554fd89c6364781032c0c76a92a018.mp4",
 				setInterval: "",
 			};
 		},

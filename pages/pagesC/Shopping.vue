@@ -406,12 +406,6 @@
 			};
 		},
 		onLoad(ev) {
-			if(ev.uid){
-				uni.setStorageSync("yaoqinguid",ev.uid)
-			}
-			if(ev.level){
-				uni.setStorageSync("yaoqinglevel",ev.level)
-			}
 			// 商品id
 			this.shopid = ev.shopid;
 			// 商品id
@@ -419,9 +413,13 @@
 		},
 		// 来自页面内分享按钮
 		onShareAppMessage(res) {
+			let aa = 0;
+			if (uni.getStorageSync("user_info").bbs != null) {
+				aa = uni.getStorageSync("user_info").bbs.id
+			}
 			return {
 				title: this.alls.name,
-				path: '/pages/pagesC/Shopping?shopid=' + this.shopid + "&uid="+uni.getStorageSync("user_info").id+"&level="+uni.getStorageSync("user_info").bbs.id
+				path: '/pages/pagesC/Shopping?shopid=' + this.shopid + "&uid=" + uni.getStorageSync("user_info").id + "&level=" + aa
 			}
 		},
 		methods: {
@@ -546,8 +544,8 @@
 			//全部数据
 			GoodsdataAlls() {
 				let aaaaa = 0
-				let aa  = uni.getStorageSync("user_info").id
-				if(aa){
+				let aa = uni.getStorageSync("user_info").id
+				if (aa) {
 					aaaaa = aa
 				}
 				//商品详情
@@ -1131,8 +1129,9 @@
 		font-weight: 400;
 		font-size: 26rpx;
 	}
-	.content{
+
+	.content {
 		padding: 0rpx;
-		  font-size: 0rpx;
+		font-size: 0rpx;
 	}
 </style>

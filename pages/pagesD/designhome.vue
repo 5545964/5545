@@ -149,7 +149,7 @@
 					},
 					{
 						name: "我的团队",
-						url: "../../pagesA/gongju11"
+						url: "../../pagesA/gongju11?shejishi=1"
 					},
 					{
 						name: "系统消息",
@@ -417,7 +417,7 @@
 				margin-left: 10rpx;
 				width: 24rpx;
 				height: 24rpx;
-				
+
 			}
 		}
 
