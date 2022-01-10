@@ -1,0 +1,238 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.cart-num.data-v-75af8ee3 {
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  background-color: #e25c5c;
+  color: #ffffff;
+  position: absolute;
+  top: -10px;
+  right: 0px;
+  line-height: 30rpx;
+  text-align: center;
+  font-weight: 400;
+  font-size: 26rpx;
+}
+.kan.data-v-75af8ee3 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40rpx;
+  background-color: #ffffff;
+}
+.kan .text.data-v-75af8ee3 {
+  font-size: 22rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.kan .number.data-v-75af8ee3 {
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 800;
+  color: #037496;
+  margin-bottom: 20rpx;
+}
+.top.data-v-75af8ee3 {
+  padding: 20rpx 30rpx;
+}
+.top .top_d.data-v-75af8ee3 {
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: #007399;
+  border-radius: 20rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.top .top_c.data-v-75af8ee3 {
+  background-color: #ffffff;
+  margin-top: 20rpx;
+  border-radius: 20rpx;
+}
+.top .top_c .fanhui.data-v-75af8ee3 {
+  width: 8rpx;
+  height: 16rpx;
+}
+.top .top_c .template.data-v-75af8ee3 {
+  padding: 40rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.top .top_c .gongjus.data-v-75af8ee3 {
+  padding: 20rpx;
+}
+.top .top_c .texts.data-v-75af8ee3 {
+  margin-left: 20rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.top .top_c .img.data-v-75af8ee3 {
+  width: 30rpx;
+  height: 30rpx;
+}
+.top .top_c .text.data-v-75af8ee3 {
+  padding: 30rpx 20rpx;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #000000;
+}
+.top .top_b.data-v-75af8ee3 {
+  padding: 40rpx;
+  background-color: #FFFFFF;
+  margin-top: 20rpx;
+  border-radius: 20rpx;
+}
+.top .top_b .quanju.data-v-75af8ee3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.top .top_b .zczx.data-v-75af8ee3 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: -webkit-max-content;
+  width: max-content;
+}
+.top .top_b .text.data-v-75af8ee3 {
+  width: -webkit-max-content;
+  width: max-content;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.top .top_b .img.data-v-75af8ee3 {
+  width: 50rpx;
+  height: 50rpx;
+}
+.top .top_a.data-v-75af8ee3 {
+  padding: 30rpx 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.top .top_a .aaa.data-v-75af8ee3 {
+  margin-left: 100rpx;
+}
+.top .top_a .le_text.data-v-75af8ee3 {
+  margin-bottom: 10rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #885A25;
+}
+.top .top_a .lr_text.data-v-75af8ee3 {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #885A25;
+}
+.top .top_a .left.data-v-75af8ee3 {
+  margin-left: 40rpx;
+}
+.top .top_a .imgs.data-v-75af8ee3 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1000;
+}
+.top .top_a .img.data-v-75af8ee3 {
+  margin-left: 10rpx;
+  width: 24rpx;
+  height: 24rpx;
+}
+.hahaha.data-v-75af8ee3 {
+  background: #CDE3EA;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.hahaha .xian.data-v-75af8ee3 {
+  margin: 10rpx;
+  width: 2rpx;
+  height: 40rpx;
+  background: #037496;
+  border-radius: 1rpx;
+}
+.hahaha .text.data-v-75af8ee3 {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #037496;
+}
+.hahaha .imgd.data-v-75af8ee3 {
+  padding: 10rpx;
+  width: 24rpx;
+  height: 24rpx;
+}
+.hahaha .imgs.data-v-75af8ee3 {
+  padding: 10rpx;
+  width: 32rpx;
+  height: 24rpx;
+}
+.heard.data-v-75af8ee3 {
+  padding: 30rpx 0;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.heard .kjjkk.data-v-75af8ee3 {
+  margin-left: 10rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.heard .czxcxz.data-v-75af8ee3 {
+  display: flex;
+  align-items: center;
+}
+.heard .bottms.data-v-75af8ee3 {
+  padding: 25rpx 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #037496;
+  border-radius: 100rpx 0rpx 0rpx 100rpx;
+}
+.heard .center.data-v-75af8ee3 {
+  margin-left: 25rpx;
+}
+.heard .text.data-v-75af8ee3 {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #000000;
+}
+.heard .text_bottom.data-v-75af8ee3 {
+  margin-top: 20rpx;
+  width: -webkit-max-content;
+  width: max-content;
+  font-size: 18rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  padding: 5rpx 15rpx;
+  background: #FF716D;
+  border-radius: 15rpx;
+}
+.heard .imgs.data-v-75af8ee3 {
+  width: 26rpx;
+  height: 26rpx;
+}
+.heard .img.data-v-75af8ee3 {
+  margin-left: 30rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 20rpx;
+}
+.fdkgkfmkjskjfjkgdbj.data-v-75af8ee3 {
+  width: 10rpx;
+  height: 86rpx;
+  margin-right: 20rpx;
+}
+

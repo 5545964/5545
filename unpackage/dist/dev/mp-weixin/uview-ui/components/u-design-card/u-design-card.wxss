@@ -1,0 +1,28 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.gghGG.data-v-29f388e0 {
+  overflow: hidden;
+  /*超出的部分隐藏起来。*/
+  white-space: nowrap;
+  /*不显示的地方用省略号...代替*/
+  text-overflow: ellipsis;
+  /* 支持 IE */
+}
+.card.data-v-29f388e0 {
+  width: 335rpx;
+  height: 420rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #000000;
+  text-align: center;
+  padding: 10rpx;
+}
+

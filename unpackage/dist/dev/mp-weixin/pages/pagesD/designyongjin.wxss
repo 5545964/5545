@@ -1,0 +1,197 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.home .hahahahaxczxc .wins.data-v-612edce8 {
+  text-align: center;
+  width: 20%;
+}
+.home .hahahahaxczxc .win.data-v-612edce8 {
+  text-align: center;
+  width: 20%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.home .hahahahaxczxc .czcxczcxc.data-v-612edce8:nth-child(odd) {
+  background-color: #EBEEF5;
+}
+.home .hahahahaxczxc .czcxczcxc.data-v-612edce8:nth-child(even) {
+  background-color: #FFFFFF;
+}
+.home .hahahahaxczxc .vdfdd.data-v-612edce8 {
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.home .hahahahaxczxc .jhfjkdhfk.data-v-612edce8 {
+  padding: 30rpx;
+  background: #007399;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.home .hahahahaxczxc .erji.data-v-612edce8 {
+  padding: 20rpx 0;
+}
+.home .hahahahaxczxc .ccxv.data-v-612edce8 {
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 30rpx;
+}
+.home .hahahahaxczxc .ccxv .text.data-v-612edce8 {
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.home .hahahahaxczxc .ccxv .dsdxcxvxs.data-v-612edce8 {
+  margin-right: 10rpx;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.home .hahahahaxczxc .ccxv .dasdsdadsxcxzas.data-v-612edce8 {
+  background: #FFFFFF;
+  border: 1px solid #E8E8E8;
+  border-radius: 100rpx;
+  display: flex;
+  width: -webkit-fit-content;
+  width: fit-content;
+  align-items: center;
+  padding: 15rpx 25rpx;
+}
+.home .center.data-v-612edce8 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  padding: 20rpx;
+  background: #FFFFFF;
+  box-shadow: 0rpx 3rpx 7rpx 0rpx rgba(0, 0, 0, 0.1);
+  border-radius: 20rpx;
+  margin: -250rpx 30rpx 0 30rpx;
+}
+.home .center .number.data-v-612edce8 {
+  padding: 20rpx;
+  font-size: 48rpx;
+  font-weight: 400;
+  color: #007399;
+}
+.home .center .text.data-v-612edce8 {
+  padding: 20rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #007399;
+}
+.home .back.data-v-612edce8 {
+  padding: 30rpx;
+  height: 360rpx;
+  background: #007399;
+  display: flex;
+  justify-content: space-between;
+}
+.home .back .no.data-v-612edce8 {
+  font-size: 28rpx;
+  font-weight: 400;
+  text-decoration: underline;
+  color: #FF9F59;
+}
+.home .back .yaoqingma.data-v-612edce8 {
+  margin-top: 30rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.home .back .dasize.data-v-612edce8 {
+  font-size: 60rpx;
+}
+.home .back .xiaosize.data-v-612edce8 {
+  font-size: 28rpx;
+}
+.home .back .mony.data-v-612edce8 {
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.home .back .dads.data-v-612edce8 {
+  align-items: baseline;
+  display: flex;
+}
+.home .back .tixian.data-v-612edce8 {
+  margin-top: 20rpx;
+  width: 200rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  background: #FFFFFF;
+  border-radius: 35rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #007399;
+}
+.home .back .imgs.data-v-612edce8 {
+  margin-left: 20rpx;
+  width: 30rpx;
+  height: 30rpx;
+}
+.tanchu .top.data-v-612edce8 {
+  width: 640rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  background: #007399;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #FEFEFE;
+}
+.tanchu .center.data-v-612edce8 {
+  padding: 50rpx;
+  background: #F8F8F8;
+  text-align: center;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #333333;
+}
+.tanchu .text.data-v-612edce8 {
+  width: 640rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  background: #FFFFFF;
+}
+.navbar .navbar_top.data-v-612edce8 {
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  width: 166rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.navbar .navbar_top .dsds.data-v-612edce8 {
+  padding: 20rpx;
+}
+.navbar .navbar_top .hang.data-v-612edce8 {
+  width: 2rpx;
+  height: 26rpx;
+  background-color: #e5e5e5;
+}
+.navbar .navbar_top .fanhui.data-v-612edce8 {
+  width: 12rpx;
+  height: 22rpx;
+}
+.navbar .navbar_top .souye.data-v-612edce8 {
+  width: 26rpx;
+  height: 24rpx;
+}
+
