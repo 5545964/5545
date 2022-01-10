@@ -1,6 +1,10 @@
 import request from "./request.js"
 
 export default {
+	//api/bydshop/shopicon
+	shopicon(params = {}) {
+		return request.post("/api/bydshop/shopicon", params);
+	},
 	//bydidentity/star
 	star(params = {}) {
 		return request.post("/api/bydidentity/star", params);
