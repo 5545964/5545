@@ -55,6 +55,7 @@
 	</view>
 </template>
 <script>
+	import islogo from "../../utils/islogin.js"
 	export default {
 		name: '',
 		props: {},
@@ -103,14 +104,15 @@
 		},
 		methods: {
 			async denglu() {
-				let islogin = await this.$login("../pagesA/gongju0")
-				console.log(islogin);
-				if (islogin) {
-					console.log(1111111111111);
+				if (await this.$login()) {
+					this.showssss = false
 				} else {
-					console.log(2222222222222);
+					uni.showToast({
+						title:"登陆失败，请重试",
+						duration:1000,
+						icon:"none"
+					})
 				}
-
 			},
 			budenglu() {
 				this.showssss = false
