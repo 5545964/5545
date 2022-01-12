@@ -8,9 +8,9 @@
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
 			if (ev.path == "pages/Home/Home") {
-				uni.navigateTo({
-					url: "pages/pagesD/start"
-				})
+				// uni.navigateTo({
+				// 	url: "pages/pagesD/start"
+				// })
 			} else {
 				uni.navigateTo({
 					url: ev.path + "?shopid=" + ev.query.shopid

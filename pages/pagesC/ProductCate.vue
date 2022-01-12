@@ -115,7 +115,6 @@
 </template>
 
 <script>
-	import classifyData from "@/utils/classify.data.js";
 	export default {
 		onLoad() {
 			this.getCate()
@@ -126,7 +125,6 @@
 				keyword: "",
 				imgtilte: this.$imgPath,
 				show: false,
-				tabbar: classifyData,
 				scrollTop: 0, //tab标题的滚动条位置
 				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度

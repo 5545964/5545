@@ -134,7 +134,7 @@
 					<!-- 其他选项 -->
 					<view class="inputss" v-if="items.type == 'xuan'">
 						<view class="cxz" style="margin-bottom: 20rpx;">
-							{{items.name}}{{items.list.length}}
+							{{items.name}}
 						</view>
 						<view class="asd">
 							<view v-if="items.list.length == 0">
@@ -350,7 +350,7 @@
 								name: '房屋户型',
 								obj: "housetype",
 								text: "请填写您的户型",
-								type: "input",
+								type: "Picker",
 								show: false
 							},
 							{
@@ -516,7 +516,8 @@
 					})
 				})
 				this.list = [];
-				this.list.push({
+				this.list.push(
+				{
 					title: '基本信息',
 					list: [{
 							id: 0,
@@ -541,7 +542,8 @@
 							type: "Displays_data"
 						},
 					]
-				}, {
+				},
+				{
 					title: '项目概括',
 					list: [{
 							id: 3,
@@ -606,7 +608,8 @@
 							list: [...cc]
 						},
 					]
-				}, {
+				},
+				{
 					title: '相关文件',
 					list: [{
 							id: 10,
@@ -806,6 +809,24 @@
 						}
 					]
 				} else if (ev.obj == "zx") {
+					this.poplist = [];
+					this.poplist = [{
+							check: false,
+							name: "精装房",
+							id: 0
+						},
+						{
+							check: false,
+							name: "毛坯房",
+							id: 1
+						},
+						{
+							check: false,
+							name: "旧房",
+							id: 12
+						}
+					]
+				}else if (ev.obj == "housetype") {
 					this.poplist = [];
 					this.poplist = [{
 							check: false,

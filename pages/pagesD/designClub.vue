@@ -93,7 +93,7 @@
 			<view class="reject" v-if="state==0">
 				<image src="../../static/icon_me_review.png" class="imgrej" mode=""></image>
 				<view class="">
-					你的资料平台正在加紧审核中，请留意电话
+					你的资料平台正在加紧审核中，请留意站内信或电话
 				</view>
 			</view>
 			<!-- 审核成功 -->

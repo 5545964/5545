@@ -11,8 +11,8 @@ Vue.use(uView);
 import tabBar from "@/components/tabbar/tabbar.vue" 
 Vue.component('tab-bar', tabBar)
 // 全局登陆
-import login from "@/utils/islogin.js"
-Vue.prototype.$login = login()
+import login from "utils/islogin.js"
+Vue.prototype.$login = login
 // 显示图片头部
 Vue.prototype.$imgPath = "https://bao.scwushen.com"
 Vue.prototype.$imgs = function(url) {

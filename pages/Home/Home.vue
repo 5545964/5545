@@ -20,8 +20,8 @@
 				<u-search @click='seach_go' :disabled="true" v-model="keyword"></u-search>
 			</view>
 			<view class="wrap">
-				<swiper @change="gaizhi"  :current="current" :indicator-dots="true"
-					:circular="true" :autoplay="true" :interval="3000" :duration="1000">
+				<swiper @change="gaizhi" :current="current" :indicator-dots="true" :circular="true" :autoplay="true"
+					:interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<video v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
 							:src="imgurl + item.video"></video>
@@ -34,6 +34,24 @@
 			<u-kehu :showsss='show'></u-kehu>
 			<tab-bar @tabbers="dsad"></tab-bar>
 		</view>
+		<u-popup v-model="showssss" mode="center" border-radius="20">
+			<view class="popimgsss cet">
+				<view class="">
+					<view class="tetx-cet cde">
+						您还未登录
+					</view>
+					<view class="tetx-cet">
+						请登录后在进行操作
+					</view>
+					<view @click="denglu" class="tetx-cet login">
+						立即登录
+					</view>
+					<view @click="budenglu" class="tetx-cet" style="color: #c2c2c2;">
+						暂不登录
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 <script>
@@ -43,6 +61,7 @@
 		components: {},
 		data() {
 			return {
+				showssss: true,
 				current: 0,
 				show: false,
 				data_list: [],
@@ -83,6 +102,19 @@
 			};
 		},
 		methods: {
+			async denglu() {
+				let islogin = await this.$login("../pagesA/gongju0")
+				console.log(islogin);
+				if (islogin) {
+					console.log(1111111111111);
+				} else {
+					console.log(2222222222222);
+				}
+
+			},
+			budenglu() {
+				this.showssss = false
+			},
 			gaizhi(ev) {
 				this.current = ev.detail.current
 			},
@@ -219,7 +251,11 @@
 		},
 		onLoad() {
 			uni.setStorageSync("shouzhi", 0)
-			const res = uni.getSystemInfoSync();
+			const res = uni.getSystemInfoSync()
+			// let that = this;
+			//   uni.$on('update',function(data){
+			//       that.denglu()
+			//     })
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 		},
 		onShow() {
@@ -288,5 +324,32 @@
 		height: 34rpx;
 		width: 290rpx;
 		padding: 0 30rpx;
+	}
+
+	.popimgsss {
+		width: 542rpx;
+		height: 564rpx;
+		background-image: url(../../static/logo.jpg);
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+
+		.login {
+			padding: 10rpx;
+			background: #00688e;
+			color: #ffffff;
+			border-radius: 10rpx;
+			margin: 10rpx;
+		}
+
+		.cde {
+			padding-top: 200rpx;
+			font-size: 30rpx;
+			font-weight: bold;
+		}
+
+		.tetx-cet {
+			text-align: center;
+			line-height: 50rpx;
+		}
 	}
 </style>

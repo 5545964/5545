@@ -94,26 +94,27 @@
 					uni.setStorageSync("hetong", aa)
 					// uni.setStorageSync("des_info", this.desinger)
 				} else {
-					uni.showModal({
-						title: data.data.msg,
-						success(res) {
-							if (res.confirm) {
-								uni.reLaunch({
-									url: "/pages/Home/Investment?is_re=1"
-								})
-							} else if (res.cancel) {
-								uni.navigateBack({
-									delta: 1
-								})
-							}
-
-						},
-						fail() {
-							uni.navigateBack({
-								delta: 1
-							})
-						}
+					uni.reLaunch({
+						url: "/pages/Home/Investment?is_re=1"
 					})
+					// uni.showModal({
+					// 	title: data.data.msg,
+					// 	success(res) {
+					// 		if (res.confirm) {
+								
+					// 		} else if (res.cancel) {
+					// 			uni.navigateBack({
+					// 				delta: 1
+					// 			})
+					// 		}
+
+					// 	},
+					// 	fail() {
+					// 		uni.navigateBack({
+					// 			delta: 1
+					// 		})
+					// 	}
+					// })
 				}
 			})
 		},
