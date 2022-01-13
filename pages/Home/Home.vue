@@ -50,12 +50,12 @@
 						暂不登录
 					</view>
 				</view>
+				<image @click="budenglu" style="width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;" src="../../static/icon_close_ico.png" mode=""></image>
 			</view>
 		</u-popup>
 	</view>
 </template>
 <script>
-	import islogo from "../../utils/islogin.js"
 	export default {
 		name: '',
 		props: {},
@@ -329,6 +329,7 @@
 	}
 
 	.popimgsss {
+		position: relative;
 		width: 542rpx;
 		height: 564rpx;
 		background-image: url(../../static/logo.jpg);

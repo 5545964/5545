@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "商城",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
+    "u-adata": "/uview-ui/components/u-adata/u-adata",
+    "u-parse": "/uview-ui/components/u-parse/u-parse",
+    "u-pinglun": "/uview-ui/components/u-pinglun/u-pinglun",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-kehu": "/uview-ui/components/u-kehu/u-kehu"
+  }
+}
