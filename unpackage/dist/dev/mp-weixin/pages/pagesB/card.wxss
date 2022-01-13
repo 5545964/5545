@@ -70,7 +70,7 @@
 .home .top .tops .text.data-v-3de20918 {
   width: -webkit-fit-content;
   width: fit-content;
-  padding: 15rpx;
+  padding: 15rpx 20rpx;
   background: #FFFFFF;
   opacity: 0.5;
   border-radius: 100rpx;

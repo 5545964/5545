@@ -179,7 +179,8 @@
 					})
 				}
 			},
-			pinglun(ev) {
+			async pinglun(ev) {
+				if (await this.$login()) {
 				let aa = ev
 				this.pinglun_list = []
 				this.pinglun_list = ev.pl
@@ -188,10 +189,11 @@
 					this.showComment = true;
 				}
 				this.budakai = true
+				}
 			},
 			// 选星星
-			xuanxinxin(ev) {
-
+			async xuanxinxin(ev) {
+				if (await this.$login()) {
 				this.$api.star({
 					user_id: uni.getStorageSync("user_info").id,
 					des_id: ev.id,
@@ -204,8 +206,10 @@
 					})
 
 				})
+				}
 			},
-			dianzhan(ev) {
+			async dianzhan(ev) {
+				if (await this.$login()) {
 				let aa = ""
 				if (ev.zans != null && ev.zans != '') {
 					aa = 1
@@ -223,11 +227,14 @@
 						this.desDetails()
 					}
 				})
+				}
 			},
-			yuyue() {
+			async yuyue() {
+				if (await this.$login()) {
 				uni.navigateTo({
 					url: "../Home/booking/AppointmentDesign"
 				})
+				}
 			},
 			lunbo(ev) {
 				if (this.desInfo.work != '') {
@@ -248,7 +255,8 @@
 
 			},
 			//关注
-			guanzhu(ev) {
+			async guanzhu(ev) {
+				if (await this.$login()) {
 				this.$api.desfollow({
 					user_id: uni.getStorageSync("user_info").id,
 					tes_id: ev.id
@@ -263,6 +271,7 @@
 						this.desDetails()
 					}
 				})
+				}
 			},
 			// 设计师详情
 			desDetails() {

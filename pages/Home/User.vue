@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<view class="heard" @click="login">
-			<view class="czxcxz">
+		<view class="heard">
+			<view class="czxcxz" @click="login">
 				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode=""></image>
 				<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
 				<view class="center">
@@ -268,7 +268,7 @@
 			if (uni.getStorageSync("user_info")) {
 				this.user_info = uni.getStorageSync("user_info")
 				this.shuliang(this.user_info.id)
-			} 
+			}
 		},
 		methods: {
 			shuliang(ev) {
@@ -364,9 +364,11 @@
 				})
 			},
 			gomy() {
+
 				uni.navigateTo({
 					url: "../pagesB/my"
 				})
+
 			},
 			gos(ev) {
 				if (ev == 0) {
@@ -379,25 +381,39 @@
 					})
 				}
 			},
-			shengfenzhuanqu() {
-				uni.navigateTo({
-					url: "../pagesB/shengfen"
-				})
+			async shengfenzhuanqu() {
+				// if (await this.$login()) {
+				// 	// async 		
+				// }
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: "../pagesB/shengfen"
+					})
+				}
+
 			},
-			changeDesign() {
+			async changeDesign() {
+				if (await this.$login()) {
 				uni.navigateTo({
 					url: "../pagesD/designPage/designPage",
 				})
+				}
 			},
-			go(ev) {
-				uni.navigateTo({
-					url: "../pagesB/dindan?title=" + ev.name + "&current=" + ev.id
-				})
+			async go(ev) {
+				if (await this.$login()) {
+					console.log(ev);
+					uni.navigateTo({
+						url: "../pagesB/dindan?title=" + ev.name + "&current=" + ev.id
+					})
+				}
+
 			},
-			gongju_go(ev, title) {
-				uni.navigateTo({
-					url: ev + "?title=" + title
-				})
+			async gongju_go(ev, title) {
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: ev + "?title=" + title
+					})
+				}
 			}
 		}
 	}

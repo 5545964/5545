@@ -47,7 +47,6 @@
 			</view>
 		</view>
 		<view class="shopcar" @click="tocar">
-
 			<image src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode=""></image>
 			购物车
 			<view class="cart-num" v-if="cart_num !=0">
@@ -231,10 +230,12 @@
 
 			},
 			// 购物车
-			tocar() {
-				uni.navigateTo({
-					url: "../pagesC/shopcart"
-				})
+			async tocar() {
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: "../pagesC/shopcart"
+					})
+				}
 			},
 			topage(item) {
 				uni.navigateTo({

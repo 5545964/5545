@@ -252,6 +252,9 @@
 			}
 		},
 		onLoad() {
+			if(uni.getStorageSync("user_info")){
+				this.showssss = false
+			}
 			uni.setStorageSync("shouzhi", 0)
 			const res = uni.getSystemInfoSync()
 			// let that = this;

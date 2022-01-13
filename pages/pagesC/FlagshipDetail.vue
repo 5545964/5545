@@ -37,7 +37,7 @@
 			</swiper>
 		</view>
 		<view class="mian">
-			<view class="mian_left"  id="mianleft">
+			<view class="mian_left" id="mianleft">
 				<scroll-view scroll-y="true" :style="'height: '+heigths+'px;'">
 					<view :class="index%2==0? 'mian_left_item':'mian_left_item1'"
 						:style="active==index?'border-left: 4rpx solid #FD7904;':''" v-for="(item,index) in leftlist"
@@ -53,21 +53,24 @@
 							@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 					</view>
 					<u-parse v-if="active == 1" :html="alls.deslg"></u-parse>
-					<view v-if="active != 1 && active != 0" style="position: relative;" v-for="(item,index) in xq_img" :key="index">
+					<view v-if="active != 1 && active != 0" style="position: relative;" v-for="(item,index) in xq_img"
+						:key="index">
 						<view class="fdjksfhdsjk cet" v-if="item.url !=''" @click="goVR(item)">
 							<view class="fsds">
 								点击VR
 								100%所见所得
 							</view>
 						</view>
-						<view class="mengban"  @click="dianjishouzhi">
-							<view class="kklm" style="width: 100%;height: 100%;" v-if="item.url == '' && shouzhi == 0"></view>
-							<image class="imhjk" v-if="item.url == '' && shouzhi == 0" src="../../static/gif.gif" mode=""></image>
+						<view class="mengban" @click="dianjishouzhi">
+							<view class="kklm" style="width: 100%;height: 100%;" v-if="item.url == '' && shouzhi == 0">
+							</view>
+							<image class="imhjk" v-if="item.url == '' && shouzhi == 0" src="../../static/gif.gif"
+								mode=""></image>
 							<image :src="img+item.image" style="width: 640rpx;" mode="widthFix">
 							</image>
 						</view>
-					
-						
+
+
 						<view class="dcdczdc" v-if="item.shopid != 0" @click="goshop(item.shopid)">
 							<view style="margin:0 auto;margin-top:36rpx;">
 								<view class="nkjsfbjhsd">
@@ -114,7 +117,7 @@
 	export default {
 		data() {
 			return {
-				heigthss:10000,
+				heigthss: 10000,
 				shouzhi: uni.getStorageSync("shouzhi"),
 				img: this.$imgPath,
 				current: "",
@@ -138,7 +141,7 @@
 		onShow() {
 			this.allss(this.shenme_id)
 			this.$api.setleft({
-				setleft_id:this.shenme_id
+				setleft_id: this.shenme_id
 			}).then(data => {
 				if (data.data.code == 1) {
 					this.leftlist = [...data.data.data.status];
@@ -174,64 +177,71 @@
 				});
 			},
 			// pinglun
-			pinglun(ev) {
-				uni.navigateTo({
-					url: "./ClubStar?id=" + ev.id
-				})
+			async pinglun(ev) {
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: "./ClubStar?id=" + ev.id
+					})
+				}
 			},
 			// 选星星
-			xuanxinxin(ev) {
-
-				this.$api.star({
-					user_id: uni.getStorageSync("user_info").id,
-					des_id: ev.id,
-					star: ev.star
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
+			async xuanxinxin(ev) {
+				if (await this.$login()) {
+					this.$api.star({
+						user_id: uni.getStorageSync("user_info").id,
+						des_id: ev.id,
+						star: ev.star
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none"
+						})
 					})
-				})
+				}
 			},
 			//点赞
-			dianzhan(ev) {
-				let aa = ""
-				if (ev.zans != null && ev.zans != '') {
-					aa = 1
-				} else {
-					aa = 0
-				}
-				this.$api.zan({
-					type: aa,
-					user_id: uni.getStorageSync("user_info").id,
-					video_id: ev.id,
-					state: 1
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.allss(this.shenme_id)
+			async dianzhan(ev) {
+				if (await this.$login()) {
+					let aa = ""
+					if (ev.zans != null && ev.zans != '') {
+						aa = 1
+					} else {
+						aa = 0
 					}
-				})
+					this.$api.zan({
+						type: aa,
+						user_id: uni.getStorageSync("user_info").id,
+						video_id: ev.id,
+						state: 1
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.allss(this.shenme_id)
+						}
+					})
+				}
 			},
 			//关注
-			guanzhu(ev) {
-				this.$api.desfollow({
-					user_id: uni.getStorageSync("user_info").id,
-					tes_id: ev.id
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "success"
+			async guanzhu(ev) {
+				if (await this.$login()) {
+					this.$api.desfollow({
+						user_id: uni.getStorageSync("user_info").id,
+						tes_id: ev.id
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "success"
+						})
+						if (data.data.code == 1) {
+							this.allss(this.shenme_id)
+						}
 					})
-					if (data.data.code == 1) {
-						this.allss(this.shenme_id)
-					}
-				})
+				}
 			},
 			// 设计师详情
-			desDetails(ev) {  
-				console.log(ev,11111111111)
+			desDetails(ev) {
+				console.log(ev, 11111111111)
 				this.$api.desxq({
 					id: ev,
 					// id: 45,
@@ -243,15 +253,19 @@
 					}
 				})
 			},
-			goVR(ev) {
-				uni.navigateTo({
-					url: "../Home/URL/URL?url=" + ev.url
-				})
+			async goVR(ev) {
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: "../Home/URL/URL?url=" + ev.url
+					})
+				}
 			},
-			gosheji() {
-				uni.navigateTo({
-					url: "../Home/booking/AppointmentDesign"
-				})
+			async gosheji() {
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: "../Home/booking/AppointmentDesign"
+					})
+				}
 			},
 			allss(ev) {
 				this.$api.setxq({

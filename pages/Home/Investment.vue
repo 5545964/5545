@@ -10,7 +10,8 @@
 			</view>
 			<!-- 热门栏目 -->
 			<view class="" style="height: 100%;" v-if="current==0">
-				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa" @dianzhan="dianzhan">
+				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
+					@dianzhan="dianzhan">
 				</u-video>
 				<u-empty v-else></u-empty>
 			</view>
@@ -58,7 +59,7 @@
 						</view>
 					</view>
 					<view :style="'height: '+heigth+'px;'">
-						
+
 					</view>
 				</view>
 				<!-- 驳回 -->
@@ -132,7 +133,8 @@
 				<!-- 合同pdf -->
 				<view class="" style="    height: 700rpx; width: 100%;">
 					<scroll-view scroll-y="true" style="height: 100%;">
-						<image style="width: 100%;height: 4444rpx;" :src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode=""></image>
+						<image style="width: 100%;height: 4444rpx;"
+							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode=""></image>
 					</scroll-view>
 				</view>
 				<!-- <view class="agree_xieyi" @click="toReg"> -->
@@ -175,7 +177,7 @@
 	export default {
 		data() {
 			return {
-				imgsss:this.$imgPath,
+				imgsss: this.$imgPath,
 				parsesssss: "",
 				recruit_all: [],
 				heigth: uni.getStorageSync("setheigth"),
@@ -354,26 +356,27 @@
 			//
 			//
 			//
-			pinglunaa(ev, index) {
-				this.pinglun_list = []
-				this.pinglun_list = ev.pl
-				this.pinglun_list.forEach(item => {
-					item["checked"] = false
-				})
-				this.itemsss = ev;
-				if (!this.dianzhansssss && !this.showComment) {
-					this.video[index].showComment = true
-					return this.showComment = true;
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.pinglun_list = []
+					this.pinglun_list = ev.pl
+					this.pinglun_list.forEach(item => {
+						item["checked"] = false
+					})
+					this.itemsss = ev;
+					if (!this.dianzhansssss && !this.showComment) {
+						this.video[index].showComment = true
+						return this.showComment = true;
+					}
+					this.showComment = true;
+					this.dianzhansssss = false
 				}
-				this.showComment = true;
-				this.dianzhansssss = false
 			},
 			dsad() {
 
 			},
 			// 跳转设计师详情
 			navgepage(item) {
-
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
@@ -385,42 +388,40 @@
 				})
 			},
 			// 点赞
-			dianzhan(ev) {
-				// if(this.$log){
-				// 	return
-				// }
-				this.dianzhansssss = true
-				let type = ev.zans ? 1 : 0;
-				this.$api.zan({
-					state: 0,
-					video_id: ev.id,
-					user_id: uni.getStorageSync("user_info").id,
-					type: type
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.enjoy()
-						ev.iszan = !ev.iszan
-					}
-				})
+			async dianzhan(ev) {
+				if (await this.$login()) {
+					this.dianzhansssss = true
+					let type = ev.zans ? 1 : 0;
+					this.$api.zan({
+						state: 0,
+						video_id: ev.id,
+						user_id: uni.getStorageSync("user_info").id,
+						type: type
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.enjoy()
+							ev.iszan = !ev.iszan
+						}
+					})
+				}
 			},
 			// 收藏
-			collection(ev) {
-				// if(this.$log){
-				// 	return
-				// }
-				let state = ev.isfollow ? 1 : 0;
-				this.$api.addfollow({
-					type: 1,
-					user_id: uni.getStorageSync("user_info").id,
-					shop_id: 0,
-					video_id: ev.id,
-					state: state
-				}).then(data => {
+			async collection(ev) {
+				if (await this.$login()) {
+					let state = ev.isfollow ? 1 : 0;
+					this.$api.addfollow({
+						type: 1,
+						user_id: uni.getStorageSync("user_info").id,
+						shop_id: 0,
+						video_id: ev.id,
+						state: state
+					}).then(data => {
 
-					if (data.data.code == 1) {
-						ev.isfollow = !ev.isfollow
-					}
-				})
+						if (data.data.code == 1) {
+							ev.isfollow = !ev.isfollow
+						}
+					})
+				}
 			},
 			df() {
 				this.videoContext.pause()
@@ -491,7 +492,8 @@
 				}
 			},
 			// 查看合同模板
-			getcontein(ev) {
+			async getcontein(ev) {
+				if (await this.$login()) {
 				this.fenleideid = ev;
 				this.$api.ispay({
 					id: this.allssssss[ev].id,
@@ -505,6 +507,7 @@
 					this.showContract = true
 					this.looks(this.allssssss[ev].doc_url)
 				})
+				}
 			},
 			// 查看模板
 			looks(url) {
@@ -552,7 +555,7 @@
 							item.isfollow = true
 						}
 						item.video = this.$imgPath + item.video
-						if(item.state == "1"){
+						if (item.state == "1") {
 							aa.push(item)
 						}
 					})

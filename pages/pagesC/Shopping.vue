@@ -419,14 +419,17 @@
 			}
 			return {
 				title: this.alls.name,
-				path: '/pages/pagesC/Shopping?shopid=' + this.shopid + "&uid=" + uni.getStorageSync("user_info").id + "&level=" + aa
+				path: '/pages/pagesC/Shopping?shopid=' + this.shopid + "&uid=" + uni.getStorageSync("user_info").id +
+					"&level=" + aa
 			}
 		},
 		methods: {
-			gocart() {
-				uni.navigateTo({
-					url: "./shopcart"
-				})
+			async gocart() {
+				if (await this.$login()) {
+					uni.navigateTo({
+						url: "./shopcart"
+					})
+				}
 			},
 			add() {
 				this.value++
@@ -509,27 +512,31 @@
 
 				}
 			},
-			addcarts() {
-				this.open(1)
-			},
-			soucang() {
-				let state = ""
-				if (this.sc) {
-					state = 1
-				} else {
-					state = 0
+			async addcarts() {
+				if (await this.$login()) {
+					this.open(1)
 				}
-				this.$api.addfollow({
-					user_id: uni.getStorageSync("user_info").id,
-					type: 0,
-					state,
-					shop_id: this.alls.id,
-					video_id: 0
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.sc = !this.sc;
+			},
+			async soucang() {
+				if (await this.$login()) {
+					let state = ""
+					if (this.sc) {
+						state = 1
+					} else {
+						state = 0
 					}
-				})
+					this.$api.addfollow({
+						user_id: uni.getStorageSync("user_info").id,
+						type: 0,
+						state,
+						shop_id: this.alls.id,
+						video_id: 0
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.sc = !this.sc;
+						}
+					})
+				}
 			},
 			chooseSize(item) {
 				this.isSize = item;
@@ -636,8 +643,10 @@
 				this.showComment = false;
 			},
 			//评论
-			kanpinglun() {
-				this.showComment = true;
+			async kanpinglun() {
+				if (await this.$login()) {
+					this.showComment = true;
+				}
 			},
 			// 规格状态
 			guan() {

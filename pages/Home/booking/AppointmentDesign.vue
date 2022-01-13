@@ -516,8 +516,7 @@
 					})
 				})
 				this.list = [];
-				this.list.push(
-				{
+				this.list.push({
 					title: '基本信息',
 					list: [{
 							id: 0,
@@ -542,8 +541,7 @@
 							type: "Displays_data"
 						},
 					]
-				},
-				{
+				}, {
 					title: '项目概括',
 					list: [{
 							id: 3,
@@ -608,8 +606,7 @@
 							list: [...cc]
 						},
 					]
-				},
-				{
+				}, {
 					title: '相关文件',
 					list: [{
 							id: 10,
@@ -663,34 +660,35 @@
 				})
 			},
 			//提交按钮
-			tijiao() {
-				this.data_list["user_id"] = uni.getStorageSync("user_info").id
-
-				let aa = this.data_list.people
-				let bb = []
-				// if(aa = ""){
-				// 	return uni.showToast({
-				// 		title:"请选择人员",
-				// 		duration:1000,
-				// 		icon:"none"
-				// 	})
-				// }
-				aa.forEach((item, index) => {
-					bb.push(item.age + "_" + item.id)
-				})
-				this.data_list.people = bb
-				this.$api.yydes(this.data_list).then(data => {
-					if (data.data.code == 1) {
-						setTimeout(() => {
-							uni.navigateBack(-1)
-						}, 1000)
-					}
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
+			async tijiao() {
+				if (await this.$login()) {
+					this.data_list["user_id"] = uni.getStorageSync("user_info").id
+					let aa = this.data_list.people
+					let bb = []
+					// if(aa = ""){
+					// 	return uni.showToast({
+					// 		title:"请选择人员",
+					// 		duration:1000,
+					// 		icon:"none"
+					// 	})
+					// }
+					aa.forEach((item, index) => {
+						bb.push(item.age + "_" + item.id)
 					})
+					this.data_list.people = bb
+					this.$api.yydes(this.data_list).then(data => {
+						if (data.data.code == 1) {
+							setTimeout(() => {
+								uni.navigateBack(-1)
+							}, 1000)
+						}
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none"
+							})
 				})
+				}
 			},
 			//弹出层关闭
 			guan() {
@@ -826,7 +824,7 @@
 							id: 12
 						}
 					]
-				}else if (ev.obj == "housetype") {
+				} else if (ev.obj == "housetype") {
 					this.poplist = [];
 					this.poplist = [{
 							check: false,

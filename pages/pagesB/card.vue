@@ -8,17 +8,18 @@
 						{{userinfo.username}}
 					</view>
 					<view class="text pad">
-						不止设计 · 共赢卓越
+
+						{{userinfo.biaoti||"不止设计 · 共赢卓越"}}
 					</view>
 					<view class="add pad">
-						{{userinfo.address||""}}
+						{{cardinfo.city||""}}
 					</view>
 				</view>
 			</view>
 			<view class="yuan">
 				<scroll-view :scroll-x="true">
 					<view class="dasds">
-						<view v-for="(item,index) in userinfo" :key="index">
+						<view v-for="(item,index) in rinima" :key="index">
 							<view class="cet vxcvx" v-show="index == 'mobile'" @click="copy(item,index)">
 								<image class="img" src="../../static/icons0.png" mode=""></image>
 								<view class="text">
@@ -49,12 +50,14 @@
 									{{item}}
 								</view>
 							</view>
-						</view>
-						<view class="cet vxcvx" @click="go">
-							<image class="img" src="../../static/icons5.png" mode=""></image>
-							<view class="text">
+							<view class="cet vxcvx"  v-show="index == 'daohang'" @click="go">
+								<image class="img" src="../../static/icons5.png" mode=""></image>
+								<view class="text">
+									导航到我的公司
+								</view>
 							</view>
 						</view>
+						
 					</view>
 				</scroll-view>
 			</view>
@@ -93,6 +96,7 @@
 	export default {
 		data() {
 			return {
+				rinima: {},
 				imgtitle: this.$imgPath,
 				userinfo: {},
 				list: {},
@@ -111,11 +115,15 @@
 			}
 			if (ev.state) {
 				this.state = ev.state;
-				this.desinfo = uni.getStorageSync("des_info")
 			}
 			this.getcard()
 			this.userinfo = uni.getStorageSync("des_info")
-
+			this.rinima["mobile"] = this.userinfo.mobile
+			this.rinima["email"] = this.userinfo.email
+			this.rinima["wechat"] = this.userinfo.wechat
+			this.rinima["qq"] = this.userinfo.qq
+			this.rinima["daohang"] = this.userinfo.qq
+			console.log(this.rinima);
 		},
 		computed: {
 			imgList() {
@@ -134,7 +142,6 @@
 				this.$api.business({
 					state: this.state
 				}).then(data => {
-
 					if (data.data.code == 1) {
 						this.cardinfo = data.data.data.status
 					}
@@ -271,7 +278,7 @@
 
 				.text {
 					width: fit-content;
-					padding: 15rpx;
+					padding: 15rpx 20rpx;
 					background: #FFFFFF;
 					opacity: 0.5;
 					border-radius: 100rpx;

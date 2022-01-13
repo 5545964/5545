@@ -31,7 +31,8 @@
 			</view>
 		</view>
 		<view class="home" style="height: 100%;">
-			<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
+			<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
+				@dianzhan="dianzhan"></u-video>
 			<u-empty v-else></u-empty>
 		</view>
 		<!-- 弹窗 -->
@@ -94,11 +95,11 @@
 			}
 			this.$api.style().then(data => {
 				if (data.data.code == 1) {
-				
+
 					data.data.data.status.forEach(item => {
 						item["check"] = false;
 						this.sel_list.push("")
-						
+
 					})
 					this.fenleis = data.data.data.status;
 				}
@@ -106,16 +107,18 @@
 			this.alls()
 		},
 		methods: {
-			pinglunaa(ev, index) {
-				this.dianzhansssss = true
-				this.indexdas = index
-				this.pinglun_list = []
-				this.pinglun_list = ev.pl
-				this.pinglun_list.forEach(item => {
-					item["checked"] = false
-				})
-				this.showComment = true;
-				this.itemsss = ev;
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.dianzhansssss = true
+					this.indexdas = index
+					this.pinglun_list = []
+					this.pinglun_list = ev.pl
+					this.pinglun_list.forEach(item => {
+						item["checked"] = false
+					})
+					this.showComment = true;
+					this.itemsss = ev;
+				}
 			},
 			pingjia(item) {
 
@@ -137,7 +140,7 @@
 							item.isfollow = true
 						}
 						item.video = this.$imgPath + item.video
-						if(item.state == "0"){
+						if (item.state == "0") {
 							aa.push(item)
 						}
 					})
@@ -238,39 +241,40 @@
 				this.showComment = true;
 			},
 			// 点赞
-			dianzhan(ev) {
-				this.dianzhansssss = false
-				let type = ev.zans ? 1 : 0;
-				this.$api.zan({
-					state: 0,
-					video_id: ev.id,
-					user_id: uni.getStorageSync("user_info").id,
-					type: type
-				}).then(data => {
-					if (data.data.code == 1) {
-						ev.iszan = !ev.iszan
-						this.alls()
-					}
-				})
+			async dianzhan(ev) {
+				if (await this.$login()) {
+					this.dianzhansssss = false
+					let type = ev.zans ? 1 : 0;
+					this.$api.zan({
+						state: 0,
+						video_id: ev.id,
+						user_id: uni.getStorageSync("user_info").id,
+						type: type
+					}).then(data => {
+						if (data.data.code == 1) {
+							ev.iszan = !ev.iszan
+							this.alls()
+						}
+					})
+				}
 			},
 			// 收藏
-			collection(ev) {
-				// if(this.$log){
-				// 	return
-				// }
-				let state = ev.isfollow ? 1 : 0;
-				this.$api.addfollow({
-					type: 1,
-					user_id: uni.getStorageSync("user_info").id,
-					shop_id: 0,
-					video_id: ev.id,
-					state: state
-				}).then(data => {
+			async collection(ev) {
+				if (await this.$login()) {
+					let state = ev.isfollow ? 1 : 0;
+					this.$api.addfollow({
+						type: 1,
+						user_id: uni.getStorageSync("user_info").id,
+						shop_id: 0,
+						video_id: ev.id,
+						state: state
+					}).then(data => {
 
-					if (data.data.code == 1) {
-						ev.isfollow = !ev.isfollow
-					}
-				})
+						if (data.data.code == 1) {
+							ev.isfollow = !ev.isfollow
+						}
+					})
+				}
 			},
 			back(ev) {
 				switch (ev) {

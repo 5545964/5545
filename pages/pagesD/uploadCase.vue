@@ -15,13 +15,20 @@
 			</u-navbar>
 		</view>
 		<!-- 选择分类 -->
+		<!-- <button type="default" @click="selectImg">1234</button>
+		<button type="default" @click="gossss">456</button> -->
 		<view class="choose">
 			<view class="" style="display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
-				<view :class="index%2==0? 'drop_item1':'drop_item'" @click="showSelect(index)"
-					v-for="(item,index) in dropList" :key="item.id">
-					{{item.name}}
-					<image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="">
-					</image>
+				<view :class="index%2==0? 'drop_item1':'drop_item'" v-for="(item,index) in dropList" :key="item.id">
+					<!-- <u-input v-if="index == 0" @click="open()" input-align="left" :disabled="true" v-model="item.value"
+						:placeholder="item.name" type="text" /> -->
+					<view v-if="index == 0" @click="open()">
+						{{item.name}}
+					</view>
+					<u-input v-else v-model="item.value" input-align="left" :placeholder="item.name" type="text" />
+					<!-- {{item.name}} -->
+					<!-- <image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="">
+					</image> -->
 					<!-- <u-dropdown :border-bottom="true">
 						<u-dropdown-item v-model="value1" :title="item.name" :options="options1"></u-dropdown-item>
 					</u-dropdown> -->
@@ -111,7 +118,6 @@
 			</view>
 		</view>
 		<view class="" style="height: 110rpx;">
-
 		</view>
 		<!-- 底部提交按钮 -->
 		<view class="foot_reg">
@@ -119,7 +125,7 @@
 				提交
 			</view>
 		</view>
-		<u-select v-model="show" :label-name="labelName" @confirm="confirm" :list="options2"></u-select>
+		<u-city-select v-model="showcity" @city-change="cityChange" />
 	</view>
 </template>
 
@@ -130,6 +136,11 @@
 	export default {
 		data() {
 			return {
+				sheng: "",
+				shi: "",
+				qu: "",
+				shengshiqu: "",
+				showcity: false,
 				vider: this.$imgPath,
 				namess: "image", //上传
 				formData: {}, //上传
@@ -147,43 +158,39 @@
 				imgList: [],
 				dropList: [{
 						id: 0,
-						name: "选择省份",
-						keys: "sf"
-					},
-					{
-						id: 1,
-						name: "选择城市",
-						keys: "city"
-					},
-					{
-						id: 2,
-						name: "选择区县",
-						keys: "county"
+						name: "请选择省市区",
+						keys: "sf",
+						value: ""
 					},
 					{
 						id: 3,
-						name: "选择楼盘",
-						keys: "loupan"
+						name: "请输入楼盘",
+						keys: "loupan",
+						value: ""
 					},
 					{
 						id: 4,
-						name: "选择户型",
-						keys: "huxin"
+						name: "请输入户型",
+						keys: "huxin",
+						value: ""
 					},
 					{
 						id: 5,
-						name: "选择楼层",
-						keys: "lc"
+						name: "请输入楼层",
+						keys: "lc",
+						value: ""
 					},
 					{
 						id: 6,
-						name: "选择栋号",
-						keys: "dh"
+						name: "请输入栋号",
+						keys: "dh",
+						value: ""
 					},
 					{
 						id: 7,
-						name: "选择期数",
-						keys: "qs"
+						name: "请输入期数",
+						keys: "qs",
+						value: ""
 					}
 				],
 				options1: [],
@@ -194,13 +201,41 @@
 				vr_fenleiimg: [],
 				arrs: [],
 				vrurl: "",
-				videoList: ""
+				videoList: "",
 			};
 		},
 		onLoad() {
 			this.getChooseData()
 		},
 		methods: {
+			gossss(){
+				uni.navigateTo({
+					url:"../pagesB/images"
+				})
+			},
+			selectImg() {
+				uni.chooseImage({
+					count: 1,
+					sizeType: ['original'],
+					sourceType: ['album', 'camera'],
+					success: res => {
+						var tempFilePaths = res.tempFilePaths
+						uni.navigateTo({
+							url:"../pagesB/images?img="+tempFilePaths[0]
+						})
+					}
+				})
+			},
+			open() {
+				this.showcity = true
+			},
+			cityChange(e) {
+				this.sheng = e.province.label;
+				this.shi = e.city.label;
+				this.qu = e.area.label
+				this.shengshiqu = e.province.label + e.city.label + e.area.label;
+				this.dropList[0].name = this.shengshiqu
+			},
 			shanghcuanvideo() {
 				let that = this;
 				uni.chooseVideo({
@@ -412,9 +447,9 @@
 			// 提交
 			submit() {
 				let aa = [
-					this.dropList[0].name,
-					this.dropList[1].name,
-					this.dropList[2].name,
+					this.sheng,
+					this.shi,
+					this.qu,
 					this.dropList[3].name,
 					this.dropList[4].name,
 					this.dropList[5].name,
@@ -443,9 +478,9 @@
 				if (aa.length == bb.length) {
 					this.$api.addprogramme({
 						des_id: uni.getStorageSync("des_info").id,
-						sf: this.dropList[0].name,
-						city: this.dropList[1].name,
-						county: this.dropList[2].name,
+						sf: this.sheng,
+						city: this.shi,
+						county: this.qu,
 						loupan: this.dropList[3].name,
 						huxin: this.dropList[4].name,
 						lc: this.dropList[5].name,
@@ -647,4 +682,5 @@
 			line-height: 70rpx;
 		}
 	}
+	
 </style>

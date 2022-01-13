@@ -307,6 +307,15 @@
 				"navigationBarTextStyle": "white"
 			}
 
+		}, {
+			"path": "images",
+			"style": {
+				"navigationBarTitleText": "图片处理",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "white"
+			}
+
 		}]
 	}, {
 		"root": "pages/pagesC",

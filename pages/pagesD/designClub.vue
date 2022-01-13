@@ -20,7 +20,8 @@
 		</view>
 		<!-- 热门栏目 -->
 		<view class="" style="height: 100%;" v-if="current==0">
-			<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa" @dianzhan="dianzhan">
+			<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
+				@dianzhan="dianzhan">
 			</u-video>
 			<u-empty v-else></u-empty>
 		</view>
@@ -29,11 +30,7 @@
 		</view>
 		<!-- 设计师列表 -->
 		<view class="" v-if="current==2">
-			<!-- 排序 -->
 			<view class="paixu">
-				<!-- <view class="item">
-					综合排序<image src="../../static/icon_home_sanjiao.png" style="width: 16rpx;height: 10rpx;margin-left: 12rpx;" mode=""></image>
-				</view> -->
 				<view class="paxi">
 					<u-dropdown :mask="true" style="position: relative;z-index: 100;">
 						<u-dropdown-item v-model="value1" :title="tit" :options="options1" @change="xuanzhedsa">
@@ -328,25 +325,23 @@
 				}
 
 			},
-			pinglunaa(ev, index) {
-				this.indexdas = index
-				this.pinglun_list = []
-				this.pinglun_list = ev.pl
-				this.pinglun_list.forEach(item => {
-					item["checked"] = false
-				})
-				this.itemsss = ev;
-				if (!this.dianzhansssss && !this.showComment) {
-					this.video[index].showComment = true
-					return this.showComment = true;
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.indexdas = index
+					this.pinglun_list = []
+					this.pinglun_list = ev.pl
+					this.pinglun_list.forEach(item => {
+						item["checked"] = false
+					})
+					this.itemsss = ev;
+					if (!this.dianzhansssss && !this.showComment) {
+						this.video[index].showComment = true
+						return this.showComment = true;
+					}
+					this.showComment = true;
+					this.dianzhansssss = false
 				}
-				this.showComment = true;
-				this.dianzhansssss = false
 			},
-			//
-			//
-			//
-			//
 			// 跳转设计师详情
 			navgepage(item) {
 				uni.navigateTo({
@@ -364,40 +359,38 @@
 				this.showComment = true;
 			},
 			// 点赞
-			dianzhan(ev) {
-				// if(this.$log){
-				// 	return
-				// }
-				let type = ev.zans ? 1 : 0;
-				this.$api.zan({
-					state: 0,
-					video_id: ev.id,
-					user_id: uni.getStorageSync("user_info").id,
-					type: type
-				}).then(data => {
-					if (data.data.code == 1) {
-						ev.iszan = !ev.iszan
-						this.enjoy()
-					}
-				})
+			async dianzhan(ev) {
+				if (await this.$login()) {
+					let type = ev.zans ? 1 : 0;
+					this.$api.zan({
+						state: 0,
+						video_id: ev.id,
+						user_id: uni.getStorageSync("user_info").id,
+						type: type
+					}).then(data => {
+						if (data.data.code == 1) {
+							ev.iszan = !ev.iszan
+							this.enjoy()
+						}
+					})
+				}
 			},
 			// 收藏
-			collection(ev) {
-				// if(this.$log){
-				// 	return
-				// }
-				let state = ev.isfollow ? 1 : 0;
-				this.$api.addfollow({
-					type: 1,
-					user_id: uni.getStorageSync("user_info").id,
-					shop_id: 0,
-					video_id: ev.id,
-					state: state
-				}).then(data => {
-					if (data.data.code == 1) {
-						ev.isfollow = !ev.isfollow
-					}
-				})
+			async collection(ev) {
+				if (await this.$login()) {
+					let state = ev.isfollow ? 1 : 0;
+					this.$api.addfollow({
+						type: 1,
+						user_id: uni.getStorageSync("user_info").id,
+						shop_id: 0,
+						video_id: ev.id,
+						state: state
+					}).then(data => {
+						if (data.data.code == 1) {
+							ev.isfollow = !ev.isfollow
+						}
+					})
+				}
 			},
 			// 跳转填写资料
 			toReg() {
@@ -412,20 +405,22 @@
 
 			},
 			// 查看合同模板
-			getcontein(ev) {
-				this.fenleideid = ev;
-				this.$api.ispay({
-					id: this.allssssss[ev].id,
-					user_id: uni.getStorageSync("user_info").id
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.pay = '去填写资料'
-					} else {
-						this.pay = '支付￥' + this.allssssss[ev].money
-					}
-					this.showContract = true
-					this.looks(this.allssssss[ev].doc_url)
-				})
+			async getcontein(ev) {
+				if (await this.$login()) {
+					this.fenleideid = ev;
+					this.$api.ispay({
+						id: this.allssssss[ev].id,
+						user_id: uni.getStorageSync("user_info").id
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.pay = '去填写资料'
+						} else {
+							this.pay = '支付￥' + this.allssssss[ev].money
+						}
+						this.showContract = true
+						this.looks(this.allssssss[ev].doc_url)
+					})
+				}
 			},
 			// 查看模板
 			looks(url) {
@@ -530,7 +525,7 @@
 					order: ev
 				}).then(data => {
 					if (data.data.code == 1) {
-						console.log(data.data.data.status,"data.data.data.status");
+						console.log(data.data.data.status, "data.data.data.status");
 						data.data.data.status.forEach(item => {
 							console.log(item);
 							item.createtime = item.createtime * 1000
