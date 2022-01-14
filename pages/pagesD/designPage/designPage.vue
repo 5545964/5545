@@ -18,6 +18,9 @@
 			DesignHome: DesignHome,
 			DesignMine: DesignMine
 		},
+		onShow() {
+			this.current = 0
+		},
 		data() {
 			return {
 				list: [{

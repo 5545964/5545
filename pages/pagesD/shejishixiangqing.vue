@@ -171,7 +171,8 @@
 		</view>
 		<view class="bngh" v-if="isyuyue == 0">
 			<view class="annui" @click="tijiao(0)" style="background-color: #EFEFEF;color: #333333;">
-				上传二维码
+				<!-- 上传二维码 -->
+				查看二维码
 			</view>
 			<view class="annui" @click="tijiao(1)">
 				确认完成
@@ -192,10 +193,10 @@
 				</view>
 				<!-- <input type="text" v-model="jujueliyou" /> -->
 				<view style="width: 100%;padding: 20rpx;">
-					<textarea style="width: 100%;" value="" placeholder="请填写拒绝理由" v-model="jujueliyouss"/>
+					<textarea style="width: 100%;" value="" placeholder="请填写拒绝理由" v-model="jujueliyouss" />
 				</view>
 				<view class="xian">
-		
+
 				</view>
 				<view class="bottoms">
 					<view class="sdasas" @click="jujueshanshu(0)">
@@ -254,8 +255,8 @@
 	export default {
 		data() {
 			return {
-				jujueliyouss:"",
-				jujue:false,
+				jujueliyouss: "",
+				jujue: false,
 				imgtitle: this.$imgPath,
 				showa: false,
 				mony: "9980.00", //预约价格
@@ -481,18 +482,24 @@
 							},
 							{
 								id: 7,
+								name: '入住时间',
+								text: "2021.12.21",
+								type: "Displays_data"
+							},
+							{
+								id: 8,
 								name: '喜欢风格',
 								text: "伊拉克风格",
 								type: "Displays_data"
 							},
 							{
-								id: 8,
+								id: 9,
 								name: '喜欢色调',
 								text: "猛男粉",
 								type: "Displays_data"
 							},
 							{
-								id: 9,
+								id: 10,
 								name: '新房居住成员',
 								type: "xuan",
 								list: [{
@@ -519,14 +526,14 @@
 					{
 						title: '相关文件',
 						list: [{
-								id: 10,
+								id: 11,
 								name: "平面图",
 								text: "(手机拍照/购房宣传册)",
 								type: "upload",
 								img_list: []
 							},
 							{
-								id: 11,
+								id: 12,
 								name: "现场照片或视频",
 								text: "",
 								type: "upload",
@@ -565,10 +572,11 @@
 				this.list[1].list[0].text = this.desOrder.city || "";
 				this.list[1].list[1].text = this.desOrder.dire || "";
 				this.list[1].list[2].text = this.desOrder.housetype || "";
-				this.list[1].list[3].text = this.desOrder.jftime_text.split(" ")[0];
-				this.list[1].list[4].text = this.desOrder.style || "";
-				this.list[1].list[5].text = this.desOrder.color || "";
-				this.list[1].list[6].list = arr;
+				this.list[1].list[3].text = this.desOrder.jf || "";
+				this.list[1].list[4].text = this.desOrder.rz || "";
+				this.list[1].list[5].text = this.desOrder.style || "";
+				this.list[1].list[6].text = this.desOrder.color || "";
+				this.list[1].list[7].list = arr;
 				this.list[2].list[0].img_list = this.desOrder.aboveimage.split(",");
 				this.list[2].list[1].img_list = this.desOrder.image.split(",");
 
@@ -578,7 +586,7 @@
 			kan(ev, index) {
 
 				let aa = this.list[2].list[index].img_list
-				aa.forEach((item,index) => {
+				aa.forEach((item, index) => {
 					aa[index] = this.$imgPath + item
 				})
 				uni.previewImage({
@@ -594,10 +602,10 @@
 					}
 				});
 			},
-			jujueshanshu(ev){
-				if(ev != 0){
+			jujueshanshu(ev) {
+				if (ev != 0) {
 					this.$api.desorder({
-						bhnew:this.jujueliyouss,
+						bhnew: this.jujueliyouss,
 						id: this.desOrder.id,
 						state: 0
 					}).then(data => {
@@ -611,7 +619,7 @@
 							})
 						}
 					})
-				}else{
+				} else {
 					this.jujue = false;
 				}
 			},
@@ -664,10 +672,19 @@
 			tijiao(ev) {
 				switch (ev) {
 					case 0:
+						uni.previewImage({
+							urls: [this.$imgPath + this.desOrder.ewm],
+							longPressActions: {
+								itemList: ['发送给朋友', '保存图片', '收藏'],
+								success: function(data) {},
+								fail: function(err) {
 
-						uni.navigateTo({
-							url: "./erweima?id=" + this.desOrder.id
-						})
+								}
+							}
+						});
+						// uni.navigateTo({
+						// 	url: "./erweima?id=" + this.desOrder.id
+						// })
 						break;
 					case 1:
 						this.showa = true;
@@ -677,7 +694,7 @@
 
 						this.jujue = true;
 
-						
+
 						break;
 					case 4:
 
@@ -689,7 +706,7 @@
 							if (data.data.code == 1) {
 								let aa = {
 									title: "接单成功",
-									text: "请前往进行中订单上传项目沟通群 (例如QQ群或者微信群等)的群名称和二维码， 以方便客户添加~",
+									text: "请前往进行中查看订单",
 									botton: "我知道了"
 								}
 								uni.navigateTo({

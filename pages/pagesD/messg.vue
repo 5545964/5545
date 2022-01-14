@@ -131,9 +131,11 @@
 				this.$api.addnews({
 					id: uni.getStorageSync("des_info").id
 				}).then(data => {
-
 					if (data.data.code == 1) {
 						this.data_list = data.data.data.status
+						uni.setStorageSync("addnews", data.data.data.status.length)
+					}else{
+						uni.setStorageSync("addnews", 0)
 					}
 				})
 			},
@@ -151,7 +153,7 @@
 							if (state == 1) {
 								let aa = {
 									title: "接单成功",
-									text: "请前往进行中订单上传项目沟通群 (例如QQ群或者微信群等)的群名称和二维码， 以方便客户添加~",
+									text: "请前往进行中查看订单",
 									botton: "我知道了"
 								}
 								uni.navigateTo({

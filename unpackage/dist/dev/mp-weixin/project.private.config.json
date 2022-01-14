@@ -1,4 +1,5 @@
 {
+    "setting": {},
     "condition": {
         "plugin": {
             "list": []
@@ -14,6 +15,24 @@
                 {
                     "name": "",
                     "pathName": "pages/pagesD/uploadCase",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/pagesB/card",
+                    "query": "state=1",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/pagesD/designPage/designPage",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/Home/booking/AppointmentDesign",
                     "query": "",
                     "scene": null
                 }

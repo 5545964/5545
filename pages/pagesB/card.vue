@@ -8,7 +8,6 @@
 						{{userinfo.username}}
 					</view>
 					<view class="text pad">
-
 						{{userinfo.biaoti||"不止设计 · 共赢卓越"}}
 					</view>
 					<view class="add pad">
@@ -20,59 +19,34 @@
 				<scroll-view :scroll-x="true">
 					<view class="dasds">
 						<view v-for="(item,index) in rinima" :key="index">
-							<view class="cet vxcvx" v-show="index == 'mobile'" @click="copy(item,index)">
-								<image class="img" src="../../static/icons0.png" mode=""></image>
-								<view class="text">
-									{{userinfo.mobile||""}}
-								</view>
-							</view>
-							<view class="cet vxcvx" v-show="index == 'email'" @click="copy(item,index)">
-								<image class="img" src="../../static/icons1.png" mode=""></image>
-								<view class="text">
-									{{userinfo.email||""}}
-								</view>
-							</view>
-							<view class="cet vxcvx" v-show="index == 'wechat'" @click="copy(item,index)">
-								<image class="img" src="../../static/icons2.png" mode=""></image>
-								<view class="text">
-									{{userinfo.wechat||""}}
-								</view>
-							</view>
-							<view class="cet vxcvx" v-show="index == 'qq'" @click="copy(item,index)">
-								<image class="img" src="../../static/icons3.png" mode=""></image>
-								<view class="text">
-									{{userinfo.qq||""}}
-								</view>
-							</view>
-							<view class="cet vxcvx" v-show="index == 'tt'" @click="copy(item,index)">
-								<image class="img" src="../../static/icons4.png" mode=""></image>
-								<view class="text">
+							<view class="cet vxcvx" v-if="item !=''" @click="copy(item,index)">
+								<image class="img" :src="'../../static/icons'+index+'.png'" mode=""></image>
+								<view class="text" style="width: 100rpx;" v-if="index == 5">
 									{{item}}
 								</view>
 							</view>
-							<view class="cet vxcvx"  v-show="index == 'daohang'" @click="go">
-								<image class="img" src="../../static/icons5.png" mode=""></image>
-								<view class="text">
-									导航到我的公司
-								</view>
-							</view>
 						</view>
-						
+
 					</view>
 				</scroll-view>
 			</view>
 			<view style="padding: 30rpx;background-color: #FFFFFF;" v-html="cardinfo.content">
 			</view>
+			<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==1">
+				<u-swiper height="400" :effect3d="true" img-mode="aspectFit" :list="imgList"></u-swiper>
+			</view>
 		</view>
-		<!-- <view class="anniuss">
+		
+		<view class="anniuss">
 			<view class="kuang">
-				<button open-type="contact">11</button>
-				<image class="img" src="../../static/icon_me_fenxiang.png" mode=""></image>
+				<button open-type="contact" class="annuiwwww" type="default">
+					<image class="img" src="../../static/icon_me_fenxiang.png" mode=""></image>
+				</button>
 			</view>
 			<view class="kuang" @click="gohome">
 				<image class="img" src="../../static/icon_me_shouye.png" mode=""></image>
 			</view>
-		</view> -->
+		</view>
 		<view class="navbar">
 			<u-navbar :is-back="false" title-color="#FFFFFF" :title="title" :background="background">
 				<view class="navbar_top">
@@ -86,9 +60,7 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==1">
-			<u-swiper height="400" :effect3d="true" :list="imgList"></u-swiper>
-		</view>
+		
 	</view>
 </template>
 
@@ -96,7 +68,8 @@
 	export default {
 		data() {
 			return {
-				rinima: {},
+				imgList: [],
+				rinima: [],
 				imgtitle: this.$imgPath,
 				userinfo: {},
 				list: {},
@@ -113,28 +86,23 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
+			this.state = 1
 			if (ev.state) {
 				this.state = ev.state;
 			}
 			this.getcard()
 			this.userinfo = uni.getStorageSync("des_info")
-			this.rinima["mobile"] = this.userinfo.mobile
-			this.rinima["email"] = this.userinfo.email
-			this.rinima["wechat"] = this.userinfo.wechat
-			this.rinima["qq"] = this.userinfo.qq
-			this.rinima["daohang"] = this.userinfo.qq
-			console.log(this.rinima);
-		},
-		computed: {
-			imgList() {
-				let arr = []
-				if (this.desinfo.work) {
-					this.desinfo.work.split(",").forEach(item => {
-						arr.push(this.$imgPath + item)
-					})
-				}
-				return arr
-			}
+			this.rinima.push(this.userinfo.mobile)
+			this.rinima.push(this.userinfo.email)
+			this.rinima.push(this.userinfo.wechat)
+			this.rinima.push(this.userinfo.qq)
+			this.rinima.push("")
+			this.rinima.push("导航到我的公司！")
+			this.userinfo.work.split(",").forEach(item => {
+				this.imgList.push({
+					image: this.$imgPath + item
+				})
+			})
 		},
 		methods: {
 			// 获取电子名片
@@ -165,8 +133,7 @@
 				});
 			},
 			copy(item, index) {
-
-				if (index == 'mobile') {
+				if (index == 0) {
 					uni.makePhoneCall({
 						phoneNumber: item,
 						success: (res) => {
@@ -176,13 +143,15 @@
 
 						}
 					});
+				} else if (index == this.rinima.length - 1) {
+					this.go()
+				} else {
+					uni.setClipboardData({
+						data: item.toString(),
+						success: function() {}
+					});
 				}
-				uni.setClipboardData({
-					data: item.toString(),
-					success: function() {
 
-					}
-				});
 			},
 			back(ev) {
 				switch (ev) {
@@ -212,17 +181,30 @@
 		align-items: center;
 		justify-content: center;
 		position: fixed;
-		right: 10rpx;
+		right: 0rpx;
+		top: 800rpx;
+		z-index: 10000;
 
-		.kuang {
-			width: fit-content;
-			padding: 20rpx 0;
+		.annuiwwww {
+			background-color: #007399;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+
 		}
 
 		.img {
 			width: 38rpx;
 			height: 38rpx;
 		}
+
+		.kuang {
+			width: fit-content;
+			padding: 20rpx 0;
+		}
+
+
 	}
 
 	.home {

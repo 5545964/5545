@@ -63,6 +63,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 .top .top_c .gongjus.data-v-75af8ee3 {
   padding: 20rpx;
@@ -234,5 +235,14 @@
   width: 10rpx;
   height: 86rpx;
   margin-right: 20rpx;
+}
+.dsalhdkjahjad.data-v-75af8ee3 {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+  left: 150rpx;
+  top: 30rpx;
 }
 

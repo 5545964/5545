@@ -235,6 +235,7 @@
 				this.qu = e.area.label
 				this.shengshiqu = e.province.label + e.city.label + e.area.label;
 				this.dropList[0].name = this.shengshiqu
+				this.dropList[0].value = this.shengshiqu
 			},
 			shanghcuanvideo() {
 				let that = this;
@@ -446,15 +447,16 @@
 			},
 			// 提交
 			submit() {
+				console.log(this.dropList);
 				let aa = [
 					this.sheng,
 					this.shi,
 					this.qu,
-					this.dropList[3].name,
-					this.dropList[4].name,
-					this.dropList[5].name,
-					this.dropList[6].name,
-					this.dropList[7].name,
+					this.dropList[1].value,
+					this.dropList[2].value,
+					this.dropList[3].value,
+					this.dropList[4].value,
+					this.dropList[5].value,
 					this.name,
 					this.content,
 					this.upimgs,
@@ -474,18 +476,17 @@
 						bb.push("1")
 					}
 				})
-
 				if (aa.length == bb.length) {
 					this.$api.addprogramme({
 						des_id: uni.getStorageSync("des_info").id,
 						sf: this.sheng,
 						city: this.shi,
 						county: this.qu,
-						loupan: this.dropList[3].name,
-						huxin: this.dropList[4].name,
-						lc: this.dropList[5].name,
-						dh: this.dropList[6].name,
-						qs: this.dropList[7].name,
+						loupan: this.dropList[1].value,
+						huxin: this.dropList[2].value,
+						lc: this.dropList[3].value,
+						dh: this.dropList[4].value,
+						qs: this.dropList[5].value,
 						name: this.name,
 						content: this.content,
 						image: this.upimgs,
@@ -670,6 +671,7 @@
 		justify-content: center;
 		position: fixed;
 		bottom: 0;
+		z-index: 1000;
 
 		.submit {
 			width: 600rpx;

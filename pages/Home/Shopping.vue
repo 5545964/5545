@@ -5,13 +5,13 @@
 			<view class="wrap">
 				<!-- <u-swipers @click="lunbochang" img-mode="scaleToFill" :list="lun_list" :border-radius="20"
 					:autoplay="false" :height="300" indicator-pos="bottomLeft"></u-swipers> -->
-				<swiper @change="gaizhi" :current="current" :indicator-dots="true" :circular="true" :autoplay="true"
+				<swiper @change="gaizhi" :current="current" :indicator-dots="true" :circular="true" :autoplay="autoplay"
 					:interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
+						<video @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
 							:src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" style="width: 100%;height: 300rpx;"
-							:src="item.image" mode=""></image>
+							:src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -61,6 +61,7 @@
 	export default {
 		data() {
 			return {
+				autoplay:true,
 				imgurl: this.$imgPath,
 				current: 0,
 				cart_num: uni.getStorageSync("cart_num"),
@@ -92,6 +93,18 @@
 			this.alls()
 		},
 		methods: {
+			ended(ev){
+				console.log(ev,"视频结束");
+				this.autoplay = true
+			},
+			pause(ev){
+				console.log(ev,"视频暂停");
+				this.autoplay = true
+			},
+			bofang(ev){
+				console.log(ev,"视频播放");
+				this.autoplay = false
+			},
 			gosss(ev) {
 				switch (Number(ev.link)) {
 					case 0:

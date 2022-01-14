@@ -18,7 +18,7 @@
 			<slot name="addBtn"></slot>
 			<view v-if="!customBtn" class="u-list-item u-add-wrap" hover-class="u-add-wrap__hover" hover-stay-time="150"
 				:style="{width: $u.addUnit(width),height: $u.addUnit(height),'background-color': $u.addUnit(BackColor)}">
-				<image :src="imgUrl" mode=""></image>
+				<image :src="imgUrl" :mode="imageMode"></image>
 			</view>
 			<!-- <view v-if="!customBtn" class="u-list-item u-add-wrap" hover-class="u-add-wrap__hover" hover-stay-time="150"
 				:style="{width: $u.addUnit(width),height: $u.addUnit(height)}">
@@ -109,7 +109,7 @@
 			// 预览上传的图片时的裁剪模式，和image组件mode属性一致
 			imageMode: {
 				type: String,
-				default: 'aspectFill'
+				default: 'aspectFit'
 			},
 			// 头部信息
 			header: {

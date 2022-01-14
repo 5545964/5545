@@ -69,28 +69,34 @@
 					</view>
 					<view class="asdsss">
 						<template>
-							<u-upload :imgUrl="avatar" width="100" height="100" :action="action"
-								max-count="1" :header="header" @on-success="shangchuan" :form-data="formData"
-								name="image" size-type="compressed">
+							<u-upload :fileList="avatar" width="100" height="100" :action="action" max-count="1"
+								:header="header" @on-success="shangchuan" :form-data="formData" name="image"
+								size-type="compressed">
 							</u-upload>
 						</template>
 					</view>
 				</view>
 				<!-- 上传 -->
+				<!-- 设计师手机号 -->
+				<view class="inputs" v-if="items.status == 'phone' && isdes == 1" @click="showcitys(items)">
+					<view class="cxz">
+						{{items.name}}
+					</view>
+					<view class="asd">
+						<u-input style="width: 100%;height: 100%;" v-model="items.inp" type="text"
+							:placeholder="items.placeholder" />
+					</view>
+				</view>
+				<!-- 设计师手机号 -->
 				<!-- 设计师上传 -->
 				<view class="design" v-if="items.status == 'designupload' && isdes == 1">
 					<view class="cxz" style="padding: 30rpx 0;">
 						{{items.name}}
 					</view>
 					<view class="img_list">
-						<view class="img_item" v-for="(item,index) in imgList" :key="index">
-							<image :src="imgtitle+item" mode="aspectFit" style="position: relative;"></image>
-							<image src="../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg"
-								mode="">
-							</image>
-						</view>
-						<u-upload :action="action" max-count="9" style="margin: 0 30rpx;" width="160" height="160"
-							ref="uUpload" :form-data="formData" name="image" size-type="compressed"></u-upload>
+						<u-upload :fileList="imgList" :action="action" max-count="9" width="160" height="160"
+							ref="uUpload" :form-data="formData" @on-success="asdfg" @on-remove="deleteimg" name="image"
+							size-type="compressed"></u-upload>
 					</view>
 				</view>
 				<!-- 设计师上传 -->
@@ -236,6 +242,13 @@
 						inp: "",
 					},
 					{
+						id: 13,
+						name: "手机号",
+						placeholder: "请填写手机号",
+						status: "phone",
+						inp: "",
+					},
+					{
 						id: 11,
 						name: "设计师标签",
 						status: "designbiao"
@@ -252,8 +265,10 @@
 				actList: [],
 				isdes: "",
 				imgList: [],
+				imgListsss: [],
 				avatar: "",
-				avatarss: ""
+				avatarss: "",
+				djsahkdjhaslk:"",
 			};
 		},
 		onLoad(ev) {
@@ -262,27 +277,39 @@
 			}
 			if (ev.isdesign == 1) {
 				this.isdes = ev.isdesign
-				// this.getdesData()
 				this.getmode()
 				this.desinfo = uni.getStorageSync("des_info")
-				this.avatarss = this.desinfo.avatar
-				this.desinfo.avatar = this.$imgPath + this.desinfo.avatar
-				this.avatar = this.desinfo.avatar
-				this.list[1].inp = this.desinfo.nickname
-				this.list[2].inp = this.desinfo.myself
-				this.list[3].inp = this.desinfo.username
-				this.list[4].inp = this.desinfo.level
-				this.list[5].inp = this.desinfo.wechat
-				this.list[6].inp = this.desinfo.qq
-				this.list[7].inp = this.desinfo.yb
-				this.list[8].inp = this.desinfo.email
-				this.list[9].inp = this.desinfo.address
-				this.list[10].inp = this.desinfo.addressxq
-				this.actList = this.desinfo.label.split(",")
-				this.imgList = this.desinfo.work.split(",")
+				this.avatarss = this.desinfo.avatar;
+				this.avatar = [{
+					url: this.$imgPath + this.desinfo.avatar,
+				}];
+				this.list[1].inp = this.desinfo.nickname;
+				this.list[2].inp = this.desinfo.myself;
+				this.list[3].inp = this.desinfo.username;
+				this.list[4].inp = this.desinfo.bbs.type;
+				this.list[5].inp = this.desinfo.wechat;
+				this.list[6].inp = this.desinfo.qq;
+				this.list[7].inp = this.desinfo.yb;
+				this.list[8].inp = this.desinfo.email;
+				this.list[9].inp = this.desinfo.address;
+				this.list[10].inp = this.desinfo.addressxq;
+				this.list[11].inp = this.desinfo.mobile;
+				this.actList = this.desinfo.label.split(",");
+				if(this.desinfo.work !=''){
+					this.imgListsss = this.desinfo.work.split(",")
+					this.desinfo.work.split(",").forEach(item => {
+						this.imgList.push({
+							url: this.$imgPath + item,
+						})
+					})
+				}
+				
 			} else {
 				this.desinfo = uni.getStorageSync("user_info")
-				this.avatar = this.desinfo.avatar
+				// this.avatar = this.desinfo.avatar
+				this.avatar = [{
+					url: this.desinfo.avatar,
+				}];
 				this.list[1].inp = this.desinfo.nickname
 				this.list[2].inp = "暂未开通"
 				this.list[3].inp = this.desinfo.username
@@ -295,16 +322,20 @@
 			}
 		},
 		methods: {
+			asdfg(ev) {
+				console.log(ev);
+				this.imgListsss.push(ev.data.status)
+			},
 			// 删除图片
 			deleteimg(index) {
-				this.imgList.splice(index, 1)
-
+				this.imgListsss.splice(index, 1)
+				console.log(this.imgListsss);
 			},
 			shangchuan(ev) {
-				if(this.isdes == 1){
+				if (this.isdes == 1) {
 					this.avatarss = ev.data.status
-					this.avatar = this.$imgPath +  ev.data.status
-				}else{
+					this.avatar = this.$imgPath + ev.data.status
+				} else {
 					this.avatar = ev.data.status
 				}
 			},
@@ -328,7 +359,7 @@
 						// that.imgList = res.tempFilePaths
 						res.tempFilePaths.forEach(item => {
 							uni.uploadFile({
-								url: 'http://bao.scwushen.com/index.php/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
+								url: that.$shangchuan + '/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
 								filePath: item,
 								name: 'image',
 								formData: {},
@@ -368,31 +399,31 @@
 				item.act = !item.act
 			},
 			// 设计师个人资料
-			getdesData() {
-				this.$api.desindex({
-					id: uni.getStorageSync("des_info").id
-				}).then(data => {
-					if (data.data.code == 1) {
-						console.log(data.data.data.status);
-						this.desinfo = data.data.data.status
-						this.list[1].inp = this.desinfo.nickname
-						this.list[2].inp = this.desinfo.myself
-						this.list[3].inp = this.desinfo.username
-						this.list[4].inp = this.desinfo.zw.type
-						this.list[5].inp = this.desinfo.wechat
-						this.list[6].inp = this.desinfo.qq
-						this.list[7].inp = this.desinfo.yb
-						this.list[8].inp = this.desinfo.email
-						this.list[9].inp = this.desinfo.address
-						this.list[10].inp = this.desinfo.addressxq
-						this.avatarss = this.desinfo.avatar
-						this.avatar = this.$imgPath + this.desinfo.avatar
-						console.log(this.avatar);
-						this.actList = this.desinfo.label.split(",")
-						this.imgList = this.desinfo.work.split(",")
-					}
-				})
-			},
+			// getdesData() {
+			// 	this.$api.desindex({
+			// 		id: uni.getStorageSync("des_info").id
+			// 	}).then(data => {
+			// 		if (data.data.code == 1) {
+			// 			console.log(data.data.data.status);
+			// 			this.desinfo = data.data.data.status
+			// 			this.list[1].inp = this.desinfo.nickname
+			// 			this.list[2].inp = this.desinfo.myself
+			// 			this.list[3].inp = this.desinfo.username
+			// 			this.list[4].inp = this.desinfo.zw.type
+			// 			this.list[5].inp = this.desinfo.wechat
+			// 			this.list[6].inp = this.desinfo.qq
+			// 			this.list[7].inp = this.desinfo.yb
+			// 			this.list[8].inp = this.desinfo.email
+			// 			this.list[9].inp = this.desinfo.address
+			// 			this.list[10].inp = this.desinfo.addressxq
+			// 			this.avatarss = this.desinfo.avatar
+			// 			this.avatar = this.$imgPath + this.desinfo.avatar
+			// 			console.log(this.avatar);
+			// 			this.actList = this.desinfo.label.split(",")
+			// 			this.imgList = this.desinfo.work.split(",")
+			// 		}
+			// 	})
+			// },
 			// 设计师标签 desmode
 			getmode() {
 				this.$api.desmode().then(data => {
@@ -415,22 +446,22 @@
 						})
 						return
 					}
-					let files = [];
-					// 通过filter，筛选出上传进度为100的文件(因为某些上传失败的文件，进度值不为100，这个是可选的操作)
-					files = this.$refs.uUpload[0].lists.filter(val => {
-						return val.progress == 100;
-					})
-					// 如果您不需要进行太多的处理，直接如下即可
-					// files = this.$refs.uUpload.lists;
-					files.forEach(item => {
-						this.imgList.push(item.response.data.status)
-					})
-					if(this.actList.length == 0){
+					// let files = [];
+					// // 通过filter，筛选出上传进度为100的文件(因为某些上传失败的文件，进度值不为100，这个是可选的操作)
+					// files = this.$refs.uUpload[0].lists.filter(val => {
+					// 	return val.progress == 100;
+					// })
+					// // 如果您不需要进行太多的处理，直接如下即可
+					// // files = this.$refs.uUpload.lists;
+					// files.forEach(item => {
+					// 	this.imgList.push(item.response.data.status)
+					// })
+					if (this.actList.length == 0) {
 						uni.showToast({
-							title:"请检查标签",
-							icon:"none"
+							title: "请检查标签",
+							icon: "none"
 						})
-						return 
+						return
 					}
 					this.$api.editdes({
 						id: this.desinfo.id,
@@ -445,7 +476,8 @@
 						addressxq: this.list[10].inp,
 						avatar: this.avatarss,
 						label: this.actList,
-						work: this.imgList
+						work: this.imgListsss,
+						mobile: this.list[11].inp
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

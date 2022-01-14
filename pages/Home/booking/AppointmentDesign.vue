@@ -159,12 +159,15 @@
 											岁
 										</view>
 									</view>
+									<image @click="sanchuhsuahsuhd(indexc)" v-if="itemc.del"
+										style="width: 28rpx;height: 28rpx;position: absolute;top: 30rpx;right: 20rpx;"
+										src="../../../static/icon_close_ico.png" mode=""></image>
 								</view>
 								<view class="czzxczx nbnbn" v-if="isadd" @click="add">
 									+点击添加成员
 								</view>
 							</view>
-							<view v-if="items.list.length != 0">
+							<view v-else>
 								<view class="czccxz" v-for="(itemc,indexc) in items.list" :key="indexc">
 									<view style="width: 25%;">
 										成员{{indexc+1}}
@@ -221,6 +224,7 @@
 		<view class="annui" v-if="isyuyue == 0" @click="tijiao">
 			提交预约
 		</view>
+		<u-picker mode="time" v-model="shijianshow" @confirm="zhishizhege"></u-picker>
 		<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">{{chuanzhi.name}}</view>
 			<view class="mids">
@@ -247,6 +251,7 @@
 	export default {
 		data() {
 			return {
+				shijianshow: false,
 				state: 1,
 				fans: {},
 				mony: "9980.00", //预约价格
@@ -266,17 +271,21 @@
 				man_data: [{
 						id: 0,
 						age: "",
-						select: 10000
+						select: 10000,
+						del: false
+
 					},
 					{
 						id: 1,
 						age: "",
-						select: 10000
+						select: 10000,
+						del: false
 					},
 					{
 						id: 2,
 						age: "",
-						select: 10000
+						select: 10000,
+						del: true
 					}
 				],
 				//性别选项
@@ -349,31 +358,31 @@
 								id: 5,
 								name: '房屋户型',
 								obj: "housetype",
-								text: "请填写您的户型",
+								text: "请选择您的户型",
 								type: "Picker",
 								show: false
 							},
 							{
 								id: 12,
 								name: '交付时间',
-								obj: "jftime",
-								text: "请填写交付时间",
-								type: "input",
+								obj: "jf",
+								text: "请选择交付时间",
+								type: "Picker",
 								show: false
 							},
 							{
 								id: 12,
 								name: '入住时间',
 								obj: "rz",
-								text: "请填写入住时间",
-								type: "input",
+								text: "请选择入住时间",
+								type: "Picker",
 								show: false
 							},
 							{
 								id: 6,
 								name: '装修现状',
 								obj: "zx",
-								text: "请填写装修现状",
+								text: "请选择装修现状",
 								type: "Picker",
 								show: false
 							},
@@ -389,7 +398,7 @@
 								id: 8,
 								name: '喜欢色调',
 								obj: "color",
-								text: "请填写装修色调",
+								text: "请选择装修色调",
 								type: "Picker",
 								show: false
 							},
@@ -434,6 +443,15 @@
 			}
 		},
 		methods: {
+			sanchuhsuahsuhd(ev) {
+				console.log(ev);
+				this.man_data.splice(ev, 1)
+				this.isadd = true
+			},
+			zhishizhege(ev) {
+				console.log(ev);
+				this.data_list[this.chuanzhi.obj] = ev.year + '-' + ev.month + "-" + ev.day
+			},
 			address(ev) {
 				let that = this;
 				let aa = ''
@@ -569,8 +587,8 @@
 						{
 							id: 6,
 							name: '交付时间',
-							obj: "jftime",
-							text: this.fans.jftime,
+							obj: "jf",
+							text: this.fans.jf,
 							type: "Displays_data",
 							show: false
 						},
@@ -686,13 +704,14 @@
 							title: data.data.msg,
 							duration: 1000,
 							icon: "none"
-							})
-				})
+						})
+					})
 				}
 			},
 			//弹出层关闭
 			guan() {
 				this.popshow = false;
+				this.shijianshow = false;
 			},
 			// 增加成员
 			add() {
@@ -702,7 +721,8 @@
 						this.man_data.push({
 							id: aa + i,
 							age: "",
-							select: 10000
+							select: 10000,
+							del: true
 						})
 					}
 					if (this.man_data.length >= 10) {
@@ -763,6 +783,7 @@
 							id: 756
 						}
 					]
+					this.popshow = true;
 				} else if (ev.obj == "color") {
 					this.poplist = [];
 					this.poplist = [{
@@ -806,6 +827,7 @@
 							id: 437
 						}
 					]
+					this.popshow = true;
 				} else if (ev.obj == "zx") {
 					this.poplist = [];
 					this.poplist = [{
@@ -824,6 +846,7 @@
 							id: 12
 						}
 					]
+					this.popshow = true;
 				} else if (ev.obj == "housetype") {
 					this.poplist = [];
 					this.poplist = [{
@@ -842,10 +865,12 @@
 							id: 12
 						}
 					]
+					this.popshow = true;
+				} else if (ev.obj == 'jf' || ev.obj == 'rz') {
+					this.shijianshow = true
 				}
 				this.re();
 				this.chuanzhi = ev;
-				this.popshow = true;
 			},
 			back(ev) {
 				switch (ev) {
@@ -906,10 +931,10 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					padding-top: 30rpx;
-					padding-bottom: 40rpx;
+					// padding-top: 30rpx;
+					// padding-bottom: 40rpx;
 					border-bottom: 1px solid #DEDEDE;
-
+					position: relative;
 				}
 
 				.czccxz:first-child {
@@ -1121,7 +1146,7 @@
 		.type_list {
 			display: flex;
 			align-items: center;
-			justify-content: space-between;
+			justify-content: end;
 			flex-wrap: wrap;
 		}
 
@@ -1136,6 +1161,8 @@
 			text-align: center;
 			line-height: 70rpx;
 			margin-top: 30rpx;
+			margin-left: 10rpx;
+			margin-right: 10rpx;
 		}
 
 		.active {
@@ -1149,6 +1176,8 @@
 			text-align: center;
 			line-height: 70rpx;
 			margin-top: 30rpx;
+			margin-left: 10rpx;
+			margin-right: 10rpx;
 		}
 	}
 

@@ -15,6 +15,8 @@ import login from "utils/islogin.js"
 Vue.prototype.$login = login
 // 显示图片头部
 Vue.prototype.$imgPath = "https://bao.scwushen.com"
+// 显示图片头部
+Vue.prototype.$shangchuan = "http://bao.scwushen.com/index.php"
 Vue.prototype.$imgs = function(url) {
 	if (url.indexOf("http") == -1) {
 		if (url.indexOf("uploads") != -1) {

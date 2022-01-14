@@ -4,7 +4,7 @@
   "navigationStyle": "custom",
   "navigationBarTextStyle": "white",
   "usingComponents": {
-    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
-    "u-swiper": "/uview-ui/components/u-swiper/u-swiper"
+    "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar"
   }
 }

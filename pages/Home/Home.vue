@@ -20,13 +20,13 @@
 				<u-search @click='seach_go' :disabled="true" v-model="keyword"></u-search>
 			</view>
 			<view class="wrap">
-				<swiper @change="gaizhi" :current="current" :indicator-dots="true" :circular="true" :autoplay="true"
+				<swiper @change="gaizhi" :current="current" :indicator-dots="true" :circular="true" :autoplay="autoplay"
 					:interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
+						<video @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
 							:src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" style="width: 100%;height: 300rpx;"
-							:src="item.image" mode=""></image>
+							:src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -62,7 +62,8 @@
 		components: {},
 		data() {
 			return {
-				showssss: true,
+				autoplay:true,
+				showssss: false,
 				current: 0,
 				show: false,
 				data_list: [],
@@ -103,6 +104,18 @@
 			};
 		},
 		methods: {
+			ended(ev){
+				console.log(ev,"视频结束");
+				this.autoplay = true
+			},
+			pause(ev){
+				console.log(ev,"视频暂停");
+				this.autoplay = true
+			},
+			bofang(ev){
+				console.log(ev,"视频播放");
+				this.autoplay = false
+			},
 			async denglu() {
 				if (await this.$login()) {
 					this.showssss = false
@@ -235,6 +248,10 @@
 				this.goods();
 				//轮播图
 				this.$api.banner().then(data => {
+					this.showssss = data.data.data.edit
+					if(uni.getStorageSync("user_info")){
+						this.showssss = false
+					}
 					if (data.data.code == 1) {
 						this.lun_list = [];
 						let aa = []
@@ -252,9 +269,7 @@
 			}
 		},
 		onLoad() {
-			if(uni.getStorageSync("user_info")){
-				this.showssss = false
-			}
+			
 			uni.setStorageSync("shouzhi", 0)
 			const res = uni.getSystemInfoSync()
 			// let that = this;

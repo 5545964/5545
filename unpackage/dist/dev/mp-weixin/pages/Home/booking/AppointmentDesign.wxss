@@ -37,9 +37,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 30rpx;
-  padding-bottom: 40rpx;
   border-bottom: 1px solid #DEDEDE;
+  position: relative;
 }
 .xunhuan .dadsda .inputss .czccxz.data-v-00101410:first-child {
   border-top-right-radius: 10rpx;
@@ -212,7 +211,7 @@
 .mids .type_list.data-v-00101410 {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   flex-wrap: wrap;
 }
 .mids .type_item.data-v-00101410 {
@@ -224,6 +223,8 @@
   text-align: center;
   line-height: 70rpx;
   margin-top: 30rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
 }
 .mids .active.data-v-00101410 {
   background: #007399;
@@ -234,6 +235,8 @@
   text-align: center;
   line-height: 70rpx;
   margin-top: 30rpx;
+  margin-left: 10rpx;
+  margin-right: 10rpx;
 }
 .klks.data-v-00101410 {
   text-align: center;

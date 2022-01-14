@@ -39,7 +39,7 @@
 					</image>
 				</view>
 				<image @click="chooseImg" src="../../../static/icon_up_ico.png" class="imgs" mode=""></image> -->
-				<u-upload width="160" height="160" :action="action" max-count="9" :header="header"
+				<u-upload width="160" :fileList="kanimg" height="160" :action="action" max-count="9" :header="header"
 					@on-success="shangchuan" @on-remove="deleteimg" :form-data="formData" name="image"
 					size-type="compressed">
 				</u-upload>
@@ -62,22 +62,29 @@
 	export default {
 		onLoad() {
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
+			let info = uni.getStorageSync("inpList");
+			if (info) {
+				this.inpList[0].text = info[0].text;
+				this.inpList[1].text = info[1].text;
+				this.inpList[2].text = info[2].text;
+				this.inpList[3].text = info[3].text;
+				this.inpList[4].text = info[4].text;
+				this.inpList[5].text = info[5].text;
+			}
+			let info_img = uni.getStorageSync("upimgs");
+			if (info_img) {
+				this.upimgs = info_img
+				info_img.forEach(item => {
+					this.kanimg.push({
+						url: this.$imgPath + item,
+					})
+				})
+			}
 
-			// let info = uni.getStorageSync("reg_des");
-			// if (info) {
-			// 	this.inpList[0].text = info.username;
-			// 	this.inpList[1].text = info.idcart;
-			// 	this.inpList[2].text = info.mobile;
-			// 	this.inpList[3].text = info.email;
-			// 	this.inpList[4].text = info.address;
-			// 	this.inpList[5].text = info.addressxq;
-			// 	info.desimage.split(",").forEach(item => {
-			// 		this.imgList.push(this.$imgPath + item)
-			// 	})
-			// }
 		},
 		data() {
 			return {
+				kanimg:[],
 				header: {},
 				formData: {},
 				action: "",
@@ -185,6 +192,8 @@
 				// if (this.upimgs.length == 0) {
 				// 	this.upimgs = uni.getStorageSync("reg_des").desimage
 				// }
+				uni.setStorageSync("inpList", this.inpList)
+				uni.setStorageSync("upimgs", this.upimgs)
 				let bb = []
 				this.inpList.forEach(item => {
 					if (item.text == '') {
@@ -206,7 +215,6 @@
 							desimage: this.upimgs,
 							addressxq: this.inpList[5].text,
 						}).then(data => {
-
 							if (data.data.code == 1) {
 								let list = {
 									title: "提交成功",

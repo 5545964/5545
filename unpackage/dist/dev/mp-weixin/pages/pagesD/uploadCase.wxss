@@ -135,6 +135,7 @@
   justify-content: center;
   position: fixed;
   bottom: 0;
+  z-index: 1000;
 }
 .foot_reg .submit.data-v-cb7d7bd2 {
   width: 600rpx;

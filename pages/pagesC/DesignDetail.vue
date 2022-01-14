@@ -16,7 +16,7 @@
 		</view>
 		<!-- 轮播 -->
 		<view class="lunbo">
-			<swiper style="width: 100%;height: 450rpx;" :indicator-dots="true" :circular="true" :autoplay="true"
+			<swiper style="width: 100%;height: 450rpx;" :indicator-dots="true" :circular="true" :autoplay="autoplay"
 				:interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in list" :key="index" @click="kaniamg(item)">
 					<image style="width: 100%;height: 450rpx;" :src="item" mode=""></image>
@@ -28,11 +28,11 @@
 							100%所见所得
 						</view>
 					</view>
-					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image" mode="">
+					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image" mode="aspectFit">
 					</image>
 				</swiper-item>
 				<swiper-item>
-					<video style="width: 100%;height: 450rpx;" :src="video"></video>
+					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;" :src="video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -88,7 +88,8 @@
 	export default {
 		data() {
 			return {
-				budakai:false,
+				autoplay:true,
+				budakai: false,
 				showComment: false,
 				dsaa: {},
 				itemsss: {},
@@ -112,10 +113,25 @@
 			};
 		},
 		onLoad(ev) {
-			this.deta = JSON.parse(ev.id);
+			// this.deta = JSON.parse(ev.id);
+			this.deta = uni.getStorageSync("fdklfjdsfjsfhks")
 			this.allss()
+			this.videoContext = uni.createVideoContext('video')
+			console.log(this.videoContext);
 		},
 		methods: {
+			ended(ev){
+				console.log(ev,"视频结束");
+				this.autoplay = true
+			},
+			pause(ev){
+				console.log(ev,"视频暂停");
+				this.autoplay = true
+			},
+			bofang(ev){
+				console.log(ev,"视频播放");
+				this.autoplay = false
+			},
 			chang(text, pla) {
 				if (pla == "发表评论请文明用语") {
 					this.$api.indexpl({
@@ -161,20 +177,14 @@
 			pingjia(item) {
 				this.dsaa = item
 			},
-			//
-			//
-			//
-			//
 			kaniamg(ev) {
 				let aa = [ev]
 				uni.previewImage({
 					urls: aa,
 					longPressActions: {
 						itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function(data) {
-						},
-						fail: function(err) {
-						}
+						success: function(data) {},
+						fail: function(err) {}
 					}
 				});
 			},

@@ -25,10 +25,14 @@
 		},
 		methods: {
 			topage() {
-				let aa = this.list
-				console.log(aa);
+				// let aa = this.list
+				// console.log(aa);
+				// uni.navigateTo({
+				// 	url: "./DesignDetail?id=" + JSON.stringify(aa)
+				// })
+				uni.setStorageSync("fdklfjdsfjsfhks",this.list)
 				uni.navigateTo({
-					url: "./DesignDetail?id=" + JSON.stringify(aa)
+					url: "./DesignDetail"
 				})
 			}
 		}

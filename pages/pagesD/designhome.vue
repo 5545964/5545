@@ -122,6 +122,7 @@
 							</view>
 						</view>
 						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode=""></image>
+						<view class="dsalhdkjahjad" v-if="index == 2 && fkjsfjdisfjsl"></view>
 					</view>
 				</view>
 			</view>
@@ -138,6 +139,7 @@
 
 		data() {
 			return {
+				fkjsfjdisfjsl: false,
 				num_list: [0, 0],
 				myuser: {},
 				img: this.$imgPath,
@@ -183,6 +185,18 @@
 			if (uni.getStorageSync("user_info")) {
 				this.user_info = uni.getStorageSync("user_info");
 			}
+			this.$api.addnews({
+				id: uni.getStorageSync("des_info").id
+			}).then(data => {
+				if (data.data.code == 1) {
+					let aa = uni.getStorageSync("addnews")
+					if (data.data.data.status.length > aa) {
+						this.fkjsfjdisfjsl = true
+					} else {
+						this.fkjsfjdisfjsl = false
+					}
+				}
+			})
 			this.$api.desmyuser({
 				user_id: uni.getStorageSync("user_info").id,
 			}).then(data => {
@@ -319,6 +333,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
+				position: relative;
 			}
 
 			.gongjus {
@@ -524,5 +539,15 @@
 		width: 10rpx;
 		height: 86rpx;
 		margin-right: 20rpx;
+	}
+
+	.dsalhdkjahjad {
+		width: 20rpx;
+		height: 20rpx;
+		border-radius: 50%;
+		background-color: red;
+		position: absolute;
+		left: 150rpx;
+		top: 30rpx;
 	}
 </style>
