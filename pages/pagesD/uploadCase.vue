@@ -44,7 +44,7 @@
 				<input style="width: 100%;" v-model="name" type="text" value="" placeholder="输入名称" />
 			</view>
 			<view class="areaitem">
-				<textarea v-model="content" value="" placeholder="输入介绍" />
+				<textarea style="width: 100%;" v-model="content" value="" placeholder="输入介绍" />
 			</view>
 		</view>
 		<!-- 上传封面 -->
@@ -112,7 +112,7 @@
 				<image v-if="videoList !=''" src="../../static/icon_close_ico.png" @click="sanchuvideo()"
 					class="closeImg" mode="">
 				</image>
-				<video style="width: 100%;margin: 30rpx 0;" v-if="videoList !=''" :src="vider+videoList"></video>
+				<video style="width: 100%;margin: 30rpx 0;height: 400rpx;" v-if="videoList !=''" :src="vider+videoList"></video>
 				<image v-else src="../../static/icon_up_ico.png" @click="shanghcuanvideo" class="imgs" mode="aspectFit">
 				</image>
 			</view>

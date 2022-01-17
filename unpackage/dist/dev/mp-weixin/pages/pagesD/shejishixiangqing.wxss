@@ -47,10 +47,12 @@
 .xunhuan .dadsda .inputss .czccxz.data-v-23107602 {
   padding: 20rpx;
   background: #F6F6F6;
-  display: flex;
   padding-top: 30rpx;
   padding-bottom: 40rpx;
   border-bottom: 1px solid #DEDEDE;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .xunhuan .dadsda .inputss .czccxz.data-v-23107602:first-child {
   border-top-right-radius: 10rpx;
@@ -300,5 +302,8 @@
   font-size: 30rpx;
   font-weight: 400;
   color: #FEFEFE;
+}
+.cxzcxzcxz.data-v-23107602 {
+  background-color: red;
 }
 

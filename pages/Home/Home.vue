@@ -20,13 +20,12 @@
 				<u-search @click='seach_go' :disabled="true" v-model="keyword"></u-search>
 			</view>
 			<view class="wrap">
-				<swiper @change="gaizhi" :current="current" :indicator-dots="true" :circular="true" :autoplay="autoplay"
-					:interval="3000" :duration="1000">
+				<swiper @change="gaizhi" style="height: 300rpx;width: 100%;" :current="current" :indicator-dots="true"
+					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
-							:src="imgurl + item.video"></video>
-						<image v-if="item.image !=''" @click="lunbochang" style="width: 100%;height: 300rpx;"
-							:src="item.image" mode="aspectFit"></image>
+						<video id="video" @play="bofang" @pause="pause" @ended="ended"
+							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -50,7 +49,8 @@
 						暂不登录
 					</view>
 				</view>
-				<image @click="budenglu" style="width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;" src="../../static/icon_close_ico.png" mode=""></image>
+				<image @click="budenglu" style="width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;"
+					src="../../static/icon_close_ico.png" mode=""></image>
 			</view>
 		</u-popup>
 	</view>
@@ -62,7 +62,8 @@
 		components: {},
 		data() {
 			return {
-				autoplay:true,
+				videoContext: "",
+				autoplay: true,
 				showssss: false,
 				current: 0,
 				show: false,
@@ -104,16 +105,13 @@
 			};
 		},
 		methods: {
-			ended(ev){
-				console.log(ev,"视频结束");
+			ended(ev) {
 				this.autoplay = true
 			},
-			pause(ev){
-				console.log(ev,"视频暂停");
+			pause(ev) {
 				this.autoplay = true
 			},
-			bofang(ev){
-				console.log(ev,"视频播放");
+			bofang(ev) {
 				this.autoplay = false
 			},
 			async denglu() {
@@ -121,9 +119,9 @@
 					this.showssss = false
 				} else {
 					uni.showToast({
-						title:"登陆失败，请重试",
-						duration:1000,
-						icon:"none"
+						title: "登陆失败，请重试",
+						duration: 1000,
+						icon: "none"
 					})
 				}
 			},
@@ -132,6 +130,11 @@
 			},
 			gaizhi(ev) {
 				this.current = ev.detail.current
+				if (ev.detail.current == this.lun_list.length - 1) {
+					this.videoContext.play()
+				} else {
+					this.videoContext.pause()
+				}
 			},
 			dsad() {
 				this.show = false
@@ -249,7 +252,7 @@
 				//轮播图
 				this.$api.banner().then(data => {
 					this.showssss = data.data.data.edit
-					if(uni.getStorageSync("user_info")){
+					if (uni.getStorageSync("user_info")) {
 						this.showssss = false
 					}
 					if (data.data.code == 1) {
@@ -269,7 +272,7 @@
 			}
 		},
 		onLoad() {
-			
+
 			uni.setStorageSync("shouzhi", 0)
 			const res = uni.getSystemInfoSync()
 			// let that = this;
@@ -277,6 +280,7 @@
 			//       that.denglu()
 			//     })
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
+			this.videoContext = uni.createVideoContext('video')
 		},
 		onShow() {
 			this.alls()

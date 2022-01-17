@@ -18,8 +18,7 @@
 				<view class="jdhfd">
 					<view style="width: 30%;">
 						<view class="hhi">
-							<image class="img imgs" src="../../static/icon_zbout_yuanhuan.png" mode=""></image>
-							<image class="img imgd" :src="img + item.avatar" mode=""></image>
+							<image class="imgd" :src="img + item.avatar" mode=""></image>
 						</view>
 						<view class="dadasdad">
 							{{item.username}}
@@ -90,35 +89,45 @@
 			}).then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.data.forEach((item, index) => {
-						var labels = item.des.label
-						let aa = item.des.desimage.split(',')
-						this.mydesigner.push({
-							id: item.des.id,
-							avatar: item.des.avatar,
-							username: item.des.username,
-							list: labels.split(','),
-							list_s: [{
-									name: "满意",
-									num: item.des.manyi
-								},
-								{
-									name: "创意",
-									num: item.des.cy
-								},
-								{
-									name: "业绩",
-									num: item.des.yj
-								},
-								{
-									name: "专业",
-									num: item.des.zy
-								}
-							],
-							work: item.des.work,
-							star: item.star,
-							createtime: item.createtime,
-							image: this.$imgPath + aa[0]
-						})
+						if (item.des != null) {
+							let aa = []
+							let bb = []
+							if(item.des.desimage){
+								aa = item.des.desimage.split(',')
+							}
+							let labels = item.des.label
+							if( labels){
+								bb = labels.split(',')
+							}
+							// this.mydesigner = []
+							this.mydesigner.push({
+								id: item.des.id,
+								avatar: item.des.avatar || "",
+								username: item.des.username,
+								list: bb,
+								list_s: [{
+										name: "满意",
+										num: item.des.manyi
+									},
+									{
+										name: "创意",
+										num: item.des.cy
+									},
+									{
+										name: "业绩",
+										num: item.des.yj
+									},
+									{
+										name: "专业",
+										num: item.des.zy
+									}
+								],
+								work: item.des.work,
+								star: item.star,
+								createtime: item.createtime,
+								image: this.$imgPath + aa[0]
+							})
+						}
 					});
 				}
 			})
@@ -248,22 +257,17 @@
 		}
 
 		.hhi {
-			position: relative;
+			width: 80rpx;
+			height: 80rpx;
+			border: 10rpx solid transparent;
+			border-radius: 50%;
+			background-clip: padding-box, border-box;
+			background-origin: padding-box, border-box;
+			background-image: linear-gradient(to bottom, #222, #222), linear-gradient(135deg, #8ebfce, #3391b0);
 		}
 
 		.imgd {
 			border-radius: 50%;
-		}
-
-		.imgs {
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-
-		.img {
-			width: 80rpx;
-			height: 80rpx;
 		}
 	}
 

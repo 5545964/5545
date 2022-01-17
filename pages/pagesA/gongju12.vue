@@ -23,14 +23,14 @@
 						<view class="text">
 							查看预约详情
 						</view>
-						<image class="img" src="../../static/icon_shop_hsmore.png" mode=""></image>
+						<image class="img" mode="aspectFit" src="../../static/icon_shop_hsmore.png"></image>
 					</view>
 				</view>
 				<view class="dsfedfed" @click="kanzhaopian(item.ewm)">
 					<view class="text">
 						项目沟通群二维码：
 					</view>
-					<image class="img" :src="bindIcon(item.ewm)" mode=""></image>
+					<image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image>
 				</view>
 			</view>
 		</view>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+	import dayjs from "@/dayjs"
 	export default {
 		data() {
 			return {
@@ -60,7 +61,7 @@
 		// },
 		methods: {
 			kanzhaopian(ev) {
-				let aa = [this.$imgPath+ev]
+				let aa = [this.$imgPath + ev]
 				uni.previewImage({
 					urls: aa,
 					longPressActions: {
@@ -80,12 +81,19 @@
 			gethomepage() {
 				this.fansList = []
 				this.$api.mymake({
-					// user_id:uni.getStorageSync("user_info").id,
 					user_id: uni.getStorageSync("user_info").id,
 					limit: 1000
 				}).then(data => {
 					if (data.data.code == 1) {
+						let aa = 0
+						data.data.data.status.data.forEach(item => {
+							item["tjtime"] = dayjs((item.createtime * 1000)).format('YYYY-MM-DD')
+							if(item.state == "1"){
+								aa = aa + 1
+							}
+						})
 						this.fansList = data.data.data.status.data;
+						uni.setStorageSync("yuyuejilunum",aa)
 					}
 				})
 			},

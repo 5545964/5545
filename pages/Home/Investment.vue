@@ -9,7 +9,7 @@
 				</u-tabs>
 			</view>
 			<!-- 热门栏目 -->
-			<view class="" style="height: 100%;" v-if="current==0">
+			<view v-if="current==0">
 				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 					@dianzhan="dianzhan">
 				</u-video>

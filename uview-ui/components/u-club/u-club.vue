@@ -5,8 +5,8 @@
 				<view class="jdhfd">
 					<view>
 						<view class="hhi">
-							<image class="img imgs" src="@/static/icon_zbout_yuanhuan.png" mode=""></image>
-							<image class="img imgd" :src="item.avatar" mode=""></image>
+							<!-- <image class=" imgs" src="@/static/icon_zbout_yuanhuan.png" mode=""></image> -->
+							<image class=" imgd" :src="item.avatar" mode="aspectFit"></image>
 							<!-- {{item.avatar}} -->
 						</view>
 						<!-- <view class="dadasdad">
@@ -219,22 +219,17 @@
 		}
 
 		.hhi {
-			position: relative;
+			width: 80rpx;
+			height: 80rpx;
+			border: 5rpx solid transparent;
+			border-radius: 50%;
+			background-clip: padding-box, border-box;
+			background-origin: padding-box, border-box;
+			background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
 		}
 
 		.imgd {
 			border-radius: 50%;
-		}
-
-		.imgs {
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-
-		.img {
-			width: 80rpx;
-			height: 80rpx;
 		}
 	}
 </style>

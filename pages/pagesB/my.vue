@@ -268,7 +268,7 @@
 				imgListsss: [],
 				avatar: "",
 				avatarss: "",
-				djsahkdjhaslk:"",
+				djsahkdjhaslk: "",
 			};
 		},
 		onLoad(ev) {
@@ -280,9 +280,15 @@
 				this.getmode()
 				this.desinfo = uni.getStorageSync("des_info")
 				this.avatarss = this.desinfo.avatar;
-				this.avatar = [{
-					url: this.$imgPath + this.desinfo.avatar,
-				}];
+				if (this.desinfo.avatar.indexOf("https") == -1) {
+					this.avatar = [{
+						url: this.$imgPath + this.desinfo.avatar,
+					}];
+				} else {
+					this.avatar = [{
+						url: this.desinfo.avatar,
+					}];
+				}
 				this.list[1].inp = this.desinfo.nickname;
 				this.list[2].inp = this.desinfo.myself;
 				this.list[3].inp = this.desinfo.username;
@@ -295,7 +301,7 @@
 				this.list[10].inp = this.desinfo.addressxq;
 				this.list[11].inp = this.desinfo.mobile;
 				this.actList = this.desinfo.label.split(",");
-				if(this.desinfo.work !=''){
+				if (this.desinfo.work != '') {
 					this.imgListsss = this.desinfo.work.split(",")
 					this.desinfo.work.split(",").forEach(item => {
 						this.imgList.push({
@@ -303,7 +309,7 @@
 						})
 					})
 				}
-				
+
 			} else {
 				this.desinfo = uni.getStorageSync("user_info")
 				// this.avatar = this.desinfo.avatar
@@ -359,7 +365,8 @@
 						// that.imgList = res.tempFilePaths
 						res.tempFilePaths.forEach(item => {
 							uni.uploadFile({
-								url: that.$shangchuan + '/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
+								url: that.$shangchuan +
+									'/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
 								filePath: item,
 								name: 'image',
 								formData: {},

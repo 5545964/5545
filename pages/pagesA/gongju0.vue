@@ -62,7 +62,6 @@
 			this.$api.addressshow({
 				id: this.userinfo.id
 			}).then(data => {
-
 				if (data.data.code == 1) {
 					this.list = data.data.data.status;
 					this.list.forEach(item=>{

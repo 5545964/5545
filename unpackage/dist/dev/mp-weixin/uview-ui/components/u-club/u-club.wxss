@@ -86,18 +86,15 @@
   color: #FFFFFF;
 }
 .hahaha .hhi.data-v-4fbaa3c0 {
-  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  border: 5rpx solid transparent;
+  border-radius: 50%;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
 }
 .hahaha .imgd.data-v-4fbaa3c0 {
   border-radius: 50%;
-}
-.hahaha .imgs.data-v-4fbaa3c0 {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-.hahaha .img.data-v-4fbaa3c0 {
-  width: 80rpx;
-  height: 80rpx;
 }
 

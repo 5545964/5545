@@ -84,19 +84,16 @@
   color: #FFFFFF;
 }
 .hahaha .hhi.data-v-6b1fabad {
-  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  border: 10rpx solid transparent;
+  border-radius: 50%;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: linear-gradient(to bottom, #222, #222), linear-gradient(135deg, #8ebfce, #3391b0);
 }
 .hahaha .imgd.data-v-6b1fabad {
   border-radius: 50%;
-}
-.hahaha .imgs.data-v-6b1fabad {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-.hahaha .img.data-v-6b1fabad {
-  width: 80rpx;
-  height: 80rpx;
 }
 .navbar .sssss.data-v-6b1fabad {
   border: 1px solid #e5e5e5;

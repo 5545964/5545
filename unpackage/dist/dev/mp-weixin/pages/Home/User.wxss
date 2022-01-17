@@ -23,6 +23,7 @@
   border-radius: 20rpx;
 }
 .top .top_c .template.data-v-1197255c {
+  position: relative;
   flex: 0 0 25%;
   margin-bottom: 50px;
 }
@@ -213,5 +214,14 @@
   text-align: center;
   font-weight: 400;
   font-size: 26rpx;
+}
+.dsalhdkjahjad.data-v-1197255c {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: red;
+  position: absolute;
+  left: 110rpx;
+  top: -20rpx;
 }
 

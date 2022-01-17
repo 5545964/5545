@@ -16,8 +16,8 @@
 		</view>
 		<!-- 轮播 -->
 		<view class="lunbo">
-			<swiper style="width: 100%;height: 450rpx;" :indicator-dots="true" :circular="true" :autoplay="autoplay"
-				:interval="3000" :duration="1000">
+			<swiper style="width: 100%;height: 450rpx;" @change="bainhua" :indicator-dots="true" :circular="true"
+				:autoplay="autoplay" :interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in list" :key="index" @click="kaniamg(item)">
 					<image style="width: 100%;height: 450rpx;" :src="item" mode=""></image>
 				</swiper-item>
@@ -28,11 +28,13 @@
 							100%所见所得
 						</view>
 					</view>
-					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image" mode="aspectFit">
+					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image"
+						mode="aspectFit">
 					</image>
 				</swiper-item>
 				<swiper-item>
-					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;" :src="video"></video>
+					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
+						:src="video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -88,7 +90,7 @@
 	export default {
 		data() {
 			return {
-				autoplay:true,
+				autoplay: true,
 				budakai: false,
 				showComment: false,
 				dsaa: {},
@@ -117,19 +119,23 @@
 			this.deta = uni.getStorageSync("fdklfjdsfjsfhks")
 			this.allss()
 			this.videoContext = uni.createVideoContext('video')
-			console.log(this.videoContext);
 		},
 		methods: {
-			ended(ev){
-				console.log(ev,"视频结束");
+			bainhua(ev) {
+				if (ev.detail.current == this.list.length + 1) {
+					this.videoContext.play()
+				} else {
+					this.videoContext.pause()
+				}
+
+			},
+			ended(ev) {
 				this.autoplay = true
 			},
-			pause(ev){
-				console.log(ev,"视频暂停");
+			pause(ev) {
 				this.autoplay = true
 			},
-			bofang(ev){
-				console.log(ev,"视频播放");
+			bofang(ev) {
 				this.autoplay = false
 			},
 			chang(text, pla) {

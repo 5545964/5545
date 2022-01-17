@@ -165,6 +165,7 @@
 						<view class="texts">
 							预约记录
 						</view>
+						<view class="dsalhdkjahjad" v-if="fkjsfjdisfjsl"></view>
 					</view>
 				</view>
 			</view>
@@ -181,6 +182,7 @@
 	export default {
 		data() {
 			return {
+				fkjsfjdisfjsl:false,
 				user_info_id: "",
 				img: this.$imgPath,
 				user_info: "",
@@ -268,10 +270,30 @@
 			if (uni.getStorageSync("user_info")) {
 				this.user_info = uni.getStorageSync("user_info")
 				this.shuliang(this.user_info.id)
+				
 			}
 		},
 		methods: {
 			shuliang(ev) {
+				this.$api.mymake({
+					user_id: ev,
+					limit: 1000
+				}).then(data => {
+					if (data.data.code == 1) {
+						let aa = uni.getStorageSync("yuyuejilunum")
+						let bb = 0
+						data.data.data.status.data.forEach(item => {
+							if(item.state == "1"){
+								bb = bb + 1
+							}
+						})
+						if (bb > aa) {
+							this.fkjsfjdisfjsl = true
+						} else {
+							this.fkjsfjdisfjsl = false
+						}
+					}
+				})
 				this.$api.addressshow({
 					id: ev
 				}).then(data => {
@@ -441,6 +463,7 @@
 			border-radius: 20rpx;
 
 			.template {
+				position: relative;
 				flex: 0 0 25%;
 				margin-bottom: 50px;
 			}
@@ -665,5 +688,14 @@
 		text-align: center;
 		font-weight: 400;
 		font-size: 26rpx;
+	}
+	.dsalhdkjahjad {
+		width: 20rpx;
+		height: 20rpx;
+		border-radius: 50%;
+		background-color: red;
+		position: absolute;
+		left: 110rpx;
+		    top: -20rpx;
 	}
 </style>

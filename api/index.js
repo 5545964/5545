@@ -1,6 +1,23 @@
 import request from "./request.js"
 
 export default {
+	// /api/byd_user/activtz
+	activtz(params = {}) {
+		return request.post("/api/byd_user/activtz", params);
+	},
+	// 站内信byd_user/letter
+	letter(params = {}) {
+		return request.post("/api/byd_user/letter", params);
+	},
+	// 限时抢购bydshop/timeshop
+	timeshop(params = {}) {
+		return request.post("/api/bydshop/timeshop", params);
+	},
+	// style  佳作分享
+	// 色调分类color
+	color(params = {}) {
+		return request.post("/api/bydindex/color", params);
+	},
 	//api/bydshop/shopicon
 	shopicon(params = {}) {
 		return request.post("/api/bydshop/shopicon", params);

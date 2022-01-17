@@ -84,7 +84,7 @@
 		},
 		data() {
 			return {
-				kanimg:[],
+				kanimg: [],
 				header: {},
 				formData: {},
 				action: "",
@@ -192,6 +192,14 @@
 				// if (this.upimgs.length == 0) {
 				// 	this.upimgs = uni.getStorageSync("reg_des").desimage
 				// }
+				if (!(/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/.test(this.inpList[2].text))) {
+					uni.showToast({
+						title: "手机号码有误，请重填",
+						icon: "none"
+					})
+					this.inpList[2].text = ""
+					return false;
+				}
 				uni.setStorageSync("inpList", this.inpList)
 				uni.setStorageSync("upimgs", this.upimgs)
 				let bb = []

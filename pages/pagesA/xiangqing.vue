@@ -30,6 +30,7 @@
 			if(ev.title){
 				this.title = ev.title;
 			}
+			this.fuwenben = ev.id
 		},
 		methods: {
 			back(ev) {

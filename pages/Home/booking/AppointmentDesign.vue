@@ -211,7 +211,8 @@
 						</view>
 						<view v-if="items.img_list.length != 0">
 							<view class="asdssss">
-								<image style="width: 200rpx;height: 200rpx;border-radius: 20rpx;margin-bottom: 20rpx;"
+								<image @click="kan(itemv)"
+									style="width: 200rpx;height: 200rpx;border-radius: 20rpx;margin-bottom: 20rpx;"
 									:src="img+itemv" mode="" v-for="(itemv,indexv) in items.img_list" :key="indexv">
 								</image>
 							</view>
@@ -229,9 +230,13 @@
 			<view class="klks">{{chuanzhi.name}}</view>
 			<view class="mids">
 				<view class="type_list">
-					<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)"
-						v-for="(item,index) in poplist" :key="index">
-						{{item.name}}
+					<view class="dkjshkdsf" v-for="(item,index) in poplist" :key="index">
+						<image style="width: 120rpx;height: 120rpx;" v-if="item.image!=''" @click="kan1(item.image)"
+							:src="item.image" mode="aspectFit">
+						</image>
+						<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)">
+							{{item.name}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -434,6 +439,9 @@
 				],
 				img: this.$imgPath,
 				states: "",
+				colorssss: [],
+				stylessss: [],
+				huxinssss: []
 			};
 		},
 		onLoad(ev) {
@@ -441,8 +449,64 @@
 				this.isyuyue = ev.yuyue;
 				this.gethomepage(this.yy_id);
 			}
+			this.$api.color().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						this.colorssss.push({
+							check: false,
+							name: item.title,
+							id: item.id,
+							image: ''
+						})
+					})
+				}
+			})
+			this.$api.huxincategory().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						this.huxinssss.push({
+							check: false,
+							name: item.title,
+							id: item.id,
+							image: ''
+						})
+					})
+				}
+			})
+			this.$api.style().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						this.stylessss.push({
+							check: false,
+							name: item.title,
+							id: item.id,
+							image: this.$imgPath + item.image
+						})
+					})
+				}
+			})
 		},
 		methods: {
+			kan1(itemv) {
+				uni.previewImage({
+					urls: [itemv],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
+			kan(itemv) {
+				uni.previewImage({
+					urls: [this.$imgPath + itemv],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
 			sanchuhsuahsuhd(ev) {
 				console.log(ev);
 				this.man_data.splice(ev, 1)
@@ -521,8 +585,6 @@
 				aboveimage.forEach(item => {
 					item = this.$imgPath + item
 				})
-
-
 				aa.forEach(item => {
 					bb.push(item.split("_"))
 
@@ -585,10 +647,18 @@
 							show: false
 						},
 						{
-							id: 6,
+							id: 12,
 							name: '交付时间',
 							obj: "jf",
 							text: this.fans.jf,
+							type: "Displays_data",
+							show: false
+						},
+						{
+							id: 6,
+							name: '入住时间',
+							obj: "rz",
+							text: this.fans.rz,
 							type: "Displays_data",
 							show: false
 						},
@@ -613,6 +683,14 @@
 							name: '喜欢色调',
 							obj: "color",
 							text: this.fans.color,
+							type: "Displays_data",
+							show: false
+						},
+						{
+							id: 13,
+							name: '提交时间',
+							obj: "jf",
+							text: this.fans.tjtime,
 							type: "Displays_data",
 							show: false
 						},
@@ -747,124 +825,37 @@
 			open(ev) {
 				if (ev.obj == "style") {
 					this.poplist = [];
-					this.poplist = [{
-							check: false,
-							name: "现代极简",
-							id: 0
-						},
-						{
-							check: false,
-							name: "托斯卡纳（地中海）",
-							id: 1
-						},
-						{
-							check: false,
-							name: "现代原木",
-							id: 12
-						},
-						{
-							check: false,
-							name: "新北欧",
-							id: 321
-						},
-						{
-							check: false,
-							name: "极简东方",
-							id: 433
-						},
-						{
-							check: false,
-							name: "当代轻奢",
-							id: 654
-						},
-						{
-							check: false,
-							name: "摩登",
-							id: 756
-						}
-					]
+					this.poplist = [...this.stylessss]
 					this.popshow = true;
 				} else if (ev.obj == "color") {
 					this.poplist = [];
-					this.poplist = [{
-							check: false,
-							name: "黑",
-							id: 0
-						},
-						{
-							check: false,
-							name: "白",
-							id: 1
-						},
-						{
-							check: false,
-							name: "灰",
-							id: 12
-						},
-						{
-							check: false,
-							name: "蓝",
-							id: 321
-						},
-						{
-							check: false,
-							name: "绿",
-							id: 433
-						},
-						{
-							check: false,
-							name: "红",
-							id: 654
-						},
-						{
-							check: false,
-							name: "黄",
-							id: 756
-						},
-						{
-							check: false,
-							name: "咖",
-							id: 437
-						}
-					]
+					this.poplist = [...this.colorssss]
 					this.popshow = true;
 				} else if (ev.obj == "zx") {
 					this.poplist = [];
 					this.poplist = [{
 							check: false,
 							name: "精装房",
-							id: 0
+							id: 0,
+							image: ""
 						},
 						{
 							check: false,
 							name: "毛坯房",
-							id: 1
+							id: 1,
+							image: ""
 						},
 						{
 							check: false,
 							name: "旧房",
-							id: 12
+							id: 12,
+							image: ""
 						}
 					]
 					this.popshow = true;
 				} else if (ev.obj == "housetype") {
 					this.poplist = [];
-					this.poplist = [{
-							check: false,
-							name: "精装房",
-							id: 0
-						},
-						{
-							check: false,
-							name: "毛坯房",
-							id: 1
-						},
-						{
-							check: false,
-							name: "旧房",
-							id: 12
-						}
-					]
+					this.poplist = [...this.huxinssss]
 					this.popshow = true;
 				} else if (ev.obj == 'jf' || ev.obj == 'rz') {
 					this.shijianshow = true
@@ -890,6 +881,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.asd {
+		width: 76%;
+	}
+
 	.xunhuan {
 		background: #FFFFFF;
 		border-radius: 20rpx;
@@ -1151,7 +1146,7 @@
 		}
 
 		.type_item {
-			padding: 0 40rpx;
+			padding: 0 25rpx;
 			// width: 210rpx;
 			// height: 70rpx;
 			background: #F6F6F6;
@@ -1159,25 +1154,33 @@
 			font-size: 26rpx;
 			color: #333;
 			text-align: center;
-			line-height: 70rpx;
-			margin-top: 30rpx;
+			line-height: 50rpx;
+			margin-top: 10rpx;
 			margin-left: 10rpx;
 			margin-right: 10rpx;
 		}
 
 		.active {
 			background: #007399;
-			padding: 0 40rpx;
+			padding: 0 25rpx;
 			// width: 210rpx;
 			// height: 70rpx;
 			border-radius: 35rpx;
 			font-size: 26rpx;
 			color: #FFFFFF;
 			text-align: center;
-			line-height: 70rpx;
-			margin-top: 30rpx;
+			line-height: 50rpx;
+			margin-top: 10rpx;
 			margin-left: 10rpx;
 			margin-right: 10rpx;
+		}
+
+		.dkjshkdsf {
+			display: flex;
+			flex-flow: column;
+			justify-content: center;
+			align-items: center;
+			margin-top: 30rpx;
 		}
 	}
 

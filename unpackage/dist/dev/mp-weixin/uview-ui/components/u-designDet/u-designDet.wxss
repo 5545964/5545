@@ -52,21 +52,17 @@
   border-top: 2rpx solid #F6F6F6;
   margin-top: 40rpx;
 }
-.designer .imgs.data-v-ba3a3b08 {
-  width: 130rpx;
-  height: 130rpx;
-  border-radius: 50%;
-  position: absolute;
-  top: 10rpx;
-  left: 10rpx;
-}
 .designer .imgd.data-v-ba3a3b08 {
-  width: 150rpx;
-  height: 150rpx;
   border-radius: 50%;
 }
 .designer .designer_left.data-v-ba3a3b08 {
-  position: relative;
+  width: 150rpx;
+  height: 150rpx;
+  border: 10rpx solid transparent;
+  border-radius: 50%;
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
 }
 .designer .type_list.data-v-ba3a3b08 {
   display: flex;

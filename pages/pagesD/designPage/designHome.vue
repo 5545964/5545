@@ -18,13 +18,14 @@
 			<!-- 设计师 -->
 			<view class="designer">
 				<view class="designer_left">
-					<image :src="imgtitle+desinger.avatar" class="imgs" mode=""></image>
-					<image src="../../../static/icon_zbout_yuanhuan.png" class="imgd" mode=""></image>
+					<view class="asdfghjkl">
+						<image :src="imgtitle+desinger.avatar" class="imgs" mode="aspectFit"></image>
+					</view>
 					<view style="text-align: center;">
 						{{desinger.username||''}}
 					</view>
 				</view>
-				<view class="" style="width: 400rpx;">
+				<view class="" style="width: 60%;margin-right: 40rpx;">
 					<view class="type_list">
 						<view class="type_item" v-for="(item,index) in list1" :key="index">
 							{{item}}
@@ -34,7 +35,7 @@
 						<view class="dasjbash">
 							{{item.name}}
 						</view>
-						<u-line-progress style="width: 60%;height:50rpx ;" active-color="#479ABB" :height="10"
+						<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
 							:show-percent="false" :percent="item.num" />
 					</view>
 				</view>
@@ -101,7 +102,7 @@
 					// 	title: data.data.msg,
 					// 	success(res) {
 					// 		if (res.confirm) {
-								
+
 					// 		} else if (res.cancel) {
 					// 			uni.navigateBack({
 					// 				delta: 1
@@ -186,17 +187,6 @@
 		padding: 40rpx 0;
 
 		.imgs {
-			width: 130rpx;
-			height: 130rpx;
-			border-radius: 50%;
-			position: absolute;
-			top: 10rpx;
-			// left: 20rpx;
-		}
-
-		.imgd {
-			width: 150rpx;
-			height: 150rpx;
 			border-radius: 50%;
 		}
 
@@ -206,7 +196,6 @@
 			flex-direction: column;
 			align-items: center;
 			margin-left: 50rpx;
-			margin-right: 50rpx;
 		}
 
 		.type_list {
@@ -268,5 +257,15 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-bottom: 100rpx;
+	}
+
+	.asdfghjkl {
+		width: 150rpx;
+		height: 150rpx;
+		border: 10rpx solid transparent;
+		border-radius: 50%;
+		background-clip: padding-box, border-box;
+		background-origin: padding-box, border-box;
+		background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
 	}
 </style>

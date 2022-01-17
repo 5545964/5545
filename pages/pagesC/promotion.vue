@@ -25,7 +25,7 @@
 						<video v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
 							:src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" style="width: 100%;height: 300rpx;"
-							:src="item.image" mode=""></image>
+							:src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -61,20 +61,19 @@
 					this.lun_list = data.data.data.status;
 				}
 			})
-			this.$api.shopindex().then(data => {
+			this.$api.timeshop().then(data => {
 				if (data.data.code == 1) {
-
-					data.data.data.status.forEach((item,index) => {
-						if (index <= 1) {
+					data.data.data.data.forEach((item,index) => {
+						// if (index <= 1) {
 							item["isgo"] = true;
-						} else {
-							item["isgo"] = false;
-						}
+						// } else {
+							// item["isgo"] = false;
+						// }
 						let aa = item.simage
 						item.simage = item.image
 						item.image = aa
 					})
-					this.data_list = [...data.data.data.status]
+					this.data_list = [...data.data.data.data]
 				}
 			})
 		},

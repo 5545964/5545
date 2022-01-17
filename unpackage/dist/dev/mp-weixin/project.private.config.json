@@ -14,25 +14,13 @@
             "list": [
                 {
                     "name": "",
-                    "pathName": "pages/pagesD/uploadCase",
-                    "query": "",
+                    "pathName": "pages/pagesA/gongju8",
+                    "query": "title=%E7%AB%99%E5%86%85%E4%BF%A1%E6%81%AF",
                     "scene": null
                 },
                 {
                     "name": "",
-                    "pathName": "pages/pagesB/card",
-                    "query": "state=1",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/pagesD/designPage/designPage",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "name": "",
-                    "pathName": "pages/Home/booking/AppointmentDesign",
+                    "pathName": "pages/pagesA/gongju8",
                     "query": "",
                     "scene": null
                 }

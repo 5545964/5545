@@ -37,11 +37,11 @@
 				</view>
 			</view>
 			<view v-if="current == 1">
-				<view v-for="(item,index) in data_lists" :key="index" @click="gos(item)">
+				<view v-for="(item,index) in data_lists" :key="index" >
 					<view class="xunhuan">
 						{{item.time}}
 					</view>
-					<view class="haha" v-for="(items,indexs) in item.list" :key="indexs">
+					<view class="haha" v-for="(items,indexs) in item.list" :key="indexs" @click="gos(items.text)">
 						<view class="texts">
 							{{items.title}}
 						</view>
@@ -65,76 +65,8 @@
 	export default {
 		data() {
 			return {
-				data_list: [{
-						time: "2021-06-09 14:32:59",
-						list: [{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							}
-						]
-					},
-					{
-						time: "2021-06-10 14:32:59",
-						list: [{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							}
-						]
-					},
-				],
-				data_lists: [{
-						time: "2021-06-09 14:32:59",
-						list: [{
-								title: "消息标题",
-								text: "1111消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							},
-							{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							}
-						]
-					},
-					{
-						time: "2021-06-10 14:32:59",
-						list: [{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							}
-						]
-					},
-					{
-						time: "2021-06-11 14:32:59",
-						list: [{
-								title: "消息标题",
-								text: "消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容消息内容"
-							}
-						]
-					}
-				],
+				data_list: [],
+				data_lists: [],
 				current: 0,
 				title: "站内信息",
 				list: [{
@@ -151,15 +83,63 @@
 				this.title = ev.title;
 			}
 		},
+		onShow() {
+			this.data_list = [];
+			this.data_lists = [];
+			this.$api.letter({
+				user_id: uni.getStorageSync("user_info").id
+			}).then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach((item, index) => {
+						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
+							.create_at.split(" ")[0]) {
+							this.data_list[index].list.push({
+								title: item.zt,
+								text: item.content
+							})
+						} else {
+							this.data_list.push({
+								time: item.create_at,
+								list: [{
+									title: item.zt,
+									text: item.content
+								}]
+							})
+						}
+					})
+				}
+			})
+			this.$api.activtz().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach((item, index) => {
+						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
+							.create_at.split(" ")[0]) {
+							this.data_lists[index].list.push({
+								title: item.name,
+								text: item.content
+							})
+						} else {
+							this.data_lists.push({
+								time: item.stime_text,
+								list: [{
+									title: item.name,
+									text: item.content
+								}]
+							})
+						}
+					})
+				}
+			})
+		},
 		methods: {
-			go(ev){
+			go(ev) {
 				uni.navigateTo({
-					url:"./xiangqing"
+					url: "./xiangqing"
 				})
 			},
-			gos(ev){
+			gos(ev) {
 				uni.navigateTo({
-					url:"./xiangqing"
+					url: "./xiangqing?id="+ev
 				})
 			},
 			change(ev) {

@@ -24,114 +24,40 @@
 						<view class="cxz">
 							{{items.name}}
 						</view>
-						<view class="asd">
+						<view class="asd" style="width: 76%;">
 							<view class="textss">
 								{{items.text}}
 							</view>
 						</view>
 					</view>
 					<!-- 显示数据 -->
-					<!-- 单行输入框 -->
-					<view class="inputs" v-if="items.type == 'input'&&isdes!=1">
-						<view class="cxz">
-							{{items.name}}
-						</view>
-						<view class="asd">
-							<u-input style="width: 100%;height: 100%;" v-model="data_list[items.id]" :type="type"
-								:placeholder="items.text" />
-						</view>
-					</view>
-					<!-- 单行输入框 -->
-					<!-- 弹出选项 -->
-					<view class="inputs" v-if="items.type == 'Picker'&&isdes!=1">
-						<view class="cxz">
-							{{items.name}}
-						</view>
-						<view class="asd">
-							<u-input v-model="data_list[items.id]" @click="open(items)" type="text" :disabled="true"
-								:placeholder="items.text" />
-						</view>
-					</view>
-					<!-- 弹出选项 -->
-					<!-- 单选框 -->
-					<view class="inputs" v-if="items.type == 'checkbox'&&isdes!=1">
-						<view class="cxz">
-							{{items.name}}
-						</view>
-						<view class="asd cet">
-							<view class="cet czczc" v-for="(itema,indexa) in items.select"
-								@click="danxuan(indexa,items.id)" :key="indexa">
-								<view :class="[numbers==indexa?'hhjhjh':'yuanquan']"></view>
-								<view class="textss">
-									{{itema}}
-								</view>
-							</view>
-						</view>
-					</view>
-					<!-- 单选框 -->
-					<!-- 多行行输入框 -->
-					<view class="inputs" v-if="items.type == 'textarea'&&isdes!=1">
-						<view class="cxz">
-							{{items.name}}
-						</view>
-						<view class="asd" style="width: 60%;">
-							<textarea style="width: 100%;" placeholder-style="color: #999999;"
-								v-model="data_list[items.id]" :placeholder="items.text" :auto-height="true" />
-						</view>
-					</view>
-					<!-- 多行行输入框 -->
 					<!-- 其他选项 -->
 					<view class="inputss" v-if="items.type == 'xuan'">
 						<view class="cxz" style="margin-bottom: 20rpx;">
 							{{items.name}}
 						</view>
 						<view class="asd">
-							<view v-show="items.list.length == 0&&isdes!=1">
-								<view class="czccxz" v-for="(itemc,indexc) in man_data" :key="indexc">
-									<view style="width: 25%;">
-										成员{{indexc+1}}
-									</view>
-									<view class="jjj">
-										<view class="cet" style="margin-bottom: 40rpx;margin-left: 40rpx;"
-											v-for="(itema,indexa) in man_list" @click="danxuans(indexa,items.id,indexc)"
-											:key="indexa">
-											<view :class="[man_data[indexc].select==indexa?'hhjhjh':'yuanquan']"></view>
-											<view class="textss">
-												{{itema.text}}
-											</view>
-										</view>
-									</view>
-									<view class="cet">
-										<u-input type="number" v-model="man_data[indexc].age" placeholder="输入年龄">
-										</u-input>
-										<view style="padding-left: 10rpx;">
-											岁
-										</view>
-									</view>
-								</view>
-								<view class="czzxczx nbnbn" v-if="isadd" @click="add">
-									+点击添加成员
-								</view>
-							</view>
 							<view v-show="items.list.length != 0">
 								<view class="" v-for="(itemc,indexc) in items.list" :key="indexc">
 									<view class="czccxz" v-if="itemc.sex">
 										<view style="width: 25%;">
 											成员{{indexc+1}}
 										</view>
-										<view class="jjj">
-											<view class="cet">
-												<view class="textss">
-													{{itemc.sex}}
+										<view style="display: flex;justify-content: center;align-items: center;">
+											<view class="jjj">
+												<view class="cet">
+													<view class="textss">
+														{{itemc.sex}}
+													</view>
 												</view>
 											</view>
-										</view>
-										<view class="cet" style="margin-left: 50rpx;">
-											<view class="textss">
-												{{itemc.age}}
-											</view>
-											<view style="padding-left: 10rpx;">
-												岁
+											<view class="cet" style="margin-left: 50rpx;">
+												<view class="textss">
+													{{itemc.age}}
+												</view>
+												<view style="padding-left: 10rpx;">
+													岁
+												</view>
 											</view>
 										</view>
 									</view>
@@ -145,22 +71,14 @@
 						<view class="cxz">
 							{{items.name}}<text class="khkkk">{{items.text}}</text>
 						</view>
-						<template>
-							<view v-if="items.img_list.length == 0">
-								<view class="asdsss">
-									<u-upload :action="action" max-count="9" :header="header" :form-data="formData"
-										:name="name" size-type="compressed"></u-upload>
-								</view>
+						<view v-if="items.img_list.length != 0">
+							<view class="asdssss">
+								<image @click="kan(indexv,indexs)"
+									style="width: 200rpx;height: 200rpx;border-radius: 20rpx;margin-bottom: 20rpx;"
+									:src="imgtitle+itemv" mode="" v-for="(itemv,indexv) in items.img_list"
+									:key="indexv"></image>
 							</view>
-							<view v-else>
-								<view class="asdssss">
-									<image @click="kan(indexv,indexs)"
-										style="width: 200rpx;height: 200rpx;border-radius: 20rpx;margin-bottom: 20rpx;"
-										:src="imgtitle+itemv" mode="" v-for="(itemv,indexv) in items.img_list"
-										:key="indexv"></image>
-								</view>
-							</view>
-						</template>
+						</view>
 					</view>
 					<!-- 上传 -->
 				</view>
@@ -174,7 +92,7 @@
 				<!-- 上传二维码 -->
 				查看二维码
 			</view>
-			<view class="annui" @click="tijiao(1)">
+			<view class="annui" @click="tijiao(1)" v-if="desOrder.state == 1">
 				确认完成
 			</view>
 		</view>
@@ -229,25 +147,6 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="klks">{{chuanzhi.name}}</view>
-			<view class="mids">
-				<view class="type_list">
-					<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)"
-						v-for="(item,index) in poplist" :key="index">
-						{{item.name}}
-					</view>
-				</view>
-			</view>
-			<view class="clos">
-				<view class="reset" @click="re">
-					重置
-				</view>
-				<view class="on" @click="change">
-					确定选择
-				</view>
-			</view>
-		</u-popup>
 	</view>
 </template>
 
@@ -262,62 +161,7 @@
 				mony: "9980.00", //预约价格
 				isyuyue: 0, //接单，完成
 				//弹出层选项数据
-				poplist: [{
-						check: false,
-						name: "个性推是荐",
-						id: 0
-					},
-					{
-						check: false,
-						name: "个性啊推荐",
-						id: 1
-					},
-					{
-						check: false,
-						name: "个性和推荐",
-						id: 12
-					},
-					{
-						check: false,
-						name: "个性荐",
-						id: 321
-					},
-					{
-						check: false,
-						name: "个性订单推荐",
-						id: 433
-					},
-					{
-						check: false,
-						name: "推荐",
-						id: 654
-					},
-					{
-						check: false,
-						name: "很高的",
-						id: 756
-					},
-					{
-						check: false,
-						name: "VS沙发",
-						id: 8879
-					},
-					{
-						check: false,
-						name: "会感到孤独和",
-						id: 64
-					},
-					{
-						check: false,
-						name: "来问问",
-						id: 34
-					},
-					{
-						check: false,
-						name: "规划规范化",
-						id: 88
-					}
-				],
+				poplist: [],
 				sel_list: "", //弹出层单选传递
 				popshow: "", //弹出层开关
 				name: "", //上传
@@ -367,26 +211,7 @@
 				//list为数组结构
 				list: [{
 						title: '基本信息',
-						list: [
-							// {
-							// 	id: 0,
-							// 	name: '姓名',
-							// 	text: "请填写真实姓名",
-							// 	type: "input"
-							// },
-							// {
-							// 	id: 1,
-							// 	name: '性别',
-							// 	select: ["先生", "女士"],
-							// 	type: "checkbox"
-							// },
-							// {
-							// 	id: 2,
-							// 	name: '联系电话',
-							// 	text: "请填写您的联系电话",
-							// 	type: "input"
-							// },
-							{
+						list: [{
 								id: 0,
 								name: '姓名',
 								text: "张三",
@@ -408,55 +233,7 @@
 					},
 					{
 						title: '项目概括',
-						list: [
-							// {
-							// 	id: 3,
-							// 	name: '所在地区',
-							// 	text: "请选择所在地区",
-							// 	type: "Picker",
-							// 	show: false
-							// },
-							// {
-							// 	id: 4,
-							// 	name: '详细地址',
-							// 	text: "小区名字、栋号单元号等详细地址",
-							// 	type: "textarea"
-							// },
-							// {
-							// 	id: 5,
-							// 	name: '房屋户型',
-							// 	text: "点击选择您的户型",
-							// 	type: "Picker",
-							// 	show: false
-							// },
-							// {
-							// 	id: 6,
-							// 	name: '交付时间',
-							// 	text: "点击选择交付时间",
-							// 	type: "Picker",
-							// 	show: false
-							// },
-							// {
-							// 	id: 7,
-							// 	name: '喜欢风格',
-							// 	text: "点击选择装修现状",
-							// 	type: "Picker",
-							// 	show: false
-							// },
-							// {
-							// 	id: 8,
-							// 	name: '喜欢色调',
-							// 	text: "点击选择装修色调",
-							// 	type: "Picker",
-							// 	show: false
-							// },
-							// {
-							// 	id: 9,
-							// 	name: '新房居住成员',
-							// 	type: "xuan",
-							// 	list: []
-							// },
-							{
+						list: [{
 								id: 3,
 								name: '所在地区',
 								text: "四川省成都市你妈家",
@@ -584,7 +361,6 @@
 		},
 		methods: {
 			kan(ev, index) {
-
 				let aa = this.list[2].list[index].img_list
 				aa.forEach((item, index) => {
 					aa[index] = this.$imgPath + item
@@ -633,12 +409,11 @@
 							id: this.desOrder.id,
 							state: 2
 						}).then(data => {
-
 							if (data.data.code == 1) {
 								uni.showToast({
 									title: "确认成功"
 								})
-								this.getdata()
+								uni.navigateBack(-1)
 								this.showa = false;
 							}
 						})
@@ -835,10 +610,12 @@
 				.czccxz {
 					padding: 20rpx;
 					background: #F6F6F6;
-					display: flex;
 					padding-top: 30rpx;
 					padding-bottom: 40rpx;
 					border-bottom: 1px solid #DEDEDE;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
 
 				}
 
@@ -1145,5 +922,9 @@
 			font-weight: 400;
 			color: #FEFEFE;
 		}
+	}
+
+	.cxzcxzcxz {
+		background-color: red;
 	}
 </style>

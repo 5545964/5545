@@ -39,7 +39,7 @@
 						clearInterval(aa)
 					}
 				})
-			}, 1000)
+			}, 100)
 
 		},
 		methods: {

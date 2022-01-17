@@ -142,7 +142,7 @@
 			// 添加或修改地址
 			submit() {
 				var phone = this.phone;
-				if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(phone))) {
+				if (!(/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/.test(phone))) {
 					uni.showToast({
 						title: "手机号码有误，请重填",
 						icon: "none"

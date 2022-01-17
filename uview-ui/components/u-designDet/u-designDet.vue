@@ -36,10 +36,9 @@
 		<!-- 设计师 -->
 		<view class="designer" @click="qushejishi">
 			<view class="designer_left">
-				<image :src="alls.avatar" class="imgs" mode=""></image>
-				<image src="../../../static/icon_zbout_yuanhuan.png" class="imgd" mode=""></image>
+				<image class="imgd" :src="alls.avatar" mode="aspectFit"></image>
 			</view>
-			<view class="" style="width: 100%;">
+			<view class="" style="width: 70%;">
 				<view class="type_list">
 					<view class="type_item" v-for="(item,index) in list1" :key="index">
 						{{item}}
@@ -115,7 +114,7 @@
 		},
 		data() {
 			return {
-				count:5,
+				count: 5,
 				swiperList: [],
 				list1: [],
 				alls: {},
@@ -196,6 +195,7 @@
 		}
 
 		.top_name {
+
 			display: flex;
 			align-items: center;
 		}
@@ -241,24 +241,18 @@
 		border-top: 2rpx solid #F6F6F6;
 		margin-top: 40rpx;
 
-		.imgs {
-			width: 130rpx;
-			height: 130rpx;
-			border-radius: 50%;
-			position: absolute;
-			top: 10rpx;
-			left: 10rpx;
-		}
-
 		.imgd {
-			width: 150rpx;
-			height: 150rpx;
 			border-radius: 50%;
 		}
 
 		.designer_left {
-			position: relative;
-			// margin-right: 100rpx;
+			width: 150rpx;
+			height: 150rpx;
+			border: 10rpx solid transparent;
+			border-radius: 50%;
+			background-clip: padding-box, border-box;
+			background-origin: padding-box, border-box;
+			background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
 		}
 
 		.type_list {
