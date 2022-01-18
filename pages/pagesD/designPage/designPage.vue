@@ -19,7 +19,7 @@
 			DesignMine: DesignMine
 		},
 		onShow() {
-			this.current = 0
+			// this.current = 0
 		},
 		data() {
 			return {

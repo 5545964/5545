@@ -22,14 +22,12 @@
 				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :current="current" :indicator-dots="true"
 					:circular="true" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video v-if="item.video !=null && item.video != ''" style="width: 100%;height: 300rpx;"
-							:src="imgurl + item.video"></video>
-						<image v-if="item.image !=''" @click="lunbochang" style="width: 100%;height: 300rpx;"
-							:src="item.image" mode="aspectFit"></image>
+						<video v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 			</view>
-			<view class="" style="padding-top: 20rpx;">
+			<view class="" style="padding-top: 100rpx;">
 				<view class="last">
 					最后疯抢
 				</view>
@@ -55,19 +53,24 @@
 		onLoad() {
 			this.$api.banner().then(data => {
 				if (data.data.code == 1) {
+					this.lun_list = [];
+					let aa = []
 					data.data.data.status.forEach(item => {
 						item.image = this.$imgPath + item.image
+						if (item.position == 1) {
+							aa.push(item)
+						}
 					})
-					this.lun_list = data.data.data.status;
+					this.lun_list = aa;
 				}
 			})
 			this.$api.timeshop().then(data => {
 				if (data.data.code == 1) {
-					data.data.data.data.forEach((item,index) => {
+					data.data.data.data.forEach((item, index) => {
 						// if (index <= 1) {
-							item["isgo"] = true;
+						item["isgo"] = true;
 						// } else {
-							// item["isgo"] = false;
+						// item["isgo"] = false;
 						// }
 						let aa = item.simage
 						item.simage = item.image

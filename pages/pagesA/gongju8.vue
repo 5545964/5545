@@ -27,27 +27,27 @@
 						<view class="neirong">
 							{{items.text}}
 						</view>
-						<view class="win">
+						<!-- <view class="win">
 
 						</view>
 						<view class="hkjh">
 							查看详情
-						</view>
+						</view> -->
 					</view>
 				</view>
 			</view>
 			<view v-if="current == 1">
-				<view v-for="(item,index) in data_lists" :key="index" >
+				<view v-for="(item,index) in data_lists" :key="index">
 					<view class="xunhuan">
 						{{item.time}}
 					</view>
 					<view class="haha" v-for="(items,indexs) in item.list" :key="indexs" @click="gos(items.text)">
-						<view class="texts">
+						<view class="texts" style="text-align: center;">
 							{{items.title}}
 						</view>
-						<view class="neirong">
+						<!-- <view class="neirong">
 							{{items.text}}
-						</view>
+						</view> -->
 						<view class="win">
 
 						</view>
@@ -90,10 +90,10 @@
 				user_id: uni.getStorageSync("user_info").id
 			}).then(data => {
 				if (data.data.code == 1) {
+					let indexss=-1
 					data.data.data.status.forEach((item, index) => {
-						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
-							.create_at.split(" ")[0]) {
-							this.data_list[index].list.push({
+						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1].create_at.split(" ")[0]) {
+							this.data_list[indexss].list.push({
 								title: item.zt,
 								text: item.content
 							})
@@ -105,16 +105,18 @@
 									text: item.content
 								}]
 							})
+							indexss++
 						}
 					})
 				}
 			})
 			this.$api.activtz().then(data => {
 				if (data.data.code == 1) {
+					let indexss=-1
 					data.data.data.status.forEach((item, index) => {
 						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
 							.create_at.split(" ")[0]) {
-							this.data_lists[index].list.push({
+							this.data_lists[indexss].list.push({
 								title: item.name,
 								text: item.content
 							})
@@ -126,6 +128,7 @@
 									text: item.content
 								}]
 							})
+							indexss++
 						}
 					})
 				}
@@ -138,8 +141,10 @@
 				})
 			},
 			gos(ev) {
+				uni.setStorageSync("fuwenben",ev)
 				uni.navigateTo({
-					url: "./xiangqing?id="+ev
+					// url: "./xiangqing?id=" + ev
+					url: "./xiangqing"
 				})
 			},
 			change(ev) {

@@ -90,7 +90,7 @@
 	export default {
 		data() {
 			return {
-				hhjh:"",
+				hhjh: "",
 				jujueliyouss: "",
 				jujue: false,
 				data_list: [],
@@ -101,10 +101,10 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
-
 		},
 		onShow() {
 			this.getdata()
+			
 		},
 		methods: {
 			jujueshanshu(ev) {
@@ -134,7 +134,7 @@
 					if (data.data.code == 1) {
 						this.data_list = data.data.data.status
 						uni.setStorageSync("addnews", data.data.data.status.length)
-					}else{
+					} else {
 						uni.setStorageSync("addnews", 0)
 					}
 				})
@@ -196,7 +196,7 @@
 </script>
 
 <style lang="scss" scoped>
-.popup {
+	.popup {
 		.xcvb {
 			height: 100%;
 			width: 2rpx;
@@ -252,6 +252,7 @@
 			color: #FEFEFE;
 		}
 	}
+
 	.hahahadadda {
 		display: flex;
 		margin-bottom: 20rpx;

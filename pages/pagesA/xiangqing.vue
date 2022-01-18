@@ -30,7 +30,7 @@
 			if(ev.title){
 				this.title = ev.title;
 			}
-			this.fuwenben = ev.id
+			this.fuwenben = uni.getStorageSync("fuwenben")
 		},
 		methods: {
 			back(ev) {

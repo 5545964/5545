@@ -182,7 +182,7 @@
 	export default {
 		data() {
 			return {
-				fkjsfjdisfjsl:false,
+				fkjsfjdisfjsl: false,
 				user_info_id: "",
 				img: this.$imgPath,
 				user_info: "",
@@ -270,7 +270,7 @@
 			if (uni.getStorageSync("user_info")) {
 				this.user_info = uni.getStorageSync("user_info")
 				this.shuliang(this.user_info.id)
-				
+
 			}
 		},
 		methods: {
@@ -283,7 +283,7 @@
 						let aa = uni.getStorageSync("yuyuejilunum")
 						let bb = 0
 						data.data.data.status.data.forEach(item => {
-							if(item.state == "1"){
+							if (item.state == "1") {
 								bb = bb + 1
 							}
 						})
@@ -416,9 +416,9 @@
 			},
 			async changeDesign() {
 				if (await this.$login()) {
-				uni.navigateTo({
-					url: "../pagesD/designPage/designPage",
-				})
+					uni.navigateTo({
+						url: "../pagesD/designPage/designPage",
+					})
 				}
 			},
 			async go(ev) {
@@ -689,6 +689,7 @@
 		font-weight: 400;
 		font-size: 26rpx;
 	}
+
 	.dsalhdkjahjad {
 		width: 20rpx;
 		height: 20rpx;
@@ -696,6 +697,6 @@
 		background-color: red;
 		position: absolute;
 		left: 110rpx;
-		    top: -20rpx;
+		top: -20rpx;
 	}
 </style>

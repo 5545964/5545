@@ -125,7 +125,7 @@
 						<view class="cxz">
 							{{items.name}}
 						</view>
-						<view class="asd" style="width: 60%;">
+						<view class="asd" style="width: 70%;">
 							<textarea style="width: 100%;" placeholder-style="color: #999999;"
 								v-model="data_list[items.obj]" :placeholder="items.text" :auto-height="true" />
 						</view>
@@ -213,7 +213,7 @@
 							<view class="asdssss">
 								<image @click="kan(itemv)"
 									style="width: 200rpx;height: 200rpx;border-radius: 20rpx;margin-bottom: 20rpx;"
-									:src="img+itemv" mode="" v-for="(itemv,indexv) in items.img_list" :key="indexv">
+									:src="img+itemv" mode="aspectFit" v-for="(itemv,indexv) in items.img_list" :key="indexv">
 								</image>
 							</view>
 						</view>
@@ -758,32 +758,39 @@
 			//提交按钮
 			async tijiao() {
 				if (await this.$login()) {
-					this.data_list["user_id"] = uni.getStorageSync("user_info").id
-					let aa = this.data_list.people
-					let bb = []
-					// if(aa = ""){
-					// 	return uni.showToast({
-					// 		title:"请选择人员",
-					// 		duration:1000,
-					// 		icon:"none"
-					// 	})
-					// }
-					aa.forEach((item, index) => {
-						bb.push(item.age + "_" + item.id)
-					})
-					this.data_list.people = bb
-					this.$api.yydes(this.data_list).then(data => {
-						if (data.data.code == 1) {
-							setTimeout(() => {
-								uni.navigateBack(-1)
-							}, 1000)
+					uni.requestSubscribeMessage({
+						tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
+						success: function(res) {
+							console.log(res);
+							this.data_list["user_id"] = uni.getStorageSync("user_info").id
+							let aa = this.data_list.people
+							let bb = []
+							// if(aa = ""){
+							// 	return uni.showToast({
+							// 		title:"请选择人员",
+							// 		duration:1000,
+							// 		icon:"none"
+							// 	})
+							// }
+							aa.forEach((item, index) => {
+								bb.push(item.age + "_" + item.id)
+							})
+							this.data_list.people = bb
+							this.$api.yydes(this.data_list).then(data => {
+								if (data.data.code == 1) {
+									setTimeout(() => {
+										uni.navigateBack(-1)
+									}, 1000)
+								}
+								uni.showToast({
+									title: data.data.msg,
+									duration: 1000,
+									icon: "none"
+								})
+							})
 						}
-						uni.showToast({
-							title: data.data.msg,
-							duration: 1000,
-							icon: "none"
-						})
-					})
+					});
+
 				}
 			},
 			//弹出层关闭
@@ -881,10 +888,6 @@
 </script>
 
 <style lang="scss" scoped>
-	.asd {
-		width: 76%;
-	}
-
 	.xunhuan {
 		background: #FFFFFF;
 		border-radius: 20rpx;

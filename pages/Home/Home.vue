@@ -9,10 +9,10 @@
 			<view class="navlist cet" style="justify-content: space-between;">
 				<view class="text" v-for="(item,index) in list" :key="index" @click="go(item.url,index)">
 					<view class="color_text hhnhb">
-						{{item.a}}
+						{{item.top}}
 					</view>
 					<view class="color_text hhnhb">
-						{{item.b}}
+						{{item.down}}
 					</view>
 				</view>
 			</view>
@@ -71,33 +71,33 @@
 				lun_list: [],
 				keyword: "",
 				list: [{
-						a: "楼盘",
-						b: "设计",
+						top: "楼盘",
+						down: "设计",
 						url: "../pagesC/HouseDesign",
 					},
 					{
-						a: "旗舰",
-						b: "套系",
+						top: "旗舰（整装）",
+						down: "套系",
 						url: "../pagesC/FlagshipSet",
 					},
 					{
-						a: "设计师",
-						b: "club ",
+						top: "设计师",
+						down: "club ",
 						url: "../pagesD/designClub",
 					},
 					{
-						a: "工长",
-						b: "club",
+						top: "工长",
+						down: "club",
 						url: "#",
 					},
 					{
-						a: "社区生活",
-						b: "club",
+						top: "社区生活",
+						down: "club",
 						url: "#",
 					},
 					{
-						a: "佳作",
-						b: "分享",
+						top: "佳作",
+						down: "分享",
 						url: "./jiazhuo",
 					}
 				],

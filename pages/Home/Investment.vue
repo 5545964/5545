@@ -177,6 +177,10 @@
 	export default {
 		data() {
 			return {
+				mobanid: [
+					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
+					'ag6I4iIgY1yo9QDaLolhH-D1e7Rpl_Tszw1SqYZzBDA',
+				],
 				imgsss: this.$imgPath,
 				parsesssss: "",
 				recruit_all: [],
@@ -209,23 +213,30 @@
 						name: '供应链club',
 					}
 				],
-				list: [{
-						name: '热门栏目'
+				list: [
+					{
+						name: '热门栏目',
+						id: 0
 					},
 					{
-						name: '设计大咖'
+						name: '设计大咖',
+						id: 1
 					},
 					{
 						name: '整装设计师',
+						id: 2
 					},
 					{
 						name: '定制家具设计师',
+						id: 3
 					},
 					{
 						name: '成为设计师',
+						id: 4
 					},
 					{
 						name: '招募令',
+						id: 5
 					}
 				],
 				current: 0,
@@ -270,6 +281,7 @@
 			}
 		},
 		onShow() {
+			this.current = this.list[0].id
 			this.getstate()
 			this.enjoy()
 			this.getdesproMoenys()
@@ -494,19 +506,28 @@
 			// 查看合同模板
 			async getcontein(ev) {
 				if (await this.$login()) {
-				this.fenleideid = ev;
-				this.$api.ispay({
-					id: this.allssssss[ev].id,
-					user_id: uni.getStorageSync("user_info").id
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.pay = '去填写资料'
-					} else {
-						this.pay = '支付￥' + this.allssssss[ev].money
-					}
-					this.showContract = true
-					this.looks(this.allssssss[ev].doc_url)
-				})
+					let that = this;
+					uni.requestSubscribeMessage({
+						provider: 'weixin',
+						tmplIds: that.mobanid,
+						success: function(res) {
+							console.log(res);
+							that.fenleideid = ev;
+							that.$api.ispay({
+								id: that.allssssss[ev].id,
+								user_id: uni.getStorageSync("user_info").id
+							}).then(data => {
+								if (data.data.code == 1) {
+									that.pay = '去填写资料'
+								} else {
+									that.pay = '支付￥' + that.allssssss[ev].money
+								}
+								that.showContract = true
+								that.looks(that.allssssss[ev].doc_url)
+							})
+						}
+					});
+
 				}
 			},
 			// 查看模板
@@ -601,6 +622,7 @@
 				this.currents = index
 			},
 			change(index) {
+				console.log(index);
 				this.current = index
 				if (index == 0) {
 					this.enjoy()

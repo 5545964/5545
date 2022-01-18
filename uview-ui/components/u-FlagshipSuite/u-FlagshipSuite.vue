@@ -21,7 +21,7 @@
 		name: "FlagshipSuite",
 		data() {
 			return {
-				list: [],
+				list: [{id:0,name:""}],
 				current: 0,
 				data_list: [],
 				img: this.$imgPath
@@ -38,13 +38,16 @@
 						this.list.forEach(item => {
 							item["name"] = item.title
 						})
+						this.current = this.list[0].id
 						this.quehuan(this.list[0].id)
+						console.log(this.list);
 					}
 				})
 			},
 			change(ev) {
 				this.current = ev
-				this.quehuan(this.list[ev].id)
+				console.log(ev);
+				this.quehuan(ev)
 			},
 			quehuan(ev) {
 				this.$api.qjset({

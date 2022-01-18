@@ -182,49 +182,52 @@
 			};
 		},
 		created() {
-			if (uni.getStorageSync("user_info")) {
-				this.user_info = uni.getStorageSync("user_info");
-			}
-			this.$api.addnews({
-				id: uni.getStorageSync("des_info").id
-			}).then(data => {
-				if (data.data.code == 1) {
-					let aa = uni.getStorageSync("addnews")
-					if (data.data.data.status.length > aa) {
-						this.fkjsfjdisfjsl = true
-					} else {
-						this.fkjsfjdisfjsl = false
-					}
-				}
-			})
-			this.$api.desmyuser({
-				user_id: uni.getStorageSync("user_info").id,
-			}).then(data => {
-				if (data.data.code == 1) {
-					this.desinfo = data.data.data.myuser
-					uni.setStorageSync("des_info", data.data.data.myuser)
-				}
-			})
-			this.$api.desorders({
-				id: uni.getStorageSync("des_info").id
-			}).then(data => {
-
-				if (data.data.code == 1) {
-					let aa = this.num_list
-					data.data.data.status.forEach(item => {
-						if (item.state == "1") {
-							aa[0] = aa[0] + 1
-						} else if (item.state == "2") {
-							aa[1] = aa[1] + 1
-						}
-					})
-					this.num_list = []
-					this.num_list = [...aa]
-
-				}
-			})
+			this.dkahdjash()
 		},
 		methods: {
+			dkahdjash(){
+				if (uni.getStorageSync("user_info")) {
+					this.user_info = uni.getStorageSync("user_info");
+				}
+				this.$api.addnews({
+					id: uni.getStorageSync("des_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						let aa = uni.getStorageSync("addnews")
+						if (data.data.data.status.length > aa) {
+							this.fkjsfjdisfjsl = true
+						} else {
+							this.fkjsfjdisfjsl = false
+						}
+					}
+				})
+				this.$api.desmyuser({
+					user_id: uni.getStorageSync("user_info").id,
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.desinfo = data.data.data.myuser
+						uni.setStorageSync("des_info", data.data.data.myuser)
+					}
+				})
+				this.$api.desorders({
+					id: uni.getStorageSync("des_info").id
+				}).then(data => {
+				
+					if (data.data.code == 1) {
+						let aa = this.num_list
+						data.data.data.status.forEach(item => {
+							if (item.state == "1") {
+								aa[0] = aa[0] + 1
+							} else if (item.state == "2") {
+								aa[1] = aa[1] + 1
+							}
+						})
+						this.num_list = []
+						this.num_list = [...aa]
+				
+					}
+				})
+			},
 			gomy() {
 				uni.navigateTo({
 					url: "../../pagesB/my?isdesign=1"
@@ -253,14 +256,30 @@
 				})
 			},
 			go(ev) {
+
 				uni.navigateTo({
 					url: "../shejishidindan?title=" + ev.name + "&current=" + ev.id
 				})
 			},
 			gongju_go(ev, title) {
-				uni.navigateTo({
-					url: ev + "?title=" + title
-				})
+				if (ev == "../messg") {
+					uni.requestSubscribeMessage({
+						provider: 'weixin',
+						tmplIds: ['P9sDe92NgZMcD2lKBvrLniyriLRhaxIyOGF8tH5El8o'],
+						success: function(res) {
+							console.log(res,"pppppp");
+							uni.navigateTo({
+								url: ev + "?title=" + title
+							})
+						}
+					});
+					return
+				}else{
+					uni.navigateTo({
+						url: ev + "?title=" + title
+					})
+				}
+				
 			}
 		}
 	}
