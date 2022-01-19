@@ -61,7 +61,7 @@
 										</view>
 									</view>
 									<view class="anniu">
-										<view class="button" @click="annui(0,items)" v-if="items.state == 1">
+										<view class="button" @click="annui(0,items)" v-if="items.state == 1 || items.state == 2">
 											<!-- 上传二维码 -->
 											查看二维码
 										</view>
@@ -134,7 +134,6 @@
 		onShow() {
 			this.getdata()
 			this.system();
-			// this.chulidata()
 		},
 		methods: {
 			// 获取订单数据
@@ -142,10 +141,11 @@
 				this.$api.desorders({
 					id: uni.getStorageSync("des_info").id
 				}).then(data => {
-
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
-							item["simage"] = item.image.split(",")[0]
+							if(item.image != null){
+								item["simage"] = item.image.split(",")[0]
+							}
 						})
 						this.list = data.data.data.status
 					}

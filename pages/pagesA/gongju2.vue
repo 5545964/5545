@@ -106,19 +106,19 @@
 								username: item.des.username,
 								list: bb,
 								list_s: [{
-										name: "满意",
+										name: "满意度",
 										num: item.des.manyi
 									},
 									{
-										name: "创意",
+										name: "创意度",
 										num: item.des.cy
 									},
 									{
-										name: "业绩",
+										name: "成单率",
 										num: item.des.yj
 									},
 									{
-										name: "专业",
+										name: "专业度",
 										num: item.des.zy
 									}
 								],
@@ -224,7 +224,7 @@
 			}
 
 			.dasjbash {
-				width: 20%;
+				width: 30%;
 				font-size: 12rpx;
 				font-weight: 400;
 				color: #333333;

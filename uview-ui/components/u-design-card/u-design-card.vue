@@ -1,6 +1,6 @@
 <template>
 	<view class="card" @click="topage()">
-		<image :src="img+list.simage" style="border-radius: 20rpx;" mode=""></image>
+		<image :src="img+list.simage" style="border-radius: 20rpx;" mode="aspectFit"></image>
 		<view class="gghGG" style="margin-top: 24rpx;">
 			{{list.name}}
 		</view>
@@ -21,6 +21,10 @@
 				default () {
 					return {}
 				}
+			},
+			tiaozhuan: {
+				type: String,
+				default: "./DesignDetail"
 			}
 		},
 		methods: {
@@ -30,9 +34,9 @@
 				// uni.navigateTo({
 				// 	url: "./DesignDetail?id=" + JSON.stringify(aa)
 				// })
-				uni.setStorageSync("fdklfjdsfjsfhks",this.list)
+				uni.setStorageSync("fdklfjdsfjsfhks", this.list)
 				uni.navigateTo({
-					url: "./DesignDetail"
+					url: this.tiaozhuan
 				})
 			}
 		}

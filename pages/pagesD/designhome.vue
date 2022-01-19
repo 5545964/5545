@@ -185,13 +185,10 @@
 			this.dkahdjash()
 		},
 		methods: {
-			dkahdjash(){
-				if (uni.getStorageSync("user_info")) {
-					this.user_info = uni.getStorageSync("user_info");
-				}
-				this.$api.addnews({
-					id: uni.getStorageSync("des_info").id
-				}).then(data => {
+			dkahdjash() {
+				this.user_info = uni.getStorageSync("user_info");
+				this.desinfo = uni.getStorageSync("des_info")
+				this.$api.addnews({	id: uni.getStorageSync("des_info").id}).then(data => {
 					if (data.data.code == 1) {
 						let aa = uni.getStorageSync("addnews")
 						if (data.data.data.status.length > aa) {
@@ -201,18 +198,7 @@
 						}
 					}
 				})
-				this.$api.desmyuser({
-					user_id: uni.getStorageSync("user_info").id,
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.desinfo = data.data.data.myuser
-						uni.setStorageSync("des_info", data.data.data.myuser)
-					}
-				})
-				this.$api.desorders({
-					id: uni.getStorageSync("des_info").id
-				}).then(data => {
-				
+				this.$api.desorders({	id: uni.getStorageSync("des_info").id}).then(data => {
 					if (data.data.code == 1) {
 						let aa = this.num_list
 						data.data.data.status.forEach(item => {
@@ -224,7 +210,7 @@
 						})
 						this.num_list = []
 						this.num_list = [...aa]
-				
+
 					}
 				})
 			},
@@ -267,19 +253,19 @@
 						provider: 'weixin',
 						tmplIds: ['P9sDe92NgZMcD2lKBvrLniyriLRhaxIyOGF8tH5El8o'],
 						success: function(res) {
-							console.log(res,"pppppp");
+							console.log(res, "pppppp");
 							uni.navigateTo({
 								url: ev + "?title=" + title
 							})
 						}
 					});
 					return
-				}else{
+				} else {
 					uni.navigateTo({
 						url: ev + "?title=" + title
 					})
 				}
-				
+
 			}
 		}
 	}

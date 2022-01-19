@@ -127,9 +127,13 @@
 									<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 										取消退款
 									</view>
-									<!-- <view class="button" v-if="items.state == 9">
-										取消售后
-									</view> -->
+									<!--  -->
+									<!--  -->
+									<view class="button" v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
+										删除订单
+									</view>
+									<!--  -->
+									<!--  -->
 									<view class="button" v-if="items.state == 8">
 										已申请退款
 									</view>
@@ -527,6 +531,7 @@
 			},
 			change(ev) {
 				this.current = ev;
+				this.title = this.lists[ev].name
 			},
 			back(ev) {
 				switch (ev) {

@@ -1,6 +1,18 @@
 import request from "./request.js"
 
 export default {
+	// 实名认证/api/bydshop/realname
+	realname(params = {}) {
+		return request.post("/api/bydshop/realname", params);
+	},
+	// 上传身份证/api/bydshop/userupload
+	userupload(params = {}) {
+		return request.post("/api/bydshop/userupload", params);
+	},
+	// 智慧型注册/api/bydshop/myreg
+	myreg(params = {}) {
+		return request.post("/api/bydshop/myreg", params);
+	},
 	// /api/byd_user/activtz
 	activtz(params = {}) {
 		return request.post("/api/byd_user/activtz", params);

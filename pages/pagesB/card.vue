@@ -35,6 +35,7 @@
 			<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==1">
 				<u-swiper height="400" :effect3d="true" img-mode="aspectFit" :list="imgList"></u-swiper>
 			</view>
+			
 		</view>
 		
 		<view class="anniuss">
@@ -60,7 +61,22 @@
 				</view>
 			</u-navbar>
 		</view>
+		<!-- 优享作品 -->
+		<view class="works">
+			<view class="title">
+				<view class="name">
+					热门推荐搭配
+					<view class="bor_bot">
 		
+					</view>
+				</view>
+			</view>
+			<view class="design_list">
+				<view class="" v-for="(item,index) in tuijian" :key="item" v-if="index <= 1">
+					<u-design-card :tiaozhuan="'../pagesC/DesignDetail'" :list="item" />
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -68,6 +84,7 @@
 	export default {
 		data() {
 			return {
+				tuijian:[],
 				imgList: [],
 				rinima: [],
 				imgtitle: this.$imgPath,
@@ -102,6 +119,14 @@
 				this.imgList.push({
 					image: this.$imgPath + item
 				})
+			})
+			this.$api.loupanden().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.sort(function () {
+					 return Math.random() - 0.5;   // 值为 -0.5 ~ 0.5 的随机数
+					});
+					this.tuijian = [...data.data.data.status];
+				}
 			})
 		},
 		methods: {
@@ -316,6 +341,54 @@
 				width: 26rpx;
 				height: 24rpx;
 			}
+		}
+	}
+	
+	// 优享作品
+	.works {
+		padding: 0 30rpx;
+		margin-top: -120rpx;
+		margin-bottom: 60rpx;
+	
+		.title {
+			padding: 50rpx 30rpx;
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	
+		.name {
+			font-size: 30rpx;
+			color: #000000;
+		}
+	
+		.bor_bot {
+			width: 100%;
+			height: 10rpx;
+			background: #7AB8C8;
+			margin-top: -10rpx;
+		}
+	
+		.question {
+			width: 30rpx;
+			height: 30rpx;
+			color: #F5625D;
+			font-size: 24rpx;
+			border: 2rpx solid #F5625D;
+			box-sizing: border-box;
+			text-align: center;
+			line-height: 30rpx;
+			border-radius: 50%;
+			margin-left: 10rpx;
+			margin-top: 10rpx;
+		}
+	
+		.design_list {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			justify-content: space-between;
 		}
 	}
 </style>

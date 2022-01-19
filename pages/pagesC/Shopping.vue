@@ -33,7 +33,7 @@
 						<button type="default"
 							style="background-color: #FFFFFF;padding: 0;margin: 0;display: flex;flex-direction: column;"
 							open-type="share">
-							<image class="imgs" src="../../static/icon_shop_share.png" mode=""></image>
+							<image class="imgs" src="../../static/icon_shop_share.png" mode="aspectFit"></image>
 							<view class="share">
 								分享
 							</view>
@@ -93,7 +93,7 @@
 					</view>
 				</view>
 			</view>
-			<image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode=""></image>
+			<image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode="aspectFit"></image>
 		</view>
 		<view class="duo" @click="open(20)">
 			<view class="cet">
@@ -117,7 +117,7 @@
 			</view>
 			<view class="" v-if="pinglun_list.length !=0" style="padding: 30rpx 0;">
 				<view class="dsaascc">
-					<image class="img" v-if="pinglun_list[0].head != ''" :src="img+pinglun_list[0].head" mode="">
+					<image class="img" v-if="pinglun_list[0].head != ''" :src="img+pinglun_list[0].head" mode="aspectFit">
 					</image>
 					<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
 					<view class="skfksdfsd">
@@ -133,8 +133,8 @@
 							{{pinglun_list[0].content}}
 						</view>
 						<block class="" v-for="(item,index) in pinglun_list[0].image" :key="index">
-							<image v-if="index <= 2" style="width: 100rpx;height: 100rpx;margin: 20rpx;" :src="img+item"
-								mode=""></image>
+							<image @click="kan(item)"
+								style="width: 100rpx;height: 100rpx;margin: 20rpx;" :src="img+item" mode="aspectFit"></image>
 						</block>
 					</view>
 				</view>
@@ -142,7 +142,7 @@
 					<view class="textssss">
 						查看全部评价
 					</view>
-					<image class="scsfd" src="../../static/icon_shop_lamsemore.png" mode=""></image>
+					<image class="scsfd" src="../../static/icon_shop_lamsemore.png" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="" v-else style="padding: 30rpx 0;">
@@ -178,8 +178,8 @@
 				<view class="cet">
 					<view class="" @click="soucang">
 						<view class="img">
-							<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode=""></image>
-							<image v-else src="../../static/icon_shop_shoucang.png" mode=""></image>
+							<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode="aspectFit"></image>
+							<image v-else src="../../static/icon_shop_shoucang.png" mode="aspectFit"></image>
 						</view>
 						<view class="text">
 							收藏
@@ -189,7 +189,7 @@
 						<view class="cart-num" v-if="cart_num != 0">
 							{{cart_num}}
 						</view>
-						<image class="img" src="../../static/icon_shop_gouwuche.png" mode=""></image>
+						<image class="img" src="../../static/icon_shop_gouwuche.png" mode="aspectFit"></image>
 						<view class="text">
 							购物车
 						</view>
@@ -234,7 +234,7 @@
 		<u-popup v-model="show[1]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="produce_all">
 				<view class="top_img">
-					<image :src="list[0]" style="width: 140rpx;height: 140rpx;margin-right: 20rpx;" mode="">
+					<image :src="list[0]" style="width: 140rpx;height: 140rpx;margin-right: 20rpx;" mode="aspectFit">
 					</image>
 					<view style="width: 70%;">
 						<view
@@ -291,8 +291,8 @@
 					<view class="cet">
 						<view class="" @click="soucang">
 							<view class="img">
-								<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode=""></image>
-								<image v-else src="../../static/icon_shop_shoucang.png" mode=""></image>
+								<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode="aspectFit"></image>
+								<image v-else src="../../static/icon_shop_shoucang.png" mode="aspectFit"></image>
 							</view>
 							<view class="text">
 								收藏
@@ -302,7 +302,7 @@
 							<view class="cart-num" v-if="cart_num != 0">
 								{{cart_num}}
 							</view>
-							<image class="img" src="../../static/icon_shop_gouwuche.png" mode=""></image>
+							<image class="img" src="../../static/icon_shop_gouwuche.png" mode="aspectFit"></image>
 							<view class="text">
 								购物车
 							</view>
@@ -424,6 +424,17 @@
 			}
 		},
 		methods: {
+			kan(ev) {
+				let that = this;
+				uni.previewImage({
+					urls: [that.$imgPath + ev],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
 			async gocart() {
 				if (await this.$login()) {
 					uni.navigateTo({

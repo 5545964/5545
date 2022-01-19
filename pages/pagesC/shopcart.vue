@@ -183,7 +183,6 @@
 						}).then(data => {
 							let aa = 0
 							if (data.data.code == 1) {
-
 								data.data.data.status.forEach(item => {
 									aa = aa + Number(item.num)
 								})
@@ -191,7 +190,6 @@
 							if (aa >= 99) {
 								aa = "..."
 							}
-
 							uni.setStorageSync("cart_num", aa)
 						})
 					}

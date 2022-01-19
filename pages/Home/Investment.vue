@@ -522,7 +522,7 @@
 								} else {
 									that.pay = '支付￥' + that.allssssss[ev].money
 								}
-								that.showContract = true
+								that.showContract = true;
 								that.looks(that.allssssss[ev].doc_url)
 							})
 						}

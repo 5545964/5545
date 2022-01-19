@@ -27,9 +27,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="centers cet" style="justify-content: flex-start;">
+			<view class="centers cet" style="justify-content: space-between;">
 				<image class="img" src="../../static/icon_me_blueaddress.png" mode=""></image>
-				<view style="margin-left: 30rpx;">
+				<view style="width: 86%;">
 					<view class="cet" style="justify-content: flex-start;margin-bottom: 30rpx;">
 						<view class="name">
 							{{data_list.username}}
@@ -227,6 +227,13 @@
 				<!-- <view class="button" v-if="items.state == 9">
 					取消售后
 				</view> -->
+				<!--  -->
+				<!--  -->
+				<view class="button" v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
+					删除订单
+				</view>
+				<!--  -->
+				<!--  -->
 				<view class="button" v-if="items.state == 8">
 					已申请退款
 				</view>

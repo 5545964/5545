@@ -44,10 +44,11 @@
 					</view>
 					<view style="padding: 30rpx 0;" v-if="state == 1&&states==0">
 						<view class="cxz" style="text-align: center;">
-							您的预约申请已通过审核，请支付定金￥{{mony||0}}
+							您的预约申请已通过审核，请支付诚意金￥{{mony||0}},诚意金可在美居订单购物时抵扣！
 						</view>
 						<view class="ndajs" @click="zhifuyuyue(0)">
-							支付定金￥{{mony||0}}
+							<!-- 支付定金￥{{mony||0}} -->
+							请支付诚意金“{{mony||0}}元"
 						</view>
 					</view>
 				</view>
@@ -213,7 +214,8 @@
 							<view class="asdssss">
 								<image @click="kan(itemv)"
 									style="width: 200rpx;height: 200rpx;border-radius: 20rpx;margin-bottom: 20rpx;"
-									:src="img+itemv" mode="aspectFit" v-for="(itemv,indexv) in items.img_list" :key="indexv">
+									:src="img+itemv" mode="aspectFit" v-for="(itemv,indexv) in items.img_list"
+									:key="indexv">
 								</image>
 							</view>
 						</view>
@@ -428,7 +430,7 @@
 							},
 							{
 								id: 11,
-								name: "现场照片或视频",
+								name: "现场照片",
 								obj: "image",
 								text: "",
 								type: "upload",
@@ -758,25 +760,33 @@
 			//提交按钮
 			async tijiao() {
 				if (await this.$login()) {
+					let that = this;
 					uni.requestSubscribeMessage({
 						tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
 						success: function(res) {
-							console.log(res);
-							this.data_list["user_id"] = uni.getStorageSync("user_info").id
-							let aa = this.data_list.people
+							that.data_list["user_id"] = uni.getStorageSync("user_info").id
+							console.log(!that.data_list.people);
+							let aa = that.data_list.people
 							let bb = []
-							// if(aa = ""){
-							// 	return uni.showToast({
-							// 		title:"请选择人员",
-							// 		duration:1000,
-							// 		icon:"none"
-							// 	})
-							// }
+							if(!that.data_list.people){
+								return uni.showToast({
+									title:"请选择人员",
+									duration:1000,
+									icon:"none"
+								})
+							}
 							aa.forEach((item, index) => {
 								bb.push(item.age + "_" + item.id)
 							})
-							this.data_list.people = bb
-							this.$api.yydes(this.data_list).then(data => {
+							that.data_list.people = bb
+							let dd = Object.keys(that.data_list).length;
+							if (dd != 15) {
+								return uni.showToast({
+									title:"请检查",
+									icon:"none"
+								})
+							}
+							that.$api.yydes(that.data_list).then(data => {
 								if (data.data.code == 1) {
 									setTimeout(() => {
 										uni.navigateBack(-1)

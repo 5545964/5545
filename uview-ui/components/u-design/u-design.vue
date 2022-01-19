@@ -24,7 +24,7 @@
 						v-for="(item,index) in dropList" :key="item.id">
 						{{item.name}}
 						<image src="../../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;"
-							mode="">
+							mode="aspectFit">
 						</image>
 						<!-- <u-dropdown :border-bottom="true">
 							<u-dropdown-item v-model="value1" :title="item.name" :options="options1"></u-dropdown-item>
