@@ -3,7 +3,7 @@
 		<view class="cet csf">
 			<view class="">
 				<view class="jhg">
-					<image class="image" :src="src" mode=""></image>
+					<image class="image" :src="src" mode="aspectFit"></image>
 				</view>
 				<view class="dns" :style="'color:'+color+';'">
 					{{text}}

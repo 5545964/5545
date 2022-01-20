@@ -10,33 +10,33 @@
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">
 				<button open-type="share" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">
-					<image class="img" :src="'../../../static/shiping0.png'" mode=""></image>
+					<image class="img" :src="'../../../static/shiping0.png'" mode="aspectFit"></image>
 					<view class="text">
 						分享
 					</view>
 				</button>
 				<view class="dasdxz" @click="collection(item)">
-					<image class="img" v-show="!item.isfollow" :src="'../../../static/shiping1.png'" mode=""></image>
-					<image class="img" v-show="item.isfollow" :src="'../../../static/shiping1true.png'" mode=""></image>
+					<image class="img" v-show="!item.isfollow" :src="'../../../static/shiping1.png'" mode="aspectFit"></image>
+					<image class="img" v-show="item.isfollow" :src="'../../../static/shiping1true.png'" mode="aspectFit"></image>
 					<view class="text">
 						收藏
 					</view>
 				</view>
 				<view class="dasdxz" @click="pinglun(item,index)">
-					<image class="img" :src="'../../../static/shiping2.png'" mode=""></image>
+					<image class="img" :src="'../../../static/shiping2.png'" mode="aspectFit"></image>
 					<view class="text">
 						{{item.plnum||0}}
 					</view>
 				</view>
 				<view class="dasdxz" @click="dianzhan(item,index)">
-					<image class="img" v-show="!item.iszan" :src="'../../../static/shiping3.png'" mode=""></image>
-					<image class="img" v-show="item.iszan" :src="'../../../static/shiping3true.png'" mode=""></image>
+					<image class="img" v-show="!item.iszan" :src="'../../../static/shiping3.png'" mode="aspectFit"></image>
+					<image class="img" v-show="item.iszan" :src="'../../../static/shiping3true.png'" mode="aspectFit"></image>
 					<view class="text">
 						{{item.zan||0}}
 					</view>
 				</view>
 				<button open-type="contact" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">
-					<image class="img" :src="'../../../static/shiping4.png'" mode=""></image>
+					<image class="img" :src="'../../../static/shiping4.png'" mode="aspectFit"></image>
 					<view class="text">
 						咨询
 					</view>

@@ -3,7 +3,7 @@
 		<view class="" @click="click">
 			<view class="cet">
 				<view class="dasds">
-					<image :src="img" mode=""></image>
+					<image :src="img" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="dad cet">

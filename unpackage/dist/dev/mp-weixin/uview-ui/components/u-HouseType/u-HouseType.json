@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "u-design-card": "/uview-ui/components/u-design-card/u-design-card",
-    "u-empty": "/uview-ui/components/u-empty/u-empty",
-    "u-popup": "/uview-ui/components/u-popup/u-popup"
-  }
-}

@@ -43,7 +43,7 @@
 			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index"
 				 @click="xuanzhong(item)">
 				<view class="img">
-					<image :src="imgPath+item.image" mode=""></image>
+					<image :src="imgPath+item.image" mode="aspectFit"></image>
 				</view>
 				<view class="" v-show="!item.isgo">
 					<view class="cet">

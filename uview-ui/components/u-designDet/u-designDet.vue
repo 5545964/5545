@@ -11,17 +11,17 @@
 				</view>
 				<view class="top_num">
 					<view class="top_num_item">
-						<image src="../../../static/icon_about_time.png" style="width: 24rpx;height: 24rpx;" mode="">
+						<image src="../../../static/icon_about_time.png" style="width: 24rpx;height: 24rpx;" mode="aspectFit">
 						</image>{{alls.createtime}}
 					</view>
 					<view class="top_num_item">
 						<image src="../../../static/icon_about_eye.png"
-							style="width: 24rpx;height: 24rpx;margin-right: 10rpx;" mode="">
+							style="width: 24rpx;height: 24rpx;margin-right: 10rpx;" mode="aspectFit">
 						</image>{{alls.look||0}}
 					</view>
 					<view class="top_num_item">
 						<image src="../../../static/icon_about_shou.png"
-							style="width: 24rpx;height: 24rpx;margin-right: 10rpx;" mode="">
+							style="width: 24rpx;height: 24rpx;margin-right: 10rpx;" mode="aspectFit">
 						</image>{{alls.zan||0}}
 					</view>
 				</view>
@@ -82,14 +82,14 @@
 		<view class="zan_list">
 			<view class="zan_item" @click="pinglun">
 				<image src="../../../static/shiping2.png" style="width: 34rpx;height: 34rpx;margin-right: 20rpx;"
-					mode=""></image>
+					mode="aspectFit"></image>
 				{{alls.plcount||0}}
 			</view>
 			<view class="zan_item" @click="dianzhan">
 				<image v-if="alls.zans !=null && alls.zans != ''" src="../../../static/shiping3true.png"
-					style="width: 34rpx;height: 34rpx;margin-right: 20rpx;" mode=""></image>
+					style="width: 34rpx;height: 34rpx;margin-right: 20rpx;" mode="aspectFit"></image>
 				<image v-else src="../../../static/shiping3.png" style="width: 34rpx;height: 34rpx;margin-right: 20rpx;"
-					mode=""></image>
+					mode="aspectFit"></image>
 				{{alls.zan||0}}
 			</view>
 		</view>
