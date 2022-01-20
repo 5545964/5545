@@ -2,7 +2,7 @@
 	<view class="">
 		<u-navbar :is-back="false">
 			<view class="sssss">
-				<image src="../../../static/icon_home_logo.png" mode=""></image>
+				<image src="../../../static/icon_home_logo.png" mode="aspectFit"></image>
 			</view>
 		</u-navbar>
 		<view class="alldes">

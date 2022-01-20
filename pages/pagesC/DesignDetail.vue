@@ -5,11 +5,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -19,7 +19,7 @@
 			<swiper style="width: 100%;height: 450rpx;" @change="bainhua" :indicator-dots="true" :circular="true"
 				:autoplay="autoplay" :interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in list" :key="index" @click="kaniamg(item)">
-					<image style="width: 100%;height: 450rpx;" :src="item" mode=""></image>
+					<image style="width: 100%;height: 450rpx;" :src="item" mode="aspectFit"></image>
 				</swiper-item>
 				<swiper-item style="position: relative;">
 					<view class="fdjksfhdsjk cet" @click="govr">
@@ -215,7 +215,7 @@
 								this.des = {};
 								this.des = data.data.data.status;
 								data.data.data.status.pl.forEach(item => {
-									item.head = this.$imgPath + item.head
+									// item.head = this.$imgPath + item.head
 									item["checked"] = false
 								})
 								this.pinglun(data.data.data.status)
@@ -282,11 +282,16 @@
 					uni.showToast({
 						title: data.data.msg,
 						duration: 1000,
-						icon: "success"
+						icon: "none"
 					})
 					this.budakai = false;
 					if (data.data.code == 1) {
-						this.allss()
+						// this.allss()
+						if (this.des.follows != 0) {
+							this.des.follows = 0
+						} else {
+							this.des.follows = 1
+						}
 					}
 				})
 			},

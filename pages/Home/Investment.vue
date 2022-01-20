@@ -30,7 +30,7 @@
 					</view>
 					<view class="item" @click="show=true">
 						筛选<image src="../../static/icon_about_shaixuan.png"
-							style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode=""></image>
+							style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 					</view>
 				</view>
 				<view class="" style="position: relative;z-index: 2;">
@@ -46,7 +46,7 @@
 					<view class="be_designer">
 					</view>
 					<image style="width: 100%;height: 1500rpx;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
-						mode=""></image>
+						mode="aspectFit"></image>
 					<view class="be_foot">
 						<!-- <view class="pay" @click="pays">
 							{{pay}}
@@ -64,7 +64,7 @@
 				</view>
 				<!-- 驳回 -->
 				<view class="reject" v-if="state==2">
-					<image src="../../static/icon_me_reject.png" class="imgrej" mode=""></image>
+					<image src="../../static/icon_me_reject.png" class="imgrej" mode="aspectFit"></image>
 					<view class="">
 						你的申请已驳回
 					</view>
@@ -82,14 +82,14 @@
 				</view>
 				<!-- 审核中 -->
 				<view class="reject" v-if="state==0">
-					<image src="../../static/icon_me_review.png" class="imgrej" mode=""></image>
+					<image src="../../static/icon_me_review.png" class="imgrej" mode="aspectFit"></image>
 					<view class="">
 						你的资料平台正在加紧审核中，请留意站内信或电话
 					</view>
 				</view>
 				<!-- 审核成功 -->
 				<view class="reject" v-if="state==1">
-					<image src="../../static/icon_me_success.png" class="imgrej" mode=""></image>
+					<image src="../../static/icon_me_success.png" class="imgrej" mode="aspectFit"></image>
 					<view class="">
 						恭喜你，你已成为设计师
 					</view>
@@ -134,7 +134,7 @@
 				<view class="" style="    height: 700rpx; width: 100%;">
 					<scroll-view scroll-y="true" style="height: 100%;">
 						<image style="width: 100%;height: 4444rpx;"
-							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode=""></image>
+							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit"></image>
 					</scroll-view>
 				</view>
 				<!-- <view class="agree_xieyi" @click="toReg"> -->

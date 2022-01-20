@@ -4,17 +4,17 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
 		</view>
 		<view class="">
-			<image src="../../static/shop_dingbu_bg.png" style="height: 240rpx;" mode=""></image>
+			<image src="../../static/shop_dingbu_bg.png" style="height: 240rpx;" mode="aspectFit"></image>
 		</view>
 		<!-- 轮播 -->
 		<view class="lun_main">
@@ -57,7 +57,7 @@
 					let aa = []
 					data.data.data.status.forEach(item => {
 						item.image = this.$imgPath + item.image
-						if (item.position == 1) {
+						if (item.position == 2) {
 							aa.push(item)
 						}
 					})

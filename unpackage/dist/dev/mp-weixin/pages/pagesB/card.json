@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "电子名片",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-design-card": "/uview-ui/components/u-design-card/u-design-card"
+  }
+}

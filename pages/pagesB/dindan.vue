@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -18,7 +18,7 @@
 				<u-search bg-color="#f6f6f6" placeholder="输入关键字搜索"></u-search>
 			</view>
 			<view class="swiper">
-				<u-tabs :list="lists" :weizhi="false" :current="current" @change="change"></u-tabs>
+				<u-tabs :list="lists" :is-scroll="false" :weizhi="false" :current="current" @change="change"></u-tabs>
 				<swiper :style="'height: ' + height + 'px;'" :circular="true" duration="200" :current="current"
 					@change="lun_change">
 					<swiper-item v-for="(item, index) in list" :key="index">
@@ -45,7 +45,7 @@
 								<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc"
 									@click="goods(items)">
 									<view class="">
-										<image class="img" :src="imgtitle + itemc.simage" mode=""></image>
+										<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 									</view>
 									<view style="margin-left: 10rpx;">
 										<view class="name">
@@ -107,8 +107,7 @@
 									<view class="button" @click="annui(1, items)" v-if="items.state == 0">
 										立即支付
 									</view>
-									<view class="button" @click="annui(5, items)"
-										v-if="items.state == 1">
+									<view class="button" @click="annui(5, items)" v-if="items.state == 1">
 										申请退款
 									</view>
 									<view class="button" @click="annui(3, items)" v-if="items.state == 2">
@@ -129,7 +128,8 @@
 									</view>
 									<!--  -->
 									<!--  -->
-									<view class="button" v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
+									<view class="button"
+										v-if="items.state == 9 || items.state == 4 || items.state == 3">
 										删除订单
 									</view>
 									<!--  -->
@@ -195,32 +195,74 @@
 				height: 0,
 				current: 0,
 				title: "",
+				// lists: [{
+				// 		name: "全部",
+				// 	},
+				// 	{
+				// 		name: "待付款",
+				// 	},
+				// 	{
+				// 		name: "待发货",
+				// 	},
+				// 	{
+				// 		name: "待收货",
+				// 	},
+				// 	{
+				// 		name: "待评价",
+				// 	},
+				// 	{
+				// 		name: "已完成",
+				// 	},
+				// 	{
+				// 		name: "退换货",
+				// 	},
+				// ],
+				// list: [{
+				// 		status: "all",
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 0,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 1,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 2,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 3,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 4,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 5,
+				// 		data_list: [],
+				// 	},
+				// ],
 				lists: [{
-						name: "全部",
+						name: "代发货",
 					},
 					{
-						name: "待付款",
+						name: "发货中",
 					},
 					{
-						name: "待发货",
+						name: "已收货",
 					},
 					{
-						name: "待收货",
+						name: "报装中",
 					},
 					{
-						name: "待评价",
-					},
-					{
-						name: "已完成",
-					},
-					{
-						name: "退换货",
-					},
+						name: "已安装",
+					}
 				],
-				list: [{
-						status: "all",
-						data_list: [],
-					},
+				list: [
 					{
 						status: 0,
 						data_list: [],
@@ -240,11 +282,7 @@
 					{
 						status: 4,
 						data_list: [],
-					},
-					{
-						status: 5,
-						data_list: [],
-					},
+					}
 				],
 				time: "",
 			};
@@ -272,17 +310,37 @@
 		},
 		methods: {
 			allsss() {
-				this.$api
-					.myorder({
-						user_id: uni.getStorageSync("user_info").id,
-					})
-					.then((data) => {
-						if (data.data.code == 1) {
-							this.list[0].data_list = [];
-							this.list[0].data_list = [...data.data.data.status];
-							this.chulidata();
-						}
-					});
+				this.$api.myorder({	user_id: uni.getStorageSync("user_info").id,}).then((data) => {
+					if (data.data.code == 1) {
+						this.list.forEach((item, index) => {
+							item.data_list = [];
+						});
+						data.data.data.status.forEach((item) => {
+							switch (item.state) {
+								case "0":
+									this.list[0].data_list.push(item);
+									break;
+								case "1":
+									this.list[1].data_list.push(item);
+									break;
+								case "2":
+									this.list[2].data_list.push(item);
+									break;
+								case "3":
+									this.list[3].data_list.push(item);
+									break;
+								case "4":
+									this.list[4].data_list.push(item);
+									break;
+								default:
+									
+							}
+						});
+						// this.list[0].data_list = [];
+						// this.list[0].data_list = [...data.data.data.status];
+						// this.chulidata();
+					}
+				});
 			},
 			//订单
 			order() {
@@ -412,7 +470,7 @@
 							}).then((res) => {
 
 								if (res.data.code == 200) {
-									let that =  this;
+									let that = this;
 									uni.requestPayment({
 										timeStamp: res.data.data.timeStamp, //当前的时间
 										nonceStr: res.data.data.nonceStr, //随机字符串
@@ -493,8 +551,7 @@
 						item.data_list = [];
 					}
 				});
-				let aa = this.list[0].data_list;
-				aa.forEach((item) => {
+				this.list[0].data_list.forEach((item) => {
 					switch (item.state) {
 						case "0":
 							this.list[1].data_list.push(item);

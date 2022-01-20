@@ -4,20 +4,20 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
 		</view>
 		<view class="home">
 			<!-- 收货地址 -->
-			<view class="centers cet" style="justify-content: flex-start;" @click="seleadd">
-				<image class="img" src="../../static/icon_me_blueaddress.png" mode=""></image>
-				<view style="margin-left: 30rpx;" v-if="address != ''">
+			<view class="centers cet" style="justify-content: space-between;" @click="seleadd">
+				<image class="img" src="../../static/icon_me_blueaddress.png" mode="aspectFit"></image>
+				<view style="width: 84%;" v-if="address != ''">
 					<view class="cet" style="justify-content: flex-start;margin-bottom: 30rpx;">
 						<view class="name">
 							{{address_name}}
@@ -30,7 +30,7 @@
 						{{address}}
 					</view>
 				</view>
-				<view v-else style="margin-left: 30rpx;">
+				<view v-else style="margin-right: 150px;">
 					请选择收货地址
 				</view>
 			</view>
@@ -38,7 +38,7 @@
 			<view class="swiper-item">
 				<view class="centre" v-for="(itemc,indexc) in goodsdata" :key="indexc">
 					<view class="">
-						<image class="img" :src="img+itemc.simage" mode=""></image>
+						<image class="img" :src="img+itemc.simage" mode="aspectFit"></image>
 					</view>
 					<view class="" style="margin-left:20rpx;">
 						<view class="name">
@@ -87,7 +87,7 @@
 								<text v-if="youhuijuan_num != 0">-￥{{youhuijuan_num}}</text><text v-else>暂无可用优惠卷</text>
 							</view>
 							<image style="width: 8rpx;height: 14rpx;margin-left: 10rpx;"
-								src="../../static/icon_home_heiseyoufan.png" mode=""></image>
+								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 						</view>
 					</view>
 				</view>
@@ -110,23 +110,56 @@
 				<view class="xians">
 				</view>
 				<view class="ipnu">
-					<u-input input-align="left" placeholder="订单备注" v-model="value" type="text" />
+					<input type="text" placeholder="订单备注" v-model="value" value="" />
 				</view>
 			</view>
 		</view>
 		<view style="height: 110rpx;"></view>
-		<u-kehu style="position: relative;z-index: 100000;" url="../Home/booking/AppointmentDesign"></u-kehu>
+		<u-kehu style="position: relative;z-index: 10000;" url="../Home/booking/AppointmentDesign"></u-kehu>
 		<view class="annius">
 			<view class="anniu">
 				<view class="">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
 						class="hejimony">{{tijiaozjia.toFixed(2)}}</text>
 				</view>
-				<view class="button" @click="annui()">
+				<view class="button" @click="tongyi(1)">
 					提交订单
 				</view>
 			</view>
 		</view>
+		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					服务协议和隐私政策
+				</view>
+				<view class="textss">
+					感谢您使用宝芸邸，我们会严格
+					按照法律规定存储和使用您的个人
+					信息。您可以阅读以下几项条款了
+					解详细信息。如您同意，请勾选以
+					下几项条款并点击”同意”开始接受
+					我们的服务。
+				</view>
+				<view style="padding:20rpx 0;">
+					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
+						<view class="yuan" @click="hahaha(item)">
+							<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+						</view>
+						<view class="mingcheng" @click="fuwenben">
+							《{{item.name}}{{index}}》
+						</view>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyi(0)">
+						暂不使用
+					</view>
+					<view class="hkhnij jjhgj" @click="annui()">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<u-popup width="640" :closeable="true" border-radius="30" v-model="show" mode="bottom">
 			<view class="popup">
 				<view class="top">
@@ -178,6 +211,28 @@
 	export default {
 		data() {
 			return {
+				xieyi: [{
+						id: 0,
+						name: "协议协议协议协议",
+						check: false
+					},
+					{
+						id: 1,
+						name: "协议协议协议协议",
+						check: false
+					},
+					{
+						id: 2,
+						name: "协议协议协议协议",
+						check: false
+					},
+					{
+						id: 3,
+						name: "协议协议协议协议",
+						check: false
+					},
+				],
+				yuedu: false,
 				youhuijuan_num: 0,
 				tijiaozjia: 0,
 				yf: 0,
@@ -240,6 +295,25 @@
 			}
 		},
 		methods: {
+			tongyi(ev) {
+				if (ev == 1) {
+					this.xieyi.forEach(item => {
+						item.check = false
+					})
+					this.yuedu = true;
+				} else {
+					this.yuedu = false;
+				}
+			},
+			fuwenben() {
+				uni.navigateTo({
+					url: "./fuwenben"
+				})
+			},
+			hahaha(item) {
+				console.log(item);
+				item.check = !item.check
+			},
 			aaaaaa() {
 				this.showaaaaaa = !this.showaaaaaa
 			},
@@ -287,8 +361,19 @@
 				}
 			},
 			annui() {
-				// this.show = true;
-
+				let mm = 0
+				this.xieyi.forEach(item => {
+					if (item.check) {
+						mm++
+					}
+				})
+				if (this.xieyi.length != mm) {
+					return uni.showToast({
+						title: "请阅读并同意协议",
+						icon: "none"
+					})
+				}
+				this.yuedu = false
 				let shopids = []
 				let specidsizes = []
 				let specids = []
@@ -299,11 +384,9 @@
 					specids.push(item.specid)
 					cartids.push(item.id)
 				})
-
 				if (this.iscartid) {
 					cartids = 0
 				}
-
 				if (this.address != '') {
 					this.$api.cartpay({
 						content: this.value,
@@ -350,7 +433,7 @@
 										title: "支付失败",
 										icon: "none"
 									})
-									
+
 								}
 							})
 						}
@@ -413,7 +496,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		z-index: 1000;
+		z-index: 100000;
 	}
 
 	.anniu {
@@ -880,5 +963,59 @@
 		font-size: 26rpx;
 		font-weight: 400;
 		color: #DB0E1E;
+	}
+
+	.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-right: 10rpx;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 26rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
 	}
 </style>

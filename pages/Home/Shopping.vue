@@ -18,7 +18,7 @@
 			<!-- 分类 -->
 			<view class="shop_cls">
 				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)">
-					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;" mode="">
+					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;" mode="aspectFit">
 					</image>
 					<view class="">
 						{{item.title}}
@@ -37,7 +37,7 @@
 				</view>
 				<view class="lookmore" @click="more(item)">
 					查看更多<image src="../../static/icon_shop_hsmore.png"
-						style="width: 10rpx;height: 18rpx;margin-left: 10rpx;" mode=""></image>
+						style="width: 10rpx;height: 18rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="">
@@ -47,7 +47,7 @@
 			</view>
 		</view>
 		<view class="shopcar" @click="tocar">
-			<image src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode=""></image>
+			<image src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
 			购物车
 			<view class="cart-num" v-if="cart_num !=0">
 				{{cart_num}}
@@ -144,6 +144,7 @@
 				}
 			},
 			more(url) {
+				console.log(url);
 				uni.navigateTo({
 					url: url
 				});
@@ -178,6 +179,7 @@
 					if (item.id == 0) {
 						this.$api.shopindex().then(data => {
 							if (data.data.code == 1) {
+								item.data_list = []
 								data.data.data.status.forEach((items, index) => {
 									item.data_list.push({
 										id: items.id,
@@ -193,6 +195,7 @@
 					} else if (item.id == 1) {
 						this.$api.loupanden().then(data => {
 							if (data.data.code == 1) {
+								item.data_list = []
 								data.data.data.status.forEach((items, index) => {
 									item.data_list.push({
 										id: items.id,
@@ -208,6 +211,7 @@
 					} else if (item.id == 2) {
 						this.$api.qjset().then(data => {
 							if (data.data.code == 1) {
+								item.data_list = []
 								data.data.data.status.data.forEach((items, index) => {
 									item.data_list.push({
 										id: items.id,

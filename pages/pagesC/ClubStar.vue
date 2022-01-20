@@ -5,11 +5,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -23,11 +23,11 @@
 			<view class="page_top">
 				<view class="top_item1" @click="lunbo(0)">
 					<image src="../../static/icon_home_heisezuofan.png"
-						style="width: 12rpx;height: 22rpx;margin-right: 82rpx;" mode=""></image>上一条
+						style="width: 12rpx;height: 22rpx;margin-right: 82rpx;" mode="aspectFit"></image>上一条
 				</view>
 				<view class="top_item" @click="lunbo(1)">
 					下一条<image src="../../static/icon_home_heiseyoufan.png"
-						style="width: 12rpx;height: 22rpx;margin-left: 82rpx;" mode=""></image>
+						style="width: 12rpx;height: 22rpx;margin-left: 82rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="yuyue" @click="yuyue">
@@ -42,7 +42,7 @@
 			<view class="pl_detail">
 				<view class="pl_user">
 					<view class="">
-						<image :src="desInfo.pl[0].head" style="width: 70rpx;height: 70rpx;border-radius: 50%;" mode="">
+						<image :src="desInfo.pl[0].head" style="width: 70rpx;height: 70rpx;border-radius: 50%;" mode="aspectFit">
 						</image>
 					</view>
 					<view class="" style="margin-left: 20rpx;">
@@ -60,7 +60,7 @@
 				<view class="see_all" @click="jhsdkfjhsdlk">
 					查看全部评论
 					<image src="../../static/icon_shop_lamsemore.png"
-						style="width: 10rpx;height: 18rpx;margin-left: 10rpx;" mode=""></image>
+						style="width: 10rpx;height: 18rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
 		</view>
@@ -264,11 +264,16 @@
 					uni.showToast({
 						title: data.data.msg,
 						duration: 1000,
-						icon: "success"
+						icon: "none"
 					})
 					if (data.data.code == 1) {
 						this.budakai = false
-						this.desDetails()
+						// this.desDetails()
+						if (this.desInfo.follows != 0) {
+							this.desInfo.follows = 0
+						} else {
+							this.desInfo.follows = 1
+						}
 					}
 				})
 				}

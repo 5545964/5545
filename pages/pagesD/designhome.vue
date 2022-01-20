@@ -4,8 +4,8 @@
 		</u-navbar>
 		<view class="heard">
 			<view class="czxcxz">
-				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode=""></image>
-				<image class="img" v-else src="../../static/icon_me_bianji.png" mode=""></image>
+				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode="aspectFit"></image>
+				<image class="img" v-else src="../../static/icon_me_bianji.png" mode="aspectFit"></image>
 				<view class="center">
 					<view class="text">
 						<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>
@@ -18,7 +18,7 @@
 				</view>
 			</view>
 			<view class="bottms" @click="gomy">
-				<image class="imgs" src="../../static/icon_me_bianji.png" mode=""></image>
+				<image class="imgs" src="../../static/icon_me_bianji.png" mode="aspectFit"></image>
 				<view class="kjjkk">
 					个人资料
 				</view>
@@ -60,14 +60,14 @@
 		</view>
 		<view class="hahaha">
 			<view class="cet" @click="gos(0)">
-				<image class="imgs" src="../../static/icon_me_mingpian.png" mode=""></image>
+				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
 				<view class="text">
 					电子名片
 				</view>
 			</view>
 			<view class="xian"></view>
 			<view class="cet" @click="gos(1)">
-				<image class="imgd" src="../../static/icon_me_erweima.png" mode=""></image>
+				<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
 				<view class="text">
 					专属二维码
 				</view>
@@ -75,7 +75,7 @@
 		</view>
 		<view class="top">
 			<view class="top_a" @click="shengfenzhuanqu">
-				<image class="imgs" src="../../static/me_vip_bg.png" mode=""></image>
+				<image class="imgs" src="../../static/me_vip_bg.png" mode="aspectFit"></image>
 				<view class="left">
 					<view class="le_text">
 						身份专区
@@ -88,7 +88,7 @@
 					<view class="lr_text">
 						查看更多
 					</view>
-					<image class="img" src="../../static/icon_me_more.png" mode=""></image>
+					<image class="img" src="../../static/icon_me_more.png" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="top_b">
@@ -99,7 +99,7 @@
 						</view>
 						<view class="">
 							<view style="width: max-content;margin: 0 auto;">
-								<image class="img" :src="'../../static/des'+index+'.png'" mode=""></image>
+								<image class="img" :src="'../../static/des'+index+'.png'" mode="aspectFit"></image>
 							</view>
 							<view class="text">
 								{{item.name}}
@@ -116,12 +116,12 @@
 					<view class="template" v-for="(item,index) in gongju_list" :key="index"
 						@click="gongju_go(item.url,item.name)">
 						<view class="cet">
-							<image class="img" :src="'../../static/desgongju'+index+'.png'" mode=""></image>
+							<image class="img" :src="'../../static/desgongju'+index+'.png'" mode="aspectFit"></image>
 							<view class="texts">
 								{{item.name}}
 							</view>
 						</view>
-						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode=""></image>
+						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 						<view class="dsalhdkjahjad" v-if="index == 2 && fkjsfjdisfjsl"></view>
 					</view>
 				</view>

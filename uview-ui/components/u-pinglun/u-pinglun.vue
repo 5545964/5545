@@ -5,8 +5,8 @@
 				<view class="new">评论列表</view>
 				<view style="height: 50rpx;"></view>
 				<view class="contentView" v-if="list.length !=0" v-for="(item,index) in list" :key="index">
-					<image class="avator" v-if="item.head != ''" :src="item.head" mode=""></image>
-					<image class="img" v-else src="@/static/icon_me_avatar.png" mode=""></image>
+					<image class="avator" v-if="item.head != ''" :src="item.head" mode="aspectFit"></image>
+					<image class="img" v-else src="@/static/icon_me_avatar.png" mode="aspectFit"></image>
 					<view class="commentRight">
 						<view class="commentView">
 							<text class="username">{{item.name}}</text>
@@ -20,7 +20,7 @@
 						<block class="" @click="fupingjia(item)" v-for="(items,indexs) in item.image" :key="indexs"
 							v-if="item.image !=='0'">
 							<image v-if="items != '#'" style="width: 100rpx;height: 100rpx;margin: 20rpx;"
-								:src="img+items" mode=""></image>
+								:src="img+items" mode="aspectFit"></image>
 						</block>
 						<view class="replys" v-if="!huifu && item.list.length != 0">
 							<view v-if="!item.checked && item.list.length !=0 && item.list != null">
@@ -58,7 +58,7 @@
 
 					</view>
 					<view class="foot1" :style="'bottom: '+bottom+'px;'">
-						<!-- <image style="width: 100rpx;height: 100rpx;" src="../../../static/jia.png" mode=""></image> -->
+						<!-- <image style="width: 100rpx;height: 100rpx;" src="../../../static/jia.png" mode="aspectFit"></image> -->
 						<input class="footInp" style="width: 76%;" type="text" v-model="pinglun_text"
 							:placeholder="place" />
 						<view @click="confirm_hf" class="foot_btn">

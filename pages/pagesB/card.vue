@@ -2,7 +2,7 @@
 	<view>
 		<view class="home">
 			<view class="top">
-				<image class="img" src="../../static/login.png" mode=""></image>
+				<image class="img" src="../../static/login.png" mode="aspectFit"></image>
 				<view class="tops">
 					<view class="name pad">
 						{{userinfo.username}}
@@ -20,7 +20,7 @@
 					<view class="dasds">
 						<view v-for="(item,index) in rinima" :key="index">
 							<view class="cet vxcvx" v-if="item !=''" @click="copy(item,index)">
-								<image class="img" :src="'../../static/icons'+index+'.png'" mode=""></image>
+								<image class="img" :src="'../../static/icons'+index+'.png'" mode="aspectFit"></image>
 								<view class="text" style="width: 100rpx;" v-if="index == 5">
 									{{item}}
 								</view>
@@ -41,22 +41,22 @@
 		<view class="anniuss">
 			<view class="kuang">
 				<button open-type="contact" class="annuiwwww" type="default">
-					<image class="img" src="../../static/icon_me_fenxiang.png" mode=""></image>
+					<image class="img" src="../../static/icon_me_fenxiang.png" mode="aspectFit"></image>
 				</button>
 			</view>
 			<view class="kuang" @click="gohome">
-				<image class="img" src="../../static/icon_me_shouye.png" mode=""></image>
+				<image class="img" src="../../static/icon_me_shouye.png" mode="aspectFit"></image>
 			</view>
 		</view>
 		<view class="navbar">
 			<u-navbar :is-back="false" title-color="#FFFFFF" :title="title" :background="background">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhuibai.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhuibai.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_housebai.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_housebai.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -65,7 +65,7 @@
 		<view class="works">
 			<view class="title">
 				<view class="name">
-					热门推荐搭配
+					优享作品
 					<view class="bor_bot">
 		
 					</view>

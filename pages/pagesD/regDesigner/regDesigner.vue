@@ -5,11 +5,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -35,10 +35,10 @@
 			<view class="allimg">
 				<!-- <view class="" v-for="(item,index) in imgList" :key="index" style="position: relative;">
 					<image :src="item" class="imgs" mode="aspectFit"></image>
-					<image src="../../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg" mode="">
+					<image src="../../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg" mode="aspectFit">
 					</image>
 				</view>
-				<image @click="chooseImg" src="../../../static/icon_up_ico.png" class="imgs" mode=""></image> -->
+				<image @click="chooseImg" src="../../../static/icon_up_ico.png" class="imgs" mode="aspectFit"></image> -->
 				<u-upload width="160" :fileList="kanimg" height="160" :action="action" max-count="9" :header="header"
 					@on-success="shangchuan" @on-remove="deleteimg" :form-data="formData" name="image"
 					size-type="compressed">

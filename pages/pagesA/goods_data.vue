@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -20,7 +20,7 @@
 						待支付
 					</view>
 					<view class="cet cdsfsdfs">
-						<image class="img" src="../../static/loudou.png" mode=""></image>
+						<image class="img" src="../../static/loudou.png" mode="aspectFit"></image>
 						<view class="jhjk">
 							一天后自动取消订单
 						</view>
@@ -28,7 +28,7 @@
 				</view>
 			</view>
 			<view class="centers cet" style="justify-content: space-between;">
-				<image class="img" src="../../static/icon_me_blueaddress.png" mode=""></image>
+				<image class="img" src="../../static/icon_me_blueaddress.png" mode="aspectFit"></image>
 				<view style="width: 86%;">
 					<view class="cet" style="justify-content: flex-start;margin-bottom: 30rpx;">
 						<view class="name">
@@ -64,7 +64,7 @@
 				</view>
 				<view class="centre" v-for="(itemc,indexc) in data_list.shop" :key="indexc" @click="product(itemc)">
 					<view class="">
-						<image class="img" :src="img+itemc.simage" mode=""></image>
+						<image class="img" :src="img+itemc.simage" mode="aspectFit"></image>
 					</view>
 					<view class="" style="margin-left: 20rpx;">
 						<view class="name">
@@ -109,7 +109,7 @@
 								<text v-if="youhuijuan_num != 0">-￥{{youhuijuan_num}}</text><text v-else>暂无优惠卷</text>
 							</view>
 							<image style="width: 8rpx;height: 14rpx;margin-left: 10rpx;"
-								src="../../static/icon_home_heiseyoufan.png" mode=""></image>
+								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 						</view>
 					</view> -->
 				</view>
@@ -179,7 +179,7 @@
 				<view class="hahahahha">
 					<view class="dmskajds">图片说明：</view>
 					<view class="djkshfks">
-						<image class="imgsa" :src="img+item" v-for="(item,index) in img_list" :key="index" mode="">
+						<image class="imgsa" :src="img+item" v-for="(item,index) in img_list" :key="index" mode="aspectFit">
 						</image>
 					</view>
 				</view>

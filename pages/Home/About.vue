@@ -41,7 +41,7 @@
 										</view>
 									</view>
 									<view class="">
-										<image class="imghjk" :src="item.cover_img_1_1" mode="">
+										<image class="imghjk" :src="item.cover_img_1_1" mode="aspectFit">
 										</image>
 									</view>
 								</view>

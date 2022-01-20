@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "佳作分享",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-video": "/uview-ui/components/u-video/u-video",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-pinglun": "/uview-ui/components/u-pinglun/u-pinglun"
+  }
+}

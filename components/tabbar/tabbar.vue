@@ -11,11 +11,13 @@
 				list: [],
 				current: 0,
 				timer: "",
-				num: 0
+				num: 0,
+				zairu: true,
 			};
 		},
 		mounted() {
-			let aa = setInterval(() => {
+			if (this.zairu) {
+				this.zairu = false
 				this.$api.indexbar().then(data => {
 					if (data.data.code == 1) {
 						this.list = []
@@ -27,19 +29,35 @@
 								text: item.title
 							})
 						})
-						setTimeout(() => {
-							this.gaodu();
-							clearInterval(aa)
-						}, 500)
-
-					}
-				}).catch(data => {
-					this.num += 1
-					if (this.num == 19) {
-						clearInterval(aa)
 					}
 				})
-			}, 100)
+			} else {
+				let aa = setInterval(() => {
+					this.$api.indexbar().then(data => {
+						if (data.data.code == 1) {
+							this.list = []
+							data.data.data.status.forEach(item => {
+								this.list.push({
+									pagePath: item.url.url,
+									iconPath: this.$imgPath + item.fimage,
+									selectedIconPath: this.$imgPath + item.image,
+									text: item.title
+								})
+							})
+							setTimeout(() => {
+								this.gaodu();
+								clearInterval(aa)
+							}, 500)
+
+						}
+					}).catch(data => {
+						this.num += 1
+						if (this.num == 19) {
+							clearInterval(aa)
+						}
+					})
+				}, 1000)
+			}
 
 		},
 		methods: {

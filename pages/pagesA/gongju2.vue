@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -18,7 +18,7 @@
 				<view class="jdhfd">
 					<view style="width: 30%;">
 						<view class="hhi">
-							<image class="imgd" :src="img + item.avatar" mode=""></image>
+							<image class="imgd" :src="img + item.avatar" mode="aspectFit"></image>
 						</view>
 						<view class="dadasdad">
 							{{item.username}}

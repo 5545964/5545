@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -42,9 +42,9 @@
 								{{item2.name}}
 								<template>
 									<image v-if="item2.id<2" src="../../static/icon_home_sanjiao.png"
-										style="width: 16rpx;height: 10rpx;margin-left: 10rpx;" mode=""></image>
+										style="width: 16rpx;height: 10rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 									<image v-else src="../../static/icon_about_shaixuan.png"
-										style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode=""></image>
+										style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 								</template>
 							</view>
 						</view>
@@ -81,7 +81,7 @@
 							</view>
 							<view class="item-container">
 								<view class="thumb-box" v-for="(item1, index1) in item.foods" :key="index1">
-									<image class="item-menu-image" :src="item1.icon" mode=""></image>
+									<image class="item-menu-image" :src="item1.icon" mode="aspectFit"></image>
 									<view class="item-menu-name">{{item1.name}}</view>
 								</view>
 							</view>

@@ -52,7 +52,7 @@
 					</view>
 				</view>
 				<view class="dsdads">
-					<image style="width: 100%;height: 190rpx;" :src="imgtitle+item.work[0]" mode=""></image>
+					<image style="width: 100%;height: 190rpx;" :src="imgtitle+item.work[0]" mode="aspectFit"></image>
 				</view>
 				<view class="name">
 					设计师-{{item.username}}

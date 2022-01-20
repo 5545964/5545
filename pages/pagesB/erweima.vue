@@ -4,18 +4,18 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
 		</view>
 		<view class="cet">
 			<view class="home cet">
-				<image class="img" @click="kan(ewmsrc)" :src="ewmsrc" mode=""></image>
+				<image class="img" @click="kan(ewmsrc)" :src="ewmsrc" mode="aspectFit"></image>
 			</view>
 		</view>
 		<view class="boyyty cet" @click="sava">

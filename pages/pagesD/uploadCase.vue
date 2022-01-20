@@ -5,11 +5,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -27,7 +27,7 @@
 					</view>
 					<u-input v-else v-model="item.value" input-align="left" :placeholder="item.name" type="text" />
 					<!-- {{item.name}} -->
-					<!-- <image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="">
+					<!-- <image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="aspectFit">
 					</image> -->
 					<!-- <u-dropdown :border-bottom="true">
 						<u-dropdown-item v-model="value1" :title="item.name" :options="options1"></u-dropdown-item>
@@ -55,10 +55,10 @@
 			<view class="allimg">
 				<!-- <view class="" style="position: relative;" v-if="fenmian !=''">
 					<image :src="fenmian" class="imgs" mode="aspectFit"></image>
-					<image src="../../static/icon_close_ico.png" @click="sanchufenmian()" class="closeImg" mode="">
+					<image src="../../static/icon_close_ico.png" @click="sanchufenmian()" class="closeImg" mode="aspectFit">
 					</image>
 				</view>
-				<image v-else @click="fenmianssss" src="../../static/icon_up_ico.png" class="imgs" mode=""></image> -->
+				<image v-else @click="fenmianssss" src="../../static/icon_up_ico.png" class="imgs" mode="aspectFit"></image> -->
 				<u-upload style="margin: 10rpx;" @on-uploaded="suolv_uploaded($event)" @on-remove="suolv_remove"
 					:action="action" max-count="1" width="140rpx" height="140rpx" :header="header" :form-data="formData"
 					:name="namess" size-type="compressed">
@@ -73,10 +73,10 @@
 			<view class="allimg">
 				<!-- <view class="" v-for="(item,index) in imgList" :key="index" style="position: relative;">
 					<image :src="item" class="imgs" mode="aspectFit"></image>
-					<image src="../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg" mode="">
+					<image src="../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg" mode="aspectFit">
 					</image>
 				</view>
-				<image @click="chooseImg" src="../../static/icon_up_ico.png" class="imgs" mode=""></image> -->
+				<image @click="chooseImg" src="../../static/icon_up_ico.png" class="imgs" mode="aspectFit"></image> -->
 				<u-upload style="margin: 10rpx;" @on-uploaded="uploaded($event)" @on-remove="remove" :action="action"
 					max-count="4" width="140rpx" height="140rpx" :header="header" :form-data="formData" :name="namess"
 					size-type="compressed">
@@ -110,7 +110,7 @@
 			</view>
 			<view class="allimg" style="position: relative;">
 				<image v-if="videoList !=''" src="../../static/icon_close_ico.png" @click="sanchuvideo()"
-					class="closeImg" mode="">
+					class="closeImg" mode="aspectFit">
 				</image>
 				<video style="width: 100%;margin: 30rpx 0;height: 400rpx;" v-if="videoList !=''" :src="vider+videoList"></video>
 				<image v-else src="../../static/icon_up_ico.png" @click="shanghcuanvideo" class="imgs" mode="aspectFit">

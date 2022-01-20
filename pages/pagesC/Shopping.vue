@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -77,7 +77,7 @@
 					</view>
 				</view>
 			</view>
-			<!-- <image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode=""></image> -->
+			<!-- <image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode="aspectFit"></image> -->
 		</view>
 		<view class="duo" @click="open(1)">
 			<view class="cet">
@@ -109,7 +109,7 @@
 					</view>
 				</view>
 			</view>
-			<!-- <image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode=""></image> -->
+			<!-- <image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode="aspectFit"></image> -->
 		</view>
 		<view class="pinglun">
 			<view class="pingluns">
@@ -117,9 +117,9 @@
 			</view>
 			<view class="" v-if="pinglun_list.length !=0" style="padding: 30rpx 0;">
 				<view class="dsaascc">
-					<image class="img" v-if="pinglun_list[0].head != ''" :src="img+pinglun_list[0].head" mode="aspectFit">
+					<image class="img" v-if="pinglun_list[0].head != ''" :src="pinglun_list[0].head" mode="aspectFit">
 					</image>
-					<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
+					<image class="img" v-else src="../../static/icon_me_avatar.png" mode="aspectFit"></image>
 					<view class="skfksdfsd">
 						<view class="">
 							<view class="name">

@@ -7,16 +7,16 @@
 					}" :title="list.navbar" titleColor="#fff" :borderBottom="false">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
 		</view>
-		<image class="banner" src="../../static/about_tijiao_bg.png" mode=""></image>
+		<image class="banner" src="../../static/about_tijiao_bg.png" mode="aspectFit"></image>
 		<view class="sucView">
 			<view class="text1">{{list.title}}</view>
 			<view class="text2">{{list.text}}</view>

@@ -308,6 +308,7 @@
 	.u-input {
 		position: relative;
 		flex: 1;
+		z-index: 1;
 		@include vue-flex;
 
 		&__input {

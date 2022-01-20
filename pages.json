@@ -255,68 +255,69 @@
 	}, {
 		"root": "pages/pagesB",
 		"pages": [{
-			"path": "address",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "black"
+				"path": "address",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+				}
+			},
+			{
+				"path": "dindan",
+				"style": {
+					"navigationBarTitleText": "我的订单",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+				}
+			},
+			{
+				"path": "shengfen",
+				"style": {
+					"navigationBarTitleText": "身份专区",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+				}
+			},
+			{
+				"path": "erweima",
+				"style": {
+					"navigationBarTitleText": "二维码",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+				}
+			},
+			{
+				"path": "card",
+				"style": {
+					"navigationBarTitleText": "电子名片",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white"
+				}
+			},
+			{
+				"path": "my",
+				"style": {
+					"navigationBarTitleText": "个人资料编辑",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white"
+				}
+			},
+			{
+				"path": "images",
+				"style": {
+					"navigationBarTitleText": "图片处理",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "white"
+				}
 			}
-		}, {
-			"path": "dindan",
-			"style": {
-				"navigationBarTitleText": "我的订单",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "black"
-			}
-
-		}, {
-			"path": "shengfen",
-			"style": {
-				"navigationBarTitleText": "身份专区",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "black"
-			}
-
-		}, {
-			"path": "erweima",
-			"style": {
-				"navigationBarTitleText": "二维码",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "black"
-			}
-
-		}, {
-			"path": "card",
-			"style": {
-				"navigationBarTitleText": "电子名片",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-
-		}, {
-			"path": "my",
-			"style": {
-				"navigationBarTitleText": "个人资料编辑",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-
-		}, {
-			"path": "images",
-			"style": {
-				"navigationBarTitleText": "图片处理",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom",
-				"navigationBarTextStyle": "white"
-			}
-
-		}]
+		]
 	}, {
 		"root": "pages/pagesC",
 		"pages": [{
@@ -441,6 +442,15 @@
 				"path": "zhibo",
 				"style": {
 					"navigationBarTitleText": "我的直播",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+				}
+
+			}, {
+				"path": "fuwenben",
+				"style": {
+					"navigationBarTitleText": "富文本",
 					"enablePullDownRefresh": false,
 					"navigationStyle": "custom",
 					"navigationBarTextStyle": "black"

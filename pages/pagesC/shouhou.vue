@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -36,7 +36,7 @@
 
 					</view>
 					<view style="margin-left: 20rpx;">
-						<image class="img" :src="imgtitle + itemc.simage" mode=""></image>
+						<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 					</view>
 					<view style="margin-left: 10rpx;">
 						<view class="name">
@@ -49,8 +49,28 @@
 			</view>
 			<view class="inputs cet">
 				<view style="width: 100%;">
-					<textarea class="textarea" placeholder-style="color: #999999;" v-model="text"
-						placeholder="请填写您的理由~" />
+					<view class="text">
+						快递公司
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
+						<u-input inputAlign="left" placeholder-style="color: #999999;margin-left: 30rpx;"
+							v-model="kuaidigongsi" placeholder="请填写快递公司" />
+					</view>
+					<view class="text">
+						快递单号
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
+						<u-input inputAlign="left" placeholder-style="color: #999999;margin-left: 30rpx;"
+							v-model="kuaididanhao" placeholder="请填写快递单号" type="number" />
+					</view>
+					<view class="text">
+						您的理由
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
+						<textarea class="textarea" placeholder-style="color: #999999;" v-model="text"
+							placeholder="请填写您的理由~" />
+					</view>
+
 					<view class="text">
 						添加图片：
 					</view>
@@ -77,6 +97,8 @@
 	export default {
 		data() {
 			return {
+				kuaidigongsi: "",
+				kuaididanhao: "",
 				imgtitle: this.$imgPath,
 				imglist: [],
 				name: "image", //上传
@@ -135,7 +157,7 @@
 			fa() {
 				if (!this.shangchuan) {
 					return uni.showToast({
-						title: "请等待图片上传完成",
+						title: "请检查图片",
 						icon: "none"
 					})
 				}
@@ -155,7 +177,9 @@
 					shopid: aa,
 					num: bb,
 					tuik_ly: this.text,
-					image: this.imglist
+					image: this.imglist,
+					kuaididanhao:this.kuaididanhao,
+					kuaidigongsi:this.kuaidigongsi
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.showToast({
@@ -263,6 +287,7 @@
 		right: 0;
 		height: 110rpx;
 		background: #FFFFFF;
+		z-index: 1000;
 
 		.aaa {
 			width: 600rpx;
@@ -297,8 +322,8 @@
 			}
 
 			.textarea {
-				padding: 30rpx;
-				width: 90%;
+				padding-top: 30rpx;
+				width: 100%;
 				height: 400rpx;
 				background: #F6F6F6;
 				border-radius: 10rpx;

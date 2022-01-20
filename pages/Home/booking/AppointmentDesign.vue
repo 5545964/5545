@@ -4,11 +4,11 @@
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
 					<view class="dsds cet" @click="back(0)">
-						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode=""></image>
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
 					</view>
 					<view class="hang"></view>
 					<view class="dsds cet" @click="back(1)">
-						<image class="souye" src="@/static/icon_navigation_house.png" mode=""></image>
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
 					</view>
 				</view>
 			</u-navbar>
@@ -162,7 +162,7 @@
 									</view>
 									<image @click="sanchuhsuahsuhd(indexc)" v-if="itemc.del"
 										style="width: 28rpx;height: 28rpx;position: absolute;top: 30rpx;right: 20rpx;"
-										src="../../../static/icon_close_ico.png" mode=""></image>
+										src="../../../static/icon_close_ico.png" mode="aspectFit"></image>
 								</view>
 								<view class="czzxczx nbnbn" v-if="isadd" @click="add">
 									+点击添加成员

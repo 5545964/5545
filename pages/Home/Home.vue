@@ -3,7 +3,7 @@
 		<view class="tabber">
 			<u-navbar :is-back="false">
 				<view class="sssss">
-					<image src="../../static/icon_home_logo.png" mode=""></image>
+					<image src="../../static/icon_home_logo.png" mode="aspectFit"></image>
 				</view>
 			</u-navbar>
 			<view class="navlist cet" style="justify-content: space-between;">
@@ -50,7 +50,7 @@
 					</view>
 				</view>
 				<image @click="budenglu" style="width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;"
-					src="../../static/icon_close_ico.png" mode=""></image>
+					src="../../static/icon_close_ico.png" mode="aspectFit"></image>
 			</view>
 		</u-popup>
 	</view>
