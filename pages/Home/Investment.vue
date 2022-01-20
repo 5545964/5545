@@ -281,7 +281,7 @@
 			}
 		},
 		onShow() {
-			this.current = this.list[0].id
+			// this.current = this.list[0].id
 			this.getstate()
 			this.enjoy()
 			this.getdesproMoenys()

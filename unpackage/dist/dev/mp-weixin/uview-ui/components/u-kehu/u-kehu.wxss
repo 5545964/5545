@@ -1,0 +1,57 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.popup.data-v-1ea7eaa0 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 100rpx;
+}
+.popup .dssfdd.data-v-1ea7eaa0 {
+  padding: 20rpx 120rpx;
+}
+.popup .vv.data-v-1ea7eaa0 {
+  background: #E6F1F5;
+  border-radius: 35rpx;
+  padding: 2rpx 120rpx;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #007399;
+}
+.popup .cc.data-v-1ea7eaa0 {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.popup .dadasas.data-v-1ea7eaa0 {
+  background: #007399;
+  border-radius: 100rpx;
+}
+.popup .ffgfgf.data-v-1ea7eaa0 {
+  background: #E6F1F5;
+  border: 1px solid #007399;
+  border-radius: 100rpx;
+}
+.dad.data-v-1ea7eaa0 {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.dasds.data-v-1ea7eaa0 {
+  width: 30rpx;
+  height: 30rpx;
+}
+.djsa.data-v-1ea7eaa0 {
+  width: 90rpx;
+  height: 90rpx;
+  background: #666666;
+  border-radius: 50%;
+  position: fixed;
+  right: 20rpx;
+}
+

@@ -26,7 +26,7 @@
 							{{address_phone}}
 						</view>
 					</view>
-					<view class="text">
+					<view class="text liangdiandain">
 						{{address}}
 					</view>
 				</view>

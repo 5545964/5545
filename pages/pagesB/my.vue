@@ -51,6 +51,36 @@
 					</view>
 				</view>
 				<!-- 单行输入框 -->
+				<!-- 手机号 -->
+				<view v-if="items.status == 'phone'" @click="showcitys(items)">
+					<view class="inputs">
+						<view class="cxz">
+							{{items.name}}
+						</view>
+						<view class="asd">
+							<template>
+								<view class="" style="text-align: right;" v-if="items.id==9">
+									{{items.inp}}
+								</view>
+								<u-input v-else style="width: 100%;height: 100%;" v-model="items.inp" type="text"
+									:placeholder="items.placeholder" />
+							</template>
+						</view>
+					</view>
+					<view class="yanzhengma">
+						<view class="cxz">
+							验证码
+						</view>
+						<view class="cet" style="justify-content: space-between;width: 60%;">
+							<view class="djkshfks" style="background-color: #e5e5e5;">
+								<u-input style="width:100%;height: 100%;" inputAlign="left" size="200" v-model="code"
+									placeholder="请输入验证码" type="number" />
+							</view>
+							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						</view>
+					</view>
+				</view>
+				<!-- 手机号 -->
 				<!-- 多行行输入框 -->
 				<view class="inputs" v-if="items.status == 'textarea'">
 					<view class="cxz">
@@ -78,7 +108,7 @@
 				</view>
 				<!-- 上传 -->
 				<!-- 设计师手机号 -->
-				<view class="inputs" v-if="items.status == 'phone' && isdes == 1" @click="showcitys(items)">
+				<!-- <view class="inputs" v-if="items.status == 'phone' && isdes == 1" @click="showcitys(items)">
 					<view class="cxz">
 						{{items.name}}
 					</view>
@@ -86,7 +116,7 @@
 						<u-input style="width: 100%;height: 100%;" v-model="items.inp" type="text"
 							:placeholder="items.placeholder" />
 					</view>
-				</view>
+				</view> -->
 				<!-- 设计师手机号 -->
 				<!-- 设计师上传 -->
 				<view class="design" v-if="items.status == 'designupload' && isdes == 1">
@@ -121,7 +151,6 @@
 				</view>
 				<!-- 设计师标签 -->
 			</view>
-
 			<view class="tijiao cet">
 				<view class="ti" @click="tijiao">
 					确认修改
@@ -159,6 +188,9 @@
 	export default {
 		data() {
 			return {
+				time: 0,
+				huoqu: "获取验证码",
+				code: "",
 				showcity: false,
 				header: {},
 				formData: {},
@@ -206,11 +238,18 @@
 						status: "text",
 						inp: "",
 					},
+					// {
+					// 	id: 6,
+					// 	name: "QQ号",
+					// 	placeholder: "请填写QQ号",
+					// 	status: "text",
+					// 	inp: "",
+					// },
 					{
 						id: 6,
-						name: "QQ号",
-						placeholder: "请填写QQ号",
-						status: "text",
+						name: "手机号",
+						placeholder: "请填写手机号",
+						status: "phone",
 						inp: "",
 					},
 					{
@@ -239,13 +278,6 @@
 						name: "详细地址",
 						placeholder: "街道、小区门牌等详细地址",
 						status: "textarea",
-						inp: "",
-					},
-					{
-						id: 13,
-						name: "手机号",
-						placeholder: "请填写手机号",
-						status: "phone",
 						inp: "",
 					},
 					{
@@ -294,12 +326,11 @@
 				this.list[3].inp = this.desinfo.username;
 				this.list[4].inp = this.desinfo.bbs.type;
 				this.list[5].inp = this.desinfo.wechat;
-				this.list[6].inp = this.desinfo.qq;
+				this.list[6].inp = this.desinfo.mobile;
 				this.list[7].inp = this.desinfo.yb;
 				this.list[8].inp = this.desinfo.email;
 				this.list[9].inp = this.desinfo.address;
 				this.list[10].inp = this.desinfo.addressxq;
-				this.list[11].inp = this.desinfo.mobile;
 				this.actList = this.desinfo.label.split(",");
 				if (this.desinfo.work != '') {
 					this.imgListsss = this.desinfo.work.split(",")
@@ -312,15 +343,16 @@
 
 			} else {
 				this.desinfo = uni.getStorageSync("user_info")
-				// this.avatar = this.desinfo.avatar
 				this.avatar = [{
 					url: this.desinfo.avatar,
 				}];
+				this.avatarss = this.desinfo.avatar.slice(this.$imgPath.length)
 				this.list[1].inp = this.desinfo.nickname
-				this.list[2].inp = "暂未开通"
+				this.list[2].inp = "暂无编号";
 				this.list[3].inp = this.desinfo.username
+				this.list[4].inp = this.desinfo.bbs.type;
 				this.list[5].inp = this.desinfo.wechat
-				this.list[6].inp = this.desinfo.qq
+				this.list[6].inp = this.desinfo.mobile
 				this.list[7].inp = this.desinfo.yb
 				this.list[8].inp = this.desinfo.email
 				this.list[9].inp = this.desinfo.address
@@ -328,6 +360,19 @@
 			}
 		},
 		methods: {
+			go_code() {
+				if (this.time == 0) {
+					this.time = 60
+					let aa = setInterval(() => {
+						this.time--
+						this.huoqu = this.time + "s后获取"
+						if (this.time == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
 			asdfg(ev) {
 				console.log(ev);
 				this.imgListsss.push(ev.data.status)
@@ -342,8 +387,10 @@
 					this.avatarss = ev.data.status
 					this.avatar = this.$imgPath + ev.data.status
 				} else {
+					this.avatarss = ev.data.status
 					this.avatar = ev.data.status
 				}
+				console.log(this.avatarss, this.avatar);
 			},
 			// 选择城市
 			showcitys(item) {
@@ -405,32 +452,6 @@
 			change(item) {
 				item.act = !item.act
 			},
-			// 设计师个人资料
-			// getdesData() {
-			// 	this.$api.desindex({
-			// 		id: uni.getStorageSync("des_info").id
-			// 	}).then(data => {
-			// 		if (data.data.code == 1) {
-			// 			console.log(data.data.data.status);
-			// 			this.desinfo = data.data.data.status
-			// 			this.list[1].inp = this.desinfo.nickname
-			// 			this.list[2].inp = this.desinfo.myself
-			// 			this.list[3].inp = this.desinfo.username
-			// 			this.list[4].inp = this.desinfo.zw.type
-			// 			this.list[5].inp = this.desinfo.wechat
-			// 			this.list[6].inp = this.desinfo.qq
-			// 			this.list[7].inp = this.desinfo.yb
-			// 			this.list[8].inp = this.desinfo.email
-			// 			this.list[9].inp = this.desinfo.address
-			// 			this.list[10].inp = this.desinfo.addressxq
-			// 			this.avatarss = this.desinfo.avatar
-			// 			this.avatar = this.$imgPath + this.desinfo.avatar
-			// 			console.log(this.avatar);
-			// 			this.actList = this.desinfo.label.split(",")
-			// 			this.imgList = this.desinfo.work.split(",")
-			// 		}
-			// 	})
-			// },
 			// 设计师标签 desmode
 			getmode() {
 				this.$api.desmode().then(data => {
@@ -453,16 +474,6 @@
 						})
 						return
 					}
-					// let files = [];
-					// // 通过filter，筛选出上传进度为100的文件(因为某些上传失败的文件，进度值不为100，这个是可选的操作)
-					// files = this.$refs.uUpload[0].lists.filter(val => {
-					// 	return val.progress == 100;
-					// })
-					// // 如果您不需要进行太多的处理，直接如下即可
-					// // files = this.$refs.uUpload.lists;
-					// files.forEach(item => {
-					// 	this.imgList.push(item.response.data.status)
-					// })
 					if (this.actList.length == 0) {
 						uni.showToast({
 							title: "请检查标签",
@@ -476,7 +487,7 @@
 						username: this.list[3].inp,
 						level: this.list[4].text,
 						wechat: this.list[5].inp,
-						qq: this.list[6].inp,
+						// qq: this.list[6].inp,
 						yb: this.list[7].inp,
 						email: this.list[8].inp,
 						address: this.list[9].inp,
@@ -484,7 +495,8 @@
 						avatar: this.avatarss,
 						label: this.actList,
 						work: this.imgListsss,
-						mobile: this.list[11].inp
+						// mobile: this.list[11].inp
+						mobile: this.list[6].inp
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({
@@ -507,11 +519,12 @@
 				} else {
 					this.$api.edituser({
 						id: uni.getStorageSync("user_info").id,
-						avatar: this.avatar,
+						avatar: this.avatarss,
 						nickname: this.list[1].inp,
 						username: this.list[3].inp,
 						wechat: this.list[5].inp,
-						qq: this.list[6].inp,
+						// qq: this.list[6].inp,
+						mobile: this.list[6].inp,
 						yb: this.list[7].inp,
 						email: this.list[8].inp,
 						address: this.list[9].inp,
@@ -550,6 +563,24 @@
 </script>
 
 <style lang="scss" scoped>
+	.yanzhengma {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 200rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
+		}
+	}
+
 	.closeImg {
 		width: 28rpx;
 		height: 28rpx;

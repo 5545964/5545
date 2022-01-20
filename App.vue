@@ -16,8 +16,8 @@
 			// 		url: ev.path + "?shopid=" + ev.query.shopid
 			// 	})
 			// }
-			
-			
+
+
 		},
 		onLoad(ev) {}
 	}
@@ -34,6 +34,14 @@
 		background-color: #f6f6f6;
 		// background-color: #ff0000;
 		position: relative;
+	}
+
+	.liangdiandain {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 
 	button::after {

@@ -59,13 +59,13 @@
 			</view>
 		</view>
 		<view class="hahaha">
-			<view class="cet" @click="gos(0)">
+			<!-- <view class="cet" @click="gos(0)">
 				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
 				<view class="text">
 					电子名片
 				</view>
 			</view>
-			<view class="xian"></view>
+			<view class="xian"></view> -->
 			<view class="cet" @click="gos(1)">
 				<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
 				<view class="text">
@@ -449,6 +449,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+		height: 70rpx;
 
 		.xian {
 			margin: 10rpx;
