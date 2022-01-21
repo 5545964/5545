@@ -133,8 +133,8 @@
 							{{pinglun_list[0].content}}
 						</view>
 						<block class="" v-for="(item,index) in pinglun_list[0].image" :key="index">
-							<image @click="kan(item)"
-								style="width: 100rpx;height: 100rpx;margin: 20rpx;" :src="img+item" mode="aspectFit"></image>
+							<image @click="kan(item)" style="width: 100rpx;height: 100rpx;margin: 20rpx;"
+								:src="img+item" mode="aspectFit"></image>
 						</block>
 					</view>
 				</view>
@@ -331,7 +331,7 @@
 				关闭
 			</view>
 		</u-popup>
-		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
+		<u-kehu url="../Home/booking/AppointmentDesign" heigth="1080"></u-kehu>
 	</view>
 </template>
 
@@ -339,6 +339,7 @@
 	export default {
 		data() {
 			return {
+				orderid: 0,
 				height: uni.getStorageSync("bottomheigth"),
 				cart_num: uni.getStorageSync("cart_num"),
 				huifu: false,
@@ -409,6 +410,10 @@
 			// 商品id
 			this.shopid = ev.shopid;
 			// 商品id
+			if (ev.orderid) {
+				this.orderid = ev.orderid
+
+			}
 			this.GoodsdataAlls();
 		},
 		// 来自页面内分享按钮
@@ -474,7 +479,8 @@
 						specid: this.alls.son[this.isSize].id,
 						specidsize: this.alls.son[this.isSize].spections,
 						num: this.value,
-						price: this.alls.son[this.isSize].xc_price
+						price: this.alls.son[this.isSize].xc_price,
+						orderid:this.orderid
 					}).then(data => {
 						if (data.data.code == 1) {
 							let aa = this.show
@@ -507,19 +513,27 @@
 						})
 					})
 				} else {
-					let aa = [{
-						simage: this.alls.simage,
-						name: this.alls.name,
-						num: this.value,
-						xc_price: this.alls.son[this.isSize].xc_price,
-						shopid: this.alls.id,
-						specid: this.alls.son[this.isSize].id,
-						specidsize: this.alls.son[this.isSize].spections,
-					}]
-					uni.navigateTo({
-						url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) + "&yf=" +
-							this.alls.yf
-					})
+					if (this.orderid == '') {
+						let aa = [{
+							simage: this.alls.simage,
+							name: this.alls.name,
+							num: this.value,
+							xc_price: this.alls.son[this.isSize].xc_price,
+							shopid: this.alls.id,
+							specid: this.alls.son[this.isSize].id,
+							specidsize: this.alls.son[this.isSize].spections,
+						}]
+						uni.navigateTo({
+							url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) +
+								"&yf=" +
+								this.alls.yf
+						})
+					} else {
+						uni.showToast({
+							title: "此商品只能加入购物车",
+							icon: "none"
+						})
+					}
 
 				}
 			},

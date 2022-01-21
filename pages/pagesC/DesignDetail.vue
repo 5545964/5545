@@ -225,12 +225,21 @@
 						uni.showToast({
 							title: "暂无数据",
 							duration: 1000,
-							icon: "none"
+							icon: "error"
 						})
 						setTimeout(() => {
 							uni.navigateBack(-1)
 						}, 500)
 					}
+				}).catch(data => {
+					uni.showToast({
+						title: "暂无数据",
+						duration: 1000,
+						icon: "error"
+					})
+					setTimeout(() => {
+						uni.navigateBack(-1)
+					}, 500)
 				})
 				this.$api.loupanden().then(data => {
 					if (data.data.code == 1) {
@@ -255,6 +264,7 @@
 			},
 			//点赞
 			dianzhan(ev) {
+				console.log(ev);
 				this.budakai = false;
 				let aa = ""
 				if (ev.zans != null && ev.zans != '') {
@@ -269,7 +279,17 @@
 					state: 1
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.allss()
+						// this.allss()
+						console.log(aa);
+						if (aa == 0) {
+							this.des.zan = this.des.zan + 1
+							this.des.zans = {
+								name:'kkkkkkk'
+							}
+						}else{
+							this.des.zan = this.des.zan - 1
+							this.des.zans = null
+						}
 					}
 				})
 			},
@@ -308,7 +328,7 @@
 			},
 			pinglun(ev) {
 				let aa = ev
-				this.pinglun_list = [];
+				console.log(ev.pl);
 				this.pinglun_list = ev.pl;
 				this.itemsss = aa;
 				if (this.budakai) {

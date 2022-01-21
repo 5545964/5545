@@ -1,5 +1,6 @@
 <template>
-	<view class="djsa cet" :style="'bottom: '+heigth+'rpx;'">
+	<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
+		:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
 		<view class="" @click="click">
 			<view class="cet">
 				<view class="dasds">
@@ -38,7 +39,11 @@
 			},
 			heigth: {
 				type: Number,
-				default: 200
+				default: 1144
+			},
+			right: {
+				type: Number,
+				default: 640
 			},
 			po_hei: {
 				type: Number,
@@ -58,14 +63,67 @@
 			},
 		},
 		mounted() {
-			this.show = this.showsss
+			this.show = this.showsss;
+			this.system = uni.getSystemInfoSync()
+			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100));
+			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
+				100));
+			this.px = parseInt(uni.upx2px(90))
+			this.px = parseInt(this.px / (uni.upx2px(100) / 100))
+			console.log(this.px);
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - 20 - this.px
+			this.tabberheigth = windows - nn - this.px;
+			this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100));
+			console.log(this.navbarheigth,this.tabberheigth,"this.navbarheigth,this.tabberheigth,");
+			this.bianheigth = this.heigth;
+			this.bianright = this.right;
+			console.log(this.system);
 		},
 		data() {
 			return {
+				px: 0,
+				widthwidth: 0,
+				navbarheigth: 0,
+				tabberheigth: 0,
+				system: {},
 				show: false,
+				bianheigth: 0,
+				bianright: 0,
+				bianliang: 0
 			}
 		},
 		methods: {
+			end() {
+				if (this.bianliang < this.system.screenWidth / 2) {
+					var bb = setInterval(() => {
+						this.bianright = this.bianright - 10;
+						if (this.bianright <= 20) {
+							this.bianright = 20;
+							clearInterval(bb);
+						}
+					}, 10)
+				} else {
+					var bb = setInterval(() => {
+						this.bianright = this.bianright + 10;
+						if (this.bianright >= this.widthwidth) {
+							this.bianright = this.widthwidth
+							clearInterval(bb);
+						}
+					}, 10)
+				}
+			},
+			move(ev) {
+				let touch = ev.touches[0];
+				this.bianliang = touch.clientX
+				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px/2);
+				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px/2);
+				if (aa >= 20 && aa <= this.widthwidth) {
+					this.bianright = aa
+				}
+				if (bb >= this.navbarheigth && bb <= this.tabberheigth) {
+					this.bianheigth = bb
+				}
+			},
 			go_kefu(ev) {
 				if (this.title != "客服") {
 					return uni.navigateTo({
@@ -152,6 +210,5 @@
 		border-radius: 50%;
 		position: fixed;
 
-		right: 20rpx;
 	}
 </style>

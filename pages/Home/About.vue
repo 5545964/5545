@@ -51,7 +51,7 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		<u-kehu url="./booking/AppointmentDesign"></u-kehu>
+		<u-kehu url="./booking/AppointmentDesign" heigth="1000"></u-kehu>
 		<u-back-top :scroll-top="0"></u-back-top>
 		<tab-bar @tabbers="dsad"></tab-bar>
 	</view>

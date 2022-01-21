@@ -182,7 +182,7 @@
 			async pinglun(ev) {
 				if (await this.$login()) {
 				let aa = ev
-				this.pinglun_list = []
+				console.log(ev.pl);
 				this.pinglun_list = ev.pl
 				this.itemsss = aa;
 				if (this.budakai) {
@@ -289,7 +289,6 @@
 						this.desInfo = data.data.data.status
 						this.title = "设计师-" + this.desInfo.username
 						data.data.data.status.pl.forEach(item => {
-							item.head = this.$imgPath + item.head
 							item["checked"] = false
 						})
 						this.pinglun(data.data.data.status)

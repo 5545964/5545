@@ -216,7 +216,16 @@
 						state: 1
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.allss(this.shenme_id)
+							// this.allss(this.shenme_id)
+							if (aa == 0) {
+								this.desInfo.zan = this.desInfo.zan + 1
+								this.desInfo.zans = {
+									name:'kkkkkkk'
+								}
+							}else{
+								this.desInfo.zan = this.desInfo.zan - 1
+								this.desInfo.zans = null
+							}
 						}
 					})
 				}

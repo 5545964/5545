@@ -29,6 +29,9 @@
 								text: item.title
 							})
 						})
+						setTimeout(() => {
+							this.gaodu();
+						}, 500)
 					}
 				})
 			} else {

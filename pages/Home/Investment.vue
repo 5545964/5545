@@ -45,7 +45,7 @@
 				<view class="be_main" style="height: 100%;" v-if="state<0">
 					<view class="be_designer">
 					</view>
-					<image style="width: 100%;height: 1500rpx;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
+					<image style="width: 100%;height: 1000rpx;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
 						mode="aspectFit"></image>
 					<view class="be_foot">
 						<!-- <view class="pay" @click="pays">
@@ -134,7 +134,8 @@
 				<view class="" style="    height: 700rpx; width: 100%;">
 					<scroll-view scroll-y="true" style="height: 100%;">
 						<image style="width: 100%;height: 4444rpx;"
-							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit"></image>
+							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit">
+						</image>
 					</scroll-view>
 				</view>
 				<!-- <view class="agree_xieyi" @click="toReg"> -->
@@ -144,24 +145,24 @@
 			</view>
 		</u-popup>
 		<!-- 筛选弹窗 -->
-		<u-popup v-model="show" mode="bottom" length="40%" :closeable="true" border-radius="8">
+		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
-				<view class="seath">
+				<!-- <view class="seath">
 					<u-search bg-color="#F2F2F2" @focus="seach_go(888)" v-model="keyword"></u-search>
-				</view>
+				</view> -->
 				<view class="type_list">
-					<view :class="active==index? 'type_item1':'type_item'" v-for="(item,index) in 3" :key="item"
-						@click="active=index">
-						个性创新
+					<view :class="item.check? 'type_item1':'type_item'" v-for="(item,index) in modeList" :key="index"
+						@click="xuanzhesssss(item)">
+						{{item.title}}
 					</view>
 				</view>
 			</view>
-			<view class="clos">
-				<view class="reset">
+			<view class="clos" :style="'bottom:'+jkl+'rpx;'">
+				<view class="reset" @click="zhongzhi(0)">
 					重置
 				</view>
-				<view class="on">
+				<view class="on" @click="zhongzhi(1)">
 					确定选择
 				</view>
 			</view>
@@ -177,6 +178,8 @@
 	export default {
 		data() {
 			return {
+				jkl:100,
+				modeList: [],
 				mobanid: [
 					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
 					'ag6I4iIgY1yo9QDaLolhH-D1e7Rpl_Tszw1SqYZzBDA',
@@ -213,8 +216,7 @@
 						name: '供应链club',
 					}
 				],
-				list: [
-					{
+				list: [{
 						name: '热门栏目',
 						id: 0
 					},
@@ -272,19 +274,28 @@
 				allssssss: []
 			}
 		},
-		onShareAppMessage(ev) {
-			return {
-				title: '分享的标题',
-				imageUrl: "https://v1.uviewui.com/common/logo.png",
-				desc: "1111111111111",
-				path: "/pages/Home/Home"
-			}
-		},
+		// onShareAppMessage(ev) {
+		// 	return {
+		// 		title: '分享的标题',
+		// 		imageUrl: "https://v1.uviewui.com/common/logo.png",
+		// 		desc: "1111111111111",
+		// 		path: "/pages/Home/Home"
+		// 	}
+		// },
 		onShow() {
 			// this.current = this.list[0].id
+			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.getstate()
 			this.enjoy()
-			this.getdesproMoenys()
+			this.getdesproMoenys();
+			this.$api.desmode().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					this.modeList = data.data.data.status
+				}
+			})
 		},
 		onLoad(ev) {
 			if (ev.is_re == 1) {
@@ -292,6 +303,24 @@
 			}
 		},
 		methods: {
+			zhongzhi(ev) {
+				let aa = []
+				if (ev == 0) {
+					this.modeList.forEach(item => {
+						item.check = false
+					})
+				} else {
+					this.modeList.forEach(item => {
+						if (item.check) {
+							aa.push(item.title)
+						}
+					})
+				}
+				console.log(aa);
+			},
+			xuanzhesssss(ev) {
+				ev.check = !ev.check
+			},
 			xuanzhedsa(ev) {
 				let aa = ev - 1
 				this.tit = this.options1[aa].label
@@ -459,9 +488,9 @@
 			},
 			// 支付填写资料
 			pays() {
-				if (this.pay == "填写资料") {
-					this.showContract = true
-				} else {
+				// if (this.pay == "填写资料") {
+				// 	this.showContract = true
+				// } else {
 					this.$api.buylevel({
 						id: this.allssssss[this.fenleideid].id,
 						user_id: uni.getStorageSync("user_info").id
@@ -501,7 +530,7 @@
 							})
 						}
 					})
-				}
+				// }
 			},
 			// 查看合同模板
 			async getcontein(ev) {
@@ -709,27 +738,26 @@
 
 	// 排序
 	.paixu {
-		width: 750rpx;
-		height: 82rpx;
 		background: #FFFFFF;
 		display: flex;
-		margin-top: 20rpx;
-		padding-left: 80rpx;
-		padding-right: 30rpx;
 		box-sizing: border-box;
 		align-items: center;
-		// justify-content: space-between;
-		justify-content: flex-end;
+		justify-content: space-between;
 		position: relative;
+		height: 80rpx;
+
+		.paxi {
+			width: 100%;
+		}
 
 		.item {
 			display: flex;
 			align-items: center;
-		}
-
-		.paxi {
 			position: absolute;
-			width: 750rpx;
+			top: 0;
+			right: 0;
+			padding: 20rpx;
+			z-index: 1000;
 		}
 	}
 
@@ -744,7 +772,6 @@
 
 	.clos {
 		position: fixed;
-		bottom: 40rpx;
 		left: 0;
 		right: 0;
 		margin: 0 30rpx;

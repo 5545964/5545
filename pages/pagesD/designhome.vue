@@ -4,8 +4,8 @@
 		</u-navbar>
 		<view class="heard">
 			<view class="czxcxz">
-				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode="aspectFit"></image>
-				<image class="img" v-else src="../../static/icon_me_bianji.png" mode="aspectFit"></image>
+				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode=""></image>
+				<image class="img" v-else src="../../static/icon_me_bianji.png" mode=""></image>
 				<view class="center">
 					<view class="text">
 						<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>

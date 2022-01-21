@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="tabber">
-			<u-navbar :is-back="false">
+			<u-navbar id="navbar" :is-back="false">
 				<view class="sssss">
 					<image src="../../static/icon_home_logo.png" mode="aspectFit"></image>
 				</view>
@@ -76,7 +76,7 @@
 						url: "../pagesC/HouseDesign",
 					},
 					{
-						top: "旗舰（整装）",
+						top: "旗舰整装",
 						down: "套系",
 						url: "../pagesC/FlagshipSet",
 					},
@@ -311,6 +311,10 @@
 					})
 				}
 			})
+			const query = uni.createSelectorQuery().in(this);
+			query.select('#navbar').boundingClientRect(data => {
+				uni.setStorageSync("navbarheigth", data.height)
+			}).exec();
 		},
 		watch: {},
 		computed: {},

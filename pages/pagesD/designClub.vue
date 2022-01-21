@@ -30,6 +30,7 @@
 		</view>
 		<!-- 设计师列表 -->
 		<view class="" v-if="current==2">
+			<!-- 排序 -->
 			<view class="paixu">
 				<view class="paxi">
 					<u-dropdown :mask="true" style="position: relative;z-index: 100;">
@@ -54,7 +55,7 @@
 			<view class="be_main" style="height: 100%;" v-if="state<0">
 				<view class="be_designer">
 				</view>
-				<image style="width: 100%;height: 1500rpx;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
+				<image style="width: 100%;height: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
 					mode="aspectFit"></image>
 				<view class="be_foot">
 					<!-- <view class="pay" @click="pays">
@@ -130,7 +131,8 @@
 				<view class="" style="height: 700rpx; width: 100%;">
 					<scroll-view scroll-y="true" style="height: 100%;">
 						<image style="width: 100%;height: 4444rpx;"
-							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit"></image>
+							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit">
+						</image>
 					</scroll-view>
 				</view>
 				<!-- <view class="agree_xieyi" @click="toReg"> -->
@@ -140,24 +142,24 @@
 			</view>
 		</u-popup>
 		<!-- 筛选弹窗 -->
-		<u-popup v-model="show" mode="bottom" length="40%" :closeable="true" border-radius="8">
+		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
-				<view class="seath">
+				<!-- <view class="seath">
 					<u-search bg-color="#F2F2F2" @focus="seach_go(888)" v-model="keyword"></u-search>
-				</view>
+				</view> -->
 				<view class="type_list">
-					<view :class="active==index? 'type_item1':'type_item'" v-for="(item,index) in 3" :key="item"
-						@click="active=index">
-						个性创新
+					<view :class="item.check? 'type_item1':'type_item'" v-for="(item,index) in modeList" :key="index"
+						@click="xuanzhesssss(item)">
+						{{item.title}}
 					</view>
 				</view>
 			</view>
 			<view class="clos">
-				<view class="reset" @click="chongzhi">
+				<view class="reset" @click="zhongzhi(0)">
 					重置
 				</view>
-				<view class="on" @click="shaixuan">
+				<view class="on" @click="zhongzhi(1)">
 					确定选择
 				</view>
 			</view>
@@ -176,10 +178,18 @@
 			this.getdesproMoenys()
 		},
 		onShow() {
-
+			this.$api.desmode().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					this.modeList = data.data.data.status
+				}
+			})
 		},
 		data() {
 			return {
+				modeList: [],
 				mobanid: [
 					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
 					'ag6I4iIgY1yo9QDaLolhH-D1e7Rpl_Tszw1SqYZzBDA',
@@ -204,8 +214,7 @@
 				value1: "",
 				show: false,
 				title: "设计师club",
-				list: [
-					{
+				list: [{
 						name: '热门栏目',
 						id: 0
 					},
@@ -271,6 +280,24 @@
 			// })
 		},
 		methods: {
+			zhongzhi(ev) {
+				let aa = []
+				if (ev == 0) {
+					this.modeList.forEach(item => {
+						item.check = false
+					})
+				} else {
+					this.modeList.forEach(item => {
+						if (item.check) {
+							aa.push(item.title)
+						}
+					})
+				}
+				console.log(aa);
+			},
+			xuanzhesssss(ev) {
+				ev.check = !ev.check
+			},
 			chongzhi() {
 				this.active = -1
 			},
@@ -652,32 +679,26 @@
 
 	// 排序
 	.paixu {
-		width: 750rpx;
-		height: 82rpx;
 		background: #FFFFFF;
 		display: flex;
-		margin-top: 20rpx;
-		padding-left: 80rpx;
-		// padding-right: 30rpx;
 		box-sizing: border-box;
 		align-items: center;
-		// justify-content: space-between;
-		justify-content: flex-end;
+		justify-content: space-between;
 		position: relative;
+		height: 80rpx;
+
+		.paxi {
+			width: 100%;
+		}
 
 		.item {
 			display: flex;
 			align-items: center;
-			position: relative;
-			z-index: 101;
-			margin-right: 30rpx;
-		}
-
-		.paxi {
 			position: absolute;
-			width: 100%;
-			// z-index: 2;
-			// left:100rpx
+			top: 0;
+			right: 0;
+			padding: 20rpx;
+			z-index: 1000;
 		}
 	}
 

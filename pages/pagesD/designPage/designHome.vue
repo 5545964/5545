@@ -19,7 +19,7 @@
 			<view class="designer">
 				<view class="designer_left">
 					<view class="asdfghjkl">
-						<image :src="imgtitle+desinger.avatar" class="imgs" mode="aspectFit"></image>
+						<image :src="imgtitle+desinger.avatar" class="imgs" mode=""></image>
 					</view>
 					<view style="text-align: center;">
 						{{desinger.username||''}}

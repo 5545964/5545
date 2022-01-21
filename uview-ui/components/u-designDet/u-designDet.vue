@@ -90,7 +90,7 @@
 					style="width: 34rpx;height: 34rpx;margin-right: 20rpx;" mode="aspectFit"></image>
 				<image v-else src="../../../static/shiping3.png" style="width: 34rpx;height: 34rpx;margin-right: 20rpx;"
 					mode="aspectFit"></image>
-				{{alls.zan||0}}
+				<!-- {{alls.zan||0}} -->
 			</view>
 		</view>
 	</view>

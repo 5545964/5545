@@ -5,8 +5,8 @@
 				<view class="new">评论列表</view>
 				<view style="height: 50rpx;"></view>
 				<view class="contentView" v-if="list.length !=0" v-for="(item,index) in list" :key="index">
-					<image class="avator" v-if="item.head != ''" :src="item.head" mode="aspectFit"></image>
-					<image class="img" v-else src="@/static/icon_me_avatar.png" mode="aspectFit"></image>
+					<image class="avator" v-if="item.head != ''" :src="item.head" mode=""></image>
+					<image class="img" v-else src="@/static/icon_me_avatar.png" mode=""></image>
 					<view class="commentRight">
 						<view class="commentView">
 							<text class="username">{{item.name}}</text>
