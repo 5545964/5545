@@ -7,7 +7,7 @@
 					<view class="name" style="text-align: center;">
 						设计师-{{alls.username}}
 					</view>
-					<u-rate @change="xuanxinxin" :count="count" v-model="alls.star" active-color="#FD7904"></u-rate>
+					<u-rate :disabled="disabled" @change="xuanxinxin" :count="count" v-model="alls.star" active-color="#FD7904"></u-rate>
 				</view>
 				<view class="top_num">
 					<view class="top_num_item">
@@ -36,7 +36,7 @@
 		<!-- 设计师 -->
 		<view class="designer" @click="qushejishi">
 			<view class="designer_left">
-				<image class="imgd" :src="alls.avatar" mode="aspectFit"></image>
+				<image class="imgd" :src="alls.avatar" mode=""></image>
 			</view>
 			<view class="" style="width: 70%;">
 				<view class="type_list">
@@ -110,6 +110,10 @@
 			current: {
 				type: Number,
 				default: 0
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {

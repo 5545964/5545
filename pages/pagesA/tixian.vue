@@ -112,7 +112,7 @@
 	export default {
 		data() {
 			return {
-				yinghangka: true,
+				yinghangka: false,
 				datas: [],
 				current: 0,
 				currents: 0,
@@ -138,14 +138,17 @@
 				this.title = ev.title;
 			}
 			let data = uni.getStorageSync("monList")
-			data.forEach(item => {
-				item["checked"] = false
-			})
-			this.datas = [...data]
+			if (data.length != 0) {
+				data.forEach(item => {
+					item["checked"] = false
+				})
+				this.datas = [...data]
+			}
+
 		},
 		methods: {
 			shengfen() {
-				if (this.yinghangka) {
+				if (uni.getStorageSync("user_info").freelance_id != null && uni.getStorageSync("user_info").freelance_id != '') {
 					let list = {
 						title: "提佣成功",
 						text: "你的提佣申请已成功",

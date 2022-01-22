@@ -66,19 +66,7 @@
 				title: "我的关注",
 				list: ['个性创新', "个性", "个性创"],
 				mydesigner: [],
-				list_s: [{
-						name: "满意值",
-						num: 70
-					},
-					{
-						name: "满意值",
-						num: 60
-					},
-					{
-						name: "满意值",
-						num: 50
-					}
-				],
+				
 			};
 		},
 		onShow() {
@@ -88,6 +76,7 @@
 				limit: 10000
 			}).then(data => {
 				if (data.data.code == 1) {
+					this.mydesigner = []
 					data.data.data.status.data.forEach((item, index) => {
 						if (item.des != null) {
 							let aa = []
@@ -99,7 +88,6 @@
 							if( labels){
 								bb = labels.split(',')
 							}
-							// this.mydesigner = []
 							this.mydesigner.push({
 								id: item.des.id,
 								avatar: item.des.avatar || "",
@@ -259,7 +247,7 @@
 		.hhi {
 			width: 80rpx;
 			height: 80rpx;
-			border: 10rpx solid transparent;
+			border: 6rpx solid transparent;
 			border-radius: 50%;
 			background-clip: padding-box, border-box;
 			background-origin: padding-box, border-box;

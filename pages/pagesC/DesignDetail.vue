@@ -53,8 +53,8 @@
 		</view>
 		<!-- 设计师 -->
 		<view class="" style="margin-top: 20rpx;">
-			<u-designDet :info="des" @click="guanzhu" @dianzhan="dianzhan" @qushejishi="topage" @pinglun="pinglun"
-				@xuanxinxin="xuanxinxin" />
+			<u-designDet :info="des" :disabled="disabled" @click="guanzhu" @dianzhan="dianzhan" @qushejishi="topage"
+				@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 		</view>
 		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
 			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
@@ -90,6 +90,7 @@
 	export default {
 		data() {
 			return {
+				disabled: false,
 				autoplay: true,
 				budakai: false,
 				showComment: false,
@@ -214,6 +215,9 @@
 							if (data.data.code == 1) {
 								this.des = {};
 								this.des = data.data.data.status;
+								if (this.desInfo.userstar != null && this.desInfo.userstar != "") {
+									this.disabled = true;
+								}
 								data.data.data.status.pl.forEach(item => {
 									// item.head = this.$imgPath + item.head
 									item["checked"] = false
@@ -284,9 +288,9 @@
 						if (aa == 0) {
 							this.des.zan = this.des.zan + 1
 							this.des.zans = {
-								name:'kkkkkkk'
+								name: 'kkkkkkk'
 							}
-						}else{
+						} else {
 							this.des.zan = this.des.zan - 1
 							this.des.zans = null
 						}

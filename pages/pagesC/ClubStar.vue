@@ -16,8 +16,8 @@
 		</view>
 		<!-- 设计师 -->
 		<view class="" style="margin-top: 20rpx;">
-			<u-designDet :info="desInfo" :current="current" @click="guanzhu" @dianzhan="dianzhan" @pinglun="pinglun"
-				@xuanxinxin="xuanxinxin" />
+			<u-designDet :info="desInfo" :disabled="disabled" :current="current" @click="guanzhu" @dianzhan="dianzhan"
+				@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 		</view>
 		<view class="logopage" v-if="!isDesign">
 			<view class="page_top">
@@ -42,7 +42,8 @@
 			<view class="pl_detail">
 				<view class="pl_user">
 					<view class="">
-						<image :src="desInfo.pl[0].head" style="width: 70rpx;height: 70rpx;border-radius: 50%;" mode="aspectFit">
+						<image :src="desInfo.pl[0].head" style="width: 70rpx;height: 70rpx;border-radius: 50%;"
+							mode="aspectFit">
 						</image>
 					</view>
 					<view class="" style="margin-left: 20rpx;">
@@ -95,6 +96,7 @@
 	export default {
 		data() {
 			return {
+				disabled: false,
 				showComment: false,
 				dsaa: {},
 				itemsss: {},
@@ -181,59 +183,59 @@
 			},
 			async pinglun(ev) {
 				if (await this.$login()) {
-				let aa = ev
-				console.log(ev.pl);
-				this.pinglun_list = ev.pl
-				this.itemsss = aa;
-				if (this.budakai) {
-					this.showComment = true;
-				}
-				this.budakai = true
+					let aa = ev
+					console.log(ev.pl);
+					this.pinglun_list = ev.pl
+					this.itemsss = aa;
+					if (this.budakai) {
+						this.showComment = true;
+					}
+					this.budakai = true
 				}
 			},
 			// 选星星
 			async xuanxinxin(ev) {
 				if (await this.$login()) {
-				this.$api.star({
-					user_id: uni.getStorageSync("user_info").id,
-					des_id: ev.id,
-					star: ev.star
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
-					})
+					this.$api.star({
+						user_id: uni.getStorageSync("user_info").id,
+						des_id: ev.id,
+						star: ev.star
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none"
+						})
 
-				})
+					})
 				}
 			},
 			async dianzhan(ev) {
 				if (await this.$login()) {
-				let aa = ""
-				if (ev.zans != null && ev.zans != '') {
-					aa = 1
-				} else {
-					aa = 0
-				}
-				this.$api.zan({
-					type: aa,
-					user_id: uni.getStorageSync("user_info").id,
-					video_id: ev.id,
-					state: 1
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.budakai = false
-						this.desDetails()
+					let aa = ""
+					if (ev.zans != null && ev.zans != '') {
+						aa = 1
+					} else {
+						aa = 0
 					}
-				})
+					this.$api.zan({
+						type: aa,
+						user_id: uni.getStorageSync("user_info").id,
+						video_id: ev.id,
+						state: 1
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.budakai = false
+							this.desDetails()
+						}
+					})
 				}
 			},
 			async yuyue() {
 				if (await this.$login()) {
-				uni.navigateTo({
-					url: "../Home/booking/AppointmentDesign"
-				})
+					uni.navigateTo({
+						url: "../Home/booking/AppointmentDesign"
+					})
 				}
 			},
 			lunbo(ev) {
@@ -257,25 +259,25 @@
 			//关注
 			async guanzhu(ev) {
 				if (await this.$login()) {
-				this.$api.desfollow({
-					user_id: uni.getStorageSync("user_info").id,
-					tes_id: ev.id
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
-					})
-					if (data.data.code == 1) {
-						this.budakai = false
-						// this.desDetails()
-						if (this.desInfo.follows != 0) {
-							this.desInfo.follows = 0
-						} else {
-							this.desInfo.follows = 1
+					this.$api.desfollow({
+						user_id: uni.getStorageSync("user_info").id,
+						tes_id: ev.id
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none"
+						})
+						if (data.data.code == 1) {
+							this.budakai = false
+							// this.desDetails()
+							if (this.desInfo.follows != 0) {
+								this.desInfo.follows = 0
+							} else {
+								this.desInfo.follows = 1
+							}
 						}
-					}
-				})
+					})
 				}
 			},
 			// 设计师详情
@@ -287,7 +289,10 @@
 					if (data.data.code == 1) {
 						this.desInfo = {}
 						this.desInfo = data.data.data.status
-						this.title = "设计师-" + this.desInfo.username
+						// this.title = "设计师-" + this.desInfo.username
+						if (this.desInfo.userstar != null && this.desInfo.userstar != "") {
+							this.disabled = true;
+						}
 						data.data.data.status.pl.forEach(item => {
 							item["checked"] = false
 						})

@@ -6,7 +6,7 @@
 					<view>
 						<view class="hhi">
 							<!-- <image class=" imgs" src="@/static/icon_zbout_yuanhuan.png" mode="aspectFit"></image> -->
-							<image class=" imgd" :src="item.avatar" mode="aspectFit"></image>
+							<image class=" imgd" :src="item.avatar" mode=""></image>
 							<!-- {{item.avatar}} -->
 						</view>
 						<!-- <view class="dadasdad">

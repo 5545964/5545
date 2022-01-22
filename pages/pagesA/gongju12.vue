@@ -79,7 +79,6 @@
 				return this.$imgPath + icon;
 			},
 			gethomepage() {
-				this.fansList = []
 				this.$api.mymake({
 					user_id: uni.getStorageSync("user_info").id,
 					limit: 1000
@@ -92,6 +91,7 @@
 								aa = aa + 1
 							}
 						})
+						this.fansList = []
 						this.fansList = data.data.data.status.data;
 						uni.setStorageSync("yuyuejilunum",aa)
 					}

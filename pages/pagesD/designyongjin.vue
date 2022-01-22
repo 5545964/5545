@@ -193,9 +193,9 @@
 	export default {
 		data() {
 			return {
-				isshejishiss:0,
-				allprice:0,
-				canprice:0,
+				isshejishiss: 0,
+				allprice: 0,
+				canprice: 0,
 				show: false,
 				datas: new Date().toISOString().slice(0, 10),
 				lists: [{
@@ -214,7 +214,7 @@
 						name: "提现明细"
 					}
 				],
-				monList:[],
+				monList: [],
 				title: "我的佣金",
 			};
 		},
@@ -230,19 +230,29 @@
 		},
 		onShow() {
 			this.getdata()
+			this.$api.desmyuser({
+				user_id: uni.getStorageSync("user_info").id,
+			}).then(data => {
+				if (data.data.code == 1) {
+					let aa = data.data.data.myuser
+					uni.setStorageSync("des_info", data.data.data.myuser)
+				}
+			})
 		},
 		methods: {
-			getdata(){
+			getdata() {
 				// 1是设计师
 				this.$api.mysub({
-					type:this.isshejishiss,
-					user_id:uni.getStorageSync("user_info").id
-				}).then(data=>{ 
-					if(data.data.code==1){
-						this.monList=data.data.data.status
-						this.allprice=data.data.data.all.toFixed(2);
-						this.canprice=data.data.data.can.toFixed(2);
-						uni.setStorageSync("monList",this.monList)
+					type: this.isshejishiss,
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.monList = data.data.data.status
+						this.allprice = data.data.data.all.toFixed(2);
+						this.canprice = data.data.data.can.toFixed(2);
+						uni.setStorageSync("monList", this.monList)
+					} else {
+						uni.setStorageSync("monList", [])
 					}
 				})
 			},

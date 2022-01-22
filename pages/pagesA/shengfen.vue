@@ -43,13 +43,15 @@
 				</view>
 				<view class="dsadsa">
 					<view class="renxiang cet">
-						<u-upload :action="action" BackColor="#FFFFFF" :imgUrl="renxiang_bg" width="600" height="480"
-							max-count="1" :header="header" :form-data="formData" :name="upname" size-type="compressed">
+						<u-upload :action="action" @on-remove="remove" @on-success="success" BackColor="#FFFFFF"
+							:imgUrl="renxiang_bg" width="600" height="480" max-count="1" :header="header"
+							:form-data="formData" :name="upname" size-type="compressed">
 						</u-upload>
 					</view>
 					<view class="guohui cet">
-						<u-upload :action="action" BackColor="#FFFFFF" :imgUrl="guohui_bg" width="600" height="480"
-							max-count="1" :header="header" :form-data="formData" :name="upname" size-type="compressed">
+						<u-upload :action="action" @on-remove="removes" @on-success="successs" BackColor="#FFFFFF"
+							:imgUrl="guohui_bg" width="600" height="480" max-count="1" :header="header"
+							:form-data="formData" :name="upname" size-type="compressed">
 						</u-upload>
 					</view>
 				</view>
@@ -79,7 +81,7 @@
 			</view>
 		</view>
 		<view style="height: 110rpx;">
-			
+
 		</view>
 		<view class="bottomssss cet">
 			<view class="dasdasdxzxcx" @click="tijiao">
@@ -93,35 +95,121 @@
 	export default {
 		data() {
 			return {
+				zhen: "",
+				bei: "",
 				renxiang_bg: require('../../static/renxiang_bg.png'),
 				guohui_bg: require('../../static/guohui_bg.png'),
-				upname: "", //上传
+				upname: "image", //上传
 				formData: {}, //上传
 				header: {}, //上传
-				action: "#", //图片上传接口
+				action: this.$shangchuan + "/api/byd_user/addpostspic", //图片上传接口
 				name: "",
 				card_id: "",
 				yinghangka: "",
 				kaihuhang: "",
 				title: "上传身份信息",
+				aa: {},
 			};
 		},
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title;
 			}
+
+
+		},
+		onShow() {
+			this.aa = uni.getStorageSync("user_info")
+			if (this.aa.mobile != null && this.aa.mobile != "") {
+				this.$api.myreg({
+					phone: this.aa.mobile,
+					user_id: this.aa.id
+				}).then(data => {
+					console.log(data);
+				}).catch(data => {
+					console.log(data);
+				})
+			} else {
+				uni.showToast({
+					title: "请设置手机号",
+					icon: "error"
+				})
+				setTimeout(() => {
+					uni.navigateTo({
+						url: "../pagesB/my"
+					})
+				}, 1000)
+			}
 		},
 		methods: {
-			tijiao() {
-				let list = {
-					title: "提交成功",
-					text: "你的提佣申请已提交成功",
-					botton: "我知道了",
-					navbar: "提交成功"
-				}
-				uni.navigateTo({
-					url: "../pagesD/regSuccess?list=" + JSON.stringify(list)
+			successs(ev) {
+				this.bei = ev.data.status
+				uni.showToast({
+					title: "背面上传成功",
+					icon: "success"
 				})
+			},
+			removes(ev) {
+				this.bei = ''
+			},
+			success(ev) {
+				console.log(ev);
+				this.zhen = ev.data.status
+				uni.showToast({
+					title: "正面上传成功",
+					icon: "success"
+				})
+			},
+			remove(ev) {
+				this.zhen = ''
+			},
+			tijiao() {
+				if (this.zhen == "") {
+					return uni.showToast({
+						title: "请上传身份证正面",
+						icon: "error"
+					})
+				}
+				if (this.bei == "") {
+					return uni.showToast({
+						title: "请上传身份证背面",
+						icon: "error"
+					})
+				}
+				let aa = 0
+				this.$api.userupload({
+					user_id: this.aa.id,
+					image: this.zhen,
+					type: 0
+				}).then(data => {
+					aa++
+					console.log(data);
+					this.$api.userupload({
+						user_id: this.aa.id,
+						image: this.bei,
+						type: 1
+					}).then(data => {
+						aa++
+						console.log(data);
+					})
+				})
+				if(aa == 2){
+					let list = {
+						title: "提交成功",
+						text: "你的提佣申请已提交成功",
+						botton: "我知道了",
+						navbar: "提交成功"
+					}
+					uni.navigateTo({
+						url: "../pagesD/regSuccess?list=" + JSON.stringify(list)
+					})
+				}else{
+					uni.showToast({
+						title: "请检查",
+						icon: "error"
+					})
+				}
+				
 			},
 			back(ev) {
 				switch (ev) {

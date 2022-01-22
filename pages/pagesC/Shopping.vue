@@ -407,6 +407,7 @@
 			};
 		},
 		onLoad(ev) {
+			console.log(ev);
 			// 商品id
 			this.shopid = ev.shopid;
 			// 商品id

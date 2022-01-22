@@ -339,8 +339,19 @@
 						sex: "",
 						age: ""
 					}
-					obj.sex = item.split("_")[0]
-					obj.age = item.split("_")[1]
+					let bb = item.split("_")[1]
+					console.log(bb);
+					if (bb == 0) {
+						obj.sex = "先生"
+					} else if (bb == 1) {
+						obj.sex = "女士"
+					} else if (bb == 2) {
+						obj.sex = "男孩"
+					} else if (bb == 3) {
+						obj.sex = "女孩"
+					}
+
+					obj.age = item.split("_")[0]
 					arr.push(obj)
 				})
 				this.list[0].list[0].text = this.desOrder.name;

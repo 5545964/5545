@@ -43,25 +43,23 @@
 			}
 		},
 		onShow() {
-			this.alls = [{
-				type: "合同一",
-				doc_url: this.$imgPath + uni.getStorageSync("hetong")
-			}]
+			console.log();
+			this.alls = []
+			uni.getStorageSync("des_info").contrins.split(",").forEach((item,index) => {
+				this.alls.push({
+					type: "合同"+(index+1),
+					doc_url: this.$imgPath + item
+				})
+			})
 
 		},
 		methods: {
 			kan(ev) {
-				let url = ev.doc_url;
-				if (url.indexOf("http") == -1) {
-					url = this.$imgPath + url
-				}
 				uni.downloadFile({
-					url: url,
+					url: ev.doc_url,
 					success(res) {
-						const filePath = res.tempFilePath;
-
 						uni.openDocument({
-							filePath,
+							filePath:res.tempFilePath,
 							success(res) {
 
 							}

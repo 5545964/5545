@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "我的售后",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-kehu": "/uview-ui/components/u-kehu/u-kehu"
+  }
+}

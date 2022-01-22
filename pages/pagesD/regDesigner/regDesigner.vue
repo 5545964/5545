@@ -16,16 +16,41 @@
 		</view>
 		<!-- 填写基础资料 -->
 		<view class="write_msg">
-			<view class="write_item" v-for="item in inpList" :key="item.id">
-				<view class="">
-					{{item.name}}
+			<block v-for="item in inpList" :key="item.id">
+				<view class="write_item" v-if="item.aa != 'phone'">
+					<view class="">
+						{{item.name}}
+					</view>
+					<input v-if="item.id!=4" style="text-align: right;" v-model="item.text" type="text" value=""
+						:placeholder="item.placeholder" />
+					<view class="" @click="show=true" v-if="item.id==4" style="text-align: right;">
+						{{item.text||"请选择地区"}}
+					</view>
 				</view>
-				<input v-if="item.id!=4" style="text-align: right;" v-model="item.text" type="text" value=""
-					:placeholder="item.placeholder" />
-				<view class="" @click="show=true" v-if="item.id==4" style="text-align: right;">
-					{{item.text||"请选择地区"}}
+				<view class="write_item" v-if="item.aa == 'phone'">
+					<view class="">
+						{{item.name}}
+					</view>
+					<input v-if="item.id!=4" style="text-align: right;" v-model="item.text" type="text" value=""
+						:placeholder="item.placeholder" />
+					<view class="" @click="show=true" v-if="item.id==4" style="text-align: right;">
+						{{item.text||"请选择地区"}}
+					</view>
 				</view>
-			</view>
+				<view class="write_item" v-if="item.aa == 'phone'">
+					<view class="">
+						验证码
+					</view>
+					<view class="cet" style="justify-content: space-between;width: 60%;">
+						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+							<u-input inputAlign="left" size="200" v-model="code" maxlength="6"
+								placeholder="请输入验证码" type="number" />
+						</view>
+						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					</view>
+				</view>
+			</block>
+
 		</view>
 		<!-- 上传设计师资质 -->
 		<view class="upload_des">
@@ -84,6 +109,9 @@
 		},
 		data() {
 			return {
+				huoqu: '获取验证码',
+				time: 0,
+				code: "",
 				kanimg: [],
 				header: {},
 				formData: {},
@@ -94,37 +122,43 @@
 						id: 0,
 						name: "姓名",
 						placeholder: "请输入您的姓名",
-						text: ""
+						text: "",
+						aa: ""
 					},
 					{
 						id: 1,
 						name: "身份证号码",
 						placeholder: "请输入您的身份证号码",
-						text: ""
+						text: "",
+						aa: ""
 					},
 					{
 						id: 2,
 						name: "手机号码",
 						placeholder: "请输入您的手机号码",
-						text: ""
+						text: "",
+						aa: "phone"
 					},
 					{
 						id: 3,
 						name: "电子邮箱",
 						placeholder: "请输入您的电子邮箱",
-						text: ""
+						text: "",
+						aa: ""
 					},
 					{
 						id: 4,
 						name: "所在地区",
 						placeholder: "请选择您的所在地区",
-						text: "请选择您的所在地区"
+						text: "请选择您的所在地区",
+						aa: ""
 					},
 					{
 						id: 5,
 						name: "详细地址",
 						placeholder: "街道、小区门牌等详细地址",
-						text: ""
+						text: "",
+						aa: ""
 					}
 				],
 				imgList: [],
@@ -132,6 +166,19 @@
 			};
 		},
 		methods: {
+			go_code() {
+				if (this.time == 0) {
+					this.time = 60
+					let aa = setInterval(() => {
+						this.time--
+						this.huoqu = this.time + "s后获取"
+						if (this.time == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
 			shangchuan(ev) {
 				this.upimgs.push(ev.data.status)
 				// uni.setStorageSync("reg_des", img)
@@ -192,7 +239,8 @@
 				// if (this.upimgs.length == 0) {
 				// 	this.upimgs = uni.getStorageSync("reg_des").desimage
 				// }
-				if (!(/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/.test(this.inpList[2].text))) {
+				if (!(/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/.test(this.inpList[2]
+						.text))) {
 					uni.showToast({
 						title: "手机号码有误，请重填",
 						icon: "none"
@@ -368,5 +416,17 @@
 			text-align: center;
 			line-height: 70rpx;
 		}
+	}
+
+	.djkshfks {
+		background-color: #e5e5e5;
+		height: 100%;
+		border-radius: 10rpx;
+		width: 200rpx;
+	}
+
+	.annuyt {
+		font-size: 28rpx;
+		margin: 0;
 	}
 </style>

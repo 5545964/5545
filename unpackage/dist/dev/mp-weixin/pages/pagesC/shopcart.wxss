@@ -1,0 +1,383 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.fsdfsfs.data-v-adbed086 {
+  color: #000000;
+}
+.fdsds.data-v-adbed086 {
+  font-size: 22rpx;
+  font-weight: 400;
+  color: #666666;
+}
+page.data-v-adbed086 {
+  background: #f5f5f5;
+}
+view.data-v-adbed086,
+textarea.data-v-adbed086,
+input.data-v-adbed086,
+text.data-v-adbed086,
+button.data-v-adbed086 {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  font-family: "微软雅黑";
+}
+.uni-checkbox-input.data-v-adbed086 {
+  border-radius: 50% !important;
+}
+.submit_btn.data-v-adbed086 {
+  width: 160rpx;
+  height: 70rpx;
+  background: #007399;
+  border-radius: 35rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 70rpx;
+  margin-left: 20rpx;
+}
+.container.data-v-adbed086 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+.line1.data-v-adbed086 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: box;
+  display: -webkit-box;
+  line-clamp: 1;
+  box-orient: vertical;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  /* 英文换行问题 */
+}
+.line2.data-v-adbed086 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: box;
+  display: -webkit-box;
+  line-clamp: 2;
+  box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  /* 英文换行问题 */
+}
+.centerboth.data-v-adbed086 {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.clearfix.data-v-adbed086:after {
+  content: "";
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+}
+.clearfix.data-v-adbed086 {
+  zoom: 1;
+}
+image.data-v-adbed086 {
+  padding: 0;
+  margin: 0;
+}
+textarea.data-v-adbed086 {
+  width: 300rpx;
+  height: 75rpx;
+  display: block;
+  position: relative;
+  font-size: 28rpx;
+}
+button.data-v-adbed086::after {
+  border: none;
+}
+input.data-v-adbed086:-ms-input-placeholder {
+  color: #808080;
+}
+car-list.data-v-adbed086 {
+  width: 100%;
+}
+.navbar .sssss.data-v-adbed086 {
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  width: 166rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.navbar .sssss .dsds.data-v-adbed086 {
+  padding: 20rpx;
+}
+.navbar .sssss .hang.data-v-adbed086 {
+  width: 2rpx;
+  height: 26rpx;
+  background-color: #e5e5e5;
+}
+.navbar .sssss .fanhui.data-v-adbed086 {
+  width: 12rpx;
+  height: 22rpx;
+}
+.navbar .sssss .souye.data-v-adbed086 {
+  width: 26rpx;
+  height: 24rpx;
+}
+
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+@font-face {
+  font-family: 'iconfont';
+  /* project id 1143282 */
+  src: url("https://at.alicdn.com/t/font_1143282_zy7677qexck.eot");
+  src: url("https://at.alicdn.com/t/font_1143282_zy7677qexck.eot?#iefix") format("embedded-opentype"), url("https://at.alicdn.com/t/font_1143282_zy7677qexck.woff2") format("woff2"), url("https://at.alicdn.com/t/font_1143282_zy7677qexck.woff") format("woff"), url("https://at.alicdn.com/t/font_1143282_zy7677qexck.ttf") format("truetype"), url("https://at.alicdn.com/t/font_1143282_zy7677qexck.svg#iconfont") format("svg");
+}
+.iconfont.data-v-adbed086 {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.car-add.data-v-adbed086:before {
+  content: "\e8a6";
+}
+.car-sub.data-v-adbed086:before {
+  content: "\e8a7";
+}
+.car-no.data-v-adbed086:before {
+  content: "\e64d";
+}
+.car-unsel.data-v-adbed086:before {
+  content: "\e63a";
+}
+.car-sel.data-v-adbed086:before {
+  content: "\e639";
+}
+.car-del.data-v-adbed086:before {
+  content: "\e622";
+}
+.car-count.data-v-adbed086 {
+  width: 100%;
+  padding-bottom: 120rpx;
+}
+.manage-btn.data-v-adbed086 {
+  width: 100%;
+  height: 75rpx;
+  background: #FFFFFF;
+  text-align: right;
+}
+.manage-btn text.data-v-adbed086 {
+  font-size: 30rpx;
+  color: #76a28c;
+  line-height: 75rpx;
+  padding: 0 24rpx;
+}
+.all-sel-btn.data-v-adbed086 {
+  height: 100%;
+  float: left;
+}
+.all-sel-btn .iconfont.data-v-adbed086 {
+  margin-right: 10rpx;
+  color: #76a28c;
+}
+.car-list.data-v-adbed086 {
+  width: 100%;
+  padding: 24rpx 24rpx 0 24rpx;
+}
+.car-list .list.data-v-adbed086 {
+  width: 100%;
+  padding: 20rpx 20rpx 20rpx 0;
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 10rpx;
+  border-bottom: 1px solid #F5F5F5;
+}
+.car-list .list.data-v-adbed086:nth-child(1) {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.car-list .list.data-v-adbed086:nth-last-child(1) {
+  margin: 0;
+}
+.car-list .list .btn.data-v-adbed086 {
+  width: 70rpx;
+  height: 190rpx;
+}
+.car-list .list .btn .iconfont.data-v-adbed086 {
+  color: #76a28c;
+  font-size: 38rpx;
+}
+.car-list .list .car-img.data-v-adbed086 {
+  width: 190rpx;
+  height: 190rpx;
+  border-radius: 10rpx;
+}
+.car-list .list .car-mes.data-v-adbed086 {
+  flex: 1;
+  margin-left: 20rpx;
+}
+.car-list .g-name.data-v-adbed086 {
+  font-size: 28rpx;
+  color: #2a2a2a;
+  /* height: 38rpx; */
+}
+.car-list .mes-box.data-v-adbed086 {
+  width: 100%;
+}
+.car-list .gz-box.data-v-adbed086 {
+  font-size: 26rpx;
+  color: #999999;
+  margin: 10rpx 0;
+}
+.car-list .mes-box .price.data-v-adbed086 {
+  color: #ff5621;
+  font-weight: bold;
+  font-size: 24rpx;
+}
+.car-list .mes-box .yj-price.data-v-adbed086 {
+  font-size: 36rpx;
+}
+.car-list .price .num.data-v-adbed086 {
+  color: #2a2a2a;
+  font-size: 28rpx;
+  font-weight: normal;
+  float: right;
+}
+.car-list .num-box.data-v-adbed086 {
+  float: right;
+}
+.car-list .num-box .iconfont.data-v-adbed086 {
+  font-size: 50rpx;
+  color: #999999;
+}
+.car-list .num-box view.data-v-adbed086 {
+  width: 60rpx;
+  text-align: center;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 30rpx;
+  color: #2A2A2A;
+  margin: 0 10rpx;
+}
+.price-change-num .price.data-v-adbed086 {
+  float: left;
+}
+.car-bottom-btn.data-v-adbed086 {
+  position: fixed;
+  width: 100%;
+  height: 100rpx;
+  background: #FFFFFF;
+  left: 0;
+  bottom: 0;
+  z-index: 6;
+  box-shadow: 0px -5px 10px -5px #d0d0d0;
+  padding: 0 300rpx 0 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.car-bottom-btn .all-cost.data-v-adbed086 {
+  margin-right: 10rpx;
+}
+.car-bottom-btn .all-cost .icon.data-v-adbed086 {
+  font-size: 28rpx;
+  margin-top: 5rpx;
+}
+.car-bottom-btn text.data-v-adbed086 {
+  color: #ff5621;
+  font-size: 38rpx;
+  line-height: 80rpx;
+}
+.car-btn-box.data-v-adbed086 {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  z-index: 9;
+  top: 0;
+}
+.car-btn-box view.data-v-adbed086 {
+  width: 150rpx;
+  height: 100%;
+  cursor: pointer;
+}
+.del-btn.data-v-adbed086 {
+  background: red;
+  color: #FFFFFF;
+}
+.js-btn.data-v-adbed086 {
+  background: #76a28c;
+  color: #FFFFFF;
+}
+.shop-mes.data-v-adbed086 {
+  padding: 20rpx;
+  background: #FFFFFF;
+  border-bottom: 1px solid #F5F5F5;
+}
+.shop-mes .iconfont.data-v-adbed086 {
+  font-size: 38rpx;
+  margin-right: 20rpx;
+  color: #76a28c;
+}
+.shop-mes .name-mes.data-v-adbed086 {
+  float: left;
+}
+.car_foot.data-v-adbed086 {
+  width: 100%;
+  height: 100rpx;
+  background: #FFFFFF;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  justify-content: space-between;
+}
+.car_foot .foot_right.data-v-adbed086 {
+  display: flex;
+  align-items: center;
+}
+.car_foot .all_price.data-v-adbed086 {
+  font-size: 26rpx;
+  color: #000000;
+  text-align: right;
+}
+.car_foot .acitvity.data-v-adbed086 {
+  font-size: 18rpx;
+  color: #999;
+}
+.car_foot .submit_btn.data-v-adbed086 {
+  width: 160rpx;
+  height: 70rpx;
+  background: #007399;
+  border-radius: 35rpx;
+  font-size: 30rpx;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 70rpx;
+  margin-left: 20rpx;
+}
+.dksjahk.data-v-adbed086 {
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #000000;
+  line-height: 30rpx;
+}
+

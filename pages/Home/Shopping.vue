@@ -9,8 +9,7 @@
 					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<video id="video" @play="bofang" @pause="pause" @ended="ended"
-							v-if="item.video !=null && item.video != ''"
-							:src="imgurl + item.video"></video>
+							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
@@ -18,7 +17,8 @@
 			<!-- 分类 -->
 			<view class="shop_cls">
 				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)">
-					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;" mode="aspectFit">
+					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;"
+						mode="aspectFit">
 					</image>
 					<view class="">
 						{{item.title}}
@@ -46,7 +46,8 @@
 				</view>
 			</view>
 		</view>
-		<view class="shopcar" @click="tocar">
+		<view class="shopcar" :style="'left: '+bianright+'rpx;top: '+bianheigth+'rpx;'" @touchend="end"
+			@touchmove.stop="move" @click="tocar">
 			<image src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
 			购物车
 			<view class="cart-num" v-if="cart_num !=0">
@@ -86,15 +87,67 @@
 					}
 				],
 				lun_list: [],
-				clsList: []
+				clsList: [],
+				//
+				//移动
+				//
+				system: {},
+				px: 0,
+				widthwidth: 0,
+				tabberheigth: 0,
+				navbarheigth: 0,
+				bianright: 30,
+				bianheigth: 300,
 			};
 		},
 		onShow() {
 			this.videoContext = uni.createVideoContext('video')
 			this.cart_num = uni.getStorageSync("cart_num")
 			this.alls()
+			// 
+			// 移动
+			// 
+			this.system = uni.getSystemInfoSync() //系统参数
+			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
+			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
+				100)); //获取底部tabber和系统留白的高rpx
+			this.px = parseInt(uni.upx2px(100))
+			this.px = parseInt(this.px / (uni.upx2px(100) / 100)) //移动物体高rpx
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - 20 - this.px //最宽边距
+			this.tabberheigth = windows - nn - this.px; //最大下边距
 		},
 		methods: {
+			end() {
+				if (this.bianliang < this.system.screenWidth / 2) {
+					var bb = setInterval(() => {
+						this.bianright = this.bianright - 10;
+						if (this.bianright <= 20) {
+							this.bianright = 20;
+							clearInterval(bb);
+						}
+					}, 10)
+				} else {
+					var bb = setInterval(() => {
+						this.bianright = this.bianright + 10;
+						if (this.bianright >= this.widthwidth) {
+							this.bianright = this.widthwidth
+							clearInterval(bb);
+						}
+					}, 10)
+				}
+			},
+			move(ev) {
+				let touch = ev.touches[0];
+				this.bianliang = touch.clientX
+				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px / 2);
+				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px / 2);
+				if (aa >= 20 && aa <= this.widthwidth) {
+					this.bianright = aa
+				}
+				if (bb >= this.navbarheigth && bb <= this.tabberheigth) {
+					this.bianheigth = bb
+				}
+			},
 			ended(ev) {
 				this.autoplay = true
 			},
@@ -330,8 +383,7 @@
 		font-size: 20rpx;
 		color: #FFFFFF;
 		position: fixed;
-		right: 30rpx;
-		top: 850rpx;
+
 
 	}
 

@@ -72,8 +72,8 @@
 							验证码
 						</view>
 						<view class="cet" style="justify-content: space-between;width: 60%;">
-							<view class="djkshfks" style="background-color: #e5e5e5;">
-								<u-input style="width:100%;height: 100%;" inputAlign="left" size="200" v-model="code"
+							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+								<u-input inputAlign="left" size="200" v-model="code"
 									placeholder="请输入验证码" type="number" />
 							</view>
 							<button class="annuyt" @click="go_code">{{huoqu}}</button>
@@ -536,9 +536,14 @@
 							icon: "none"
 						})
 						if (data.data.code == 1) {
-
-
-							uni.navigateBack(-1)
+							this.$api.myuser({
+								user_id: uni.getStorageSync("user_info").id
+							}).then(data => {
+								if (data.data.code == 1) {
+									uni.setStorageSync("user_info", data.data.data.myuser)
+									uni.navigateBack(-1)
+								}
+							})
 						} else {
 
 						}

@@ -65,7 +65,8 @@
 				</swiper>
 			</view>
 		</view>
-		<u-kehu :heigth="100" :po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
+		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
+		<!--  :heigth="100" :po_hei="100" -->
 	</view>
 </template>
 

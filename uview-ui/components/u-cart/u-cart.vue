@@ -1,7 +1,8 @@
 <template>
 	<view class="main">
-		<view v-for="(item, index) in csListArrl" :key="index" :data-index="index" class="order-item" @click="kanshangping(item)"
-			@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :style="'right:'+item.right+'px'">
+		<view v-for="(item, index) in csListArrl" :key="index" :data-index="index" class="order-item"
+			@click="kanshangping(item)" @touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd"
+			:style="'right:'+item.right+'px'">
 			<view class="content">
 				<image class="img" :src="item.img" mode=""></image>
 				<view class="dasdas">
@@ -52,8 +53,6 @@
 			},
 			//触摸滑动
 			drawMove(e) {
-				console.log(e.currentTarget.offsetLeft);
-				// console.log(e.currentTarget.offsetTop);
 				for (var index in this.csListArrl) {
 					this.$set(this.csListArrl[index], 'right', 0);
 				}
@@ -83,7 +82,7 @@
 			delData(item, index) {
 				this.$emit("click", item, index)
 			},
-			kanshangping(item){
+			kanshangping(item) {
 				this.$emit("kan", item)
 			}
 		}

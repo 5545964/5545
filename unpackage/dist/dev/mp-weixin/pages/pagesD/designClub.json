@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-video": "/uview-ui/components/u-video/u-video",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-dropdown": "/uview-ui/components/u-dropdown/u-dropdown",
+    "u-dropdown-item": "/uview-ui/components/u-dropdown-item/u-dropdown-item",
+    "u-club": "/uview-ui/components/u-club/u-club",
+    "u-parse": "/uview-ui/components/u-parse/u-parse",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-pinglun": "/uview-ui/components/u-pinglun/u-pinglun"
+  }
+}

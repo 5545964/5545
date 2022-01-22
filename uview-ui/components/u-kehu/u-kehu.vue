@@ -64,20 +64,17 @@
 		},
 		mounted() {
 			this.show = this.showsss;
-			this.system = uni.getSystemInfoSync()
-			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100));
+			this.system = uni.getSystemInfoSync(); //系统参数
+			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
 			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
-				100));
-			this.px = parseInt(uni.upx2px(90))
-			this.px = parseInt(this.px / (uni.upx2px(100) / 100))
-			console.log(this.px);
-			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - 20 - this.px
-			this.tabberheigth = windows - nn - this.px;
-			this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100));
-			console.log(this.navbarheigth,this.tabberheigth,"this.navbarheigth,this.tabberheigth,");
+				100)); //获取底部tabber和系统留白的高rpx
+			this.px = parseInt(uni.upx2px(90));
+			this.px = parseInt(this.px / (uni.upx2px(100) / 100)); //移动物体高rpx
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - 20 - this.px; //最宽边距
+			this.tabberheigth = windows - nn - this.px; //最大下边距
+			this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100)); //最大上边距
 			this.bianheigth = this.heigth;
 			this.bianright = this.right;
-			console.log(this.system);
 		},
 		data() {
 			return {
@@ -115,8 +112,8 @@
 			move(ev) {
 				let touch = ev.touches[0];
 				this.bianliang = touch.clientX
-				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px/2);
-				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px/2);
+				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px / 2);
+				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px / 2);
 				if (aa >= 20 && aa <= this.widthwidth) {
 					this.bianright = aa
 				}
