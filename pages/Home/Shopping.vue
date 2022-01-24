@@ -50,7 +50,7 @@
 			@touchmove.stop="move" @click="tocar">
 			<image src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
 			购物车
-			<view class="cart-num" v-if="cart_num !=0">
+			<view class="cart-num" v-if="cart_num !=0 && cart_num">
 				{{cart_num}}
 			</view>
 		</view>
@@ -96,8 +96,8 @@
 				widthwidth: 0,
 				tabberheigth: 0,
 				navbarheigth: 0,
-				bianright: 30,
-				bianheigth: 300,
+				bianright: 0,
+				bianheigth: 600,
 			};
 		},
 		onShow() {
@@ -113,7 +113,8 @@
 				100)); //获取底部tabber和系统留白的高rpx
 			this.px = parseInt(uni.upx2px(100))
 			this.px = parseInt(this.px / (uni.upx2px(100) / 100)) //移动物体高rpx
-			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - 20 - this.px //最宽边距
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px //最宽边距
+			this.bianright = this.widthwidth-20
 			this.tabberheigth = windows - nn - this.px; //最大下边距
 		},
 		methods: {
@@ -121,16 +122,16 @@
 				if (this.bianliang < this.system.screenWidth / 2) {
 					var bb = setInterval(() => {
 						this.bianright = this.bianright - 10;
-						if (this.bianright <= 20) {
-							this.bianright = 20;
+						if (this.bianright <= 0) {
+							this.bianright = 0;
 							clearInterval(bb);
 						}
 					}, 10)
 				} else {
 					var bb = setInterval(() => {
 						this.bianright = this.bianright + 10;
-						if (this.bianright >= this.widthwidth) {
-							this.bianright = this.widthwidth
+						if (this.bianright >= this.widthwidth-20) {
+							this.bianright = this.widthwidth-30
 							clearInterval(bb);
 						}
 					}, 10)
@@ -141,7 +142,7 @@
 				this.bianliang = touch.clientX
 				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px / 2);
 				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px / 2);
-				if (aa >= 20 && aa <= this.widthwidth) {
+				if (aa >= 0 && aa <= this.widthwidth) {
 					this.bianright = aa
 				}
 				if (bb >= this.navbarheigth && bb <= this.tabberheigth) {

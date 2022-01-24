@@ -149,9 +149,10 @@
 					<u-search bg-color="#F2F2F2" @focus="seach_go(888)" v-model="keyword"></u-search>
 				</view> -->
 				<view class="type_list">
-					<view :class="item.check? 'type_item1':'type_item'" v-for="(item,index) in modeList" :key="index"
-						@click="xuanzhesssss(item)">
-						{{item.title}}
+					<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
+						<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
+							{{item.title}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -178,14 +179,7 @@
 			this.getdesproMoenys()
 		},
 		onShow() {
-			this.$api.desmode().then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					this.modeList = data.data.data.status
-				}
-			})
+
 		},
 		data() {
 			return {
@@ -571,6 +565,14 @@
 						this.parsesssss = this.recruit_all[0].content
 					}
 				})
+				this.$api.desmode().then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
+						})
+						this.modeList = data.data.data.status
+					}
+				})
 
 			},
 			// 设计师列表
@@ -772,6 +774,7 @@
 			color: #333;
 			text-align: center;
 			line-height: 70rpx;
+			margin: 20rpx 0;
 		}
 
 		.type_item1 {
@@ -780,10 +783,10 @@
 			background: #007399;
 			border-radius: 35rpx;
 			font-size: 26rpx;
-			color: #333;
 			text-align: center;
 			line-height: 70rpx;
 			color: #FFFFFF;
+			margin: 20rpx 0;
 		}
 	}
 

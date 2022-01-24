@@ -154,8 +154,8 @@
 										</view>
 									</view>
 									<view class="cet">
-										<u-input type="number" v-model="man_data[indexc].age" placeholder="输入年龄">
-										</u-input>
+										<u-input type="number" @click="nianopen(indexc)" disabled
+											v-model="man_data[indexc].age" placeholder="输入年龄" />
 										<view style="padding-left: 10rpx;">
 											岁
 										</view>
@@ -224,6 +224,7 @@
 				</view>
 			</view>
 		</view>
+		<u-select v-model="nianning" mode="single-column" :list="nianlist" @confirm="confirm"></u-select>
 		<view class="annui" v-if="isyuyue == 0" @click="tijiao">
 			提交预约
 		</view>
@@ -258,6 +259,9 @@
 	export default {
 		data() {
 			return {
+				niannum: 0,
+				nianlist: [],
+				nianning: false,
 				shijianshow: false,
 				state: 1,
 				fans: {},
@@ -447,6 +451,12 @@
 			};
 		},
 		onLoad(ev) {
+			for (var i = 1; i <= 100; i++) {
+				this.nianlist.push({
+					value: i,
+					label: i + "岁"
+				})
+			}
 			if (ev.yuyue) {
 				this.isyuyue = ev.yuyue;
 				this.gethomepage(this.yy_id);
@@ -489,6 +499,14 @@
 			})
 		},
 		methods: {
+			nianopen(ev) {
+				console.log(ev);
+				this.niannum = ev
+				this.nianning = true
+			},
+			confirm(ev) {
+				this.man_data[this.niannum].age = ev[0].value
+			},
 			kan1(itemv) {
 				uni.previewImage({
 					urls: [itemv],
@@ -764,26 +782,37 @@
 					uni.requestSubscribeMessage({
 						tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
 						success: function(res) {
-							that.data_list["user_id"] = uni.getStorageSync("user_info").id
-							console.log(!that.data_list.people);
-							let aa = that.data_list.people
-							let bb = []
-							if(!that.data_list.people){
+							that.data_list["user_id"] = uni.getStorageSync("user_info").id;
+							let aa = that.data_list.people;
+							let bb = [];
+							let cc = false;
+							if (!that.data_list.people) {
 								return uni.showToast({
-									title:"请选择人员",
-									duration:1000,
-									icon:"none"
+									title: "请选择人员",
+									duration: 1000,
+									icon: "none"
 								})
 							}
-							aa.forEach((item, index) => {
-								bb.push(item.age + "_" + item.id)
-							})
+							for (let i in aa) {
+								if (aa[i].select != 10000 && aa[i].age != "") {
+									bb.push(aa[i].age + "_" + aa[i].id)
+								} else {
+									cc = true
+									break;
+								}
+							}
+							if (cc) {
+								return uni.showToast({
+									title: "请检查人员选项",
+									icon: "none"
+								})
+							}
 							that.data_list.people = bb
 							let dd = Object.keys(that.data_list).length;
 							if (dd != 15) {
 								return uni.showToast({
-									title:"请检查",
-									icon:"none"
+									title: "请检查",
+									icon: "none"
 								})
 							}
 							that.$api.yydes(that.data_list).then(data => {

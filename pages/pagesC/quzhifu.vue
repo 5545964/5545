@@ -18,7 +18,7 @@
 			<view class="centers cet" style="justify-content: space-between;" @click="seleadd">
 				<image class="img" src="../../static/icon_me_blueaddress.png" mode="aspectFit"></image>
 				<view style="width: 84%;" v-if="address != ''">
-					<view class="cet" style="justify-content: flex-start;margin-bottom: 30rpx;">
+					<view class="cet" style="justify-content: flex-start;">
 						<view class="name">
 							{{address_name}}
 						</view>
@@ -116,17 +116,54 @@
 		</view>
 		<view style="height: 110rpx;"></view>
 		<u-kehu style="position: relative;z-index: 10000;" url="../Home/booking/AppointmentDesign"></u-kehu>
-		<view class="annius">
+		<view class="annius" v-if="buyanzheng">
 			<view class="anniu">
 				<view class="">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
 						class="hejimony">{{tijiaozjia.toFixed(2)}}</text>
 				</view>
-				<view class="button" @click="tongyi(1)">
+				<view class="button" @click="xianshi">
 					提交订单
 				</view>
 			</view>
 		</view>
+		<view class="annius" v-else>
+			<view class="anniu">
+				<view class="">
+					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
+						class="hejimony">{{tijiaozjia.toFixed(2)}}</text>
+				</view>
+				<view class="button" @click="annui()">
+					提交订单
+				</view>
+			</view>
+		</view>
+		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					确保是你本人操作
+				</view>
+				<view class="textss">
+					<input type="number" value="" placeholder="请输入手机号" v-model="shoujihao" />
+				</view>
+				<view class="yanzhengma">
+					<view class="cet" style="justify-content: space-around;width: 100%;">
+						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+						</view>
+						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyis(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="tongyis(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
 			<view class="yueduwo">
 				<view class="text">
@@ -211,6 +248,12 @@
 	export default {
 		data() {
 			return {
+				buyanzheng: true,
+				time: 0,
+				huoqu: "获取验证码",
+				code: "",
+				shoujihao: "",
+				shoujiyanzheng: false,
 				xieyi: [{
 						id: 0,
 						name: "协议协议协议协议",
@@ -295,6 +338,29 @@
 			}
 		},
 		methods: {
+			go_code() {
+				if (this.time == 0) {
+					this.time = 60
+					let aa = setInterval(() => {
+						this.time--
+						this.huoqu = this.time + "s后获取"
+						if (this.time == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
+			xianshi() {
+				this.shoujiyanzheng = true;
+			},
+			tongyis(ev) {
+				if (ev == 1) {
+					this.tongyi(1)
+				} else {
+					this.shoujiyanzheng = false;
+				}
+			},
 			tongyi(ev) {
 				if (ev == 1) {
 					this.xieyi.forEach(item => {
@@ -302,6 +368,7 @@
 					})
 					this.yuedu = true;
 				} else {
+					this.shoujiyanzheng = false;
 					this.yuedu = false;
 				}
 			},
@@ -361,19 +428,22 @@
 				}
 			},
 			annui() {
-				let mm = 0
-				this.xieyi.forEach(item => {
-					if (item.check) {
-						mm++
-					}
-				})
-				if (this.xieyi.length != mm) {
-					return uni.showToast({
-						title: "请阅读并同意协议",
-						icon: "none"
+				if (this.buyanzheng) {
+					let mm = 0
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							mm++
+						}
 					})
+					if (this.xieyi.length != mm) {
+						return uni.showToast({
+							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					this.shoujiyanzheng = false;
+					this.yuedu = false
 				}
-				this.yuedu = false
 				let shopids = []
 				let specidsizes = []
 				let specids = []
@@ -763,8 +833,6 @@
 		}
 
 		.centers {
-			width: 690rpx;
-			height: 160rpx;
 			background: #FFFFFF;
 			border-radius: 10rpx;
 			margin-bottom: 30rpx;
@@ -1008,7 +1076,7 @@
 			padding: 0 26rpx;
 			text-align: center;
 			font-weight: bold;
-			font-size: 26rpx;
+			font-size: 30rpx;
 		}
 
 		.text {
@@ -1016,6 +1084,25 @@
 			line-height: 100rpx;
 			font-weight: bold;
 			font-size: 30rpx;
+		}
+	}
+
+	.yanzhengma {
+		margin: 50rpx 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 230rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
 		}
 	}
 </style>

@@ -231,8 +231,6 @@
   color: #333333;
 }
 .home .centers.data-v-39d613e2 {
-  width: 690rpx;
-  height: 160rpx;
   background: #FFFFFF;
   border-radius: 10rpx;
   margin-bottom: 30rpx;
@@ -436,12 +434,28 @@
   padding: 0 26rpx;
   text-align: center;
   font-weight: bold;
-  font-size: 26rpx;
+  font-size: 30rpx;
 }
 .yueduwo .text.data-v-39d613e2 {
   text-align: center;
   line-height: 100rpx;
   font-weight: bold;
   font-size: 30rpx;
+}
+.yanzhengma.data-v-39d613e2 {
+  margin: 50rpx 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.yanzhengma .djkshfks.data-v-39d613e2 {
+  background-color: #e5e5e5;
+  height: 100%;
+  border-radius: 10rpx;
+  width: 230rpx;
+}
+.yanzhengma .annuyt.data-v-39d613e2 {
+  font-size: 28rpx;
+  margin: 0;
 }
 

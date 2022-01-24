@@ -37,7 +37,7 @@
 			</swiper>
 		</view>
 		<view class="mian">
-			<view class="mian_left" id="mianleft">
+			<view class="mian_left">
 				<scroll-view scroll-y="true" :style="'height: '+heigths+'px;'">
 					<view :class="index%2==0? 'mian_left_item':'mian_left_item1'"
 						:style="active==index?'border-left: 4rpx solid #FD7904;':''" v-for="(item,index) in leftlist"
@@ -49,7 +49,7 @@
 			<view style="width: 86%;overflow: hidden;">
 				<scroll-view scroll-y="true" :style="'height: '+heigths+'px;'">
 					<view v-if="active == 0">
-						<u-designDet :info="desInfo" @click="guanzhu" @dianzhan="dianzhan" @qushejishi="pinglun"
+						<u-designDet id="descard" :info="desInfo" @click="guanzhu" @dianzhan="dianzhan" @qushejishi="pinglun"
 							@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 					</view>
 					<u-parse v-if="active == 1" :html="alls.deslg"></u-parse>
@@ -66,8 +66,7 @@
 							</view>
 							<image class="imhjk" v-if="item.url == '' && shouzhi == 0" src="../../static/gif.gif"
 								mode="aspectFit"></image>
-							<image :src="img+item.image" style="width: 640rpx;" mode="widthFix">
-							</image>
+							<image :src="img+item.image" style="width: 640rpx;" mode="widthFix"></image>
 						</view>
 
 
@@ -147,8 +146,9 @@
 					this.leftlist = [...data.data.data.status];
 					setTimeout(() => {
 						const query = uni.createSelectorQuery().in(this);
-						query.select('#mianleft').boundingClientRect(data => {
-							// this.heigths = data.height
+						query.select('#descard').boundingClientRect(data => {
+							console.log(data.height);
+							this.heigths = data.height
 						}).exec();
 					}, 1000)
 				}
@@ -518,6 +518,7 @@
 			box-sizing: border-box;
 			width: 100rpx;
 			background: #305166;
+			border-left: 4rpx solid #305166;
 		}
 
 		.mian_left_item1 {
@@ -527,6 +528,7 @@
 			box-sizing: border-box;
 			width: 100rpx;
 			background: #376379;
+			border-left: 4rpx solid #376379;
 		}
 	}
 

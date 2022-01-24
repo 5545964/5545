@@ -36,7 +36,7 @@
 		<!-- 设计师 -->
 		<view class="designer" @click="qushejishi">
 			<view class="designer_left">
-				<image class="imgd" :src="alls.avatar" mode=""></image>
+				<image class="imgd" @click="kan(alls.avatar)" :src="alls.avatar" mode=""></image>
 			</view>
 			<view class="" style="width: 70%;">
 				<view class="type_list">
@@ -130,6 +130,16 @@
 			this.alls = this.info
 		},
 		methods: {
+			kan(ev) {
+				uni.previewImage({
+					urls: [ev],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
 			kantupian(ev) {
 				let aa = [this.swiperList[ev]]
 				uni.previewImage({

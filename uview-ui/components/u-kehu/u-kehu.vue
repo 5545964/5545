@@ -1,14 +1,31 @@
 <template>
-	<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
-		:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
-		<view class="" @click="click">
-			<view class="cet">
-				<view class="dasds">
-					<image :src="img" mode="aspectFit"></image>
+	<view class="">
+		<view class="">
+			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
+				:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
+				<view class="" @click="click">
+					<view class="cet">
+						<view class="dasds">
+							<image :src="img" mode="aspectFit"></image>
+						</view>
+					</view>
+					<view class="dad cet">
+						{{title}}
+					</view>
 				</view>
 			</view>
-			<view class="dad cet">
-				{{title}}
+		</view>
+		<view class="">
+			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
+				:style="'top: '+(bianheigth+100)+'rpx;left: '+bianright+'rpx;'">
+				<view class="" @click="xianshiqianggou">
+					<view class="cet">
+						<image class="dasds" :src="xianshiqianggouimg" mode="aspectFit"></image>
+					</view>
+					<view class="dad cet" style="width:60rpx;text-align: center;margin-top: 0;">
+						限时抢购
+					</view>
+				</view>
 			</view>
 		</view>
 		<u-popup v-model="show" mode="bottom" @close="show = false">
@@ -37,13 +54,17 @@
 				type: String,
 				default: require('@/static/icon_home_kefu_ico.png')
 			},
+			xianshiqianggouimg: {
+				type: String,
+				default: require('@/static/xianshiqiaonggoua.png')
+			},
 			heigth: {
 				type: Number,
-				default: 1144
+				default: 300
 			},
 			right: {
 				type: Number,
-				default: 640
+				default: 0
 			},
 			po_hei: {
 				type: Number,
@@ -61,20 +82,34 @@
 				type: Boolean,
 				default: false
 			},
+			navis: {
+				type: Boolean,
+				default: true
+			},
+			xianshiqianggouurl: {
+				type: String,
+				default: "../pagesC/promotion"
+			},
 		},
 		mounted() {
 			this.show = this.showsss;
 			this.system = uni.getSystemInfoSync(); //系统参数
-			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
+			let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
 			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
 				100)); //获取底部tabber和系统留白的高rpx
 			this.px = parseInt(uni.upx2px(90));
 			this.px = parseInt(this.px / (uni.upx2px(100) / 100)); //移动物体高rpx
-			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - 20 - this.px; //最宽边距
-			this.tabberheigth = windows - nn - this.px; //最大下边距
-			this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100)); //最大上边距
-			this.bianheigth = this.heigth;
-			this.bianright = this.right;
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px; //最宽边距
+			if (this.navis) {
+				this.tabberheigth = windows - nn - this.px - this.px; //最大下边距
+				this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100)); //最大上边距
+			} else {
+				this.tabberheigth = windows - nn - this.px - parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(
+					100) / 100)); //最大下边距
+				this.navbarheigth = 0
+			}
+			this.bianheigth = this.tabberheigth - 300;
+			this.bianright = this.widthwidth;
 		},
 		data() {
 			return {
@@ -94,8 +129,8 @@
 				if (this.bianliang < this.system.screenWidth / 2) {
 					var bb = setInterval(() => {
 						this.bianright = this.bianright - 10;
-						if (this.bianright <= 20) {
-							this.bianright = 20;
+						if (this.bianright <= 0) {
+							this.bianright = 0;
 							clearInterval(bb);
 						}
 					}, 10)
@@ -114,7 +149,7 @@
 				this.bianliang = touch.clientX
 				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px / 2);
 				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px / 2);
-				if (aa >= 20 && aa <= this.widthwidth) {
+				if (aa >= 0 && aa <= this.widthwidth) {
 					this.bianright = aa
 				}
 				if (bb >= this.navbarheigth && bb <= this.tabberheigth) {
@@ -138,6 +173,11 @@
 						break;
 					default:
 				}
+			},
+			xianshiqianggou() {
+				uni.navigateTo({
+					url: this.xianshiqianggouurl
+				})
 			},
 			click(ev) {
 				this.show = true;

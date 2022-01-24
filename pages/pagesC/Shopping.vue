@@ -331,7 +331,7 @@
 				关闭
 			</view>
 		</u-popup>
-		<u-kehu url="../Home/booking/AppointmentDesign" heigth="1080"></u-kehu>
+		<u-kehu url="../Home/booking/AppointmentDesign" ></u-kehu>
 	</view>
 </template>
 

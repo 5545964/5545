@@ -145,7 +145,7 @@
 			</view>
 		</u-popup>
 		<!-- 筛选弹窗 -->
-		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
+		<u-popup v-model="show" mode="bottom" length="70%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
 				<!-- <view class="seath">
@@ -830,6 +830,7 @@
 			color: #333;
 			text-align: center;
 			line-height: 70rpx;
+			margin: 20rpx 0;
 		}
 
 		.type_item1 {
@@ -838,10 +839,10 @@
 			background: #007399;
 			border-radius: 35rpx;
 			font-size: 26rpx;
-			color: #333;
 			text-align: center;
 			line-height: 70rpx;
 			color: #FFFFFF;
+			margin: 20rpx 0;
 		}
 	}
 

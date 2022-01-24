@@ -115,26 +115,8 @@
 				img: this.$imgPath
 			};
 		},
-		onLoad() {
-			this.allsss();
-		},
 		onShow() {
-			this.$api.shopcart({
-				id: uni.getStorageSync("user_info").id
-			}).then(data => {
-				let aa = 0
-				if (data.data.code == 1) {
-
-					data.data.data.status.forEach(item => {
-						aa = aa + 1
-					})
-				}
-				if (aa >= 99) {
-					aa = "..."
-				}
-
-				uni.setStorageSync("cart_num", aa)
-			})
+			this.allsss();
 		},
 		watch: {},
 		mounted() {
@@ -153,10 +135,17 @@
 						})
 						this.carList = [...aa]
 						this.getAllMount();
+						let bb = 0
+						data.data.data.status.forEach(item => {
+							bb = bb + 1
+						})
+						if (bb >= 99) {
+							bb = "..."
+						}
 					} else {
 						this.carList = [];
 						this.allAmount = 0;
-
+						uni.setStorageSync("cart_num", 0)
 					}
 				})
 			},

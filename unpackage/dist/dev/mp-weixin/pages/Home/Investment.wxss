@@ -113,6 +113,7 @@
   color: #333;
   text-align: center;
   line-height: 70rpx;
+  margin: 20rpx 0;
 }
 .mids .type_item1.data-v-c060bdcc {
   width: 210rpx;
@@ -120,10 +121,10 @@
   background: #007399;
   border-radius: 35rpx;
   font-size: 26rpx;
-  color: #333;
   text-align: center;
   line-height: 70rpx;
   color: #FFFFFF;
+  margin: 20rpx 0;
 }
 .seath.data-v-c060bdcc {
   margin: 40rpx 30rpx 30rpx;

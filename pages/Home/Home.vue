@@ -30,7 +30,16 @@
 				</swiper>
 			</view>
 			<u-adata :list="data_list" @click="go_shop"></u-adata>
-			<u-kehu :showsss='show'></u-kehu>
+		<!-- 	<u-kehu 
+			:px="px" 
+			:zhongjian="zhongjian" 
+			:widthwidth="widthwidth" 
+			:heigth="navbarheigth"
+			:navbarheigth="navbarheigth" 
+			:tabberheigth="tabberheigth" 
+			:showsss='show'
+			></u-kehu> -->
+			<u-kehu :showsss='show' ></u-kehu>
 			<tab-bar @tabbers="dsad"></tab-bar>
 		</view>
 		<u-popup v-model="showssss" mode="center" border-radius="20">
@@ -57,11 +66,21 @@
 </template>
 <script>
 	export default {
-		name: '',
-		props: {},
-		components: {},
 		data() {
 			return {
+				//
+				//
+				//
+				zhongjian: 0,
+				system: 0,
+				px: 0,
+				widthwidth: 0,
+				tabberheigth: 0,
+				navbarheigth: 0,
+				navbar: 0,
+				//
+				//
+				//
 				videoContext: "",
 				autoplay: true,
 				showssss: false,
@@ -269,10 +288,28 @@
 					}
 				})
 				//轮播图
-			}
+			},
+			yidong() {
+				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
+					uni.setStorageSync("navbarheigth", data.height)
+				}).exec();//顶部自定义navber高
+				this.system = uni.getSystemInfoSync(); //系统参数
+				this.zhongjian = parseInt(this.system.screenWidth / 2)
+				let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
+				let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(
+					100) / 100)); //获取底部tabber和系统留白的高rpx
+				this.px = parseInt(uni.upx2px(90));
+				this.px = parseInt(this.px / (uni.upx2px(100) / 100)); //移动物体高rpx
+				this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px; //最宽边距
+				this.tabberheigth = windows - nn - this.px; //最大下边距
+				this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100)); //最大上边距
+				console.log(this.tabberheigth, this.navbarheigth, windows, nn, this.px);
+			},
 		},
 		onLoad() {
-
+			uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
+				uni.setStorageSync("navbarheigth", data.height)
+			}).exec();//顶部自定义navber高
 			uni.setStorageSync("shouzhi", 0)
 			const res = uni.getSystemInfoSync()
 			// let that = this;
@@ -283,6 +320,7 @@
 			this.videoContext = uni.createVideoContext('video')
 		},
 		onShow() {
+			// this.yidong()
 			this.alls()
 			//购物车数量
 			this.$api.shopcart({
@@ -311,10 +349,7 @@
 					})
 				}
 			})
-			const query = uni.createSelectorQuery().in(this);
-			query.select('#navbar').boundingClientRect(data => {
-				uni.setStorageSync("navbarheigth", data.height)
-			}).exec();
+
 		},
 		watch: {},
 		computed: {},

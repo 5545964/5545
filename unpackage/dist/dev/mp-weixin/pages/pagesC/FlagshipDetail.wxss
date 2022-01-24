@@ -124,6 +124,7 @@
   box-sizing: border-box;
   width: 100rpx;
   background: #305166;
+  border-left: 4rpx solid #305166;
 }
 .mian .mian_left_item1 {
   font-size: 26rpx;
@@ -132,6 +133,7 @@
   box-sizing: border-box;
   width: 100rpx;
   background: #376379;
+  border-left: 4rpx solid #376379;
 }
 .flag_foot {
   width: 100%;

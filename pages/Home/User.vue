@@ -173,7 +173,7 @@
 				切换设计师
 			</view>
 		</view>
-		<u-kehu heigth="980"></u-kehu>
+		<u-kehu :navis="false"></u-kehu>
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -187,7 +187,7 @@
 				img: this.$imgPath,
 				user_info: "",
 				// num_list: ["", "", "", ""],
-				num_list: ["", "", "", "",""],
+				num_list: ["", "", "", "", ""],
 				gongju_list: [{
 						name: "收货地址",
 						url: "../pagesA/gongju0"
@@ -286,6 +286,20 @@
 			}
 		},
 		methods: {
+			yidong() {
+				this.system = uni.getSystemInfoSync(); //系统参数
+				this.zhongjian = parseInt(this.system.screenWidth / 2)
+				let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
+				let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(
+					100) / 100)); //获取底部tabber和系统留白的高rpx
+				this.px = parseInt(uni.upx2px(90));
+				this.px = parseInt(this.px / (uni.upx2px(100) / 100)); //移动物体高rpx
+				this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px; //最宽边距
+				this.tabberheigth = windows - nn - this.px - parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(
+					100) / 100)); //最大下边距
+				this.navbarheigth = 0
+				console.log(this.tabberheigth, this.navbarheigth, windows, nn, this.px);
+			},
 			shuliang(ev) {
 				this.$api.mymake({
 					user_id: ev,

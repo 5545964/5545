@@ -16,7 +16,7 @@
 		<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<view class="home">
 			<view v-if="current == 0">
-				<view v-for="(item,index) in data_list" :key="index" @click="go(item)">
+				<view v-for="(item,index) in data_list" :key="index">
 					<view class="xunhuan">
 						{{item.time}}
 					</view>
@@ -114,8 +114,7 @@
 				if (data.data.code == 1) {
 					let indexss=-1
 					data.data.data.status.forEach((item, index) => {
-						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
-							.create_at.split(" ")[0]) {
+						if (index > 0 && item.stime_text.split(" ")[0] == data.data.data.status[index - 1].stime_text.split(" ")[0]) {
 							this.data_lists[indexss].list.push({
 								title: item.name,
 								text: item.content

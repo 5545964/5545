@@ -17,6 +17,7 @@
 			<view class="text">
 				身份选择
 			</view>
+			<button type="default" @click="kankan">123</button>
 			<swiper v-if="list.length != 0" indicator-active-color="#D8AE5F" indicator-color="#000000"
 				:style="'height: '+hei+'px;'" @change="lunbo" :indicator-dots="true" :circular="true" :duration="500">
 				<swiper-item v-for="(item,index) in list" :key="index">
@@ -81,6 +82,11 @@
 			this.getdata()
 		},
 		methods: {
+			kankan(){
+				console.log(uni.getStorageSync("des_info"));
+				console.log("321312321321312321312313123213");
+				console.log(uni.getStorageSync("user_info"));
+			},
 			topay() {
 				this.$api.buylevel({
 					id: this.id,
