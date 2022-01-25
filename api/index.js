@@ -1,6 +1,10 @@
 import request from "./request.js"
 
 export default {
+	// 删除订单bydshop/deleorder 
+	deleorder(params = {}) {
+		return request.post("/api/bydshop/deleorder", params);
+	},
 	// 实名认证/api/bydshop/realname
 	realname(params = {}) {
 		return request.post("/api/bydshop/realname", params);

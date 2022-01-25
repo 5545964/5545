@@ -186,8 +186,8 @@
 				user_info_id: "",
 				img: this.$imgPath,
 				user_info: "",
-				// num_list: ["", "", "", ""],
-				num_list: ["", "", "", "", ""],
+				num_list: ["", "", "", ""],
+				// num_list: ["", "", "", "", ""],
 				gongju_list: [{
 						name: "收货地址",
 						url: "../pagesA/gongju0"
@@ -243,39 +243,50 @@
 					}
 				],
 				list: [{
-						// id: 1,
-						// name: "待付款",
-						id: 0,
-						name: "代发货"
-					},
-					{
-						// id: 2,
-						// name: "待发货"
 						id: 1,
-						name: "发货中"
+						name: "待付款",
 					},
-
 					{
-						// id: 3,
-						// name: "待收货"
 						id: 2,
-						name: "已收货"
+						name: "待发货"
 					},
 
 					{
-						// id: 4,
-						// name: "待评价"
 						id: 3,
-						name: "报装中"
+						name: "待收货"
 					},
 					{
-						// id: 0,
-						// name: "全部订单"
 						id: 4,
-						name: "已安装"
-
+						name: "待评价"
+					},
+					{
+						id: 0,
+						name: "全部订单"
 					}
 				],
+				// list: [{
+				// 		id: 0,
+				// 		name: "代发货"
+				// 	},
+				// 	{
+				// 		id: 1,
+				// 		name: "发货中"
+				// 	},
+				
+				// 	{
+				// 		id: 2,
+				// 		name: "已收货"
+				// 	},
+				
+				// 	{
+				// 		id: 3,
+				// 		name: "报装中"
+				// 	},
+				// 	{
+				// 		id: 4,
+				// 		name: "已安装"
+				// 	}
+				// ],
 			};
 		},
 		onShow() {

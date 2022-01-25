@@ -15,7 +15,7 @@
 		</view>
 		<!-- 轮播 -->
 		<view class="lunbo">
-			<u-swiper height="750" :border-radius="0" :list="list" :img-mode="'scaleToFill'"></u-swiper>
+			<u-swiper height="750" :border-radius="0" @click="kansss" :list="list" :img-mode="'scaleToFill'"></u-swiper>
 		</view>
 		<!-- 轮播 -->
 		<view class="datas">
@@ -331,7 +331,7 @@
 				关闭
 			</view>
 		</u-popup>
-		<u-kehu url="../Home/booking/AppointmentDesign" ></u-kehu>
+		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
 	</view>
 </template>
 
@@ -430,6 +430,18 @@
 			}
 		},
 		methods: {
+			kansss(ev) {
+				console.log(ev, );
+				let that = this;
+				uni.previewImage({
+					urls: this.list,
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
 			kan(ev) {
 				let that = this;
 				uni.previewImage({
@@ -481,7 +493,7 @@
 						specidsize: this.alls.son[this.isSize].spections,
 						num: this.value,
 						price: this.alls.son[this.isSize].xc_price,
-						orderid:this.orderid
+						orderid: this.orderid
 					}).then(data => {
 						if (data.data.code == 1) {
 							let aa = this.show
@@ -524,6 +536,7 @@
 							specid: this.alls.son[this.isSize].id,
 							specidsize: this.alls.son[this.isSize].spections,
 						}]
+						console.log(this.alls,"alls");
 						uni.navigateTo({
 							url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) +
 								"&yf=" +
@@ -599,7 +612,7 @@
 						// 富文本图片加域名
 						if (this.alls.content != '') {
 							this.alls.content = this.alls.content.replace(/\<img src=\"/gi,
-								'<img src=\"http://bao.scwushen.com');
+								'<img src=\"' + this.$imgPath);
 						}
 						let image = data.data.data.status[0].image.split(",");
 						// 图片加域名

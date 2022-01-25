@@ -5,13 +5,18 @@
 				style="width: 16rpx;height: 10rpx;margin-left: 12rpx;" mode=""></image>
 		</view>
 		<!-- 设计列表 -->
-		<view class="design_list" v-if="cad.length != 0">
+		<!-- <view class="design_list" v-if="cad.length != 0">
 			<view class="" v-for="item in cad" :key="item">
 				<u-design-card :list="item" />
 			</view>
-		</view>
+		</view> 
+		<u-empty v-else></u-empty> -->
+		<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
+			@dianzhan="dianzhan"></u-video>
 		<u-empty v-else></u-empty>
 		<!-- 弹窗 -->
+		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="changd"
+			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
 		<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
@@ -43,30 +48,205 @@
 				default () {
 					return []
 				}
+			},
+			pages: {
+				type: Number,
+				default: 0
 			}
 		},
 		data() {
 			return {
+				dsaa: {},
+				pinglun_list: [],
+				showComment: false,
+				dianzhansssss: false,
+				video: [],
 				hahah: [],
 				show: false,
 				sel_list: [],
 				list: [],
-				cad: []
+				cad: [],
+				pagess: 0
 			};
 		},
 		watch: {
 			fenlei(val) {
 				this.list = [...this.fenlei];
-			}
+			},
+			pages(val) {
+				this.alls()
+			},
 		},
 		mounted() {
+			this.pagess = this.pages
 			this.list = [...this.fenlei];
 			this.list.forEach(item => {
 				this.sel_list.push("")
 			})
-			this.chang(0)
+			console.log(this.list);
+			// this.chang(0)
+			this.alls(0)
 		},
 		methods: {
+			allsa() {
+				this.$api.enjoy({
+					user_id: uni.getStorageSync("user_info").id,
+					type: 3,
+					page: this.pagess,
+					limit: 10
+				}).then(data => {
+					let aa = []
+					data.data.data.status.data.forEach(item => {
+						item["iszan"] = false
+						item["isfollow"] = false
+						if (item.zans) {
+							item.iszan = true
+						}
+						if (item.follow) {
+							item.isfollow = true
+						}
+						item.video = this.$imgPath + item.video
+						if (item.state == "2") {
+							aa.push(item)
+						}
+					})
+					this.video = aa
+					if (this.dianzhansssss) {
+						this.pinglunaa(this.video[this.indexdas], this.indexdas)
+					}
+				})
+			},
+			alls() {
+				this.$api.enjoy({
+					user_id: uni.getStorageSync("user_info").id,
+					type: 3,
+					page: this.pages,
+					limit: 10
+				}).then(data => {
+					let aa = []
+					data.data.data.status.data.forEach(item => {
+						if (item.state == "2") {
+							item["iszan"] = false
+							item["isfollow"] = false
+							if (item.zans) {
+								item.iszan = true
+							}
+							if (item.follow) {
+								item.isfollow = true
+							}
+							item.video = this.$imgPath + item.video
+							aa.push(item)
+							console.log(aa,"aa",aa.length);
+						}
+					})
+					if (aa.length > 0) {
+						this.video = [...this.video, ...aa]
+						return
+					} else {
+						this.pages = this.pages + 1
+						this.pagess = this.pages;
+					}
+					// if (this.dianzhansssss) {
+					// 	this.pinglunaa(this.video[this.indexdas], this.indexdas)
+					// }
+				})
+			},
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.pagess = this.pages
+					this.dianzhansssss = true
+					this.indexdas = index
+					this.pinglun_list = []
+					this.pinglun_list = ev.pl
+					this.pinglun_list.forEach(item => {
+						item["checked"] = false
+					})
+					this.showComment = true;
+					this.itemsss = ev;
+				}
+			},
+			// 点赞
+			async dianzhan(ev) {
+				if (await this.$login()) {
+					this.dianzhansssss = false
+					let type = ev.zans ? 1 : 0;
+					this.$api.zan({
+						state: 0,
+						video_id: ev.id,
+						user_id: uni.getStorageSync("user_info").id,
+						type: type
+					}).then(data => {
+						if (data.data.code == 1) {
+							ev.iszan = !ev.iszan
+							// this.alls()
+						}
+					})
+				}
+			},
+			// 收藏
+			async collection(ev) {
+				if (await this.$login()) {
+					let state = ev.isfollow ? 1 : 0;
+					this.$api.addfollow({
+						type: 1,
+						user_id: uni.getStorageSync("user_info").id,
+						shop_id: 0,
+						video_id: ev.id,
+						state: state
+					}).then(data => {
+
+						if (data.data.code == 1) {
+							ev.isfollow = !ev.isfollow
+						}
+					})
+				}
+			},
+			guanbi() {
+				this.showComment = false;
+			},
+			changd(text, pla) {
+				if (pla == "发表评论请文明用语") {
+					this.$api.indexpl({
+						userid: uni.getStorageSync("user_info").id,
+						content: text,
+						image: "#",
+						state: 1,
+						id: this.itemsss.id
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.allsa()
+						} else {
+							uni.showToast({
+								title: "评论失败",
+								icon: "none"
+							})
+						}
+					})
+				} else {
+					this.$api.indexplhf({
+						pl_id: this.dsaa.pl_id,
+						pl_user_id: this.dsaa.pl_user_id,
+						userid: uni.getStorageSync("user_info").id,
+						content: text,
+						image: "#",
+						state: 1,
+						id: this.itemsss.id
+					}).then(data => {
+						if (data.data.code == 1) {
+
+							this.alls()
+						} else {
+							uni.showToast({
+								title: "评论失败",
+								icon: "none"
+							})
+						}
+					})
+				}
+			},
+			pingjia(item) {
+				this.dsaa = item
+			},
 			guan() {
 				this.show = false;
 			},
@@ -91,7 +271,7 @@
 							this.cad.push({
 								simage: item.image,
 								name: item.title,
-								id:item.id
+								id: item.id
 							})
 						})
 						console.log(this.cad);

@@ -14,9 +14,11 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class="car-count">
-			<view class="car-list" v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex">
-				<view class="list" style="border-radius: 20rpx;">
+		<view class="huadong">
+			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
+				@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :data-index="shopIndex"
+				:style="'right:'+item.right+'px'">
+				<view class="list"  :class="{ 'aaaaaaaaaa': item.right == 0 }">
 					<view class="btn centerboth" v-if="item.selected==true" @click="selThis(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
@@ -28,7 +30,7 @@
 						<view class="mes-box">
 							<view class="g-name line2">{{item.shop.name}}</view>
 							<view class="price-change-num clearfix">
-								<view class="price">￥<text class="yj-price">{{item.shop.xc_price}}</text></view>
+								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
 								<view class="num-box centerboth">
 									<text class="iconfont car-sub" @click="changeNum(0,shopIndex)"></text>
 									<view>{{item.num}}</view>
@@ -36,73 +38,77 @@
 								</view>
 							</view>
 							<text class="fdsds"> 合计：</text><text
-								class="fsdfsfs fdsds">￥{{(item.num * item.shop.xc_price).toFixed(2)}}</text>
+								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)}}</text>
 						</view>
 					</view>
+				</view>
+				<view class="hdjsah">
+					<view class="remove" @click="delData(item,shopIndex)">删除</view>
 				</view>
 			</view>
 			<u-empty v-else></u-empty>
-			<!-- 底部合计 -->
-			<!-- <view class="" v-if="cartssss"
-				style="display: flex;background-color: #FFFFFF;position: fixed;bottom: 100rpx;padding: 0 30rpx;left: 0;right: 0;">
-				<view class="dksjahk">
-					定金:￥0
-				</view>
-				<view class="dksjahk">
-					定金:￥0
-				</view>
-			</view> -->
-			<view class="car_foot">
-				<!-- <label class="radio">
-					<radio value="" style="transform: scale(0.7);" /><text>全选</text>
-				</label> -->
-				<view class="all-sel-btn centerboth">
-					<text v-if="allSel==true" class="iconfont car-sel" @click="allSelBtn"></text>
-					<text v-else class="iconfont car-unsel" @click="allSelBtn"></text>
-					<text @click="allSelBtn">全选</text>
-					<text v-if="cartssss" style="color: #E11915;display: inline-block;margin-left: 10rpx;"
-						@click="sanchu">删除</text>
-				</view>
-				<view class="foot_right">
-					<view class="">
-						<view class="all_price">
-							合计：<text style="color: #E11915;">￥{{allAmount.toFixed(2)}}</text>
-						</view>
-						<view class="acitvity">
-							(不含运费，优惠金额见结算页面)
-						</view>
+		</view>
+		<!-- 底部合计 -->
+		<!-- <view class="" v-if="cartssss"
+			style="display: flex;background-color: #FFFFFF;position: fixed;bottom: 100rpx;padding: 0 30rpx;left: 0;right: 0;">
+			<view class="dksjahk">
+				定金:￥0
+			</view>
+			<view class="dksjahk">
+				定金:￥0
+			</view>
+		</view> -->
+		<view class="car_foot">
+			<!-- <label class="radio">
+				<radio value="" style="transform: scale(0.7);" /><text>全选</text>
+			</label> -->
+			<view class="all-sel-btn centerboth">
+				<text v-if="allSel==true" class="iconfont car-sel" @click="allSelBtn"></text>
+				<text v-else class="iconfont car-unsel" @click="allSelBtn"></text>
+				<text @click="allSelBtn">全选</text>
+				<text v-if="cartssss" style="color: #E11915;display: inline-block;margin-left: 10rpx;"
+					@click="sanchu">删除</text>
+			</view>
+			<view class="foot_right">
+				<view class="">
+					<view class="all_price">
+						合计：<text style="color: #E11915;">￥{{allAmount.toFixed(2)}}</text>
 					</view>
-					<view class="submit_btn" @click="jsCars">
-						结算
+					<view class="acitvity">
+						(不含运费，优惠金额见结算页面)
 					</view>
+				</view>
+				<view class="submit_btn" @click="jsCars">
+					结算
 				</view>
 			</view>
-			<!-- <view class="car-bottom-btn">
-				<view class="all-sel-btn centerboth" @click="allSelBtn">
-					<text v-if="allSel==true" class="iconfont car-sel"></text>
-					<text v-else class="iconfont car-unsel"></text>
-					全选
-				</view>
-				<view class="all-cost centerboth">
-					合计:<text class="icon">￥</text><text class="money">{{allAmount}}</text>
-				</view>
-				<view class="car-btn-box centerboth">
-					<view class="del-btn centerboth" @click="delCars">删除</view>
-					<view class="submit_btn" @click="jsCars">
-						结算({{allNumber}})
-					</view>
-				</view>
-			</view> -->
-			<mask-model ref="askmodel" btnType="1" @confirm="confirm" @cancel="cancel" titleColoe="#666666"
-				cancelColor="#666666" confirmColor="#007AFF" :maskTitle="maskTitle"></mask-model>
 		</view>
+		<!-- <view class="car-bottom-btn">
+			<view class="all-sel-btn centerboth" @click="allSelBtn">
+				<text v-if="allSel==true" class="iconfont car-sel"></text>
+				<text v-else class="iconfont car-unsel"></text>
+				全选
+			</view>
+			<view class="all-cost centerboth">
+				合计:<text class="icon">￥</text><text class="money">{{allAmount}}</text>
+			</view>
+			<view class="car-btn-box centerboth">
+				<view class="del-btn centerboth" @click="delCars">删除</view>
+				<view class="submit_btn" @click="jsCars">
+					结算({{allNumber}})
+				</view>
+			</view>
+		</view> -->
+		<mask-model ref="askmodel" btnType="1" @confirm="confirm" @cancel="cancel" titleColoe="#666666"
+			cancelColor="#666666" confirmColor="#007AFF" :maskTitle="maskTitle"></mask-model>
 	</view>
-
 </template>
+
 <script>
 	export default {
 		data() {
 			return {
+				yunfei: 0,
 				cartssss: false,
 				title: "购物车",
 				maskTitle: '',
@@ -112,14 +118,12 @@
 				delIds: '', //要删除的购物车id
 				btnType: 0, //0删除  1结算
 				carList: [],
-				img: this.$imgPath
-			};
+				img: this.$imgPath,
+				delBtnWidth: 65
+			}
 		},
 		onShow() {
 			this.allsss();
-		},
-		watch: {},
-		mounted() {
 			this.getAllMount();
 		},
 		methods: {
@@ -129,10 +133,18 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = []
+						this.yunfei = 0
 						data.data.data.status.forEach((item, index) => {
 							item["selected"] = false
+							item["right"] = 0
 							aa.push(item)
+							if (index > 0 && item.shop.id == data.data.data.status[index - 1].shop
+								.id) {} else {
+								this.yunfei = this.yunfei + Number(item.shop.yf)
+							}
 						})
+						console.log("yunfei", this.yunfei);
+						this.carList = []
 						this.carList = [...aa]
 						this.getAllMount();
 						let bb = 0
@@ -184,19 +196,6 @@
 					}
 				})
 			},
-			back(ev) {
-				switch (ev) {
-					case 0:
-						uni.navigateBack(-1)
-						break;
-					case 1:
-						uni.switchTab({
-							url: "/pages/Home/Home"
-						})
-						break;
-					default:
-				}
-			},
 			confirm: function() { //确定按钮
 				var that = this;
 
@@ -212,7 +211,6 @@
 			},
 			jsCars: function() {
 				let data = []
-
 				this.carList.forEach(item => {
 					if (item.selected) {
 						data.push({
@@ -223,7 +221,8 @@
 							specid: item.specid,
 							specidsize: item.specidsize,
 							num: Number(item.num),
-							xc_price: Number(item.shop.xc_price)
+							xc_price: Number(item.price),
+							orderid: item.orderid
 						})
 					}
 				})
@@ -233,9 +232,8 @@
 						icon: "none"
 					})
 				}
-
 				uni.navigateTo({
-					url: "./quzhifu?goodsdata=" + JSON.stringify(data) + "&iscartid=0"
+					url: "./quzhifu?goodsdata=" + JSON.stringify(data) + "&iscartid=0&yf=" + this.yunfei
 				})
 
 			},
@@ -342,8 +340,8 @@
 				for (let i = 0; i < carList.length; i++) {
 					if (carList[i].selected == true) {
 						selNum = selNum + Number(carList[i].num);
-						allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].shop.xc_price));
-
+						// allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].shop.xc_price));
+						allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].price));
 					}
 				}
 				that.allNumber = selNum;
@@ -394,172 +392,90 @@
 				this.carList = [...carList]
 				that.getAllMount();
 			},
+
+
+
+
+
+			//开始触摸滑动
+			drawStart(e) {
+				var touch = e.touches[0];
+				this.startX = touch.clientX;
+			},
+			//触摸滑动
+			drawMove(e) {
+				for (var index in this.carList) {
+					this.$set(this.carList[index], 'right', 0);
+				}
+				var touch = e.touches[0];
+				var item = this.carList[e.currentTarget.dataset.index];
+				var disX = this.startX - touch.clientX;
+				if (disX >= 20) {
+					if (disX > this.delBtnWidth) {
+						disX = this.delBtnWidth;
+					}
+					this.$set(this.carList[e.currentTarget.dataset.index], 'right', disX);
+				} else {
+					this.$set(this.carList[e.currentTarget.dataset.index], 'right', 0);
+				}
+			},
+			//触摸滑动结束
+			drawEnd(e) {
+				var item = this.carList[e.currentTarget.dataset.index];
+				if (item.right >= this.delBtnWidth / 2) {
+					this.$set(this.carList[e.currentTarget.dataset.index], 'right', this.delBtnWidth);
+				} else {
+					this.$set(this.carList[e.currentTarget.dataset.index], 'right', 0);
+				}
+			},
+			//删除方法
+			delData(item, index) {
+				console.log(item, index);
+				this.$api.cartdel({
+					id: item.id
+				}).then(data => {
+					uni.showToast({
+						title: data.data.msg,
+						duration: 1000,
+						icon: "none"
+					})
+					if (data.data.code == 1) {
+						this.allsss()
+						this.$api.shopcart({
+							id: uni.getStorageSync("user_info").id
+						}).then(data => {
+							let aa = 0
+							if (data.data.code == 1) {
+								data.data.data.status.forEach(item => {
+									aa = aa + Number(item.num)
+								})
+							}
+							if (aa >= 99) {
+								aa = "..."
+							}
+							uni.setStorageSync("cart_num", aa)
+						})
+					}
+				})
+			},
+			back(ev) {
+				switch (ev) {
+					case 0:
+						uni.navigateBack(-1)
+						break;
+					case 1:
+						uni.switchTab({
+							url: "/pages/Home/Home"
+						})
+						break;
+					default:
+				}
+			}
 		}
 	}
 </script>
-<style scoped lang="scss">
-	.fsdfsfs {
-		color: #000000;
-	}
 
-	.fdsds {
-		font-size: 22rpx;
-		font-weight: 400;
-		color: #666666;
-	}
-
-	page {
-		background: #f5f5f5;
-	}
-
-	view,
-	textarea,
-	input,
-	text,
-	button {
-		padding: 0;
-		margin: 0;
-		box-sizing: border-box;
-		font-size: 28rpx;
-		font-family: "微软雅黑";
-	}
-
-	.uni-checkbox-input {
-		border-radius: 50% !important;
-	}
-
-	.submit_btn {
-		width: 160rpx;
-		height: 70rpx;
-		background: #007399;
-		border-radius: 35rpx;
-		font-size: 30rpx;
-		color: #FFFFFF;
-		text-align: center;
-		line-height: 70rpx;
-		margin-left: 20rpx;
-	}
-
-	.container {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-between;
-		box-sizing: border-box;
-		background: #f5f5f5;
-		overflow: hidden;
-	}
-
-	.line1 {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: box;
-		display: -webkit-box;
-		line-clamp: 1;
-		box-orient: vertical;
-		-webkit-line-clamp: 1;
-		-webkit-box-orient: vertical;
-		word-break: break-all;
-		/* 英文换行问题 */
-	}
-
-	.line2 {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: box;
-		display: -webkit-box;
-		line-clamp: 2;
-		box-orient: vertical;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		word-break: break-all;
-		/* 英文换行问题 */
-	}
-
-	.centerboth {
-		display: flex;
-		display: -webkit-flex;
-		align-items: center;
-		-webkit-align-items: center;
-		justify-content: center;
-		-webkit-justify-content: center;
-	}
-
-	.clearfix:after {
-		content: "";
-		display: block;
-		visibility: hidden;
-		height: 0;
-		clear: both;
-	}
-
-	.clearfix {
-		zoom: 1;
-	}
-
-	image {
-		padding: 0;
-		margin: 0;
-	}
-
-	textarea {
-		width: 300rpx;
-		height: 75rpx;
-		display: block;
-		position: relative;
-		font-size: 28rpx;
-	}
-
-	button::after {
-		border: none;
-	}
-
-	input:-ms-input-placeholder {
-		color: #808080;
-	}
-
-	car-list {
-		width: 100%;
-	}
-
-	// 导航
-	.navbar {
-		.sssss {
-			border: 1px solid #e5e5e5;
-			overflow: hidden;
-			width: 166rpx;
-			height: 60rpx;
-			border-radius: 30rpx;
-			margin-left: 30rpx;
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-
-			.dsds {
-				padding: 20rpx;
-			}
-
-			.hang {
-				width: 2rpx;
-				height: 26rpx;
-				background-color: #e5e5e5;
-			}
-
-			.fanhui {
-				width: 12rpx;
-				height: 22rpx;
-			}
-
-			.souye {
-				width: 26rpx;
-				height: 24rpx;
-			}
-		}
-	}
-</style>
-
-<style scoped lang="scss">
+<style lang="scss" scoped>
 	@font-face {
 		font-family: 'iconfont';
 		/* project id 1143282 */
@@ -636,26 +552,31 @@
 
 	.car-list {
 		width: 100%;
-		padding: 24rpx 24rpx 0 24rpx;
+		display: flex;
+		position: relative;
+		align-items: right;
+		flex-direction: row;
+		padding: 12rpx 0;
 	}
-
+	.aaaaaaaaaa{
+		border-radius: 20rpx;
+	}
 	.car-list .list {
 		width: 100%;
 		padding: 20rpx 20rpx 20rpx 0;
 		display: flex;
 		background: #FFFFFF;
-		border-radius: 10rpx;
 		border-bottom: 1px solid #F5F5F5;
 	}
 
-	.car-list .list:nth-child(1) {
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-	}
+	// .car-list .list:nth-child(1) {
+	// 	border-top-left-radius: 0;
+	// 	border-top-right-radius: 0;
+	// }
 
-	.car-list .list:nth-last-child(1) {
-		margin: 0;
-	}
+	// .car-list .list:nth-last-child(1) {
+	// 	margin: 0;
+	// }
 
 	.car-list .list .btn {
 		width: 70rpx;
@@ -850,5 +771,232 @@
 		font-weight: 400;
 		color: #000000;
 		line-height: 30rpx;
+	}
+
+	.fsdfsfs {
+		color: #000000;
+	}
+
+	.fdsds {
+		font-size: 22rpx;
+		font-weight: 400;
+		color: #666666;
+	}
+
+	page {
+		background: #f5f5f5;
+	}
+
+	view,
+	textarea,
+	input,
+	text,
+	button {
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+		font-size: 28rpx;
+		font-family: "微软雅黑";
+	}
+
+	.uni-checkbox-input {
+		border-radius: 50% !important;
+	}
+
+	.submit_btn {
+		width: 160rpx;
+		height: 70rpx;
+		background: #007399;
+		border-radius: 35rpx;
+		font-size: 30rpx;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 70rpx;
+		margin-left: 20rpx;
+	}
+
+	.container {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		box-sizing: border-box;
+		background: #f5f5f5;
+		overflow: hidden;
+	}
+
+	.line1 {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: box;
+		display: -webkit-box;
+		line-clamp: 1;
+		box-orient: vertical;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		word-break: break-all;
+		/* 英文换行问题 */
+	}
+
+	.line2 {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: box;
+		display: -webkit-box;
+		line-clamp: 2;
+		box-orient: vertical;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		word-break: break-all;
+		/* 英文换行问题 */
+	}
+
+	.centerboth {
+		display: flex;
+		display: -webkit-flex;
+		align-items: center;
+		-webkit-align-items: center;
+		justify-content: center;
+		-webkit-justify-content: center;
+	}
+
+	.clearfix:after {
+		content: "";
+		display: block;
+		visibility: hidden;
+		height: 0;
+		clear: both;
+	}
+
+	.clearfix {
+		zoom: 1;
+	}
+
+	image {
+		padding: 0;
+		margin: 0;
+	}
+
+	textarea {
+		width: 300rpx;
+		height: 75rpx;
+		display: block;
+		position: relative;
+		font-size: 28rpx;
+	}
+
+	button::after {
+		border: none;
+	}
+
+	input:-ms-input-placeholder {
+		color: #808080;
+	}
+
+	car-list {
+		width: 100%;
+	}
+
+
+
+
+
+	// 导航
+	.navbar {
+		.sssss {
+			border: 1px solid #e5e5e5;
+			overflow: hidden;
+			width: 166rpx;
+			height: 60rpx;
+			border-radius: 30rpx;
+			margin-left: 30rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+
+			.dsds {
+				padding: 20rpx;
+			}
+
+			.hang {
+				width: 2rpx;
+				height: 26rpx;
+				background-color: #e5e5e5;
+			}
+
+			.fanhui {
+				width: 12rpx;
+				height: 22rpx;
+			}
+
+			.souye {
+				width: 26rpx;
+				height: 24rpx;
+			}
+		}
+	}
+
+	//滑动
+	.huadong {
+		margin: 20rpx;
+		overflow: hidden;
+
+		.order-item {}
+
+		.content {
+			width: 100%;
+			height: 180rpx;
+			background: #FFFFFF;
+			border-radius: 10rpx;
+			display: flex;
+			align-items: center;
+			padding: 0 30rpx;
+
+			.dasdas {
+				margin-left: 30rpx;
+			}
+
+			.texts {
+				margin-top: 40rpx;
+				font-size: 22rpx;
+				font-weight: 400;
+				color: #999999;
+			}
+
+			.text {
+				font-size: 24rpx;
+				font-weight: 400;
+				color: #333333;
+			}
+
+			.img {
+				width: 140rpx;
+				height: 140rpx;
+				border-radius: 20rpx;
+			}
+		}
+
+		.hdjsah {
+			position: absolute;
+			top: 0;
+			right: -130rpx;
+			width: 130rpx;
+			margin: 12rpx 0;
+			padding: 20rpx 0;
+			background-color: #FB716E;
+			border-radius: 0rpx 10rpx 10rpx 0rpx;
+		}
+
+		.remove {
+			width: 100%;
+			height: 190rpx;
+			line-height: 190rpx;
+			text-align: center;
+			font-size: 30rpx;
+			font-weight: 400;
+			color: #FFFFFF;
+		}
+
 	}
 </style>

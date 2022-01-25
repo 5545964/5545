@@ -16,7 +16,7 @@
 		<view v-if="isyuyue != 0">
 			<view class="xunhuan" style="padding: 30rpx;">
 				<view class="dshk">
-					预约进度
+					预约进度1
 				</view>
 				<view class="dadsda">
 					<view v-if="state == 0">

@@ -25,7 +25,7 @@
 			<u-FlagshipSuite></u-FlagshipSuite>
 		</view>
 		<view style="height: 100%;" v-if="current==2">
-			<u-HouseType :fenlei="fenlei"></u-HouseType>
+			<u-HouseType :pages="pages" :fenlei="fenlei"></u-HouseType>
 		</view>
 	</view>
 </template>
@@ -44,21 +44,38 @@
 					name: '户型攻略',
 				}],
 				lou_list: [],
-				current: 0
+				current: 0,
+				pages:0
 			};
+		},
+		onReachBottom(ev) {
+			this.pages = this.pages +1
 		},
 		onShow() {
 			this.alls()
 			this.$api.huxincategory().then(data => {
 				if (data.data.code == 1) {
-					this.fenlei = data.data.data.status;
-					this.fenlei.forEach(item => {
+					data.data.data.status.forEach(item => {
 						item["check"] = false;
 					})
+					this.fenlei = data.data.data.status;
 				}
 			})
 		},
 		methods: {
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.dianzhansssss = true
+					this.indexdas = index
+					this.pinglun_list = []
+					this.pinglun_list = ev.pl
+					this.pinglun_list.forEach(item => {
+						item["checked"] = false
+					})
+					this.showComment = true;
+					this.itemsss = ev;
+				}
+			},
 			alls() {
 				this.$api.loupanden().then(data => {
 					if (data.data.code == 1) {

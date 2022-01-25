@@ -3,22 +3,28 @@
 		<view class="">
 			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
 				:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
-				<view class="" @click="click">
-					<view class="cet">
+				<view style="width: 100%;" @click="click">
+					<view class="dad" style="margin-top:-14rpx;">
+						客服
+					</view>
+					<view class="dad">
+						预约设计
+					</view>
+					<!-- <view class="cet">
 						<view class="dasds">
 							<image :src="img" mode="aspectFit"></image>
 						</view>
-					</view>
-					<view class="dad cet">
+					</view> -->
+					<!-- <view class="dad cet">
 						{{title}}
-					</view>
+					</view> -->
 				</view>
 			</view>
 		</view>
 		<view class="">
-			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
-				:style="'top: '+(bianheigth+100)+'rpx;left: '+bianright+'rpx;'">
-				<view class="" @click="xianshiqianggou">
+			<view class="djsa cet" id="yuan" @touchend="ends" @touchmove.stop="moves"
+				:style="'top: '+bianheigths+'rpx;left: '+bianrights+'rpx;'">
+				<view class="" @click="xianshiqianggous">
 					<view class="cet">
 						<image class="dasds" :src="xianshiqianggouimg" mode="aspectFit"></image>
 					</view>
@@ -76,7 +82,7 @@
 			},
 			title: {
 				type: String,
-				default: "客服"
+				default: "预约设计-客服"
 			},
 			showsss: {
 				type: Boolean,
@@ -110,6 +116,8 @@
 			}
 			this.bianheigth = this.tabberheigth - 300;
 			this.bianright = this.widthwidth;
+			this.bianheigths = this.tabberheigth - 500;
+			this.bianrights = this.widthwidth;
 		},
 		data() {
 			return {
@@ -121,10 +129,44 @@
 				show: false,
 				bianheigth: 0,
 				bianright: 0,
-				bianliang: 0
+				bianliang: 0,
+				bianheigths: 0,
+				bianrights: 0,
+				bianliangs: 0
 			}
 		},
 		methods: {
+			ends() {
+				if (this.bianliangs < this.system.screenWidth / 2) {
+					var bbs = setInterval(() => {
+						this.bianrights = this.bianrights - 10;
+						if (this.bianrights <= 0) {
+							this.bianrights = 0;
+							clearInterval(bbs);
+						}
+					}, 10)
+				} else {
+					var bb = setInterval(() => {
+						this.bianrights = this.bianrights + 10;
+						if (this.bianrights >= this.widthwidth) {
+							this.bianrights = this.widthwidth
+							clearInterval(bb);
+						}
+					}, 10)
+				}
+			},
+			moves(ev) {
+				let touch = ev.touches[0];
+				this.bianliangs = touch.clientX
+				let aa = parseInt(touch.clientX / (uni.upx2px(100) / 100)) - (this.px / 2);
+				let bb = parseInt(touch.clientY / (uni.upx2px(100) / 100)) - (this.px / 2);
+				if (aa >= 0 && aa <= this.widthwidth) {
+					this.bianrights = aa
+				}
+				if (bb >= this.navbarheigth && bb <= this.tabberheigth) {
+					this.bianheigths = bb
+				}
+			},
 			end() {
 				if (this.bianliang < this.system.screenWidth / 2) {
 					var bb = setInterval(() => {
@@ -229,7 +271,7 @@
 	}
 
 	.dad {
-		margin-top: 8rpx;
+		text-align: center;
 		font-size: 20rpx;
 		font-weight: 400;
 		color: #FFFFFF;

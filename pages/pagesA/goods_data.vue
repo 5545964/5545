@@ -30,7 +30,7 @@
 			<view class="centers cet" style="justify-content: space-between;">
 				<image class="img" src="../../static/icon_me_blueaddress.png" mode="aspectFit"></image>
 				<view style="width: 86%;">
-					<view class="cet" style="justify-content: flex-start;margin-bottom: 30rpx;">
+					<view class="cet" style="justify-content: flex-start;">
 						<view class="name">
 							{{data_list.username}}
 						</view>
@@ -38,7 +38,7 @@
 							{{data_list.phone}}
 						</view>
 					</view>
-					<view class="text">
+					<view class="text lll">
 						{{data_list.address}}{{data_list.addressxq}}
 					</view>
 				</view>
@@ -179,7 +179,8 @@
 				<view class="hahahahha">
 					<view class="dmskajds">图片说明：</view>
 					<view class="djkshfks">
-						<image class="imgsa" :src="img+item" v-for="(item,index) in img_list" :key="index" mode="aspectFit">
+						<image class="imgsa" :src="img+item" v-for="(item,index) in img_list" :key="index"
+							mode="aspectFit">
 						</image>
 					</view>
 				</view>
@@ -229,7 +230,8 @@
 				</view> -->
 				<!--  -->
 				<!--  -->
-				<view class="button" v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
+				<view @click="delorder(data_list)" class="button"
+					v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
 					删除订单
 				</view>
 				<!--  -->
@@ -331,6 +333,35 @@
 
 		},
 		methods: {
+			delorder(ev) {
+				console.log(ev);
+				let that = this;
+				uni.showModal({
+					title: '是否删除此订单',
+					content: ev.orderid,
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							that.$api.deleorder({
+								orderid: ev.orderid
+							}).then(data => {
+								uni.showToast({
+									title: data.data.msg,
+									duration: 1000,
+									icon: "success"
+								});
+								if (data.data.code == 1) {
+									uni.navigateBack({
+										delta: 2
+									})
+								}
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
 			allsss() {
 				this.$api.myorder({
 					user_id: uni.getStorageSync("user_info").id,
@@ -446,40 +477,40 @@
 					case 1:
 
 						this.$api.orderpay({
-								prepay_id: this.data_list.id,
-								id: this.data_list.id,
-							}).then((res) => {
+							prepay_id: this.data_list.id,
+							id: this.data_list.id,
+						}).then((res) => {
 
-								if (res.data.code == 200) {
-									let that = this;
-									uni.requestPayment({
-										timeStamp: res.data.data.timeStamp, //当前的时间
-										nonceStr: res.data.data.nonceStr, //随机字符串
-										package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-										signType: res.data.data.signType, //签名算法，暂支持 MD5。
-										paySign: res.data.data.paySign, //签名
-										success: function(res) {
-											uni.showToast({
-												title: "支付成功",
-												icon: "none",
-											});
-											uni.navigateBack(-1)
-										},
-										fail: function(err) {
+							if (res.data.code == 200) {
+								let that = this;
+								uni.requestPayment({
+									timeStamp: res.data.data.timeStamp, //当前的时间
+									nonceStr: res.data.data.nonceStr, //随机字符串
+									package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+									signType: res.data.data.signType, //签名算法，暂支持 MD5。
+									paySign: res.data.data.paySign, //签名
+									success: function(res) {
+										uni.showToast({
+											title: "支付成功",
+											icon: "none",
+										});
+										uni.navigateBack(-1)
+									},
+									fail: function(err) {
 
-											uni.showToast({
-												title: "支付失败",
-												icon: "none",
-											});
-										},
-									});
-								} else {
-									uni.showToast({
-										title: res.data.msg,
-										icon: "none",
-									});
-								}
-							});
+										uni.showToast({
+											title: "支付失败",
+											icon: "none",
+										});
+									},
+								});
+							} else {
+								uni.showToast({
+									title: res.data.msg,
+									icon: "none",
+								});
+							}
+						});
 						break;
 					case 2:
 
@@ -973,5 +1004,13 @@
 				height: 24rpx;
 			}
 		}
+	}
+
+	.lll {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 </style>

@@ -248,7 +248,7 @@
 	export default {
 		data() {
 			return {
-				buyanzheng: true,
+				buyanzheng: false,
 				time: 0,
 				huoqu: "获取验证码",
 				code: "",
@@ -322,6 +322,7 @@
 			}
 			if (ev.goodsdata) {
 				let aa = JSON.parse(ev.goodsdata)
+				console.log(aa,"ss");
 				let arr = []
 				that.goodsdata = [...aa];
 				that.goodsdata.forEach(item => {
@@ -459,6 +460,8 @@
 				}
 				if (this.address != '') {
 					this.$api.cartpay({
+						swj:0,
+						orderid:0,
 						content: this.value,
 						shopid: shopids,
 						cartid: cartids,

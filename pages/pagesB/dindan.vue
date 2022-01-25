@@ -128,7 +128,7 @@
 									</view>
 									<!--  -->
 									<!--  -->
-									<view class="button"
+									<view class="button" @click="delorder(items)"
 										v-if="items.state == 9 || items.state == 4 || items.state == 3">
 										删除订单
 									</view>
@@ -195,74 +195,32 @@
 				height: 0,
 				current: 0,
 				title: "",
-				// lists: [{
-				// 		name: "全部",
-				// 	},
-				// 	{
-				// 		name: "待付款",
-				// 	},
-				// 	{
-				// 		name: "待发货",
-				// 	},
-				// 	{
-				// 		name: "待收货",
-				// 	},
-				// 	{
-				// 		name: "待评价",
-				// 	},
-				// 	{
-				// 		name: "已完成",
-				// 	},
-				// 	{
-				// 		name: "退换货",
-				// 	},
-				// ],
-				// list: [{
-				// 		status: "all",
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 0,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 1,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 2,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 3,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 4,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 5,
-				// 		data_list: [],
-				// 	},
-				// ],
 				lists: [{
-						name: "代发货",
+						name: "全部",
 					},
 					{
-						name: "发货中",
+						name: "待付款",
 					},
 					{
-						name: "已收货",
+						name: "待发货",
 					},
 					{
-						name: "报装中",
+						name: "待收货",
 					},
 					{
-						name: "已安装",
-					}
+						name: "待评价",
+					},
+					{
+						name: "已完成",
+					},
+					{
+						name: "退换货",
+					},
 				],
-				list: [
+				list: [{
+						status: "all",
+						data_list: [],
+					},
 					{
 						status: 0,
 						data_list: [],
@@ -282,8 +240,49 @@
 					{
 						status: 4,
 						data_list: [],
-					}
+					},
+					{
+						status: 5,
+						data_list: [],
+					},
 				],
+				// lists: [{
+				// 		name: "代发货",
+				// 	},
+				// 	{
+				// 		name: "发货中",
+				// 	},
+				// 	{
+				// 		name: "已收货",
+				// 	},
+				// 	{
+				// 		name: "报装中",
+				// 	},
+				// 	{
+				// 		name: "已安装",
+				// 	}
+				// ],
+				// list: [{
+				// 		status: 0,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 1,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 2,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 3,
+				// 		data_list: [],
+				// 	},
+				// 	{
+				// 		status: 4,
+				// 		data_list: [],
+				// 	}
+				// ],
 				time: "",
 			};
 		},
@@ -309,8 +308,37 @@
 			this.allsss();
 		},
 		methods: {
+			delorder(ev) {
+				console.log(ev);
+				let that = this;
+				uni.showModal({
+					title: '是否删除此订单',
+					content: ev.orderid,
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							that.$api.deleorder({
+								orderid: ev.orderid
+							}).then(data => {
+								uni.showToast({
+									title: data.data.msg,
+									duration: 1000,
+									icon: "success"
+								});
+								if (data.data.code == 1) {
+									uni.navigateBack(-1)
+								}
+							})
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
 			allsss() {
-				this.$api.myorder({	user_id: uni.getStorageSync("user_info").id,}).then((data) => {
+				this.$api.myorder({
+					user_id: uni.getStorageSync("user_info").id,
+				}).then((data) => {
 					if (data.data.code == 1) {
 						this.list.forEach((item, index) => {
 							item.data_list = [];
@@ -333,7 +361,7 @@
 									this.list[4].data_list.push(item);
 									break;
 								default:
-									
+
 							}
 						});
 						// this.list[0].data_list = [];
