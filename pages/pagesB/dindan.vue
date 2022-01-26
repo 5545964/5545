@@ -195,74 +195,33 @@
 				height: 0,
 				current: 0,
 				title: "",
-				lists: [{
-						name: "全部",
-					},
-					{
-						name: "待付款",
-					},
-					{
-						name: "待发货",
-					},
-					{
-						name: "待收货",
-					},
-					{
-						name: "待评价",
-					},
-					{
-						name: "已完成",
-					},
-					{
-						name: "退换货",
-					},
-				],
-				list: [{
-						status: "all",
-						data_list: [],
-					},
-					{
-						status: 0,
-						data_list: [],
-					},
-					{
-						status: 1,
-						data_list: [],
-					},
-					{
-						status: 2,
-						data_list: [],
-					},
-					{
-						status: 3,
-						data_list: [],
-					},
-					{
-						status: 4,
-						data_list: [],
-					},
-					{
-						status: 5,
-						data_list: [],
-					},
-				],
 				// lists: [{
-				// 		name: "代发货",
+				// 		name: "全部",
 				// 	},
 				// 	{
-				// 		name: "发货中",
+				// 		name: "待付款",
 				// 	},
 				// 	{
-				// 		name: "已收货",
+				// 		name: "待发货",
 				// 	},
 				// 	{
-				// 		name: "报装中",
+				// 		name: "待收货",
 				// 	},
 				// 	{
-				// 		name: "已安装",
-				// 	}
+				// 		name: "待评价",
+				// 	},
+				// 	{
+				// 		name: "已完成",
+				// 	},
+				// 	{
+				// 		name: "退换货",
+				// 	},
 				// ],
 				// list: [{
+				// 		status: "all",
+				// 		data_list: [],
+				// 	},
+				// 	{
 				// 		status: 0,
 				// 		data_list: [],
 				// 	},
@@ -281,8 +240,49 @@
 				// 	{
 				// 		status: 4,
 				// 		data_list: [],
-				// 	}
+				// 	},
+				// 	{
+				// 		status: 5,
+				// 		data_list: [],
+				// 	},
 				// ],
+				lists: [{
+						name: "代发货",
+					},
+					{
+						name: "发货中",
+					},
+					{
+						name: "已收货",
+					},
+					{
+						name: "报装中",
+					},
+					{
+						name: "已安装",
+					}
+				],
+				list: [{
+						status: 0,
+						data_list: [],
+					},
+					{
+						status: 1,
+						data_list: [],
+					},
+					{
+						status: 2,
+						data_list: [],
+					},
+					{
+						status: 3,
+						data_list: [],
+					},
+					{
+						status: 4,
+						data_list: [],
+					}
+				],
 				time: "",
 			};
 		},

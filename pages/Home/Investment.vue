@@ -178,7 +178,8 @@
 	export default {
 		data() {
 			return {
-				jkl:100,
+				pages: 1,
+				jkl: 100,
 				modeList: [],
 				mobanid: [
 					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
@@ -300,6 +301,12 @@
 		onLoad(ev) {
 			if (ev.is_re == 1) {
 				this.current = 4
+			}
+		},
+		onReachBottom(ev) {
+			if (this.current == 0) {
+				this.pages = this.pages + 1
+				this.enjoy()
 			}
 		},
 		methods: {
@@ -491,45 +498,45 @@
 				// if (this.pay == "填写资料") {
 				// 	this.showContract = true
 				// } else {
-					this.$api.buylevel({
-						id: this.allssssss[this.fenleideid].id,
-						user_id: uni.getStorageSync("user_info").id
-					}).then(res => {
-						if (res.data.code == 1) {
-							// uni.showToast({
-							// 	title: res.data.msg
-							// })
-							this.showContract = false
-							setTimeout(() => {
-								this.resss()
-							}, 1000)
-						}
-						if (res.data.code == 200) {
-							let that = this;
-							uni.requestPayment({
-								timeStamp: res.data.data.timeStamp, //当前的时间
-								nonceStr: res.data.data.nonceStr, //随机字符串
-								package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-								signType: res.data.data.signType, //签名算法，暂支持 MD5。
-								paySign: res.data.data.paySign, //签名
-								success: function(res) {
-									uni.showToast({
-										title: "支付成功",
-										icon: "success"
-									})
-									that.toReg()
-									that.showContract = false
-								},
-								fail: function(err) {
+				this.$api.buylevel({
+					id: this.allssssss[this.fenleideid].id,
+					user_id: uni.getStorageSync("user_info").id
+				}).then(res => {
+					if (res.data.code == 1) {
+						// uni.showToast({
+						// 	title: res.data.msg
+						// })
+						this.showContract = false
+						setTimeout(() => {
+							this.resss()
+						}, 1000)
+					}
+					if (res.data.code == 200) {
+						let that = this;
+						uni.requestPayment({
+							timeStamp: res.data.data.timeStamp, //当前的时间
+							nonceStr: res.data.data.nonceStr, //随机字符串
+							package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+							signType: res.data.data.signType, //签名算法，暂支持 MD5。
+							paySign: res.data.data.paySign, //签名
+							success: function(res) {
+								uni.showToast({
+									title: "支付成功",
+									icon: "success"
+								})
+								that.toReg()
+								that.showContract = false
+							},
+							fail: function(err) {
 
-									uni.showToast({
-										title: "支付失败",
-										icon: "error"
-									})
-								}
-							})
-						}
-					})
+								uni.showToast({
+									title: "支付失败",
+									icon: "error"
+								})
+							}
+						})
+					}
+				})
 				// }
 			},
 			// 查看合同模板
@@ -586,30 +593,31 @@
 			},
 			// 热门栏目
 			enjoy() {
-				// if(this.$login){
-				// 	return
-				// }
 				this.$api.enjoy({
 					user_id: uni.getStorageSync("user_info").id,
-					type: 1
+					type: 1,
+					page: this.pages,
+					limit: 10,
+					state: 1
 				}).then(data => {
 					let aa = []
-					data.data.data.status.data.forEach(item => {
-						item["iszan"] = false
-						item["isfollow"] = false
-						item["showComment"] = this.showComment
-						if (item.zans) {
-							item.iszan = true
-						}
-						if (item.follow) {
-							item.isfollow = true
-						}
-						item.video = this.$imgPath + item.video
-						if (item.state == "1") {
+					this.pages = data.data.data.status.current_page
+					if (data.data.data.status.data.length != 0) {
+						data.data.data.status.data.forEach(item => {
+							item["iszan"] = false
+							item["isfollow"] = false
+							item["showComment"] = this.showComment
+							if (item.zans) {
+								item.iszan = true
+							}
+							if (item.follow) {
+								item.isfollow = true
+							}
+							item.video = this.$imgPath + item.video
 							aa.push(item)
-						}
-					})
-					this.video = aa
+						})
+						this.video = aa
+					}
 				})
 				this.$api.recruit().then(data => {
 					if (data.data.code == 1) {

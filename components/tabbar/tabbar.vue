@@ -86,6 +86,6 @@
 <style lang="scss" scoped>
 	.dasds {
 		position: relative;
-		z-index: 1000000000000;
+		z-index: 10100;
 	}
 </style>

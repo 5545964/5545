@@ -121,11 +121,13 @@
 					user_id: uni.getStorageSync("user_info").id,
 					type: 3,
 					page: this.pages,
-					limit: 10
+					limit: 10,
+					state: 2
 				}).then(data => {
-					let aa = []
-					data.data.data.status.data.forEach(item => {
-						if (item.state == "2") {
+					this.pages = data.data.data.status.current_page
+					if (data.data.data.status.data.length !=0) {
+						let aa = []
+						data.data.data.status.data.forEach(item => {
 							item["iszan"] = false
 							item["isfollow"] = false
 							if (item.zans) {
@@ -136,16 +138,11 @@
 							}
 							item.video = this.$imgPath + item.video
 							aa.push(item)
-							console.log(aa,"aa",aa.length);
-						}
-					})
-					if (aa.length > 0) {
+							console.log(aa, "aa", aa.length);
+						})
 						this.video = [...this.video, ...aa]
-						return
-					} else {
-						this.pages = this.pages + 1
-						this.pagess = this.pages;
 					}
+
 					// if (this.dianzhansssss) {
 					// 	this.pinglunaa(this.video[this.indexdas], this.indexdas)
 					// }

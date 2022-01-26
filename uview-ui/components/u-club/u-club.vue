@@ -14,7 +14,7 @@
 						</view> -->
 					</view>
 					<view class="bottom">
-						<view class="top-ss">
+						<view class="top-ss" style="flex-wrap:wrap;justify-content: space-around;">
 							<view class="top" v-for="(item1,index) in item.label" :key="index">
 								{{item1}}
 							</view>
@@ -176,7 +176,7 @@
 
 		.bottom {
 			width: 100%;
-			margin-left: 20rpx;
+			// margin-left: 20rpx;
 
 			.fsfds {
 				margin-top: 20rpx;
@@ -205,7 +205,7 @@
 				font-size: 12rpx;
 				font-weight: 400;
 				color: #FFFFFF;
-				margin: 0 4rpx;
+				margin: 4rpx;
 			}
 		}
 

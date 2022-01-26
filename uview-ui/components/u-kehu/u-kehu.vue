@@ -24,7 +24,7 @@
 		<view class="">
 			<view class="djsa cet" id="yuan" @touchend="ends" @touchmove.stop="moves"
 				:style="'top: '+bianheigths+'rpx;left: '+bianrights+'rpx;'">
-				<view class="" @click="xianshiqianggous">
+				<view class="" @click="xianshiqianggou">
 					<view class="cet">
 						<image class="dasds" :src="xianshiqianggouimg" mode="aspectFit"></image>
 					</view>
@@ -115,9 +115,9 @@
 				this.navbarheigth = 0
 			}
 			this.bianheigth = this.tabberheigth - 300;
-			this.bianright = this.widthwidth;
 			this.bianheigths = this.tabberheigth - 500;
-			this.bianrights = this.widthwidth;
+			// this.bianrights = this.widthwidth;
+			// this.bianright = this.widthwidth;
 		},
 		data() {
 			return {

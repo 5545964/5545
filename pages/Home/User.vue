@@ -186,8 +186,8 @@
 				user_info_id: "",
 				img: this.$imgPath,
 				user_info: "",
-				num_list: ["", "", "", ""],
-				// num_list: ["", "", "", "", ""],
+				// num_list: ["", "", "", ""],
+				num_list: ["", "", "", "", ""],
 				gongju_list: [{
 						name: "收货地址",
 						url: "../pagesA/gongju0"
@@ -242,58 +242,57 @@
 						url: "../pagesA/gongju12"
 					}
 				],
+				// list: [{
+				// 		id: 1,
+				// 		name: "待付款",
+				// 	},
+				// 	{
+				// 		id: 2,
+				// 		name: "待发货"
+				// 	},
+
+				// 	{
+				// 		id: 3,
+				// 		name: "待收货"
+				// 	},
+				// 	{
+				// 		id: 4,
+				// 		name: "待评价"
+				// 	},
+				// 	{
+				// 		id: 0,
+				// 		name: "全部订单"
+				// 	}
+				// ],
 				list: [{
-						id: 1,
-						name: "待付款",
+						id: 0,
+						name: "代发货"
 					},
 					{
+						id: 1,
+						name: "发货中"
+					},
+
+					{
 						id: 2,
-						name: "待发货"
+						name: "已收货"
 					},
 
 					{
 						id: 3,
-						name: "待收货"
+						name: "报装中"
 					},
 					{
 						id: 4,
-						name: "待评价"
-					},
-					{
-						id: 0,
-						name: "全部订单"
+						name: "已安装"
 					}
 				],
-				// list: [{
-				// 		id: 0,
-				// 		name: "代发货"
-				// 	},
-				// 	{
-				// 		id: 1,
-				// 		name: "发货中"
-				// 	},
-				
-				// 	{
-				// 		id: 2,
-				// 		name: "已收货"
-				// 	},
-				
-				// 	{
-				// 		id: 3,
-				// 		name: "报装中"
-				// 	},
-				// 	{
-				// 		id: 4,
-				// 		name: "已安装"
-				// 	}
-				// ],
 			};
 		},
 		onShow() {
 			if (uni.getStorageSync("user_info")) {
 				this.user_info = uni.getStorageSync("user_info")
 				this.shuliang(this.user_info.id)
-
 			}
 		},
 		methods: {
@@ -394,51 +393,55 @@
 					}
 				});
 			},
-			login() {
-				let code = "";
-				let iv = "";
-				let encryptedData = "";
-				let that = this;
-				let level = 0;
-				let pid = 0;
-				if (uni.getStorageSync("yaoqinglevel")) {
-					level = uni.getStorageSync("yaoqinglevel")
+			async login() {
+				if (await this.$login()) {
+					this.user_info = uni.getStorageSync("user_info")
+					this.shuliang(this.user_info.id)
 				}
-				if (uni.getStorageSync("yaoqinguid")) {
-					pid = uni.getStorageSync("yaoqinguid")
-				}
-				uni.getUserProfile({
-					desc: 'Wexin',
-					success: data => {
-						iv = data.iv;
-						encryptedData = data.encryptedData;
-						uni.login({
-							provider: 'weixin',
-							success: function(loginRes) {
-								code = loginRes.code
-								that.$api.wxlogin({
-									level,
-									code,
-									iv,
-									encryptedData,
-									pid
-								}).then(data => {
-									if (data.data.code == 1) {
-										that.user_info_id = data.data.data.status.id;
-										uni.setStorageSync("token", data.data.data.token);
-										that.shuliang(that.user_info_id)
-									} else {
-										uni.showToast({
-											title: data.data.msg,
-											duration: 1000,
-											icon: "none"
-										})
-									}
-								})
-							}
-						});
-					}
-				})
+				// let code = "";
+				// let iv = "";
+				// let encryptedData = "";
+				// let that = this;
+				// let level = 0;
+				// let pid = 0;
+				// if (uni.getStorageSync("yaoqinglevel")) {
+				// 	level = uni.getStorageSync("yaoqinglevel")
+				// }
+				// if (uni.getStorageSync("yaoqinguid")) {
+				// 	pid = uni.getStorageSync("yaoqinguid")
+				// }
+				// uni.getUserProfile({
+				// 	desc: 'Wexin',
+				// 	success: data => {
+				// 		iv = data.iv;
+				// 		encryptedData = data.encryptedData;
+				// 		uni.login({
+				// 			provider: 'weixin',
+				// 			success: function(loginRes) {
+				// 				code = loginRes.code
+				// 				that.$api.wxlogin({
+				// 					level,
+				// 					code,
+				// 					iv,
+				// 					encryptedData,
+				// 					pid
+				// 				}).then(data => {
+				// 					if (data.data.code == 1) {
+				// 						that.user_info_id = data.data.data.status.id;
+				// 						uni.setStorageSync("token", data.data.data.token);
+				// 						that.shuliang(that.user_info_id)
+				// 					} else {
+				// 						uni.showToast({
+				// 							title: data.data.msg,
+				// 							duration: 1000,
+				// 							icon: "none"
+				// 						})
+				// 					}
+				// 				})
+				// 			}
+				// 		});
+				// 	}
+				// })
 			},
 			gomy() {
 

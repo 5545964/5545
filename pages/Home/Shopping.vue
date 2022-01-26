@@ -114,7 +114,7 @@
 			this.px = parseInt(uni.upx2px(100))
 			this.px = parseInt(this.px / (uni.upx2px(100) / 100)) //移动物体高rpx
 			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px //最宽边距
-			this.bianright = this.widthwidth-20
+			
 			this.tabberheigth = windows - nn - this.px; //最大下边距
 		},
 		methods: {
@@ -131,7 +131,7 @@
 					var bb = setInterval(() => {
 						this.bianright = this.bianright + 10;
 						if (this.bianright >= this.widthwidth-20) {
-							this.bianright = this.widthwidth-30
+							this.bianright = this.widthwidth-20
 							clearInterval(bb);
 						}
 					}, 10)

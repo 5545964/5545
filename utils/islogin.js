@@ -17,7 +17,6 @@ function log() {
 			uni.getUserProfile({
 				desc: 'Wexin',
 				success: data => {
-					console.log(data);
 					uni.login({
 						provider: 'weixin',
 						success: function(loginRes) {

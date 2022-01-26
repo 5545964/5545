@@ -158,7 +158,7 @@
 			</view>
 		</view>
 		<!-- 筛选弹窗 -->
-		<u-popup v-model="show" mode="bottom" length="40%" :closeable="true" border-radius="8">
+		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">设计师标签</view>
 			<view class="mids">
 				<!-- <view class="seath">

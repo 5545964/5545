@@ -45,11 +45,13 @@
 				}],
 				lou_list: [],
 				current: 0,
-				pages:0
+				pages:1
 			};
 		},
 		onReachBottom(ev) {
-			this.pages = this.pages +1
+			if(this.current == 2){
+				this.pages = this.pages +1
+			}
 		},
 		onShow() {
 			this.alls()
@@ -113,6 +115,7 @@
 			// 	})
 			// },
 			change(index) {
+				this.pages = 1
 				this.current = index
 			},
 			back(ev) {

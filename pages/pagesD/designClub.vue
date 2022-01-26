@@ -174,13 +174,6 @@
 <script>
 	import dayjs from "dayjs"
 	export default {
-		onLoad(ev) {
-			this.enjoy()
-			this.getdesproMoenys()
-		},
-		onShow() {
-
-		},
 		data() {
 			return {
 				modeList: [],
@@ -260,12 +253,16 @@
 						value: 6,
 					}
 				],
-				dsaa: {}
+				dsaa: {},
+				pages: 1,
 			}
 		},
 		onShow() {
 			this.current = this.list[0].id
 			this.getstate();
+			this.enjoy()
+			this.enjoys()
+			this.getdesproMoenys()
 			// this.$api.shenfen({
 			// 	id: uni.getStorageSync("user_info").id
 			// }).then(data => {
@@ -273,21 +270,43 @@
 			// 	}
 			// })
 		},
+		onReachBottom(ev) {
+			if (this.current == 0) {
+				this.pages = this.pages + 1
+				this.enjoy()
+			}
+		},
 		methods: {
 			zhongzhi(ev) {
-				let aa = []
 				if (ev == 0) {
 					this.modeList.forEach(item => {
 						item.check = false
 					})
+					this.dessel(0)
 				} else {
+					let aa = []
 					this.modeList.forEach(item => {
 						if (item.check) {
 							aa.push(item.title)
 						}
 					})
+					this.$api.deslabel({
+						label: aa
+					}).then(data => {
+						console.log(data);
+						if (data.data.code == 1) {
+							data.data.data.status.forEach((item, index) => {
+								item.createtime = item.createtime * 1000
+								item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
+								item.label = item.label ? item.label.split(",") : ""
+								item.work = item.work ? item.work.split(",") : ""
+							})
+							this.designerList = data.data.data.status
+							this.show = false
+						}
+					})
 				}
-				console.log(aa);
+
 			},
 			xuanzhesssss(ev) {
 				ev.check = !ev.check
@@ -332,8 +351,7 @@
 						id: this.itemsss.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.enjoy()
+							this.enjoy(1)
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -352,8 +370,7 @@
 						id: this.itemsss.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.enjoy()
+							this.enjoy(1)
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -409,7 +426,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							ev.iszan = !ev.iszan
-							this.enjoy()
+							// this.enjoy()
 						}
 					})
 				}
@@ -531,34 +548,7 @@
 				}
 			},
 			// 热门栏目
-			enjoy() {
-				// if(this.$login){
-				// 	return
-				// }
-				this.$api.enjoy({
-					user_id: uni.getStorageSync("user_info").id,
-					type: 1
-				}).then(data => {
-					let aa = []
-					data.data.data.status.data.forEach(item => {
-						item["iszan"] = false
-						item["isfollow"] = false
-						if (item.zans) {
-							item.iszan = true
-						}
-						if (item.follow) {
-							item.isfollow = true
-						}
-						item.video = this.$imgPath + item.video
-						if (item.state == "1") {
-							aa.push(item)
-						}
-					})
-					data.data.data.status.data.forEach(item => {
-						item["showComment"] = this.showComment
-					})
-					this.video = aa
-				})
+			enjoys(){
 				this.$api.recruit().then(data => {
 					if (data.data.code == 1) {
 						this.recruit_all = data.data.data.status
@@ -573,7 +563,35 @@
 						this.modeList = data.data.data.status
 					}
 				})
-
+			},
+			enjoy() {
+				this.$api.enjoy({
+					user_id: uni.getStorageSync("user_info").id,
+					type: 1,
+					page: this.pages,
+					limit: 10,
+					state: 1
+				}).then(data => {
+					let aa = []
+					this.pages = data.data.data.status.current_page
+					if (data.data.data.status.data.length != 0) {
+						data.data.data.status.data.forEach(item => {
+							item["iszan"] = false
+							item["isfollow"] = false
+							item["showComment"] = this.showComment
+							if (item.zans) {
+								item.iszan = true
+							}
+							if (item.follow) {
+								item.isfollow = true
+							}
+							item.video = this.$imgPath + item.video
+							aa.push(item)
+						})
+						this.video = aa
+					}
+				})
+				
 			},
 			// 设计师列表
 			dessel(ev) {
@@ -581,9 +599,7 @@
 					order: ev
 				}).then(data => {
 					if (data.data.code == 1) {
-						console.log(data.data.data.status, "data.data.data.status");
 						data.data.data.status.forEach(item => {
-							console.log(item);
 							item.createtime = item.createtime * 1000
 							item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
 							item.label = item.label ? item.label.split(",") : ""
@@ -594,6 +610,7 @@
 				})
 			},
 			change(index) {
+				this.pages = 1
 				this.current = index
 				if (index == 0) {
 					this.enjoy()

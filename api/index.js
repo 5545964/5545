@@ -1,6 +1,10 @@
 import request from "./request.js"
 
 export default {
+	//筛选设计师 bydidentity/deslabel
+	deslabel(params = {}) {
+		return request.post("/api/bydidentity/deslabel", params);
+	},
 	// 删除订单bydshop/deleorder 
 	deleorder(params = {}) {
 		return request.post("/api/bydshop/deleorder", params);

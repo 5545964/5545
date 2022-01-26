@@ -87,6 +87,7 @@
 				lkjh: "",
 				dsaa: {},
 				indexdas: "",
+				pages: 1
 			};
 		},
 		onLoad(ev) {
@@ -104,6 +105,10 @@
 					this.fenleis = data.data.data.status;
 				}
 			})
+			this.alls()
+		},
+		onReachBottom(ev) {
+			this.pages = this.pages + 1
 			this.alls()
 		},
 		methods: {
@@ -127,28 +132,31 @@
 			alls() {
 				this.$api.enjoy({
 					user_id: uni.getStorageSync("user_info").id,
-					type: 1
+					type: 1,
+					page: this.pages,
+					limit: 10,
+					state: 0
 				}).then(data => {
 					let aa = []
-					data.data.data.status.data.forEach(item => {
-						item["iszan"] = false
-						item["isfollow"] = false
-						if (item.zans) {
-							item.iszan = true
-						}
-						if (item.follow) {
-							item.isfollow = true
-						}
-						item.video = this.$imgPath + item.video
-						if (item.state == "0") {
+					this.pages = data.data.data.status.current_page
+					if (data.data.data.status.data.length != 0) {
+						data.data.data.status.data.forEach(item => {
+							item["iszan"] = false
+							item["isfollow"] = false
+							if (item.zans) {
+								item.iszan = true
+							}
+							if (item.follow) {
+								item.isfollow = true
+							}
+							item.video = this.$imgPath + item.video
 							aa.push(item)
+						})
+						this.video = aa
+						if (this.dianzhansssss) {
+							this.pinglunaa(this.video[this.indexdas], this.indexdas)
 						}
-					})
-					this.video = aa
-					if (this.dianzhansssss) {
-						this.pinglunaa(this.video[this.indexdas], this.indexdas)
 					}
-
 
 				})
 			},

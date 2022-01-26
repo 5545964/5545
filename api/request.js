@@ -2,7 +2,7 @@ import ajax from "./u-ajax/js_sdk/"
 // 创建实例
 const instance = ajax.create({
 	baseURL: "https://bao.scwushen.com/index.php",
-	timeout: 10000,
+	timeout: 60000,
 	header: {
 		post: {
 			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
