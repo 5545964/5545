@@ -1,12 +1,12 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			if (ev.query.uid) {
-				uni.setStorageSync("yaoqinguid", ev.query.uid)
-			}
-			if (ev.query.level) {
-				uni.setStorageSync("yaoqinglevel", ev.query.level)
-			}
+			// if (ev.query.uid) {
+			// 	uni.setStorageSync("yaoqinguid", ev.query.uid)
+			// }
+			// if (ev.query.level) {
+			// 	uni.setStorageSync("yaoqinglevel", ev.query.level)
+			// }
 			// if (ev.path == "pages/Home/Home") {
 			// 	uni.navigateTo({
 			// 		url: "pages/pagesD/start"

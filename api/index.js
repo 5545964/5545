@@ -1,6 +1,18 @@
 import request from "./request.js"
 
 export default {
+	// 安装完成bydshop/successloading
+	successloading(params = {}) {
+		return request.post("/api/bydshop/successloading", params);
+	},
+	// 协议内容api/Bydidentity/agreement
+	agreement(params = {}) {
+		return request.post("/api/Bydidentity/agreement", params);
+	},
+	// 申请报装bydshop/sqlading
+	sqlading(params = {}) {
+		return request.post("/api/bydshop/sqlading", params);
+	},
 	//筛选设计师 bydidentity/deslabel
 	deslabel(params = {}) {
 		return request.post("/api/bydidentity/deslabel", params);

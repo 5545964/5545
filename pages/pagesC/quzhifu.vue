@@ -116,18 +116,21 @@
 		</view>
 		<view style="height: 110rpx;"></view>
 		<u-kehu style="position: relative;z-index: 10000;" url="../Home/booking/AppointmentDesign"></u-kehu>
-		<view class="annius" v-if="buyanzheng">
+		<view class="annius">
 			<view class="anniu">
 				<view class="">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
 						class="hejimony">{{tijiaozjia.toFixed(2)}}</text>
 				</view>
-				<view class="button" @click="xianshi">
+				<view v-if="buyanzheng" class="button" @click="xianshi">
+					提交订单
+				</view>
+				<view v-else class="button" @click="annui()">
 					提交订单
 				</view>
 			</view>
 		</view>
-		<view class="annius" v-else>
+		<!-- <view class="annius">
 			<view class="anniu">
 				<view class="">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
@@ -137,7 +140,7 @@
 					提交订单
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
 			<view class="yueduwo">
 				<view class="text">
@@ -178,9 +181,12 @@
 					我们的服务。
 				</view>
 				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
-						<view class="yuan" @click="hahaha(item)">
-							<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+						:key="index">
+						<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view class="yuan" @click="hahaha(item)">
+								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
 						</view>
 						<view class="mingcheng" @click="fuwenben">
 							《{{item.name}}{{index}}》
@@ -248,33 +254,13 @@
 	export default {
 		data() {
 			return {
-				buyanzheng: false,
+				buyanzheng: true,
 				time: 0,
 				huoqu: "获取验证码",
 				code: "",
 				shoujihao: "",
 				shoujiyanzheng: false,
-				xieyi: [{
-						id: 0,
-						name: "协议协议协议协议",
-						check: false
-					},
-					{
-						id: 1,
-						name: "协议协议协议协议",
-						check: false
-					},
-					{
-						id: 2,
-						name: "协议协议协议协议",
-						check: false
-					},
-					{
-						id: 3,
-						name: "协议协议协议协议",
-						check: false
-					},
-				],
+				xieyi: [],
 				yuedu: false,
 				youhuijuan_num: 0,
 				tijiaozjia: 0,
@@ -322,7 +308,7 @@
 			}
 			if (ev.goodsdata) {
 				let aa = JSON.parse(ev.goodsdata)
-				console.log(aa,"ss");
+				console.log(aa, "ss");
 				let arr = []
 				that.goodsdata = [...aa];
 				that.goodsdata.forEach(item => {
@@ -337,6 +323,18 @@
 			if (ev.title) {
 				that.title = ev.title;
 			}
+			this.$api.agreement({
+				state: 4
+			}).then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					this.xieyi = data.data.data.status
+				} else {
+					this.buyanzheng = false
+				}
+			})
 		},
 		methods: {
 			go_code() {
@@ -357,7 +355,14 @@
 			},
 			tongyis(ev) {
 				if (ev == 1) {
-					this.tongyi(1)
+					if (this.code != "") {
+						this.tongyi(1)
+					} else {
+						uni.showToast({
+							title: "请输入验证码",
+							icon: "none"
+						})
+					}
 				} else {
 					this.shoujiyanzheng = false;
 				}
@@ -460,8 +465,8 @@
 				}
 				if (this.address != '') {
 					this.$api.cartpay({
-						swj:0,
-						orderid:0,
+						swj: 0,
+						orderid: 0,
 						content: this.value,
 						shopid: shopids,
 						cartid: cartids,

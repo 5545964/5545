@@ -304,8 +304,7 @@
 				"style": {
 					"navigationBarTitleText": "个人资料编辑",
 					"enablePullDownRefresh": false,
-					"navigationStyle": "custom",
-					"navigationBarTextStyle": "white"
+					"navigationStyle": "custom"
 				}
 			},
 			{
@@ -313,9 +312,16 @@
 				"style": {
 					"navigationBarTitleText": "图片处理",
 					"enablePullDownRefresh": false,
-					"navigationStyle": "custom",
-					"navigationBarTextStyle": "white"
+					"navigationStyle": "custom"
 				}
+			}, {
+				"path": "baozhaung",
+				"style": {
+					"navigationBarTitleText": "报装",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom"
+				}
+
 			}
 		]
 	}, {

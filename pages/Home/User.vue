@@ -58,7 +58,7 @@
 			<view class="top_b">
 				<view class="quanju">
 					<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
-						<view class="cart-num" v-if="index <=3 && num_list[index] != 0">
+						<view class="cart-num" @touchend="quxiao(index)" v-if="num_list[index] != 0">
 							{{num_list[index]}}
 						</view>
 						<!-- <image v-if="index == list.length-1" class="fdkgkfmkjskjfjkgdbj"
@@ -242,6 +242,28 @@
 						url: "../pagesA/gongju12"
 					}
 				],
+				list: [
+					{
+						id: 1,
+						name: "待发货"
+					},
+					{
+						id: 2,
+						name: "发货中"
+					},
+					{
+						id: 3,
+						name: "已收货"
+					},
+					{
+						id: 4,
+						name: "报装中"
+					},
+					{
+						id: 5,
+						name: "已安装"
+					},
+				],
 				// list: [{
 				// 		id: 1,
 				// 		name: "待付款",
@@ -250,7 +272,6 @@
 				// 		id: 2,
 				// 		name: "待发货"
 				// 	},
-
 				// 	{
 				// 		id: 3,
 				// 		name: "待收货"
@@ -264,29 +285,6 @@
 				// 		name: "全部订单"
 				// 	}
 				// ],
-				list: [{
-						id: 0,
-						name: "代发货"
-					},
-					{
-						id: 1,
-						name: "发货中"
-					},
-
-					{
-						id: 2,
-						name: "已收货"
-					},
-
-					{
-						id: 3,
-						name: "报装中"
-					},
-					{
-						id: 4,
-						name: "已安装"
-					}
-				],
 			};
 		},
 		onShow() {
@@ -296,6 +294,12 @@
 			}
 		},
 		methods: {
+			quxiao(ev) {
+				let aa = this.num_list;
+				aa[ev] = 0
+				console.log(aa);
+				this.num_list = [...aa]
+			},
 			yidong() {
 				this.system = uni.getSystemInfoSync(); //系统参数
 				this.zhongjian = parseInt(this.system.screenWidth / 2)
@@ -353,7 +357,7 @@
 					user_id: ev
 				}).then((data) => {
 					if (data.data.code == 1) {
-						let aa = [0, 0, 0, 0]
+						let aa = [0, 0, 0, 0,0]
 						data.data.data.status.forEach((item) => {
 							// switch (item.state) {
 							// 	case "0":
@@ -371,19 +375,19 @@
 							// 	default:
 							// }
 							switch (item.state) {
-								case "0":
+								case "1":
 									aa[0] += 1
 									break;
-								case "1":
+								case "2":
 									aa[1] += 1
 									break;
-								case "2":
+								case "3":
 									aa[2] += 1
 									break;
-								case "3":
+								case "16":
 									aa[3] += 1
 									break;
-								case "4":
+								case "17":
 									aa[4] += 1
 									break;
 								default:

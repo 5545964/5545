@@ -201,6 +201,7 @@
 		.type_list {
 			display: flex;
 			align-items: center;
+			flex-wrap: wrap;
 		}
 
 		.type_item {
@@ -212,7 +213,7 @@
 			color: #FFFFFF;
 			text-align: center;
 			line-height: 26rpx;
-			margin-right: 16rpx;
+			margin: 6rpx;
 		}
 
 		.fsfds {

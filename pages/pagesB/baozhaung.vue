@@ -15,30 +15,21 @@
 			</u-navbar>
 		</view>
 		<view class="huadong">
-			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
-				@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :data-index="shopIndex"
-				:style="'right:'+item.right+'px'">
-				<view class="list"  :class="{ 'aaaaaaaaaa': item.right == 0 }">
+			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list">
+				<view class="list">
 					<view class="btn centerboth" v-if="item.selected==true" @click="selThis(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
 					<view class="btn centerboth" v-else @click="selThis(shopIndex)">
 						<text class="iconfont car-unsel"></text>
 					</view>
-					<image class="car-img" :src="img+item.shop.simage" mode="aspectFill"></image>
+					<image class="car-img" :src="img+item.simage" mode="aspectFill"></image>
 					<view class="car-mes centerboth">
 						<view class="mes-box">
-							<view class="g-name line2">{{item.shop.name}}</view>
+							<view class="g-name line2">{{item.name}}</view>
 							<view class="price-change-num clearfix">
 								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
-								<view class="num-box centerboth">
-									<text class="iconfont car-sub" @click="changeNum(0,shopIndex)"></text>
-									<view>{{item.num}}</view>
-									<text class="iconfont car-add" @click="changeNum(1,shopIndex)"></text>
-								</view>
 							</view>
-							<text class="fdsds"> 合计：</text><text
-								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)}}</text>
 						</view>
 					</view>
 				</view>
@@ -47,62 +38,21 @@
 				</view>
 			</view>
 			<view style="height: 100rpx;">
-				
+
 			</view>
 		</view>
-		<!-- 底部合计 -->
-		<!-- <view class="" v-if="cartssss"
-			style="display: flex;background-color: #FFFFFF;position: fixed;bottom: 100rpx;padding: 0 30rpx;left: 0;right: 0;">
-			<view class="dksjahk">
-				定金:￥0
-			</view>
-			<view class="dksjahk">
-				定金:￥0
-			</view>
-		</view> -->
 		<view class="car_foot">
-			<!-- <label class="radio">
-				<radio value="" style="transform: scale(0.7);" /><text>全选</text>
-			</label> -->
 			<view class="all-sel-btn centerboth">
 				<text v-if="allSel==true" class="iconfont car-sel" @click="allSelBtn"></text>
 				<text v-else class="iconfont car-unsel" @click="allSelBtn"></text>
 				<text @click="allSelBtn">全选</text>
-				<text v-if="cartssss" style="color: #E11915;display: inline-block;margin-left: 10rpx;"
-					@click="sanchu">删除</text>
 			</view>
 			<view class="foot_right">
-				<view class="">
-					<view class="all_price">
-						合计：<text style="color: #E11915;">￥{{allAmount.toFixed(2)}}</text>
-					</view>
-					<view class="acitvity">
-						(不含运费，优惠金额见结算页面)
-					</view>
-				</view>
 				<view class="submit_btn" @click="jsCars">
-					结算
+					提交报装
 				</view>
 			</view>
 		</view>
-		<!-- <view class="car-bottom-btn">
-			<view class="all-sel-btn centerboth" @click="allSelBtn">
-				<text v-if="allSel==true" class="iconfont car-sel"></text>
-				<text v-else class="iconfont car-unsel"></text>
-				全选
-			</view>
-			<view class="all-cost centerboth">
-				合计:<text class="icon">￥</text><text class="money">{{allAmount}}</text>
-			</view>
-			<view class="car-btn-box centerboth">
-				<view class="del-btn centerboth" @click="delCars">删除</view>
-				<view class="submit_btn" @click="jsCars">
-					结算({{allNumber}})
-				</view>
-			</view>
-		</view> -->
-		<mask-model ref="askmodel" btnType="1" @confirm="confirm" @cancel="cancel" titleColoe="#666666"
-			cancelColor="#666666" confirmColor="#007AFF" :maskTitle="maskTitle"></mask-model>
 	</view>
 </template>
 
@@ -110,355 +60,85 @@
 	export default {
 		data() {
 			return {
-				yunfei: 0,
-				cartssss: false,
-				title: "购物车",
-				maskTitle: '',
+				title: "报装",
 				allSel: false,
-				allAmount: 0,
-				allNumber: 0,
-				delIds: '', //要删除的购物车id
-				btnType: 0, //0删除  1结算
 				carList: [],
 				img: this.$imgPath,
-				delBtnWidth: 65
+				orderid:"",
+				tiao:0
 			}
 		},
-		onShow() {
-			this.allsss();
-			this.getAllMount();
+		onLoad(ev) {
+			console.log(ev);
+			this.orderid = ev.orderid
+			let aa = uni.getStorageSync("baozhaung")
+			aa.forEach(item=>{
+				item["selected"] = false
+			})
+			this.carList = aa
+			if(ev.tiao){
+				this.tiao = ev.tiao
+			}
+			console.log(this.tiao);
 		},
 		methods: {
-			allsss() {
-				this.$api.shopcart({
-					id: uni.getStorageSync("user_info").id
-				}).then(data => {
-					if (data.data.code == 1) {
-						let aa = []
-						this.yunfei = 0
-						data.data.data.status.forEach((item, index) => {
-							item["selected"] = false
-							item["right"] = 0
-							aa.push(item)
-							if (index > 0 && item.shop.id == data.data.data.status[index - 1].shop
-								.id) {} else {
-								this.yunfei = this.yunfei + Number(item.shop.yf)
-							}
-						})
-						console.log("yunfei", this.yunfei);
-						this.carList = []
-						this.carList = [...aa]
-						this.getAllMount();
-						let bb = 0
-						data.data.data.status.forEach(item => {
-							bb = bb + 1
-						})
-						if (bb >= 99) {
-							bb = "..."
-						}
-					} else {
-						this.carList = [];
-						this.allAmount = 0;
-						uni.setStorageSync("cart_num", 0)
+			jsCars() {
+				let shopid = [];
+				this.carList.forEach(item=>{
+					if(item.selected){
+						shopid.push(item.id)
 					}
 				})
-			},
-			sanchu() {
-				let aa = []
-				this.carList.forEach(item => {
-					if (item.selected) {
-						aa.push(item.id)
-
-					}
-				})
-				this.$api.cartdel({
-					id: aa
-				}).then(data => {
+				console.log(shopid);
+				this.$api.sqlading({
+					shopid:shopid,
+					orderid:this.orderid,
+					userid:uni.getStorageSync("user_info").id
+				}).then(data=>{
 					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
+						title:"提交成功",
+						icon:"success"
 					})
-					if (data.data.code == 1) {
-						this.allsss()
-						this.$api.shopcart({
-							id: uni.getStorageSync("user_info").id
-						}).then(data => {
-							let aa = 0
-							if (data.data.code == 1) {
-								data.data.data.status.forEach(item => {
-									aa = aa + Number(item.num)
-								})
-							}
-							if (aa >= 99) {
-								aa = "..."
-							}
-							uni.setStorageSync("cart_num", aa)
+					if(data.data.code == 1){
+						uni.removeStorageSync("baozhaung")
+						let that = this;
+						
+						uni.navigateBack({
+							delta:Number(that.tiao)
 						})
 					}
 				})
 			},
-			confirm: function() { //确定按钮
-				var that = this;
-
-				if (that.btnType == 0) {
-					that.$emit('delbtn', that.delIds, that.carList);
-				} else {
-					let ids = that.getCarIds();
-					this.$emit('jsbtn', ids)
-				}
-			},
-			cancel: function() { //取消按钮
-
-			},
-			jsCars: function() {
-				let data = []
-				this.carList.forEach(item => {
-					if (item.selected) {
-						data.push({
-							id: item.id,
-							simage: item.shop.simage,
-							name: item.shop.name,
-							shopid: item.shopid,
-							specid: item.specid,
-							specidsize: item.specidsize,
-							num: Number(item.num),
-							xc_price: Number(item.price),
-							orderid: item.orderid
-						})
-					}
-				})
-				if (data.length == 0) {
-					return uni.showToast({
-						title: "请选择商品",
-						icon: "none"
-					})
-				}
-				uni.navigateTo({
-					url: "./quzhifu?goodsdata=" + JSON.stringify(data) + "&iscartid=0&yf=" + this.yunfei
-				})
-
-			},
-			delCars: function() {
-				var that = this;
-				that.delIds = ''; //清除上次删除记录
-				var delIds = that.getCarIds();
-
-				if (!delIds) {
-					uni.showToast({
-						title: '请选择要删除的商品',
-						icon: 'none'
-					})
-					return false;
-				}
-
-				that.delIds = delIds;
-				that.btnType = 0;
-				that.$refs.askmodel.show();
-				that.maskTitle = '是否将选中商品移除购物车?'
-			},
-			selThis: function(shopIndex) { //选择商品
+			//选择商品
+			selThis(shopIndex) {
 				let that = this
 				let carList = that.carList;
-				carList[shopIndex].selected = !carList[shopIndex].selected
-				that.carList = []
-				that.carList = [...carList]
 				let aa = 0;
+				carList[shopIndex].selected = !carList[shopIndex].selected
+				that.carList = carList
 				that.carList.forEach((item, index) => {
 					if (item.selected) {
 						aa += 1
-					} else {}
+					}
 				})
-
-				if (aa != 0) {
-					that.cartssss = true
-				} else {
-					that.cartssss = false
-				}
 				if (aa == that.carList.length) {
 					that.allSel = true
 				} else {
 					that.allSel = false
 				}
-				that.getAllMount();
 			},
-			selShop: function(shopIndex) {
-				var that = this;
-				let carList = that.carList;
-				if (carList[shopIndex].selected == false) {
-					carList[shopIndex].selected = true;
-					for (let i = 0; i < carList[shopIndex].glist.length; i++) {
-						carList[shopIndex].glist[i].selected = true;
-					}
-				} else {
-					carList[shopIndex].selected = false;
-					for (let i = 0; i < carList[shopIndex].glist.length; i++) {
-						carList[shopIndex].glist[i].selected = false;
-					}
-				}
-				that.setAllSel();
-				that.$emit('selShop', carList);
-			},
-			setAllSel: function() { //是否全选
-				let that = this
-				let shopNum = 0;
-				for (let i = 0; i < that.carList.length; i++) {
-					if (that.carList[i].selected == true) {
-						shopNum = shopNum + 1;
-					}
-				}
-				if (shopNum == that.carList.length && shopNum > 0) {
-					that.allSel = true;
-					that.cartssss = true;
-				} else {
-					that.allSel = false;
-					that.cartssss = false;
-				}
-
-				that.getAllMount();
-			},
-			allSelBtn: function() { //全选
-				var that = this;
+			allSelBtn() { //全选
+				let that = this;
 				that.allSel = !that.allSel;
-				var carList = that.carList;
+				let carList = that.carList;
 				for (let i = 0; i < carList.length; i++) {
 					if (that.allSel) {
-						that.allSel = true;
 						carList[i].selected = true;
-						that.cartssss = true;
 					} else {
 						carList[i].selected = false;
-						that.cartssss = false;
 					}
 				}
-				that.$emit('allSelBtn', carList);
-				that.getAllMount();
-			},
-			getAllMount: function() { //计算选中总价
-				var that = this;
-				let allPrice = 0;
-				var selNum = 0;
-				let carList = that.carList;
-				for (let i = 0; i < carList.length; i++) {
-					if (carList[i].selected == true) {
-						selNum = selNum + Number(carList[i].num);
-						// allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].shop.xc_price));
-						allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].price));
-					}
-				}
-				that.allNumber = selNum;
-				that.allAmount = allPrice;
-			},
-			getCarIds: function() { //获取要结算的商品
-				var that = this;
-				var carList = that.carList;
-				var haveSel = [];
-				for (let i = 0; i < carList.length; i++) {
-					for (let k = 0; k < carList[i].glist.length; k++) {
-						if (carList[i].glist[k].selected == true) {
-							haveSel.push(carList[i].glist[k].id);
-						}
-					}
-				}
-				if (haveSel.length == 0) {
-					uni.showToast({
-						title: '请选择要结算的商品',
-						icon: 'none'
-					})
-					return false;
-				}
-				let cartIds = haveSel.join(',');
-				return cartIds;
-			},
-			changeNum: function(type, index) { //适用于根据数量改变购物车
-				var that = this;
-				var carList = that.carList;
-				let aa = Number(carList[index].num)
-				if (type == 0) {
-					if (aa <= 1) {
-						return false;
-					}
-					aa = aa - 1
-				} else {
-					if (aa >= carList[index].shop.shopkucun) {
-						uni.showToast({
-							title: '库存不足',
-							icon: 'none'
-						})
-						return false;
-					}
-					aa = aa + 1
-				}
-				carList[index].num = aa;
-				this.carList = []
-				this.carList = [...carList]
-				that.getAllMount();
-			},
-
-
-
-
-
-			//开始触摸滑动
-			drawStart(e) {
-				var touch = e.touches[0];
-				this.startX = touch.clientX;
-			},
-			//触摸滑动
-			drawMove(e) {
-				for (var index in this.carList) {
-					this.$set(this.carList[index], 'right', 0);
-				}
-				var touch = e.touches[0];
-				var item = this.carList[e.currentTarget.dataset.index];
-				var disX = this.startX - touch.clientX;
-				if (disX >= 20) {
-					if (disX > this.delBtnWidth) {
-						disX = this.delBtnWidth;
-					}
-					this.$set(this.carList[e.currentTarget.dataset.index], 'right', disX);
-				} else {
-					this.$set(this.carList[e.currentTarget.dataset.index], 'right', 0);
-				}
-			},
-			//触摸滑动结束
-			drawEnd(e) {
-				var item = this.carList[e.currentTarget.dataset.index];
-				if (item.right >= this.delBtnWidth / 2) {
-					this.$set(this.carList[e.currentTarget.dataset.index], 'right', this.delBtnWidth);
-				} else {
-					this.$set(this.carList[e.currentTarget.dataset.index], 'right', 0);
-				}
-			},
-			//删除方法
-			delData(item, index) {
-				console.log(item, index);
-				this.$api.cartdel({
-					id: item.id
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
-					})
-					if (data.data.code == 1) {
-						this.allsss()
-						this.$api.shopcart({
-							id: uni.getStorageSync("user_info").id
-						}).then(data => {
-							let aa = 0
-							if (data.data.code == 1) {
-								data.data.data.status.forEach(item => {
-									aa = aa + Number(item.num)
-								})
-							}
-							if (aa >= 99) {
-								aa = "..."
-							}
-							uni.setStorageSync("cart_num", aa)
-						})
-					}
-				})
+				// that.$emit('allSelBtn', carList);
 			},
 			back(ev) {
 				switch (ev) {
@@ -560,9 +240,11 @@
 		flex-direction: row;
 		padding: 12rpx 0;
 	}
-	.aaaaaaaaaa{
+
+	.aaaaaaaaaa {
 		border-radius: 20rpx;
 	}
+
 	.car-list .list {
 		width: 100%;
 		padding: 20rpx 20rpx 20rpx 0;
@@ -602,6 +284,7 @@
 	}
 
 	.car-list .g-name {
+		margin-top: 30rpx;
 		font-size: 28rpx;
 		color: #2a2a2a;
 		/* height: 38rpx; */
@@ -609,6 +292,7 @@
 
 	.car-list .mes-box {
 		width: 100%;
+		height: 100%;
 	}
 
 	.car-list .gz-box {
@@ -872,6 +556,7 @@
 	}
 
 	.clearfix {
+		margin-top: 50rpx;
 		zoom: 1;
 	}
 

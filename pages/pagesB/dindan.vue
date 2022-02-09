@@ -28,8 +28,10 @@
 									<view class="text"> 订单编号：{{ items.orderid }} </view>
 									<view class="status" v-show="items.state == 0"> 待付款 </view>
 									<view class="status" v-show="items.state == 1"> 待发货 </view>
-									<view class="status" v-show="items.state == 2"> 待收货 </view>
-									<view class="status" v-show="items.state == 3"> 待评价 </view>
+									<!-- <view class="status" v-show="items.state == 2"> 待收货 </view> -->
+									<view class="status" v-show="items.state == 2"> 发货中 </view>
+									<!-- <view class="status" v-show="items.state == 3"> 待评价 </view> -->
+									<view class="status" v-show="items.state == 3"> 已收货 </view>
 									<view class="status" v-show="items.state == 4"> 已完成 </view>
 									<view class="status" v-show="items.state == 5"> 退款审核中 </view>
 									<view class="status" v-show="items.state == 6"> 退款成功 </view>
@@ -41,6 +43,8 @@
 									<view class="status" v-show="items.state == 13"> 换货审核中 </view>
 									<view class="status" v-show="items.state == 14"> 换货成功 </view>
 									<view class="status" v-show="items.state == 15"> 换货已驳回 </view>
+									<view class="status" v-show="items.state == 16"> 报装中 </view>
+									<view class="status" v-show="items.state == 17"> 已安装 </view>
 								</view>
 								<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc"
 									@click="goods(items)">
@@ -99,7 +103,6 @@
 
 								<!-- 申请退货/申请售后 -->
 								<!-- 申请换货/申请售后 -->
-
 								<view class="anniu">
 									<view class="button" @click="annui(0, items)" v-if="items.state == 0">
 										取消订单
@@ -116,9 +119,6 @@
 									<view class="button" @click="annui(4, items)" v-if="items.state == 2">
 										确认收货
 									</view>
-									<view class="button" @click="annui(6, items)" v-if="items.state == 3">
-										立即评价
-									</view>
 									<view class="button" @click="annui(7, items)"
 										v-if="items.state == 3 || items.state == 4">
 										申请售后
@@ -126,17 +126,26 @@
 									<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 										取消退款
 									</view>
-									<!--  -->
-									<!--  -->
 									<view class="button" @click="delorder(items)"
-										v-if="items.state == 9 || items.state == 4 || items.state == 3">
+										v-if="items.state == 9 || items.state == 4 || items.state == 17">
 										删除订单
 									</view>
-									<!--  -->
-									<!--  -->
 									<view class="button" v-if="items.state == 8">
 										已申请退款
 									</view>
+									<view class="button" v-if="items.state == 3" @click="baozhaung(items)">
+										是否安装
+									</view>
+									<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
+										完成安装
+									</view>
+									<!-- <view class="button" @click="delorder(items)"
+										v-if="items.state == 9 || items.state == 4 || items.state == 3">
+										删除订单
+									</view> -->
+									<!-- <view class="button" @click="annui(6, items)" v-if="items.state == 3">
+										立即评价
+									</view> -->
 								</view>
 							</view>
 							<u-empty v-if="item.data_list.length == 0" text="暂无订单" mode="list"></u-empty>
@@ -145,6 +154,7 @@
 				</swiper>
 			</view>
 		</view>
+		<!-- 确认取消该订单 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="show" mode="center">
 			<view class="popup">
 				<view class="top"> 提示 </view>
@@ -156,6 +166,19 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 确认安装完成 -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="qurren" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 是否安装完成 </view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="qurrere(0)"> 取消 </view>
+					<view class="czcxc" @click="qurrere(1)"> 确定 </view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 确认取消退款 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
 			<view class="popup">
 				<view class="top"> 提示 </view>
@@ -167,6 +190,20 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 是否需要安装 -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 是否需要安装？ </view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="baozhaungshowss(0)"> 取消 </view>
+					<view class="czcxc" @click="baozhaungshowss(1)" v-if="buyanzheng"> 确定 </view>
+					<view class="czcxc" @click="tanchuanbaozhuang()" v-else> 确定 </view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 确认收到该订单商品 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
 			<view class="popup">
 				<view class="top"> 提示 </view>
@@ -179,6 +216,71 @@
 			</view>
 		</u-popup>
 		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
+
+		<!-- 确保是你本人操作 -->
+		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					确保是你本人操作
+				</view>
+				<view class="textss">
+					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+				</view>
+				<view class="yanzhengma">
+					<view class="cet" style="justify-content: space-around;width: 100%;">
+						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+						</view>
+						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyis(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="tongyis(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 服务协议和隐私政策 -->
+		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					服务协议和隐私政策
+				</view>
+				<view class="textss">
+					感谢您使用宝芸邸，我们会严格
+					按照法律规定存储和使用您的个人
+					信息。您可以阅读以下几项条款了
+					解详细信息。如您同意，请勾选以
+					下几项条款并点击”同意”开始接受
+					我们的服务。
+				</view>
+				<view style="padding:20rpx 0;">
+					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+						:key="index">
+						<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view class="yuan" @click="hahaha(item)">
+								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="mingcheng" @click="fuwenben(item)">
+							《{{item.name}}》
+						</view>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyi(0)">
+						暂不使用
+					</view>
+					<view class="hkhnij jjhgj" @click="tanchuanbaozhuang()">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -187,6 +289,19 @@
 	export default {
 		data() {
 			return {
+				qurrsaen: "",
+				qurren: false,
+				code: "",
+				buyanzheng: true,
+				timea: 0,
+				huoqu: "获取验证码",
+				shoujiyanzheng: false,
+				yuedu: false,
+				xieyi: [],
+				//
+				//
+				mnbv: "",
+				baozhuangshow: false,
 				hahahaxuanzhe: {},
 				imgtitle: this.$imgPath,
 				show: false,
@@ -195,6 +310,50 @@
 				height: 0,
 				current: 0,
 				title: "",
+				lists: [{
+						name: "全部",
+					},
+					{
+						name: "待发货",
+					},
+					{
+						name: "发货中",
+					},
+					{
+						name: "已收货",
+					},
+					{
+						name: "报装中",
+					},
+					{
+						name: "已安装",
+					}
+				],
+				list: [{
+						status: "all",
+						data_list: [],
+					},
+					{
+						status: 1,
+						data_list: [],
+					},
+					{
+						status: 2,
+						data_list: [],
+					},
+					{
+						status: 3,
+						data_list: [],
+					},
+					{
+						status: 4,
+						data_list: [],
+					},
+					{
+						status: 5,
+						data_list: [],
+					}
+				],
 				// lists: [{
 				// 		name: "全部",
 				// 	},
@@ -246,43 +405,6 @@
 				// 		data_list: [],
 				// 	},
 				// ],
-				lists: [{
-						name: "代发货",
-					},
-					{
-						name: "发货中",
-					},
-					{
-						name: "已收货",
-					},
-					{
-						name: "报装中",
-					},
-					{
-						name: "已安装",
-					}
-				],
-				list: [{
-						status: 0,
-						data_list: [],
-					},
-					{
-						status: 1,
-						data_list: [],
-					},
-					{
-						status: 2,
-						data_list: [],
-					},
-					{
-						status: 3,
-						data_list: [],
-					},
-					{
-						status: 4,
-						data_list: [],
-					}
-				],
 				time: "",
 			};
 		},
@@ -306,8 +428,82 @@
 		onShow() {
 			this.system();
 			this.allsss();
+			this.$api.agreement({
+				state: 5
+			}).then(data => {
+				if (data.data.code == 1) {
+					console.log(data);
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					this.xieyi = data.data.data.status
+				} else {
+					this.buyanzheng = false
+				}
+			})
 		},
 		methods: {
+			qurrere(ev) {
+				if (ev == 1) {
+					this.$api.successloading({
+						orderid: this.qurrsaen.orderid
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "安装完成",
+								icon: "success"
+							})
+							this.allsss();
+						} else {
+							uni.showToast({
+								title: data.data.msg,
+								icon: "success"
+							})
+						}
+						this.qurren = false
+					})
+				} else {
+					this.qurren = false
+				}
+			},
+			jiesubaozhaung(ev) {
+				console.log(ev);
+				this.qurrsaen = ev
+				this.qurren = true
+			},
+			tanchuanbaozhuang() {
+				if (this.buyanzheng) {
+					let mm = 0
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							mm++
+						}
+					})
+					if (this.xieyi.length != mm) {
+						return uni.showToast({
+							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					this.shoujiyanzheng = false;
+					this.yuedu = false
+				}
+				this.baozhuangshow = false
+				uni.setStorageSync("baozhaung", this.mnbv.shop)
+				uni.navigateTo({
+					url: "./baozhaung?orderid=" + this.mnbv.orderid + "&tiao=1"
+				})
+			},
+			baozhaungshowss(ev) {
+				if (ev == 1) {
+					this.shoujiyanzheng = true
+				}
+				this.baozhuangshow = false
+			},
+			baozhaung(ev) {
+				this.mnbv = ev
+				this.baozhuangshow = !this.baozhuangshow
+			},
 			delorder(ev) {
 				console.log(ev);
 				let that = this;
@@ -326,7 +522,7 @@
 									icon: "success"
 								});
 								if (data.data.code == 1) {
-									uni.navigateBack(-1)
+									that.allsss()
 								}
 							})
 						} else if (res.cancel) {
@@ -343,11 +539,9 @@
 						this.list.forEach((item, index) => {
 							item.data_list = [];
 						});
+						this.list[0].data_list = data.data.data.status;
 						data.data.data.status.forEach((item) => {
 							switch (item.state) {
-								case "0":
-									this.list[0].data_list.push(item);
-									break;
 								case "1":
 									this.list[1].data_list.push(item);
 									break;
@@ -357,11 +551,13 @@
 								case "3":
 									this.list[3].data_list.push(item);
 									break;
-								case "4":
+								case "16":
 									this.list[4].data_list.push(item);
 									break;
+								case "17":
+									this.list[5].data_list.push(item);
+									break;
 								default:
-
 							}
 						});
 						// this.list[0].data_list = [];
@@ -372,15 +568,13 @@
 			},
 			//订单
 			order() {
-				this.$api
-					.myorderI({
-						user_id: 1,
-					})
-					.then((data) => {
-						if (data.data.code == 1) {
+				this.$api.myorderI({
+					user_id: 1,
+				}).then((data) => {
+					if (data.data.code == 1) {
 
-						}
-					});
+					}
+				});
 			},
 			//订单
 			//订单详情
@@ -480,74 +674,63 @@
 				//4确认收货
 				//5申请退款
 				//6立即评价
-
 				switch (ev) {
 					case 0:
-
 						this.order_id = item.id;
 						this.show = true;
 						this.hahahaxuanzhe = item;
 						break;
 					case 1:
-
-
-						this.$api
-							.orderpay({
-								prepay_id: item.id,
-								id: item.id,
-							}).then((res) => {
-
-								if (res.data.code == 200) {
-									let that = this;
-									uni.requestPayment({
-										timeStamp: res.data.data.timeStamp, //当前的时间
-										nonceStr: res.data.data.nonceStr, //随机字符串
-										package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-										signType: res.data.data.signType, //签名算法，暂支持 MD5。
-										paySign: res.data.data.paySign, //签名
-										success: function(res) {
-											uni.showToast({
-												title: "支付成功",
-												icon: "none",
-											});
-											that.allsss();
-											that.current = 2
-										},
-										fail: function(err) {
-
-											uni.showToast({
-												title: "支付失败",
-												icon: "none",
-											});
-										},
-									});
-								} else {
-									uni.showToast({
-										title: res.data.msg,
-										icon: "none",
-									});
-								}
-							});
+						this.$api.orderpay({
+							prepay_id: item.id,
+							id: item.id,
+						}).then((res) => {
+							if (res.data.code == 200) {
+								let that = this;
+								uni.requestPayment({
+									timeStamp: res.data.data.timeStamp, //当前的时间
+									nonceStr: res.data.data.nonceStr, //随机字符串
+									package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+									signType: res.data.data.signType, //签名算法，暂支持 MD5。
+									paySign: res.data.data.paySign, //签名
+									success: function(res) {
+										uni.showToast({
+											title: "支付成功",
+											icon: "none",
+										});
+										that.allsss();
+										that.current = 1
+									},
+									fail: function(err) {
+										uni.showToast({
+											title: "支付失败",
+											icon: "none",
+										});
+									},
+								});
+							} else {
+								uni.showToast({
+									title: res.data.msg,
+									icon: "none",
+								});
+							}
+						});
 						break;
 					case 2:
-
 						this.order_id = item.orderid;
 						this.showa = true;
 						break;
 					case 3:
-
 						uni.navigateTo({
 							url: "../pagesC/wuliu?id=" + item.id,
 						});
 						break;
 					case 4:
-
 						this.order_id = item.id
 						this.shows = true;
 						break;
 					case 5:
 						let type = ""
-
 						if (this.current == 2) {
 							type = 0
 						} else {
@@ -558,13 +741,11 @@
 						});
 						break;
 					case 6:
-
 						uni.navigateTo({
 							url: "../pagesC/pingjia?item=" + JSON.stringify(item)
 						});
 						break;
 					case 7:
-
 						uni.navigateTo({
 							url: "../pagesC/shouhou?item=" + JSON.stringify(item)
 						});
@@ -590,10 +771,10 @@
 						case "2":
 							this.list[3].data_list.push(item);
 							break;
-						case "3":
+						case "16":
 							this.list[4].data_list.push(item);
 							break;
-						case "4":
+						case "17":
 							this.list[5].data_list.push(item);
 							break;
 						default:
@@ -629,6 +810,62 @@
 						});
 						break;
 					default:
+				}
+			},
+			hahaha(item) {
+				item.check = !item.check
+			},
+			fuwenben(ev) {
+				uni.setStorageSync("fuwenbeng", ev.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.name
+				})
+			},
+			tongyis(ev) {
+				if (ev == 1) {
+					if (this.code != "") {
+						this.tongyi(1)
+					} else {
+						uni.showToast({
+							title: "请输入验证码",
+							icon: "none"
+						})
+					}
+				} else {
+					this.shoujiyanzheng = false;
+				}
+			},
+			tongyi(ev) {
+				if (ev == 1) {
+					this.xieyi.forEach(item => {
+						item.check = false
+					})
+					this.yuedu = true;
+				} else {
+					this.shoujiyanzheng = false;
+					this.yuedu = false;
+				}
+			},
+			hahahaa(ev) {
+				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				if (!phoneCodeVerification.test(ev.detail.value)) {
+					uni.showToast({
+						title: "手机号不正确",
+						icon: "none"
+					})
+				}
+			},
+			go_code() {
+				if (this.timea == 0) {
+					this.timea = 60
+					let aa = setInterval(() => {
+						this.timea--
+						this.huoqu = this.timea + "s后获取"
+						if (this.timea == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
 				}
 			},
 		},
@@ -847,6 +1084,78 @@
 				width: 26rpx;
 				height: 24rpx;
 			}
+		}
+	}
+
+	.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+	}
+
+	.yanzhengma {
+		margin: 50rpx 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 230rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
 		}
 	}
 </style>

@@ -23,13 +23,17 @@
 	export default {
 		data() {
 			return {
-				content:'<h2 style="text-align:center"><u><s>d阿三<strong>大苏打撒旦撒大苏打阿达阿萨啊是阿达阿斯顿啊阿达啊啊阿达啊阿萨阿萨啊实打实大苏打实打实的打撒打撒打撒萨达萨达</strong>萨达萨达是打撒十大打算<img alt=""src="https://v1.uviewui.com/common/logo.png" /></s></u></h2>',
+				content: '<h2 style="text-align:center"><u><s>d阿三<strong>大苏打撒旦撒大苏打阿达阿萨啊是阿达阿斯顿啊阿达啊啊阿达啊阿萨阿萨啊实打实大苏打实打实的打撒打撒打撒萨达萨达</strong>萨达萨达是打撒十大打算<img alt=""src="https://v1.uviewui.com/common/logo.png" /></s></u></h2>',
 				title: "富文本",
 			};
 		},
 		onLoad(ev) {
-			if(ev.title){
+			if (ev.title) {
 				this.title = ev.title;
+			}
+			let aa = uni.getStorageSync("fuwenbeng")
+			if(aa){
+				this.content = aa
 			}
 		},
 		methods: {
@@ -51,10 +55,11 @@
 </script>
 
 <style lang="scss" scoped>
-	.home{
+	.home {
 		width: 100%;
 		height: 100%;
 	}
+
 	.navbar {
 		.navbar_top {
 			border: 1px solid #e5e5e5;
