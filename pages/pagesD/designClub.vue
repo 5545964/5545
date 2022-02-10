@@ -263,12 +263,6 @@
 			this.enjoy()
 			this.enjoys()
 			this.getdesproMoenys()
-			// this.$api.shenfen({
-			// 	id: uni.getStorageSync("user_info").id
-			// }).then(data => {
-			// 	if (data.data.code == 1) {
-			// 	}
-			// })
 		},
 		onReachBottom(ev) {
 			if (this.current == 0) {
@@ -452,7 +446,7 @@
 			toReg() {
 				this.showContract = false;
 				uni.navigateTo({
-					url: "./regDesigner/regDesigner"
+					url: "./regDesigner/regDesigner?nageid=" + this.allssssss[this.fenleideid].id
 				})
 			},
 			changeTokens(index, item) {
@@ -468,19 +462,21 @@
 						provider: 'weixin',
 						tmplIds: that.mobanid,
 						success: function(res) {
-							console.log(res);
 							that.fenleideid = ev;
+							that.looks(that.allssssss[ev].doc_url)
+							// 查看是否支付
 							that.$api.ispay({
 								id: that.allssssss[ev].id,
 								user_id: uni.getStorageSync("user_info").id
 							}).then(data => {
-								if (data.data.code == 1) {
-									that.pay = '去填写资料'
-								} else {
-									that.pay = '支付￥' + that.allssssss[ev].money
-								}
+								that.pay = '去填写资料'
+								// 不支付，支付取消注释
+								// if (data.data.code == 1) {
+								// 	that.pay = '去填写资料'
+								// } else {
+								// 	that.pay = '支付￥' + that.allssssss[ev].money
+								// }
 								that.showContract = true
-								that.looks(that.allssssss[ev].doc_url)
 							})
 						}
 					});
@@ -506,22 +502,24 @@
 			},
 			// 支付填写资料
 			pays() {
-				// this.getcontein()
 				let that = this
-				if (this.pay == "填写资料") {
-					that.showContract = true
+				if (this.pay == "去填写资料") {
+					that.showContract = false
+					that.toReg()
 				} else {
 					that.$api.buylevel({
 						id: that.allssssss[that.fenleideid].id,
 						user_id: uni.getStorageSync("user_info").id
 					}).then(res => {
+						// 重新提交
 						if (res.data.code == 1) {
 							that.showContract = false
 							setTimeout(() => {
 								that.resss()
 							}, 1000)
 						}
-						if (res.data.code == 200) {
+						// 支付
+						if (res.data.code == 2000) {
 							uni.requestPayment({
 								timeStamp: res.data.data.timeStamp, //当前的时间
 								nonceStr: res.data.data.nonceStr, //随机字符串
@@ -533,8 +531,8 @@
 										title: "支付成功",
 										icon: "none"
 									})
-									that.toReg()
 									that.showContract = false
+									that.toReg()
 								},
 								fail: function(err) {
 									uni.showToast({
@@ -548,7 +546,7 @@
 				}
 			},
 			// 热门栏目
-			enjoys(){
+			enjoys() {
 				this.$api.recruit().then(data => {
 					if (data.data.code == 1) {
 						this.recruit_all = data.data.data.status
@@ -591,7 +589,7 @@
 						this.video = aa
 					}
 				})
-				
+
 			},
 			// 设计师列表
 			dessel(ev) {
@@ -637,9 +635,15 @@
 			},
 			// 查看合同
 			lookcont() {
-				// this.looks(this.desinfo.contrin)
-				uni.navigateTo({
-					url: "./hetong"
+				this.$api.desmyuser({
+					user_id: uni.getStorageSync("user_info").id,
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("des_info", data.data.data.myuser)
+						uni.navigateTo({
+							url: "./hetong"
+						})
+					}
 				})
 			},
 			back(ev) {

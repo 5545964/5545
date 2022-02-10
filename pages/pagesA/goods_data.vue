@@ -330,7 +330,8 @@
 				<view class="xian"> </view>
 				<view class="bottoms">
 					<view class="sdasas" @click="qurrere(0)"> 取消 </view>
-					<view class="czcxc" @click="qurrere(1)"> 确定 </view>
+					<view class="czcxc" @click="qurrere(1)" v-if="buyanzheng"> 确定 </view>
+					<view class="czcxc" @click="anzhaungwancheng()" v-else> 确定 </view>
 				</view>
 			</view>
 		</u-popup>
@@ -448,6 +449,7 @@
 				//
 				//
 				//
+				zhuangtai:0,
 				mnbv: "",
 				baozhuangshow: false,
 				code: "",
@@ -494,31 +496,22 @@
 				}
 			})
 		},
+		watch: {
+			shoujiyanzheng(ev, el) {
+				if (!ev) {
+					this.code = ""
+				}
+			}
+		},
 		methods: {
 			//
 			//
 			//
 			qurrere(ev) {
 				if (ev == 1) {
-					this.$api.successloading({
-						orderid: this.qurrsaen.orderid
-					}).then(data => {
-						if (data.data.code == 1) {
-							uni.showToast({
-								title: "安装完成",
-								icon: "success"
-							})
-							setTimeout(()=>{
-								uni.navigateBack(-1)
-							},800)
-						} else {
-							uni.showToast({
-								title: data.data.msg,
-								icon: "success"
-							})
-						}
-						this.qurren = false
-					})
+					this.qurren = false
+					this.shoujiyanzheng = true
+					this.zhuangtai = 1
 				} else {
 					this.qurren = false
 				}
@@ -544,10 +537,35 @@
 					this.shoujiyanzheng = false;
 					this.yuedu = false
 				}
-				this.baozhuangshow = false
-				uni.setStorageSync("baozhaung", this.mnbv.shop)
-				uni.navigateTo({
-					url: "../pagesB/baozhaung?orderid=" + this.mnbv.orderid + "&tiao=2"
+				if (this.zhuangtai == 0) {
+					this.baozhuangshow = false
+					uni.setStorageSync("baozhaung", this.mnbv.shop)
+					uni.navigateTo({
+						url: "../pagesB/baozhaung?orderid=" + this.mnbv.orderid + "&tiao=2"
+					})
+				} else {
+					this.anzhaungwancheng()
+				}
+			},
+			anzhaungwancheng(){
+				this.$api.successloading({
+					orderid: this.order_idsssss
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.showToast({
+							title: "安装完成",
+							icon: "success"
+						})
+						this.shoujiyanzheng = false
+						this.yuedu = false
+						uni.navigateBack(-1)
+					} else {
+						uni.showToast({
+							title: data.data.msg,
+							icon: "success"
+						})
+					}
+					this.qurren = false
 				})
 			},
 			baozhaungshowss(ev) {
@@ -809,6 +827,7 @@
 				if (ev == 1) {
 					if (this.code != "") {
 						this.tongyi(1)
+						this.shoujiyanzheng = false
 					} else {
 						uni.showToast({
 							title: "请输入验证码",

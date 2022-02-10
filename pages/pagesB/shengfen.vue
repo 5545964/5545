@@ -17,7 +17,6 @@
 			<view class="text">
 				身份选择
 			</view>
-			<button type="default" @click="kankan">123</button>
 			<swiper v-if="list.length != 0" indicator-active-color="#D8AE5F" indicator-color="#000000"
 				:style="'height: '+hei+'px;'" @change="lunbo" :indicator-dots="true" :circular="true" :duration="500">
 				<swiper-item v-for="(item,index) in list" :key="index">
@@ -41,11 +40,86 @@
 			</swiper>
 			<u-empty v-else></u-empty>
 		</view>
-		<view class="boyyty cet" v-if="usershengfen < id" @click="topay">
-			<view class="tetx">
+		<!-- <view class="boyyty cet" v-if="usershengfen < id"> -->
+		<view class="boyyty cet">
+			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
+				￥{{jiage}}元升级
+			</view>
+			<view class="tetx" @click="topay" v-else>
 				￥{{jiage}}元升级
 			</view>
 		</view>
+
+		<!--  -->
+		<!--  -->
+		<!--  -->
+		<!-- 确保是你本人操作 -->
+		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					确保是你本人操作
+				</view>
+				<view class="textss">
+					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+				</view>
+				<view class="yanzhengma">
+					<view class="cet" style="justify-content: space-around;width: 100%;">
+						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+						</view>
+						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyis(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="tongyis(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 服务协议和隐私政策 -->
+		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					服务协议和隐私政策
+				</view>
+				<view class="textss">
+					感谢您使用宝芸邸，我们会严格
+					按照法律规定存储和使用您的个人
+					信息。您可以阅读以下几项条款了
+					解详细信息。如您同意，请勾选以
+					下几项条款并点击”同意”开始接受
+					我们的服务。
+				</view>
+				<view style="padding:20rpx 0;">
+					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+						:key="index">
+						<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view class="yuan" @click="hahaha(item)">
+								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="mingcheng" @click="fuwenben(item)">
+							《{{item.name}}》
+						</view>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyi(0)">
+						暂不使用
+					</view>
+					<view class="hkhnij jjhgj" @click="tanchuanbaozhuang()">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<!--  -->
+		<!--  -->
+		<!--  -->
 	</view>
 </template>
 
@@ -53,6 +127,23 @@
 	export default {
 		data() {
 			return {
+				//
+				//
+				//
+				mnbv: "",
+				jshdsfdfs: false,
+				shoujihao: "",
+				baozhuangshow: false,
+				code: "",
+				buyanzheng: false,
+				timea: 0,
+				huoqu: "获取验证码",
+				shoujiyanzheng: false,
+				yuedu: false,
+				xieyi: [],
+				//
+				//
+				//
 				id: "",
 				jiage: 0,
 				hei: 10000,
@@ -68,10 +159,25 @@
 			if (ev.title) {
 				this.title = ev.title
 			}
+			let aa = 0
 			if (ev.isdes) {
 				this.isdes = 1
+				aa = 1
 			}
-			if (uni.getStorageSync("user_info").bbs !='' && uni.getStorageSync("user_info").bbs !=null) {
+			this.$api.agreement({
+				state: aa
+			}).then(data => {
+				if (data.data.code == 1) {
+					console.log(data);
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					this.xieyi = data.data.data.status
+				} else {
+					this.buyanzheng = false
+				}
+			})
+			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
 				if (this.isdes == 0) {
 					this.usershengfen = uni.getStorageSync("user_info").bbs.id
 				} else {
@@ -81,12 +187,100 @@
 
 			this.getdata()
 		},
-		methods: {
-			kankan(){
-				console.log(uni.getStorageSync("des_info"));
-				console.log("321312321321312321312313123213");
-				console.log(uni.getStorageSync("user_info"));
+		watch: {
+			shoujiyanzheng: function(val, oldVal) {
+				if(!val){
+					console.log(val);
+					this.code = ""
+				}
 			},
+		},
+		methods: {
+			//
+			//
+			//
+			hahaha(item) {
+				item.check = !item.check
+			},
+			fuwenben(ev) {
+				uni.setStorageSync("fuwenbeng", ev.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.name
+				})
+			},
+			tongyis(ev) {
+				if (ev == 1) {
+					if (this.code != "") {
+						this.tongyi(1)
+					} else {
+						uni.showToast({
+							title: "请输入验证码",
+							icon: "none"
+						})
+					}
+				} else {
+					this.shoujiyanzheng = false;
+				}
+			},
+			tongyi(ev) {
+				if (ev == 1) {
+					this.xieyi.forEach(item => {
+						item.check = false
+					})
+					this.yuedu = true;
+				} else {
+					this.shoujiyanzheng = false;
+					this.yuedu = false;
+				}
+			},
+			hahahaa(ev) {
+				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				if (!phoneCodeVerification.test(ev.detail.value)) {
+					uni.showToast({
+						title: "手机号不正确",
+						icon: "none"
+					})
+				}
+			},
+			// 获取验证码
+			go_code() {
+
+				if (this.timea == 0) {
+					this.timea = 60
+					let aa = setInterval(() => {
+						this.timea--
+						this.huoqu = this.timea + "s后获取"
+						if (this.timea == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
+			tanchuanbaozhuang() {
+				if (this.buyanzheng) {
+					let mm = 0
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							mm++
+						}
+					})
+					if (this.xieyi.length != mm) {
+						return uni.showToast({
+							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					this.shoujiyanzheng = false;
+					this.yuedu = false
+				}
+				this.baozhuangshow = false
+				console.log("协议同意");
+				this.topay()
+			},
+			//
+			//
+			//
 			topay() {
 				this.$api.buylevel({
 					id: this.id,
@@ -290,6 +484,81 @@
 				width: 26rpx;
 				height: 24rpx;
 			}
+		}
+	}
+
+	//
+	// 
+	// 
+	.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+	}
+
+	.yanzhengma {
+		margin: 50rpx 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 230rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
 		}
 	}
 </style>

@@ -169,7 +169,7 @@
 		</u-popup>
 		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang" :bottom="heigth"
 			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
-		<tab-bar @tabbers="dsad"></tab-bar>
+		<tab-bar></tab-bar>
 	</view>
 </template>
 
@@ -323,7 +323,6 @@
 						}
 					})
 				}
-				console.log(aa);
 			},
 			xuanzhesssss(ev) {
 				ev.check = !ev.check
@@ -335,8 +334,15 @@
 				// 0为智能排序1星级排序2为设计师单量排序3为好评排序4为点赞两排序5为关注量排序
 			},
 			kanhetong() {
-				uni.navigateTo({
-					url: "../pagesD/hetong"
+				this.$api.desmyuser({
+					user_id: uni.getStorageSync("user_info").id,
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("des_info", data.data.data.myuser)
+						uni.navigateTo({
+							url: "../pagesD/hetong"
+						})
+					}
 				})
 			},
 			getdesproMoenys() {
@@ -420,9 +426,6 @@
 					this.dianzhansssss = false
 				}
 			},
-			dsad() {
-
-			},
 			// 跳转设计师详情
 			navgepage(item) {
 				uni.navigateTo({
@@ -490,54 +493,52 @@
 			// 跳转填写资料
 			toReg() {
 				uni.navigateTo({
-					url: "../pagesD/regDesigner/regDesigner"
+					url: "../pagesD/regDesigner/regDesigner?nageid=" + this.allssssss[this.fenleideid].id
 				})
 			},
 			// 支付填写资料
 			pays() {
-				// if (this.pay == "填写资料") {
-				// 	this.showContract = true
-				// } else {
-				this.$api.buylevel({
-					id: this.allssssss[this.fenleideid].id,
-					user_id: uni.getStorageSync("user_info").id
-				}).then(res => {
-					if (res.data.code == 1) {
-						// uni.showToast({
-						// 	title: res.data.msg
-						// })
-						this.showContract = false
-						setTimeout(() => {
-							this.resss()
-						}, 1000)
-					}
-					if (res.data.code == 200) {
-						let that = this;
-						uni.requestPayment({
-							timeStamp: res.data.data.timeStamp, //当前的时间
-							nonceStr: res.data.data.nonceStr, //随机字符串
-							package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-							signType: res.data.data.signType, //签名算法，暂支持 MD5。
-							paySign: res.data.data.paySign, //签名
-							success: function(res) {
-								uni.showToast({
-									title: "支付成功",
-									icon: "success"
-								})
-								that.toReg()
-								that.showContract = false
-							},
-							fail: function(err) {
-
-								uni.showToast({
-									title: "支付失败",
-									icon: "error"
-								})
-							}
-						})
-					}
-				})
-				// }
+				if (this.pay == "去填写资料") {
+					this.showContract = false
+					this.toReg()
+				} else {
+					this.$api.buylevel({
+						id: this.allssssss[this.fenleideid].id,
+						user_id: uni.getStorageSync("user_info").id
+					}).then(res => {
+						// 重新提交
+						if (res.data.code == 1) {
+							this.showContract = false
+							setTimeout(() => {
+								this.resss()
+							}, 1000)
+						}
+						if (res.data.code == 2000) {
+							let that = this;
+							uni.requestPayment({
+								timeStamp: res.data.data.timeStamp, //当前的时间
+								nonceStr: res.data.data.nonceStr, //随机字符串
+								package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+								signType: res.data.data.signType, //签名算法，暂支持 MD5。
+								paySign: res.data.data.paySign, //签名
+								success: function(res) {
+									uni.showToast({
+										title: "支付成功",
+										icon: "success"
+									})
+									that.toReg()
+									that.showContract = false
+								},
+								fail: function(err) {
+									uni.showToast({
+										title: "支付失败",
+										icon: "error"
+									})
+								}
+							})
+						}
+					})
+				}
 			},
 			// 查看合同模板
 			async getcontein(ev) {
@@ -547,19 +548,20 @@
 						provider: 'weixin',
 						tmplIds: that.mobanid,
 						success: function(res) {
-							console.log(res);
 							that.fenleideid = ev;
+							that.looks(that.allssssss[ev].doc_url)
 							that.$api.ispay({
 								id: that.allssssss[ev].id,
 								user_id: uni.getStorageSync("user_info").id
 							}).then(data => {
-								if (data.data.code == 1) {
-									that.pay = '去填写资料'
-								} else {
-									that.pay = '支付￥' + that.allssssss[ev].money
-								}
-								that.showContract = true;
-								that.looks(that.allssssss[ev].doc_url)
+								that.pay = '去填写资料'
+								// 不支付，支付取消注释
+								// if (data.data.code == 1) {
+								// 	that.pay = '去填写资料'
+								// } else {
+								// 	that.pay = '支付￥' + that.allssssss[ev].money
+								// }
+								that.showContract = true
 							})
 						}
 					});
@@ -576,7 +578,6 @@
 					url: url,
 					success(res) {
 						const filePath = res.tempFilePath;
-
 						uni.openDocument({
 							filePath,
 							success(res) {
@@ -659,7 +660,6 @@
 				this.currents = index
 			},
 			change(index) {
-				console.log(index);
 				this.current = index
 				if (index == 0) {
 					this.enjoy()

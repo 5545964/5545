@@ -22,7 +22,8 @@
 					<image style="width: 100%;height: 450rpx;" :src="item" mode="aspectFit"></image>
 				</swiper-item>
 				<swiper-item style="position: relative;" v-if="vr_image != ''">
-					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image" mode="aspectFit">
+					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image"
+						mode="aspectFit">
 					</image>
 					<view class="fdjksfhdsjk cet" @click="goVR(alls)">
 						<view class="fsds">
@@ -49,8 +50,8 @@
 			<view style="width: 86%;overflow: hidden;">
 				<scroll-view scroll-y="true" :style="'height: '+heigths+'px;'">
 					<view v-if="active == 0">
-						<u-designDet id="descard" :info="desInfo" @click="guanzhu" @dianzhan="dianzhan" @qushejishi="pinglun"
-							@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
+						<u-designDet id="descard" :info="desInfo" @click="guanzhu" @dianzhan="dianzhan"
+							@qushejishi="pinglun" @pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 					</view>
 					<u-parse v-if="active == 1" :html="alls.deslg"></u-parse>
 					<view v-if="active != 1 && active != 0" style="position: relative;" v-for="(item,index) in xq_img"
@@ -139,20 +140,19 @@
 		},
 		onShow() {
 			this.allss(this.shenme_id)
-			this.$api.setleft({
-				setleft_id: this.shenme_id
-			}).then(data => {
-				if (data.data.code == 1) {
-					this.leftlist = [...data.data.data.status];
-					setTimeout(() => {
-						const query = uni.createSelectorQuery().in(this);
-						query.select('#descard').boundingClientRect(data => {
-							console.log(data.height);
-							this.heigths = data.height
-						}).exec();
-					}, 1000)
-				}
-			})
+			// this.$api.setleft({
+			// 	setleft_id: this.shenme_id
+			// }).then(data => {
+			// 	if (data.data.code == 1) {
+			// this.leftlist = [...data.data.data.status];
+			// setTimeout(() => {
+			// 	const query = uni.createSelectorQuery().in(this);
+			// 	query.select('#descard').boundingClientRect(data => {
+			// 		this.heigths = data.height
+			// 	}).exec();
+			// }, 1000)
+			// 	}
+			// })
 
 		},
 		methods: {
@@ -220,9 +220,9 @@
 							if (aa == 0) {
 								this.desInfo.zan = this.desInfo.zan + 1
 								this.desInfo.zans = {
-									name:'kkkkkkk'
+									name: 'kkkkkkk'
 								}
-							}else{
+							} else {
 								this.desInfo.zan = this.desInfo.zan - 1
 								this.desInfo.zans = null
 							}
@@ -255,10 +255,8 @@
 			},
 			// 设计师详情
 			desDetails(ev) {
-				console.log(ev, 11111111111)
 				this.$api.desxq({
 					id: ev,
-					// id: 45,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
@@ -286,6 +284,7 @@
 					id: ev
 				}).then(data => {
 					if (data.data.code == 1) {
+						this.leftlist = [...data.data.data.left];
 						this.alls = data.data.data.status;
 						this.xq = data.data.data.status.xq;
 						this.title = data.data.data.status.name;
@@ -306,6 +305,12 @@
 						if (data.data.data.status.video != '' && data.data.data.status.video != null) {
 							this.video = this.$imgPath + data.data.data.status.video
 						}
+						setTimeout(() => {
+							const query = uni.createSelectorQuery().in(this);
+							query.select('#descard').boundingClientRect(data => {
+								this.heigths = data.height
+							}).exec();
+						}, 1000)
 					} else {
 						uni.showToast({
 							title: "暂无数据",
@@ -319,29 +324,28 @@
 				})
 			},
 			qeihuan(ev) {
-
-				// let aa = ev;
-				// let bb = []
-				// aa.forEach(item => {
-				// 	if (item.shopid != 0) {
-				// 		bb.push({
-				// 			img: this.$imgPath + item.image,
-				// 			shopid: item.shopid,
-				// 			xc_price: item.shop.xc_price
-				// 		})
-				// 	} else {
-				// 		bb.push({
-				// 			shopid: 0,
-				// 			img: this.$imgPath + item.image,
-				// 			url: item.url
-				// 		})
-				// 	}
-				// })
-				this.xq_img = []
-				this.xq_img = [...ev]
+				let aa = ev;
+				let bb = []
+				aa.forEach(item => {
+					if (item.shopid != 0) {
+						bb.push({
+							image: item.image,
+							shopid: item.shopid,
+							xc_price: item.shop.xc_price
+						})
+					} else {
+						bb.push({
+							shopid: 0,
+							image: item.shop.photo,
+							url: item.url
+						})
+					}
+				})
+				this.xq_img = bb
 
 			},
 			change(index) {
+				console.log(index);
 				this.active = index;
 				if (index == 0 || index == 1) {
 					this.desDetails(this.alls.designer)

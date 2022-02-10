@@ -43,8 +43,8 @@
 					</view>
 					<view class="cet" style="justify-content: space-between;width: 60%;">
 						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-							<u-input inputAlign="left" size="200" v-model="code" maxlength="6"
-								placeholder="请输入验证码" type="number" />
+							<u-input inputAlign="left" size="200" v-model="code" maxlength="6" placeholder="请输入验证码"
+								type="number" />
 						</view>
 						<button class="annuyt" @click="go_code">{{huoqu}}</button>
 					</view>
@@ -85,7 +85,8 @@
 
 <script>
 	export default {
-		onLoad() {
+		onLoad(ev) {
+			this.ididiidid = ev.nageid
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
 			let info = uni.getStorageSync("inpList");
 			if (info) {
@@ -109,6 +110,7 @@
 		},
 		data() {
 			return {
+				ididiidid: 0,
 				huoqu: '获取验证码',
 				time: 0,
 				code: "",
@@ -270,6 +272,7 @@
 							mobile: this.inpList[2].text,
 							desimage: this.upimgs,
 							addressxq: this.inpList[5].text,
+							level:this.ididiidid
 						}).then(data => {
 							if (data.data.code == 1) {
 								let list = {
@@ -405,6 +408,7 @@
 		justify-content: center;
 		position: fixed;
 		bottom: 0;
+		z-index: 10;
 
 		.submit {
 			width: 600rpx;

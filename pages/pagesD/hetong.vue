@@ -43,7 +43,6 @@
 			}
 		},
 		onShow() {
-			console.log();
 			this.alls = []
 			uni.getStorageSync("des_info").contrins.split(",").forEach((item,index) => {
 				this.alls.push({
