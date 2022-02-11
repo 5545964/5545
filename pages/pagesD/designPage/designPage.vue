@@ -18,22 +18,6 @@
 			DesignHome: DesignHome,
 			DesignMine: DesignMine
 		},
-		onShow() {
-			this.$api.desmyuser({
-				user_id: uni.getStorageSync("user_info").id,
-			}).then(data => {
-				if (data.data.code == 1) {
-					let aa = data.data.data.myuser
-					uni.setStorageSync("des_info", data.data.data.myuser)
-					if(aa.nickname == null || aa.wechat == null || aa.work == null || aa.yb == null){
-						uni.navigateTo({
-							url: "../../pagesB/my?isdesign=1"
-						})
-					}
-				}
-			})
-			
-		},
 		data() {
 			return {
 				list: [{

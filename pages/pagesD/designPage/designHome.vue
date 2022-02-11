@@ -57,30 +57,29 @@
 			return {
 				imgtitle: this.$imgPath,
 				desinger: {},
-				userinfo: {},
 				list_s: [{
-						name: "满意",
+						name: "满意度",
 						num: 0
 					},
 					{
-						name: "专业",
+						name: "成单率",
 						num: 0
 					},
 					{
-						name: "创意",
+						name: "专业度",
 						num: 0
 					},
 					{
-						name: "业绩",
+						name: "创意度",
 						num: 0
 					}
 				],
 			};
 		},
 		created() {
-			this.userinfo = uni.getStorageSync("user_info")
+			let user_id = uni.getStorageSync("user_info").id
 			this.$api.des({
-				user_id: this.userinfo.id
+				user_id
 			}).then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.zp.forEach(item => {
@@ -89,11 +88,22 @@
 					this.desinger = data.data.data.status
 					this.list_s[0].num = this.desinger.manyi
 					this.list_s[1].num = this.desinger.zy
-					this.list_s[2].num = this.desinger.cy
-					this.list_s[3].num = this.desinger.yj
-					let aa = this.desinger.contrin
-					uni.setStorageSync("hetong", aa)
-					// uni.setStorageSync("des_info", this.desinger)
+					this.list_s[2].num = this.desinger.yj
+					this.list_s[3].num = this.desinger.cy
+					this.$api.desmyuser({
+						user_id
+					}).then(data => {
+						if (data.data.code == 1) {
+							let aa = data.data.data.myuser
+							uni.setStorageSync("des_info", data.data.data.myuser)
+							if (aa.nickname == null || aa.wechat == null || aa.work == null || aa.yb ==
+								null) {
+								uni.navigateTo({
+									url: "../../pagesB/my?isdesign=1"
+								})
+							}
+						}
+					})
 				} else {
 					uni.reLaunch({
 						url: "/pages/Home/Investment?is_re=1"
@@ -226,7 +236,7 @@
 		}
 
 		.dasjbash {
-			width: 10%;
+			width: 24%;
 			font-size: 16rpx;
 			font-weight: 400;
 			color: #333333;

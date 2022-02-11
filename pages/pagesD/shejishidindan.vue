@@ -27,12 +27,23 @@
 								v-for="(items,indexs) in list" :key="indexs">
 								<view class="">
 									<view class="top" @click="goods(items)">
-										<view class="status" v-show="items.state == 1">
-											进行中
-										</view>
-										<view class="status" v-show="items.state == 2">
-											已完成
-										</view>
+										<view class="status" v-show="items.states.state == 0">待付款</view>
+										<view class="status" v-show="items.states.state == 1">进行中</view>
+										<view class="status" v-show="items.states.state == 2">发货中</view>
+										<view class="status" v-show="items.states.state == 3">已收货</view>
+										<view class="status" v-show="items.states.state == 4">已完成</view>
+										<view class="status" v-show="items.states.state == 5">退款审核中</view>
+										<view class="status" v-show="items.states.state == 6">退款成功</view>
+										<view class="status" v-show="items.states.state == 7">退款已驳回</view>
+										<view class="status" v-show="items.states.state == 9">已取消</view>
+										<view class="status" v-show="items.states.state == 10">退货审核中</view>
+										<view class="status" v-show="items.states.state == 11">退货成功</view>
+										<view class="status" v-show="items.states.state == 12">退货已驳回</view>
+										<view class="status" v-show="items.states.state == 13">换货审核中</view>
+										<view class="status" v-show="items.states.state == 14">换货成功</view>
+										<view class="status" v-show="items.states.state == 15">换货已驳回</view>
+										<view class="status" v-show="items.states.state == 16">报装中</view>
+										<view class="status" v-show="items.states.state == 17">已安装</view>
 										<view style="display: flex;align-items: center;">
 											<view class="text">
 												查看详情
@@ -61,7 +72,8 @@
 										</view>
 									</view>
 									<view class="anniu">
-										<view class="button" @click="annui(0,items)" v-if="items.state == 1 || items.state == 2">
+										<view class="button" @click="annui(0,items)"
+											v-if="items.state == 1 || items.state == 2">
 											<!-- 上传二维码 -->
 											查看二维码
 										</view>
@@ -143,7 +155,7 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
-							if(item.image != null){
+							if (item.image != null) {
 								item["simage"] = item.image.split(",")[0]
 							}
 						})
@@ -184,8 +196,7 @@
 							urls: [this.$imgPath + item.ewm],
 							longPressActions: {
 								itemList: ['发送给朋友', '保存图片', '收藏'],
-								success: function(data) {
-								},
+								success: function(data) {},
 								fail: function(err) {
 
 								}

@@ -17,7 +17,7 @@
 		<!-- 轮播 -->
 		<view class="lunbo">
 			<swiper style="width: 100%;height: 450rpx;" :current="current" :indicator-dots="true" :circular="true"
-				:autoplay="true" :interval="3000" :duration="1000">
+				:autoplay="autoplay" :interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in list" :key="index" @click="kaniamg(item)">
 					<image style="width: 100%;height: 450rpx;" :src="item" mode="aspectFit"></image>
 				</swiper-item>
@@ -33,7 +33,7 @@
 					</view>
 				</swiper-item>
 				<swiper-item v-if="video != ''">
-					<video style="width: 100%;height: 450rpx;" :src="video"></video>
+					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;" :src="video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -49,29 +49,31 @@
 			</view>
 			<view style="width: 86%;overflow: hidden;">
 				<scroll-view scroll-y="true" :style="'height: '+heigths+'px;'">
-					<view v-if="active == 0">
+					<view v-if="desdesdesdesde == 1">
 						<u-designDet id="descard" :info="desInfo" @click="guanzhu" @dianzhan="dianzhan"
 							@qushejishi="pinglun" @pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 					</view>
-					<u-parse v-if="active == 1" :html="alls.deslg"></u-parse>
-					<view v-if="active != 1 && active != 0" style="position: relative;" v-for="(item,index) in xq_img"
-						:key="index">
+					<u-parse v-if="desdesdesdesde == 2" :html="alls.deslg"></u-parse>
+					<!-- <view v-if="active != 1 && active != 0" style="position: relative;" v-for="(item,index) in xq_img":key="index"> -->
+					<view style="position: relative;" v-for="(item,index) in xq_img" :key="index">
+
+						<!-- 图片 VR -->
 						<view class="fdjksfhdsjk cet" v-if="item.url !=''" @click="goVR(item)">
 							<view class="fsds">
 								点击VR
 								100%所见所得
 							</view>
 						</view>
+						<!-- 手指拇 -->
 						<view class="mengban" @click="dianjishouzhi">
 							<view class="kklm" style="width: 100%;height: 100%;" v-if="item.url == '' && shouzhi == 0">
 							</view>
 							<image class="imhjk" v-if="item.url == '' && shouzhi == 0" src="../../static/gif.gif"
 								mode="aspectFit"></image>
-							<image :src="img+item.image" style="width: 640rpx;" mode="widthFix"></image>
+							<image :src="img+item.shop.photo" style="width: 640rpx;" mode="widthFix"></image>
 						</view>
-
-
-						<view class="dcdczdc" v-if="item.shopid != 0" @click="goshop(item.shopid)">
+						<!-- 商品价格 -->
+						<view class="dcdczdc" v-if="item.shop.id" @click="goshop(item.shop.id)">
 							<view style="margin:0 auto;margin-top:36rpx;">
 								<view class="nkjsfbjhsd">
 									<!-- 套餐价￥ -->
@@ -117,7 +119,9 @@
 	export default {
 		data() {
 			return {
-				heigthss: 10000,
+				autoplay:true,
+				videoContext: "",
+				desdesdesdesde: 0,
 				shouzhi: uni.getStorageSync("shouzhi"),
 				img: this.$imgPath,
 				current: "",
@@ -132,11 +136,12 @@
 				active: 0,
 				leftlist: [],
 				shenme_id: "",
-				heigths: 580
+				heigths: 520
 			};
 		},
 		onLoad(ev) {
 			this.shenme_id = ev.id
+			this.videoContext = uni.createVideoContext('video')
 		},
 		onShow() {
 			this.allss(this.shenme_id)
@@ -156,6 +161,15 @@
 
 		},
 		methods: {
+			ended(ev) {
+				this.autoplay = true
+			},
+			pause(ev) {
+				this.autoplay = true
+			},
+			bofang(ev) {
+				this.autoplay = false
+			},
 			dianjishouzhi() {
 				this.shouzhi = 1
 				uni.setStorageSync("shouzhi", 1)
@@ -262,6 +276,7 @@
 					if (data.data.code == 1) {
 						this.desInfo = []
 						this.desInfo = data.data.data.status
+						this.desdesdesdesde = 1
 					}
 				})
 			},
@@ -305,12 +320,16 @@
 						if (data.data.data.status.video != '' && data.data.data.status.video != null) {
 							this.video = this.$imgPath + data.data.data.status.video
 						}
-						setTimeout(() => {
-							const query = uni.createSelectorQuery().in(this);
-							query.select('#descard').boundingClientRect(data => {
-								this.heigths = data.height
-							}).exec();
-						}, 1000)
+						// setTimeout(() => {
+						// 	const query = uni.createSelectorQuery().in(this);
+						// 	query.select('#descard').boundingClientRect(data => {
+						// 		if (data.height > 520) {
+						// 			this.heigths = 520
+						// 		} else {
+						// 			this.heigths = data.height
+						// 		}
+						// 	}).exec();
+						// }, 1000)
 					} else {
 						uni.showToast({
 							title: "暂无数据",
@@ -324,41 +343,43 @@
 				})
 			},
 			qeihuan(ev) {
-				let aa = ev;
-				let bb = []
-				aa.forEach(item => {
-					if (item.shopid != 0) {
-						bb.push({
-							image: item.image,
-							shopid: item.shopid,
-							xc_price: item.shop.xc_price
-						})
-					} else {
-						bb.push({
-							shopid: 0,
-							image: item.shop.photo,
-							url: item.url
-						})
-					}
-				})
-				this.xq_img = bb
+				console.log(321);
+				// let aa = ev;
+				// let bb = []
+				// aa.forEach(item => {
+				// 	if (item.shop.id != 0) {
+				// 		bb.push({
+				// 			shopid: item.shop.id,
+				// 			xc_price: item.shop.xc_price
+				// 		})
+				// 	} else {
+				// 		bb.push({
+				// 			shopid: 0,
+				// 			image: item.shop.photo,
+				// 			url: item.url
+				// 		})
+				// 	}
+				// })
+				// this.xq_img = bb
 
 			},
 			change(index) {
-				console.log(index);
 				this.active = index;
-				if (index == 0 || index == 1) {
+				let aa = []
+				if (this.leftlist[index].id == 1) {
 					this.desDetails(this.alls.designer)
+					this.desdesdesdesde = 1
+				} else if (this.leftlist[index].id == 2) {
+					this.desdesdesdesde = 2
 				} else {
-					let aa = []
+					this.desdesdesdesde = 0
 					this.alls.xq.forEach(item => {
 						if (this.leftlist[index].id == item.leftid) {
 							aa.push(item)
 						}
 					})
-					this.qeihuan(aa)
 				}
-
+				this.xq_img = aa
 			},
 			back(ev) {
 				switch (ev) {

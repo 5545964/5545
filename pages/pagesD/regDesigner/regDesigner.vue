@@ -87,7 +87,9 @@
 	export default {
 		onLoad(ev) {
 			this.ididiidid = ev.nageid
+			console.log(ev);
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
+			// 驳回后修改信息
 			let info = uni.getStorageSync("inpList");
 			if (info) {
 				this.inpList[0].text = info[0].text;
@@ -97,6 +99,7 @@
 				this.inpList[4].text = info[4].text;
 				this.inpList[5].text = info[5].text;
 			}
+			// 驳回后修改照片
 			let info_img = uni.getStorageSync("upimgs");
 			if (info_img) {
 				this.upimgs = info_img
@@ -170,6 +173,13 @@
 		methods: {
 			go_code() {
 				if (this.time == 0) {
+					if (!(/^[1]([3-9])[0-9]{9}$/.test(this.inpList[2].text))) {
+						uni.showToast({
+							title: "请检查手机号码",
+							icon: "none"
+						})
+						return
+					}
 					this.time = 60
 					let aa = setInterval(() => {
 						this.time--
@@ -183,8 +193,6 @@
 			},
 			shangchuan(ev) {
 				this.upimgs.push(ev.data.status)
-				// uni.setStorageSync("reg_des", img)
-
 			},
 			cityChange(e) {
 				this.inpList[4].text = e.province.label + e.city.label + e.area.label;
@@ -202,47 +210,14 @@
 					default:
 				}
 			},
-			// // 选择图片
-			// chooseImg() {
-			// 	let that = this
-			// 	uni.chooseImage({
-			// 		count: 6, //默认9
-			// 		sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-			// 		sourceType: ['album'], //从相册选择
-			// 		success: function(res) {
-
-			// 			that.imgList = res.tempFilePaths
-			// 			res.tempFilePaths.forEach(item => {
-			// 				uni.uploadFile({
-			// 					url: 'http://bao.scwushen.com/index.php/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
-			// 					filePath: item,
-			// 					name: 'image',
-			// 					formData: {},
-			// 					success: (uploadFileRes) => {
-			// 						let data = JSON.parse(uploadFileRes.data)
-			// 						if (data.code == 1) {
-			// 							that.upimgs.push(data.data.status)
-			// 						}
-			// 					}
-			// 				});
-			// 			})
-			// 		}
-			// 	});
-			// },
 			// 删除图片
 			deleteimg(index) {
 				this.upimgs.splice(index, 1)
-				// let img = uni.getStorageSync("reg_des")
-				// img.desimage = this.imgList
-				// uni.setStorageSync("reg_des", img)
 			},
 			// 提交
 			submit() {
-				// if (this.upimgs.length == 0) {
-				// 	this.upimgs = uni.getStorageSync("reg_des").desimage
-				// }
-				if (!(/^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}$/.test(this.inpList[2]
-						.text))) {
+				//判断手机号
+				if (!(/^[1]([3-9])[0-9]{9}$/.test(this.inpList[2].text))) {
 					uni.showToast({
 						title: "手机号码有误，请重填",
 						icon: "none"
@@ -250,8 +225,13 @@
 					this.inpList[2].text = ""
 					return false;
 				}
+				//提交信息存入缓存
+				this.inpList.push({
+					level: this.ididiidid
+				})
 				uni.setStorageSync("inpList", this.inpList)
 				uni.setStorageSync("upimgs", this.upimgs)
+				//检查资料是否填完
 				let bb = []
 				this.inpList.forEach(item => {
 					if (item.text == '') {
@@ -262,7 +242,9 @@
 				})
 
 				if (this.inpList.length == bb.length) {
+					//检查上传的照片
 					if (this.upimgs != '') {
+
 						this.$api.adddes({
 							user_id: uni.getStorageSync("user_info").id,
 							username: this.inpList[0].text,
@@ -272,7 +254,7 @@
 							mobile: this.inpList[2].text,
 							desimage: this.upimgs,
 							addressxq: this.inpList[5].text,
-							level:this.ididiidid
+							level: this.inpList[6].level
 						}).then(data => {
 							if (data.data.code == 1) {
 								let list = {

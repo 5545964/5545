@@ -13,66 +13,84 @@
 				</view>
 			</u-navbar>
 		</view>
-		<!-- 搜索 -->
 		<view class="u-search-box">
 			<view class="u-search-inner">
+				<!-- <u-icon name="search" color="#909399" :size="28"></u-icon>
+				<text class="u-search-text">输入关键字搜索</text> -->
 				<view class="seath">
 					<u-search bg-color="#F2F2F2" @click='seach_go' :disabled="true" placeholder="输入关键字搜索"
 						v-model="keyword"></u-search>
 				</view>
 			</view>
+			<!-- <view class="seath">
+				<u-search bg-color="#F2F2F2" @focus="seach_go(888)" v-model="keyword"></u-search>
+			</view> -->
 		</view>
 		<view class="u-menu-wrap">
-			<!-- 左边 -->
-			<scroll-view style="width: 24%;height: 100%;" scroll-y scroll-with-animation
-				class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
+			<scroll-view style="width: 24%;" scroll-y scroll-with-animation class="u-tab-view menu-scroll-view"
+				:scroll-top="scrollTop">
 				<view v-for="(item,index) in cateList" :key="index" class="u-tab-item"
 					:class="[current==index ? 'u-tab-item-active' : '']" :data-current="index"
 					@tap.stop="swichMenu(index)">
 					<text class="u-line-1">{{item.title}}</text>
 				</view>
 			</scroll-view>
-			<scroll-view style="width: 76%;height: 100%;" scroll-y class="right-box">
-				<view class="page-view">
-					<!-- 筛选 -->
-					<view class="cate_choose" v-if="mmok == 0">
-						<view class="cate_items" v-for="item2 in chooseList" @click="show=true" :key="item2.id">
-							{{item2.name}}
-							<template>
-								<image v-if="item2.id<2" src="../../static/icon_home_sanjiao.png"
-									style="width: 16rpx;height: 10rpx;margin-left: 10rpx;" mode="aspectFit"></image>
-								<image v-else src="../../static/icon_about_shaixuan.png"
-									style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
-							</template>
+			<block v-for="(item,index) in cateList" :key="index">
+				<scroll-view style="width: 76%;" scroll-y class="right-box" v-if="current==index">
+					<view class="page-view">
+						<!-- 筛选 -->
+						<view class="cate_choose" v-if="item.id != 31 && item.id != 32 && item.id != 33">
+							<view class="cate_items" v-for="item2 in chooseList" @click="show=true" :key="item2.id">
+								{{item2.name}}
+								<template>
+									<image v-if="item2.id<2" src="../../static/icon_home_sanjiao.png"
+										style="width: 16rpx;height: 10rpx;margin-left: 10rpx;" mode="aspectFit"></image>
+									<image v-else src="../../static/icon_about_shaixuan.png"
+										style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
+								</template>
+							</view>
 						</view>
-					</view>
-					<u-collapse ref="collapse">
-						<u-collapse-item ref="collapseItem" :name="item1.id" :title="item1.title" :isDot="true"
-							v-for="(item1, index1) in kklkl" :key="index1">
-							<view class="item-container" v-for="item3 in item1.neirong" :key='item3.id'
-								@click="goshop(item3)">
-								<view class="right_view">
-									<view class="">
-										<image :src="imgtilte+item3.simage"
-											style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
-										</image>
-									</view>
-									<view class="img_right">
-										<view class="top_text">
-											{{item3.name}}
+						<u-collapse @change="changeshop()" ref="collapseall">
+							<u-collapse-item ref="collapseItem" :name="item1.id" :title="item1.title" :isDot="true"
+								v-for="(item1, index1) in item.child" :key="index1">
+								<view class="item-container" v-for="item3 in shopList" :key='item3.id'
+									@click="goshop(item3)">
+									<view class="right_view">
+										<view class="">
+											<image :src="imgtilte+item3.simage"
+												style="width: 180rpx;height: 180rpx;margin-right: 20rpx;"
+												mode="aspectFit"></image>
 										</view>
-										<view class="right_bottom">
-											<view class="" style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
-												￥{{item3.xc_price||0}}
+										<view class="img_right">
+											<view class="top_text">
+												{{item3.name}}
+											</view>
+											<view class="right_bottom">
+												<view class=""
+													style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
+													￥{{item3.xc_price||0}}
+												</view>
 											</view>
 										</view>
 									</view>
 								</view>
+
+							</u-collapse-item>
+						</u-collapse>
+						<!-- <view class="class-item">
+							<view class="item-title">
+								<text>{{item.name}}</text>
 							</view>
-						</u-collapse-item>
-					</u-collapse>
-				</view>
-			</scroll-view>
+							<view class="item-container">
+								<view class="thumb-box" v-for="(item1, index1) in item.foods" :key="index1">
+									<image class="item-menu-image" :src="item1.icon" mode="aspectFit"></image>
+									<view class="item-menu-name">{{item1.name}}</view>
+								</view>
+							</view>
+						</view> -->
+					</view>
+				</scroll-view>
+			</block>
 		</view>
 		<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
@@ -105,9 +123,6 @@
 		},
 		data() {
 			return {
-				cc: [],
-				kklkl: [],
-				mmok: 1,
 				title: "产品分类",
 				keyword: "",
 				imgtilte: this.$imgPath,
@@ -166,6 +181,20 @@
 					default:
 				}
 			},
+			// // 搜索商品 
+			// searchShop(){
+			// 	this.$api.shoplike({
+			// 		name:this.keyword
+			// 	}).then(data=>{
+
+			// 		if(data.data.code==1){
+			// 			uni.setStorageSync("result",data.data.data.status)
+			// 			uni.navigateTo({
+			// 				url:`./searchResult?key=${this.keyword}`
+			// 			})
+			// 		}
+			// 	})
+			// },
 			// 获取分类
 			getCate() {
 				this.$api.seemore().then(data => {
@@ -207,27 +236,20 @@
 			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
-				this.current = index;
 				if (this.cateList[index].id == 31 || this.cateList[index].id == 32 || this.cateList[index].id == 33) {
-					this.mmok = 1
-					this.kklkl = []
+					// changeshop(index)
 				} else {
-					this.mmok = 0
-					this.kklkl = this.cateList[index].child
-					let aa = this.cateList[index].child
-					for (let i = 0; i < aa.length; i++) {
-						let data = await this.$api.categoryshop({
-							id: aa[i].id
-						})
-						if (data.data.code == 1) {
-							aa[i]["neirong"] = data.data.data.status.data
-						}
+					if (index == this.current) return;
+					this.current = index;
+
+					// await this.getShop(this.cateList[index])
+					// 如果为0，意味着尚未初始化
+					if (this.menuHeight == 0 || this.menuItemHeight == 0) {
+						await this.getElRect('menu-scroll-view', 'menuHeight');
+						await this.getElRect('u-tab-item', 'menuItemHeight');
 					}
-					this.kklkl = []
-					this.kklkl = this.cateList[index].child
-					this.$nextTick(() => {
-						this.$refs.collapse.init()
-					})
+					// 将菜单菜单活动item垂直居中
+					this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
 				}
 			},
 			// 获取一个目标元素的高度

@@ -54,6 +54,7 @@
 					setid: ev
 				}).then(data => {
 					if (data.data.code == 1) {
+						// this.data_list = [];
 						this.data_list = data.data.data.status.data;
 					}else{
 						this.data_list = [];

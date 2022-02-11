@@ -399,7 +399,6 @@
 				})
 			},
 			resss() {
-				uni.setStorageSync("reg_des", this.desinfo)
 				uni.navigateTo({
 					url: "../pagesD/regDesigner/regDesigner"
 				})
