@@ -32,10 +32,10 @@
 					<text class="u-line-1">{{item.title}}</text>
 				</view>
 			</scroll-view>
-			<scroll-view style="width: 76%;height: 100%;" scroll-y class="right-box">
+			<scroll-view v-if="mmok == 0" style="width: 76%;height: 100%;" scroll-y class="right-box">
 				<view class="page-view">
 					<!-- 筛选 -->
-					<view class="cate_choose" v-if="mmok == 0">
+					<view class="cate_choose">
 						<view class="cate_items" v-for="item2 in chooseList" @click="show=true" :key="item2.id">
 							{{item2.name}}
 							<template>
@@ -73,6 +73,9 @@
 					</u-collapse>
 				</view>
 			</scroll-view>
+			<scroll-view v-else style="width: 76%;height: 100%;" scroll-y class="right-box">
+				<u-bdata :list="destaoxi" @click="go_shop"></u-bdata>
+			</scroll-view>
 		</view>
 		<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
@@ -105,6 +108,7 @@
 		},
 		data() {
 			return {
+				destaoxi: [],
 				cc: [],
 				kklkl: [],
 				mmok: 1,
@@ -141,8 +145,12 @@
 			}
 		},
 		methods: {
+			go_shop(ev) {
+				uni.navigateTo({
+					url: "./FlagshipDetail?id=" + ev.id
+				})
+			},
 			goshop(ev) {
-
 				uni.navigateTo({
 					url: "./Shopping?shopid=" + ev.id
 				})
@@ -171,6 +179,10 @@
 				this.$api.seemore().then(data => {
 					if (data.data.code == 1) {
 						this.cateList = data.data.data.status
+						this.swichMenu(0)
+						if (this.cateList[0].id != 31 || this.cateList[0].id != 32 || this.cateList[0].id != 33) {
+							this.mmok = 0
+						}
 					}
 				})
 			},
@@ -211,6 +223,11 @@
 				if (this.cateList[index].id == 31 || this.cateList[index].id == 32 || this.cateList[index].id == 33) {
 					this.mmok = 1
 					this.kklkl = []
+					this.$api.categoryshop({
+						id: this.cateList[index].id
+					}).then(data => {
+						this.destaoxi = data.data.data.status
+					})
 				} else {
 					this.mmok = 0
 					this.kklkl = this.cateList[index].child
@@ -388,7 +405,6 @@
 
 	.right-box {
 		background-color: #FFFFFF;
-		margin-left: 10rpx;
 	}
 
 	.page-view {
