@@ -33,7 +33,8 @@
 					</view>
 				</swiper-item>
 				<swiper-item v-if="video != ''">
-					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;" :src="video"></video>
+					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
+						:src="video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -54,11 +55,10 @@
 							@qushejishi="pinglun" @pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 					</view>
 					<u-parse v-if="desdesdesdesde == 2" :html="alls.deslg"></u-parse>
-					<!-- <view v-if="active != 1 && active != 0" style="position: relative;" v-for="(item,index) in xq_img":key="index"> -->
 					<view style="position: relative;" v-for="(item,index) in xq_img" :key="index">
-
 						<!-- 图片 VR -->
-						<view class="fdjksfhdsjk cet" v-if="item.url !=''" @click="goVR(item)">
+						<view :style="'left: '+item.vzb[0]+'px;top: '+item.vzb[1]+'px;'" class="fdjksfhdsjk cet"
+							v-if="item.url !=''" @click="goVR(item)">
 							<view class="fsds">
 								点击VR
 								100%所见所得
@@ -66,14 +66,16 @@
 						</view>
 						<!-- 手指拇 -->
 						<view class="mengban" @click="dianjishouzhi">
-							<view class="kklm" style="width: 100%;height: 100%;" v-if="item.url == '' && shouzhi == 0">
+							<view class="kklm" style="width: 100%;height: 100%;" v-if="item.url != '' && shouzhi == 0">
 							</view>
-							<image class="imhjk" v-if="item.url == '' && shouzhi == 0" src="../../static/gif.gif"
-								mode="aspectFit"></image>
+							<image :style="'left: '+item.fzb[0]+'px;top: '+item.fzb[1]+'px;'" class="imhjk"
+								v-if="item.url != '' && shouzhi == 0" src="../../static/gif.gif" mode="aspectFit">
+							</image>
 							<image :src="img+item.shop.photo" style="width: 640rpx;" mode="widthFix"></image>
 						</view>
 						<!-- 商品价格 -->
-						<view class="dcdczdc" v-if="item.shop.id" @click="goshop(item.shop.id)">
+						<view :style="'left: '+item.pzb[0]+'px;top: '+item.pzb[1]+'px;'" class="dcdczdc"
+							v-if="item.shop.id" @click="goshop(item.shop.id)">
 							<view style="margin:0 auto;margin-top:36rpx;">
 								<view class="nkjsfbjhsd">
 									<!-- 套餐价￥ -->
@@ -89,7 +91,6 @@
 			</view>
 		</view>
 		<view class="" style="height: 110rpx;">
-
 		</view>
 		<!-- 底部 -->
 		<view class="flag_foot">
@@ -98,20 +99,6 @@
 				预约设计
 			</view>
 		</view>
-
-		<!-- <view class="djsa cet" style="bottom: 100rpx;" @click="goshop">
-			<view class="">
-				<view class="cet">
-					<view class="dasds">
-						<image src="../../static/shopid.png" mode="aspectFit"></image>
-					</view>
-				</view>
-				<view class="dad cet">
-					商城
-				</view>
-			</view>
-		</view> -->
-		<!-- <u-kehu url="../Home/booking/AppointmentDesign"></u-kehu> -->
 	</view>
 </template>
 
@@ -119,7 +106,7 @@
 	export default {
 		data() {
 			return {
-				autoplay:true,
+				autoplay: true,
 				videoContext: "",
 				desdesdesdesde: 0,
 				shouzhi: uni.getStorageSync("shouzhi"),
@@ -145,20 +132,6 @@
 		},
 		onShow() {
 			this.allss(this.shenme_id)
-			// this.$api.setleft({
-			// 	setleft_id: this.shenme_id
-			// }).then(data => {
-			// 	if (data.data.code == 1) {
-			// this.leftlist = [...data.data.data.status];
-			// setTimeout(() => {
-			// 	const query = uni.createSelectorQuery().in(this);
-			// 	query.select('#descard').boundingClientRect(data => {
-			// 		this.heigths = data.height
-			// 	}).exec();
-			// }, 1000)
-			// 	}
-			// })
-
 		},
 		methods: {
 			ended(ev) {
@@ -299,7 +272,18 @@
 					id: ev
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.leftlist = [...data.data.data.left];
+						this.leftlist = data.data.data.left;
+						data.data.data.status.xq.forEach(item => {
+							if (item.fzb != null || item.pzb != null || item.vzb != null) {
+								item.fzb = item.fzb.split(",")
+								item.pzb = item.pzb.split(",")
+								item.vzb = item.vzb.split(",")
+							} else {
+								item.fzb = ['50%', "50%"]
+								item.pzb = ['50%', "50%"]
+								item.vzb = ['50%', "50%"]
+							}
+						})
 						this.alls = data.data.data.status;
 						this.xq = data.data.data.status.xq;
 						this.title = data.data.data.status.name;
@@ -320,16 +304,6 @@
 						if (data.data.data.status.video != '' && data.data.data.status.video != null) {
 							this.video = this.$imgPath + data.data.data.status.video
 						}
-						// setTimeout(() => {
-						// 	const query = uni.createSelectorQuery().in(this);
-						// 	query.select('#descard').boundingClientRect(data => {
-						// 		if (data.height > 520) {
-						// 			this.heigths = 520
-						// 		} else {
-						// 			this.heigths = data.height
-						// 		}
-						// 	}).exec();
-						// }, 1000)
 					} else {
 						uni.showToast({
 							title: "暂无数据",
@@ -379,6 +353,7 @@
 						}
 					})
 				}
+
 				this.xq_img = aa
 			},
 			back(ev) {
@@ -414,9 +389,8 @@
 			width: 60px;
 			height: 60px;
 			position: absolute;
-			bottom: 50%;
+
 			z-index: 111;
-			left: 50%;
 			margin-left: -60rpx;
 			margin-bottom: -60rpx;
 		}
@@ -436,14 +410,10 @@
 		background-repeat: no-repeat;
 		background-image: url(../../static/huahua.png);
 		position: absolute;
-		bottom: 40rpx;
-		right: 20rpx;
 	}
 
 	.fdjksfhdsjk {
 		position: absolute;
-		top: 50%;
-		left: 50%;
 		margin-top: -70rpx;
 		margin-left: -100rpx;
 		width: 200rpx;

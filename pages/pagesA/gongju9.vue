@@ -20,65 +20,80 @@
 			<view class="swiper">
 				<view class="swiper-item" v-for="(items,indexs) in list" :key="indexs" @click="goods(items)">
 					<view class="top">
-						<view class="text">
-							订单编号：{{items.dindan}}
-						</view>
-						<view class="status" v-show="items.status == 1">
-							待付款
-						</view>
-						<view class="status" v-show="items.status == 2">
-							待发货
-						</view>
-						<view class="status" v-show="items.status == 3">
-							待收货
-						</view>
-						<view class="status" v-show="items.status == 4">
-							待评价
-						</view>
-						<view class="status" v-show="items.status == 5">
-							已完成
-						</view>
-						<view class="statusstatus" v-show="items.status == 6">
-							<view class="status" v-show="items.tuikuan == 0">
-								退款审核中
-							</view>
-							<view class="status" v-show="items.tuikuan == 1">
-								退款成功
-							</view>
-							<view class="status" v-show="items.tuikuan == 2">
-								退款已驳回
-							</view>
-						</view>
+						<view class="text"> 订单编号：{{ items.orderid }} </view>
+						<!-- <view class="status" v-show="items.state == 5"> 退款审核中 </view>
+						<view class="status" v-show="items.state == 6"> 退款成功 </view>
+						<view class="status" v-show="items.state == 7"> 退款已驳回 </view> -->
+						<view class="status" v-show="items.state == 10"> 退货审核中 </view>
+						<view class="status" v-show="items.state == 11"> 退货成功 </view>
+						<view class="status" v-show="items.state == 12"> 退货已驳回 </view>
+						<view class="status" v-show="items.state == 13"> 换货审核中 </view>
+						<view class="status" v-show="items.state == 14"> 换货成功 </view>
+						<view class="status" v-show="items.state == 15"> 换货已驳回 </view>
 					</view>
-					<view class="centre" v-for="(itemc,indexc) in items.goodsdata" :key="indexc">
+					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
 						<view class="">
-							<image class="img" src="../../static/12345.jpg" mode="aspectFit"></image>
+							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
-						<view class="">
+						<view style="margin-left: 10rpx;">
 							<view class="name">
-								{{itemc.name}}
+								{{ itemc.name }}
 							</view>
-							<view class="">
-								<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-									class="fsdfsfs fdsds">￥{{itemc.mony}}</text>
-							</view>
+							<text class="fdsds">共{{itemc.num}}件 合计：</text><text
+								class="fsdfsfs fdsds">￥{{itemc.sonprice}}</text>
 						</view>
 					</view>
-					<view class="kfhkjsdh">
+					<view class="kfhkjsdh" @click="goods(items)">
 						<view class="text">
-							总金额：<text class="reds">￥1111.00</text>
+							总金额：<text class="reds">￥{{ items.price }}</text>
 						</view>
-						<view class="status" v-if="items.status == 1">
-							未支付
-						</view>
-						<view class="status" v-else>
-							已支付￥{{items.zhifu}}
+						<view class="status" v-show="items.state == 0"> 未支付 </view>
+						<view class="status" v-show="items.state != 0 && items.state != 9">
+							已支付￥{{ items.price }}
 						</view>
 					</view>
 					<view class="anniu">
-						<view class="button" @click="annui(2)" v-if="items.tuikuan != 1">
+						<view class="button" @click="annui(0, items)" v-if="items.state == 0">
+							取消订单
+						</view>
+						<view class="button" @click="annui(1, items)" v-if="items.state == 0">
+							立即支付
+						</view>
+						<view class="button" @click="annui(5, items)" v-if="items.state == 1">
+							申请退款
+						</view>
+						<view class="button" @click="annui(3, items)" v-if="items.state == 2">
+							查看物流
+						</view>
+						<view class="button" @click="annui(4, items)" v-if="items.state == 2">
+							确认收货
+						</view>
+						<view class="button" @click="annui(7, items)" v-if="items.state == 3 || items.state == 4">
+							申请售后
+						</view>
+						<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 							取消退款
 						</view>
+						<view class="button" @click="delorder(items)"
+							v-if="items.state == 9 || items.state == 4 || items.state == 17">
+							删除订单
+						</view>
+						<view class="button" v-if="items.state == 8">
+							已申请退款
+						</view>
+						<view class="button" v-if="items.state == 3" @click="baozhaung(items)">
+							是否安装
+						</view>
+						<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
+							完成安装
+						</view>
+						<!-- <view class="button" @click="delorder(items)"
+							v-if="items.state == 9 || items.state == 4 || items.state == 3">
+							删除订单
+						</view> -->
+						<!-- <view class="button" @click="annui(6, items)" v-if="items.state == 3">
+							立即评价
+						</view> -->
 					</view>
 				</view>
 			</view>
@@ -112,95 +127,36 @@
 	export default {
 		data() {
 			return {
+				imgtitle: this.$imgPath,
 				showa: false,
 				title: "我的售后",
-				list: [{
-						status: 6,
-						dindan: '211204525555555',
-						zhifu: 1000,
-						tuikuan: 2,
-						goodsdata: [{
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							},
-							{
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							}, {
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							},
-						],
-						time: "01:58:10"
-					},
-					{
-						status: 6,
-						dindan: '211204525555555',
-						zhifu: 1000,
-						tuikuan: 1,
-						goodsdata: [{
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							},
-							{
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							}, {
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							},
-						],
-						time: "01:58:10"
-					},
-					{
-						status: 6,
-						dindan: '211204525555555',
-						zhifu: 1000,
-						tuikuan: 0,
-						goodsdata: [{
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							},
-							{
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							}, {
-								name: "北欧风格沙发北欧风欧风格沙发",
-								num: 3,
-								mony: "1111.00",
-								zong_mony: "3333.00",
-							},
-						],
-						time: "01:58:10"
-					}
-				]
+				list: []
 			};
 		},
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title;
 			}
+			this.allsss()
 		},
 		onShow() {
 
 		},
 		methods: {
+			allsss() {
+				this.$api.myorder({
+					user_id: uni.getStorageSync("user_info").id,
+				}).then((data) => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							if (item.state == 10 || item.state == 11 || item.state == 12 || item.state ==
+								13 || item.state == 14 || item.state == 15) {
+								this.list.push(item)
+							}
+						})
+					}
+				});
+			},
 			goods(ev) {
 				let aa = JSON.stringify(ev)
 				uni.navigateTo({
@@ -402,13 +358,14 @@
 			}
 		}
 	}
+
 	.popup {
 		.xcvb {
 			height: 100%;
 			width: 2rpx;
 			background: #EFEFEF;
 		}
-	
+
 		.czcxc {
 			border-left: 1px solid #EFEFEF;
 			text-align: center;
@@ -418,7 +375,7 @@
 			font-weight: 400;
 			color: #007399;
 		}
-	
+
 		.sdasas {
 			border-right: 1px solid #EFEFEF;
 			text-align: center;
@@ -428,18 +385,18 @@
 			font-weight: 400;
 			color: #333333;
 		}
-	
+
 		.xian {
 			height: 2rpx;
 			background: #EFEFEF;
 		}
-	
+
 		.bottoms {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
 		}
-	
+
 		.cets {
 			text-align: center;
 			padding: 50rpx;
@@ -447,7 +404,7 @@
 			font-weight: 400;
 			color: #333333;
 		}
-	
+
 		.top {
 			height: 90rpx;
 			line-height: 90rpx;

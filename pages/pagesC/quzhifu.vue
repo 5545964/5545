@@ -254,7 +254,7 @@
 	export default {
 		data() {
 			return {
-				buyanzheng: true,
+				buyanzheng: false,
 				time: 0,
 				huoqu: "获取验证码",
 				code: "",

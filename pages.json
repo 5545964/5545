@@ -463,7 +463,18 @@
 				}
 
 			}
-		]
+		    ,{
+                    "path" : "fenlei",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "分类",
+                    "enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+                }
+                
+                }
+            ]
 	}, {
 		"root": "pages/pagesD",
 		"pages": [{

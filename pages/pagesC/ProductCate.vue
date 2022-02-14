@@ -103,7 +103,7 @@
 
 <script>
 	export default {
-		onLoad() {
+		onShow() {
 			this.getCate()
 		},
 		data() {
@@ -146,8 +146,9 @@
 		},
 		methods: {
 			go_shop(ev) {
+				uni.setStorageSync("go_shop",ev)
 				uni.navigateTo({
-					url: "./FlagshipDetail?id=" + ev.id
+					url: "./fenlei"
 				})
 			},
 			goshop(ev) {

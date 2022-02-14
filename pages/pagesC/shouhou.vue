@@ -50,14 +50,14 @@
 			<view class="inputs cet">
 				<view style="width: 100%;">
 					<view class="text">
-						快递公司
+						快递公司（选填）
 					</view>
 					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
 						<u-input inputAlign="left" placeholder-style="color: #999999;margin-left: 30rpx;"
 							v-model="kuaidigongsi" placeholder="请填写快递公司" />
 					</view>
 					<view class="text">
-						快递单号
+						快递单号（选填）
 					</view>
 					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
 						<u-input inputAlign="left" placeholder-style="color: #999999;margin-left: 30rpx;"
@@ -75,7 +75,7 @@
 						添加图片：
 					</view>
 					<view class="asdsss">
-						<u-upload width="160" height="160" :action="action" @on-uploaded="uploaded" max-count="12"
+						<u-upload width="160" height="160" @on-remove="remove" :action="action" @on-uploaded="uploaded" max-count="12"
 							:header="header" :form-data="formData" :name="name" size-type="compressed"></u-upload>
 					</view>
 				</view>
@@ -138,6 +138,9 @@
 			},
 			xuan(ev) {
 				this.shsh = ev
+			},
+			remove(ev){
+				this.imglist.splice(ev,1)
 			},
 			uploaded(ev) {
 				let aa = ev;
