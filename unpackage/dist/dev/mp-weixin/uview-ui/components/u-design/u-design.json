@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-select": "/uview-ui/components/u-select/u-select",
+    "u-design-card": "/uview-ui/components/u-design-card/u-design-card"
+  }
+}

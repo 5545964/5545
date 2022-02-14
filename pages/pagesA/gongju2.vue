@@ -16,7 +16,7 @@
 		<view class="dskdk" v-if="mydesigner.length != 0">
 			<view class="hahaha" v-for="(item,indexs) in mydesigner" :key="indexs" @click="changePage(item)">
 				<view class="jdhfd">
-					<view style="width: 30%;">
+					<view style="width: 34%;">
 						<view class="hhi">
 							<image class="imgd" :src="img + item.avatar" mode="aspectFit"></image>
 						</view>
@@ -24,7 +24,7 @@
 							{{item.username}}
 						</view>
 					</view>
-					<view class="bottom" style="width: 60%;">
+					<view class="bottom" style="width: 66%;">
 						<view class="top-ss">
 							<view class="top" v-for="(items,indexs) in item.list" :key="indexs">
 								{{items}}
@@ -161,7 +161,7 @@
 		width: 48%;
 		background: #FFFFFF;
 		border-radius: 20rpx;
-		padding: 25rpx 20rpx;
+		padding: 25rpx 10rpx;
 		margin-bottom: 20rpx;
 
 		.time {

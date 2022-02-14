@@ -1,0 +1,57 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+.lunbo {
+  width: 100%;
+}
+.fdjksfhdsjk {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -70rpx;
+  margin-left: -100rpx;
+  width: 200rpx;
+  height: 140rpx;
+  background-size: cover;
+  background-image: url(data:image/png;base64,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);
+}
+.fdjksfhdsjk .fsds {
+  width: 160rpx;
+  height: 52rpx;
+  font-size: 24rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-top: 50rpx;
+  text-align: center;
+}
+.navbar .sssss {
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  width: 166rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.navbar .sssss .dsds {
+  padding: 20rpx;
+}
+.navbar .sssss .hang {
+  width: 2rpx;
+  height: 26rpx;
+  background-color: #e5e5e5;
+}
+.navbar .sssss .fanhui {
+  width: 12rpx;
+  height: 22rpx;
+}
+.navbar .sssss .souye {
+  width: 26rpx;
+  height: 24rpx;
+}
+

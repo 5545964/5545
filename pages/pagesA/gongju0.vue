@@ -64,11 +64,13 @@
 			}).then(data => {
 				if (data.data.code == 1) {
 					this.list = data.data.data.status;
-					this.list.forEach(item=>{
-						if(item.auto ==1){
-							uni.setStorageSync("address",item)
+					this.list.forEach(item => {
+						if (item.auto == 1) {
+							uni.setStorageSync("address", item)
 						}
 					})
+				} else {
+					uni.removeStorageSync("address")
 				}
 			})
 		},
