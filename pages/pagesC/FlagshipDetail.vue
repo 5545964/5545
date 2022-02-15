@@ -25,7 +25,7 @@
 					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image"
 						mode="aspectFit">
 					</image>
-					<view class="fdjksfhdsjk cet" @click="goVR(alls)">
+					<view style="top:50%;left: 50%;" class="fdjksfhdsjk cet" @click="goVR(alls)">
 						<view class="fsds">
 							点击VR
 							100%所见所得

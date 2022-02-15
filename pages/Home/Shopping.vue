@@ -117,6 +117,9 @@
 			
 			this.tabberheigth = windows - nn - this.px; //最大下边距
 		},
+		onUnload(){
+			console.log("onUnload");
+		},
 		methods: {
 			end() {
 				if (this.bianliang < this.system.screenWidth / 2) {
@@ -192,7 +195,7 @@
 			gaizhi(ev) {
 				this.current = ev.detail.current
 				if (ev.detail.current == this.lun_list.length - 1) {
-					this.videoContext.play()
+					// this.videoContext.play()
 				} else {
 					this.videoContext.pause()
 				}
@@ -200,7 +203,7 @@
 			more(url) {
 				console.log(url);
 				uni.navigateTo({
-					url: url
+					url: url.url
 				});
 			},
 			linkOthers(ev) {
@@ -247,10 +250,13 @@
 							}
 						})
 					} else if (item.id == 1) {
-						this.$api.loupanden().then(data => {
+						this.$api.loupanden({
+							pages:1,
+							limit:4
+						}).then(data => {
 							if (data.data.code == 1) {
 								item.data_list = []
-								data.data.data.status.forEach((items, index) => {
+								data.data.data.status.data.forEach((items, index) => {
 									item.data_list.push({
 										id: items.id,
 										isgo: false,
@@ -263,7 +269,11 @@
 							}
 						})
 					} else if (item.id == 2) {
-						this.$api.qjset().then(data => {
+						this.$api.qjset({
+							pages:1,
+							limit:4,
+							setid:13
+						}).then(data => {
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.data.forEach((items, index) => {

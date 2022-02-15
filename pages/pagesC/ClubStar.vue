@@ -125,9 +125,12 @@
 			// 	if (data.data.code == 1) {
 			// 	}
 			// })
-			this.$api.loupanden().then(data => {
+			this.$api.loupanden({
+				pages:1,
+				limit:2
+			}).then(data => {
 				if (data.data.code == 1) {
-					this.tuijian = [...data.data.data.status];
+					this.tuijian = [...data.data.data.status.data];
 				}
 			})
 		},

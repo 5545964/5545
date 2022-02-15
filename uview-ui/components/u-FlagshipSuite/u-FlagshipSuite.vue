@@ -19,15 +19,32 @@
 <script>
 	export default {
 		name: "FlagshipSuite",
+		props: {
+			pages: {
+				type: Number,
+				default: 1
+			}
+		},
 		data() {
 			return {
-				list: [{id:0,name:""}],
+				list: [{
+					id: 0,
+					name: ""
+				}],
 				current: 0,
 				data_list: [],
-				img: this.$imgPath
+				img: this.$imgPath,
+				pagess: 1
 			};
 		},
+		watch: {
+			pages(val) {
+				this.pagess = this.pages
+				this.quehuan(this.current)
+			},
+		},
 		mounted() {
+			this.pagess = this.pages
 			this.alls()
 		},
 		methods: {
@@ -40,36 +57,36 @@
 						})
 						this.current = this.list[0].id
 						this.quehuan(this.list[0].id)
-						console.log(this.list);
 					}
 				})
 			},
 			change(ev) {
+				this.$emit("pageB",this.pagess)
 				this.current = ev
-				console.log(ev);
 				this.quehuan(ev)
+				this.data_list = [];
+			},
+			checks(){
+				this.$emit("pageA",this.pagess)
 			},
 			quehuan(ev) {
 				this.$api.qjset({
-					setid: ev
+					setid: ev,
+					page: this.pagess,
+					limit: 10
 				}).then(data => {
 					if (data.data.code == 1) {
-						// this.data_list = [];
-						this.data_list = data.data.data.status.data;
-					}else{
-						this.data_list = [];
-						uni.showToast({
-							title:"暂无数据",
-							duration:1000,
-							icon:"none"
-						})
+						if (data.data.data.status.data.length != 0) {
+							this.data_list = [...this.data_list, ...data.data.data.status.data];
+						} else {
+							this.checks()
+						}
 					}
 				})
 			},
 			topage(ev) {
-				console.log(ev);
 				uni.navigateTo({
-					url: "./FlagshipDetail?id="+ev.id
+					url: "./FlagshipDetail?id=" + ev.id
 				})
 			}
 		}

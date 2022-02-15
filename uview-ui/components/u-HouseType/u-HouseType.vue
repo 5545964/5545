@@ -1,9 +1,9 @@
 <template>
-	<view style="height: 100%;">
-		<view class="cate" @click="show=true">
+	<view style="height: 100%;background: #fff;">
+		<!-- <view class="cate" @click="show=true">
 			筛选分类<image src="../../../static/icon_home_sanjiao.png"
 				style="width: 16rpx;height: 10rpx;margin-left: 12rpx;" mode=""></image>
-		</view>
+		</view> -->
 		<!-- 设计列表 -->
 		<!-- <view class="design_list" v-if="cad.length != 0">
 			<view class="" v-for="item in cad" :key="item">
@@ -43,12 +43,6 @@
 	export default {
 		name: "HouseType",
 		props: {
-			fenlei: {
-				type: Array,
-				default () {
-					return []
-				}
-			},
 			pages: {
 				type: Number,
 				default: 0
@@ -66,34 +60,40 @@
 				sel_list: [],
 				list: [],
 				cad: [],
-				pagess: 0
+				pagess: 0,
+				videoindex: 0,
 			};
 		},
 		watch: {
-			fenlei(val) {
-				this.list = [...this.fenlei];
-			},
 			pages(val) {
+				this.pagess = this.pages
 				this.alls()
 			},
 		},
 		mounted() {
 			this.pagess = this.pages
-			this.list = [...this.fenlei];
-			this.list.forEach(item => {
-				this.sel_list.push("")
+			this.alls()
+			this.$api.huxincategory().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false;
+					})
+					this.list = data.data.data.status;
+					this.list.forEach(item => {
+						this.sel_list.push("")
+					})
+				}
 			})
-			console.log(this.list);
-			// this.chang(0)
-			this.alls(0)
 		},
 		methods: {
+			// 发表评论
 			allsa() {
 				this.$api.enjoy({
 					user_id: uni.getStorageSync("user_info").id,
 					type: 3,
 					page: this.pagess,
-					limit: 10
+					limit: 10,
+					state: 2
 				}).then(data => {
 					let aa = []
 					data.data.data.status.data.forEach(item => {
@@ -110,7 +110,8 @@
 							aa.push(item)
 						}
 					})
-					this.video = aa
+					this.video[this.videoindex].pl = ["",""]
+					this.video[this.videoindex].pl = [...aa[this.videoindex].pl]
 					if (this.dianzhansssss) {
 						this.pinglunaa(this.video[this.indexdas], this.indexdas)
 					}
@@ -124,31 +125,28 @@
 					limit: 10,
 					state: 2
 				}).then(data => {
-					this.pages = data.data.data.status.current_page
-					if (data.data.data.status.data.length !=0) {
+					if (data.data.data.status.data.length != 0) {
 						let aa = []
 						data.data.data.status.data.forEach(item => {
 							item["iszan"] = false
 							item["isfollow"] = false
+							// 点赞
 							if (item.zans) {
 								item.iszan = true
 							}
+							// 收藏
 							if (item.follow) {
 								item.isfollow = true
 							}
 							item.video = this.$imgPath + item.video
 							aa.push(item)
-							console.log(aa, "aa", aa.length);
 						})
 						this.video = [...this.video, ...aa]
 					}
-
-					// if (this.dianzhansssss) {
-					// 	this.pinglunaa(this.video[this.indexdas], this.indexdas)
-					// }
 				})
 			},
 			async pinglunaa(ev, index) {
+				this.videoindex = index
 				if (await this.$login()) {
 					this.pagess = this.pages
 					this.dianzhansssss = true
@@ -254,7 +252,6 @@
 						aa.push(item)
 					}
 				})
-				// this.$emit("chang", aa);
 				this.chang(aa)
 				this.show = false;
 			},
@@ -263,7 +260,6 @@
 					id: ev
 				}).then(data => {
 					if (data.data.code == 1) {
-						console.log(data);
 						data.data.data.status.forEach(item => {
 							this.cad.push({
 								simage: item.image,
@@ -271,7 +267,7 @@
 								id: item.id
 							})
 						})
-						console.log(this.cad);
+					} else {
 
 					}
 				})

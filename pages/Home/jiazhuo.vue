@@ -64,6 +64,9 @@
 	export default {
 		data() {
 			return {
+				style:[],
+				color:[],
+				huxincategory:[],
 				fenleis: [],
 				show: false,
 				current: 0,
@@ -94,18 +97,31 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
+			this.alls()
 			this.$api.style().then(data => {
 				if (data.data.code == 1) {
-
 					data.data.data.status.forEach(item => {
 						item["check"] = false;
-						this.sel_list.push("")
-
+						this.style.push(item)
 					})
-					this.fenleis = data.data.data.status;
 				}
 			})
-			this.alls()
+			this.$api.color().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false;
+						this.color.push(item)
+					})
+				}
+			})
+			this.$api.huxincategory().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false;
+						this.huxincategory.push(item)
+					})
+				}
+			})
 		},
 		onReachBottom(ev) {
 			this.pages = this.pages + 1
@@ -126,7 +142,6 @@
 				}
 			},
 			pingjia(item) {
-
 				this.dsaa = item
 			},
 			alls() {
@@ -164,28 +179,30 @@
 				let aa = this.fenleis
 				aa[ev].check = !aa[ev].check;
 				if (aa[ev].check) {
-					this.sel_list[ev] = aa[ev].id
+					this.sel_list[ev] = aa[ev].title
 				} else {
 					this.sel_list[ev] = ""
 				}
-				this.fenleis = []
 				this.fenleis = aa
 			},
 			guan() {
 				this.show = false;
 			},
 			shows(ev) {
-				this.show = true
 				if (ev == 0) {
-
-				} else if (ev == 1) {} else {
-
+					this.fenleis = this.style
+				} else if (ev == 1) {
+					this.fenleis = this.color
+				} else {
+					this.fenleis = this.huxincategory
 				}
+				this.show = true
 			},
 			re() {
-				this.list.forEach(item => {
+				this.fenleis.forEach(item => {
 					item.check = false
 				})
+				this.sel_list = []
 			},
 			changesssss() {
 				let aa = []
@@ -194,7 +211,7 @@
 						aa.push(item)
 					}
 				})
-
+				console.log(aa);
 				this.show = false;
 			},
 			change(ev) {

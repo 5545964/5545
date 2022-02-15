@@ -40,6 +40,7 @@
 				});
 			},
 			go(ev) {
+				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
 						// 网页跳转
@@ -52,6 +53,9 @@
 						})
 						break;
 					case 2:
+					uni.navigateTo({
+						url: "../../pagesC/FlagshipDetail?id=" + ev.tc
+					})
 						// 套餐
 						break;
 					case 3:

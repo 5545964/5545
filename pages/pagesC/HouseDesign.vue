@@ -19,13 +19,13 @@
 			<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		</view>
 		<view v-if="current==0">
-			<u-design @click="seach" :list="lou_list"></u-design>
+			<u-design @pageA="pageA" @pageB="pageB" :pages="pages"></u-design>
 		</view>
 		<view style="height: 100%;" v-if="current==1">
-			<u-FlagshipSuite></u-FlagshipSuite>
+			<u-FlagshipSuite @pageA="pageA" @pageB="pageB" :pages="pages"></u-FlagshipSuite>
 		</view>
 		<view style="height: 100%;" v-if="current==2">
-			<u-HouseType :pages="pages" :fenlei="fenlei"></u-HouseType>
+			<u-HouseType :pages="pages" @pageA="pageA" @pageB="pageB"></u-HouseType>
 		</view>
 	</view>
 </template>
@@ -34,7 +34,6 @@
 	export default {
 		data() {
 			return {
-				fenlei: [],
 				title: "楼盘设计",
 				list: [{
 					name: '楼盘设计'
@@ -43,28 +42,25 @@
 				}, {
 					name: '户型攻略',
 				}],
-				lou_list: [],
 				current: 0,
-				pages:1
+				pages: 1,
+				shuo: true,
 			};
 		},
 		onReachBottom(ev) {
-			if(this.current == 2){
-				this.pages = this.pages +1
+			if (this.shuo) {
+				this.pages = this.pages + 1
 			}
 		},
-		onShow() {
-			this.alls()
-			this.$api.huxincategory().then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false;
-					})
-					this.fenlei = data.data.data.status;
-				}
-			})
-		},
 		methods: {
+			pageA(ev) {
+				console.log(ev);
+				this.shuo = false;
+			},
+			pageB(ev) {
+				this.pages = 1
+				this.shuo = true;
+			},
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
 					this.dianzhansssss = true
@@ -78,42 +74,6 @@
 					this.itemsss = ev;
 				}
 			},
-			alls() {
-				this.$api.loupanden().then(data => {
-					if (data.data.code == 1) {
-
-						this.lou_list = [];
-						this.lou_list = [...data.data.data.status]
-					}
-				})
-			},
-			// 搜索
-			seach(ev) {
-				this.$api.loupanlike({
-					name: ev
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.lou_list = [];
-						this.lou_list = [...data.data.data.status]
-					} else {
-						uni.showToast({
-							title: data.data.msg,
-							duration: 1000,
-							icon: "none"
-						})
-					}
-				})
-			},
-			// chang(ev) {
-
-			// 	this.$api.huxin({
-			// 		id:ev
-			// 	}).then(data=>{
-			// 		if(data.data.code==1){
-
-			// 		}
-			// 	})
-			// },
 			change(index) {
 				this.pages = 1
 				this.current = index

@@ -16,7 +16,7 @@
 		<view v-if="isyuyue != 0">
 			<view class="xunhuan" style="padding: 30rpx;">
 				<view class="dshk">
-					预约进度1
+					预约进度
 				</view>
 				<view class="dadsda">
 					<view v-if="state == 0">
@@ -34,20 +34,19 @@
 							您的预约已完成
 						</view>
 					</view>
-					<view style="padding: 30rpx 0;" v-if="state == 2&&states==1&&!fans.wstate">
+				<!-- 	<view style="padding: 30rpx 0;" v-if="state == 2&&states==1&&!fans.wstate">
 						<view class="cxz" style="text-align: center;">
 							设计师已设计完成，请支付尾金￥{{fans.wprice||0}}
 						</view>
 						<view class="ndajs" @click="zhifuyuyue(1)">
 							支付尾金￥{{fans.wprice||0}}
 						</view>
-					</view>
-					<view style="padding: 30rpx 0;" v-if="state == 1&&states==0">
+					</view> -->
+					<view style="padding: 30rpx 0;" v-if="states == 0">
 						<view class="cxz" style="text-align: center;">
 							您的预约申请已通过审核，请支付诚意金￥{{mony||0}},诚意金可在美居订单购物时抵扣！
 						</view>
 						<view class="ndajs" @click="zhifuyuyue(0)">
-							<!-- 支付定金￥{{mony||0}} -->
 							请支付诚意金“{{mony||0}}元"
 						</view>
 					</view>
@@ -459,7 +458,7 @@
 			}
 			if (ev.yuyue) {
 				this.isyuyue = ev.yuyue;
-				this.gethomepage(this.yy_id);
+				this.gethomepage();
 			}
 			this.$api.color().then(data => {
 				if (data.data.code == 1) {
@@ -554,7 +553,6 @@
 					user_id: uni.getStorageSync("user_info").id,
 					id: this.fans.id
 				}).then(res => {
-
 					if (res.data.code == 200) {
 						uni.requestPayment({
 							timeStamp: res.data.data.timeStamp, //当前的时间
@@ -582,8 +580,7 @@
 					}
 				})
 			},
-			gethomepage(yy_id) {
-				this.fans = {}
+			gethomepage() {
 				this.fans = uni.getStorageSync("yuyue_info");
 				this.state = this.fans.state;
 				this.states = this.fans.states;

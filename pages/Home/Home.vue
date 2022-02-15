@@ -123,6 +123,9 @@
 				imgurl: this.$imgPath
 			};
 		},
+		onUnload(){
+			console.log("onUnload");
+		},
 		methods: {
 			ended(ev) {
 				this.autoplay = true
@@ -150,7 +153,7 @@
 			gaizhi(ev) {
 				this.current = ev.detail.current
 				if (ev.detail.current == this.lun_list.length - 1) {
-					this.videoContext.play()
+					// this.videoContext.play()
 				} else {
 					this.videoContext.pause()
 				}

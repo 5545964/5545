@@ -20,9 +20,9 @@
 		<view class="lun_main">
 			<view class="">
 				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :current="current" :indicator-dots="true"
-					:circular="true" :autoplay="true" :interval="3000" :duration="1000">
+					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+						<video  id="video" @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
@@ -79,9 +79,12 @@
 					this.data_list = [...data.data.data.data]
 				}
 			})
+			this.videoContext = uni.createVideoContext('video')
 		},
 		data() {
 			return {
+				videoContext: "",
+				autoplay:true,
 				imgurl: this.$imgPath,
 				current: 0,
 				title: "限时抢购",
@@ -89,7 +92,19 @@
 				data_list: [],
 			};
 		},
+		onUnload(){
+			console.log("onUnload");
+		},
 		methods: {
+			ended(ev) {
+				this.autoplay = true
+			},
+			pause(ev) {
+				this.autoplay = true
+			},
+			bofang(ev) {
+				this.autoplay = false
+			},
 			goshop(ev) {
 				uni.navigateTo({
 					url: "./Shopping?shopid=" + ev.id
@@ -135,6 +150,11 @@
 			},
 			gaizhi(ev) {
 				this.current = ev.detail.current
+				if (ev.detail.current == this.lun_list.length - 1) {
+					// this.videoContext.play()
+				} else {
+					this.videoContext.pause()
+				}
 			},
 			back(ev) {
 

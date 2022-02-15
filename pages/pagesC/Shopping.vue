@@ -526,7 +526,7 @@
 						})
 					})
 				} else {
-					if (this.orderid == '') {
+					if (this.orderid == 0) {
 						let aa = [{
 							simage: this.alls.simage,
 							name: this.alls.name,

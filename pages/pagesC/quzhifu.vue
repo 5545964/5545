@@ -70,12 +70,23 @@
 							共{{znum}}件
 						</view>
 					</view>
+					<view class="text kfhkjsdh" v-if="dinjing != 0">
+						<view class="">
+							定金
+						</view>
+						<view class="red">
+							-￥{{dinjing}}
+						</view>
+					</view>
 					<view class="text kfhkjsdh">
 						<view class="">
 							运费
 						</view>
-						<view class="red">
+						<view class="red" v-if="yf != 0">
 							￥{{yf}}
+						</view>
+						<view class="red" v-else>
+							包邮
 						</view>
 					</view>
 					<view class="text kfhkjsdh" @click="youhuijuan">
@@ -254,6 +265,9 @@
 	export default {
 		data() {
 			return {
+				swjorderid:0,
+				swj:0,
+				dinjing: 0,
 				buyanzheng: false,
 				time: 0,
 				huoqu: "获取验证码",
@@ -319,20 +333,36 @@
 				that.zjia = that.zjia.toFixed(2)
 				that.cartid = arr.join(",")
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
+				if(that.goodsdata[0].swj ==1){
+					that.swj = 1;
+					that.swjorderid = that.goodsdata[0].orderid;
+					that.$api.dingj({
+						orderid: that.goodsdata[0].orderid
+					}).then(data => {
+						if (data.data.code == 1) {
+							if (data.data.data.status.price >= that.tijiaozjia && data.data.data.status.price !=
+								0.01) {
+								that.dinjing = data.data.data.status.price
+								that.tijiaozjia = that.tijiaozjia - data.data.data.status.price
+							}
+						}
+					})
+				}
+				
 			}
 			if (ev.title) {
 				that.title = ev.title;
 			}
-			this.$api.agreement({
+			that.$api.agreement({
 				state: 4
 			}).then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
-					this.xieyi = data.data.data.status
+					that.xieyi = data.data.data.status
 				} else {
-					this.buyanzheng = false
+					that.buyanzheng = false
 				}
 			})
 		},
@@ -465,8 +495,8 @@
 				}
 				if (this.address != '') {
 					this.$api.cartpay({
-						swj: 0,
-						orderid: 0,
+						swj: this.swj,
+						orderid: this.swjorderid,
 						content: this.value,
 						shopid: shopids,
 						cartid: cartids,

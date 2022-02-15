@@ -1,6 +1,10 @@
 import request from "./request.js"
 
 export default {
+	// 减定金bydshop/dingj
+	dingj(params = {}) {
+		return request.post("/api/bydshop/dingj", params);
+	},
 	// 安装完成bydshop/successloading
 	successloading(params = {}) {
 		return request.post("/api/bydshop/successloading", params);

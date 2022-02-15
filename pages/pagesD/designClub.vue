@@ -284,10 +284,14 @@
 							aa.push(item.title)
 						}
 					})
+					if(aa.length == 0){
+						this.dessel(0)
+						this.show = false
+						return
+					}
 					this.$api.deslabel({
 						label: aa
 					}).then(data => {
-						console.log(data);
 						if (data.data.code == 1) {
 							data.data.data.status.forEach((item, index) => {
 								item.createtime = item.createtime * 1000
@@ -296,6 +300,9 @@
 								item.work = item.work ? item.work.split(",") : ""
 							})
 							this.designerList = data.data.data.status
+							this.show = false
+						} else{
+							this.designerList = []
 							this.show = false
 						}
 					})
@@ -394,6 +401,7 @@
 			},
 			// 跳转设计师详情
 			navgepage(item) {
+				console.log(item);
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
@@ -947,6 +955,7 @@
 				box-sizing: border-box;
 				width: 100rpx;
 				background: #305166;
+				border-left: 4rpx solid #305166;
 			}
 
 			.mian_left_item1 {
@@ -956,6 +965,7 @@
 				box-sizing: border-box;
 				width: 100rpx;
 				background: #376379;
+				border-left: 4rpx solid #376379;
 			}
 		}
 	}

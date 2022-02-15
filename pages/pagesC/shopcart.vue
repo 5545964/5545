@@ -15,10 +15,47 @@
 			</u-navbar>
 		</view>
 		<view class="huadong">
+			<view class="" v-if="yuyuecarList.length != 0">
+				预约订单
+			</view>
+			<view v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
+				class="car-list" @touchstart="drawStarts" @touchmove="drawMoves" @touchend="drawEnds"
+				:data-index="shopIndex" :style="'right:'+item.right+'px'">
+				<view class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
+					<view class="btn centerboth" v-if="item.selected==true" @click="selThiss(shopIndex)">
+						<text class="iconfont car-sel"></text>
+					</view>
+					<view class="btn centerboth" v-else @click="selThiss(shopIndex)">
+						<text class="iconfont car-unsel"></text>
+					</view>
+					<image class="car-img" :src="img+item.shop.simage" mode="aspectFill"></image>
+					<view class="car-mes centerboth">
+						<view class="mes-box">
+							<view class="g-name line2">{{item.shop.name}}</view>
+							<view class="price-change-num clearfix">
+								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
+								<view class="num-box centerboth">
+									<text class="iconfont car-sub" @click="changeNum(0,shopIndex)"></text>
+									<view>{{item.num}}</view>
+									<text class="iconfont car-add" @click="changeNum(1,shopIndex)"></text>
+								</view>
+							</view>
+							<text class="fdsds"> 合计：</text><text
+								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)}}</text>
+						</view>
+					</view>
+				</view>
+				<view class="hdjsah">
+					<view class="remove" @click="delDatas(item,shopIndex)">删除</view>
+				</view>
+			</view>
+			<view class="" v-if="carList.length != 0">
+				普通商品
+			</view>
 			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
 				@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :data-index="shopIndex"
 				:style="'right:'+item.right+'px'">
-				<view class="list"  :class="{ 'aaaaaaaaaa': item.right == 0 }">
+				<view class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
 					<view class="btn centerboth" v-if="item.selected==true" @click="selThis(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
@@ -47,7 +84,7 @@
 				</view>
 			</view>
 			<view style="height: 100rpx;">
-				
+
 			</view>
 		</view>
 		<!-- 底部合计 -->
@@ -120,6 +157,7 @@
 				delIds: '', //要删除的购物车id
 				btnType: 0, //0删除  1结算
 				carList: [],
+				yuyuecarList: [],
 				img: this.$imgPath,
 				delBtnWidth: 65
 			}
@@ -135,19 +173,24 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = []
+						let cc = []
 						this.yunfei = 0
 						data.data.data.status.forEach((item, index) => {
 							item["selected"] = false
 							item["right"] = 0
-							aa.push(item)
-							if (index > 0 && item.shop.id == data.data.data.status[index - 1].shop
-								.id) {} else {
-								this.yunfei = this.yunfei + Number(item.shop.yf)
+							if (item.orderid != null && item.orderid != 0) {
+								aa.push(item)
+							} else {
+								cc.push(item)
+							}
+							if (index > 0 && item.shop.id == data.data.data.status[index - 1].shop.id) {
+
+							} else {
+								// this.yunfei = this.yunfei + Number(item.shop.yf)
 							}
 						})
-						console.log("yunfei", this.yunfei);
-						this.carList = []
-						this.carList = [...aa]
+						this.yuyuecarList = [...aa]
+						this.carList = [...cc]
 						this.getAllMount();
 						let bb = 0
 						data.data.data.status.forEach(item => {
@@ -224,10 +267,28 @@
 							specidsize: item.specidsize,
 							num: Number(item.num),
 							xc_price: Number(item.price),
-							orderid: item.orderid
+							orderid: item.orderid,
+							swj:1
 						})
 					}
 				})
+				if (data.length == 0) {
+					this.yuyuecarList.forEach(item => {
+						if (item.selected) {
+							data.push({
+								id: item.id,
+								simage: item.shop.simage,
+								name: item.shop.name,
+								shopid: item.shopid,
+								specid: item.specid,
+								specidsize: item.specidsize,
+								num: Number(item.num),
+								xc_price: Number(item.price),
+								orderid: item.orderid
+							})
+						}
+					})
+				}
 				if (data.length == 0) {
 					return uni.showToast({
 						title: "请选择商品",
@@ -258,6 +319,9 @@
 				that.maskTitle = '是否将选中商品移除购物车?'
 			},
 			selThis: function(shopIndex) { //选择商品
+				this.yuyuecarList.forEach(item => {
+					item.selected = false
+				})
 				let that = this
 				let carList = that.carList;
 				carList[shopIndex].selected = !carList[shopIndex].selected
@@ -281,6 +345,34 @@
 					that.allSel = false
 				}
 				that.getAllMount();
+			},
+			selThiss: function(shopIndex) { //选择商品
+				this.carList.forEach(item => {
+					item.selected = false
+				})
+				let that = this
+				let carList = that.yuyuecarList;
+				carList[shopIndex].selected = !carList[shopIndex].selected
+				that.yuyuecarList = []
+				that.yuyuecarList = [...carList]
+				let aa = 0;
+				that.yuyuecarList.forEach((item, index) => {
+					if (item.selected) {
+						aa += 1
+					} else {}
+				})
+
+				if (aa != 0) {
+					that.cartssss = true
+				} else {
+					that.cartssss = false
+				}
+				if (aa == that.yuyuecarList.length) {
+					that.allSel = true
+				} else {
+					that.allSel = false
+				}
+				that.getAllMounts();
 			},
 			selShop: function(shopIndex) {
 				var that = this;
@@ -331,8 +423,26 @@
 						that.cartssss = false;
 					}
 				}
+				that.yuyuecarList.forEach(item => {
+					item.selected = false
+				})
 				that.$emit('allSelBtn', carList);
 				that.getAllMount();
+			},
+			getAllMounts: function() { //计算选中总价
+				var that = this;
+				let allPrice = 0;
+				var selNum = 0;
+				let carList = that.yuyuecarList;
+				for (let i = 0; i < carList.length; i++) {
+					if (carList[i].selected == true) {
+						selNum = selNum + Number(carList[i].num);
+						// allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].shop.xc_price));
+						allPrice = allPrice + (Number(carList[i].num) * Number(carList[i].price));
+					}
+				}
+				that.allNumber = selNum;
+				that.allAmount = allPrice;
 			},
 			getAllMount: function() { //计算选中总价
 				var that = this;
@@ -394,7 +504,66 @@
 				this.carList = [...carList]
 				that.getAllMount();
 			},
-
+			//开始触摸滑动
+			drawStarts(e) {
+				var touch = e.touches[0];
+				this.startX = touch.clientX;
+			},
+			//触摸滑动
+			drawMoves(e) {
+				for (var index in this.yuyuecarList) {
+					this.$set(this.yuyuecarList[index], 'right', 0);
+				}
+				var touch = e.touches[0];
+				var item = this.yuyuecarList[e.currentTarget.dataset.index];
+				var disX = this.startX - touch.clientX;
+				if (disX >= 20) {
+					if (disX > this.delBtnWidth) {
+						disX = this.delBtnWidth;
+					}
+					this.$set(this.yuyuecarList[e.currentTarget.dataset.index], 'right', disX);
+				} else {
+					this.$set(this.yuyuecarList[e.currentTarget.dataset.index], 'right', 0);
+				}
+			},
+			//触摸滑动结束
+			drawEnds(e) {
+				var item = this.yuyuecarList[e.currentTarget.dataset.index];
+				if (item.right >= this.delBtnWidth / 2) {
+					this.$set(this.yuyuecarList[e.currentTarget.dataset.index], 'right', this.delBtnWidth);
+				} else {
+					this.$set(this.yuyuecarList[e.currentTarget.dataset.index], 'right', 0);
+				}
+			},
+			//删除方法
+			delDatas(item, index) {
+				this.$api.cartdel({
+					id: item.id
+				}).then(data => {
+					uni.showToast({
+						title: data.data.msg,
+						duration: 1000,
+						icon: "none"
+					})
+					if (data.data.code == 1) {
+						this.allsss()
+						this.$api.shopcart({
+							id: uni.getStorageSync("user_info").id
+						}).then(data => {
+							let aa = 0
+							if (data.data.code == 1) {
+								data.data.data.status.forEach(item => {
+									aa = aa + Number(item.num)
+								})
+							}
+							if (aa >= 99) {
+								aa = "..."
+							}
+							uni.setStorageSync("cart_num", aa)
+						})
+					}
+				})
+			},
 
 
 
@@ -432,7 +601,6 @@
 			},
 			//删除方法
 			delData(item, index) {
-				console.log(item, index);
 				this.$api.cartdel({
 					id: item.id
 				}).then(data => {
@@ -560,9 +728,11 @@
 		flex-direction: row;
 		padding: 12rpx 0;
 	}
-	.aaaaaaaaaa{
+
+	.aaaaaaaaaa {
 		border-radius: 20rpx;
 	}
+
 	.car-list .list {
 		width: 100%;
 		padding: 20rpx 20rpx 20rpx 0;
