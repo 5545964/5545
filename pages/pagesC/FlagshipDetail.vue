@@ -58,7 +58,7 @@
 					<view style="position: relative;" v-for="(item,index) in xq_img" :key="index">
 						<!-- 图片 VR -->
 						<view :style="'left: '+item.vzb[0]+'px;top: '+item.vzb[1]+'px;'" class="fdjksfhdsjk cet"
-							v-if="item.url !=''" @click="goVR(item)">
+							v-if="item.url !='' && item.url !=null" @click="goVR(item)">
 							<view class="fsds">
 								点击VR
 								100%所见所得
@@ -78,7 +78,6 @@
 							v-if="item.shop.id" @click="goshop(item.shop.id)">
 							<view style="margin:0 auto;margin-top:36rpx;">
 								<view class="nkjsfbjhsd">
-									<!-- 套餐价￥ -->
 									商品价￥
 								</view>
 								<view class="nkjsfbjhsd">
@@ -316,33 +315,21 @@
 					}
 				})
 			},
-			qeihuan(ev) {
-				console.log(321);
-				// let aa = ev;
-				// let bb = []
-				// aa.forEach(item => {
-				// 	if (item.shop.id != 0) {
-				// 		bb.push({
-				// 			shopid: item.shop.id,
-				// 			xc_price: item.shop.xc_price
-				// 		})
-				// 	} else {
-				// 		bb.push({
-				// 			shopid: 0,
-				// 			image: item.shop.photo,
-				// 			url: item.url
-				// 		})
-				// 	}
-				// })
-				// this.xq_img = bb
-
-			},
 			change(index) {
 				this.active = index;
 				let aa = []
 				if (this.leftlist[index].id == 1) {
-					this.desDetails(this.alls.designer)
-					this.desdesdesdesde = 1
+					if (this.alls.designer == "") {
+						this.desdesdesdesde = 0
+						this.alls.xq.forEach(item => {
+							if (this.leftlist[index].id == item.leftid) {
+								aa.push(item)
+							}
+						})
+					} else {
+						this.desDetails(this.alls.designer)
+						this.desdesdesdesde = 1
+					}
 				} else if (this.leftlist[index].id == 2) {
 					this.desdesdesdesde = 2
 				} else {
@@ -353,8 +340,8 @@
 						}
 					})
 				}
-
 				this.xq_img = aa
+				console.log(this.xq_img);
 			},
 			back(ev) {
 				switch (ev) {

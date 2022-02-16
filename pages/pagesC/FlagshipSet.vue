@@ -24,7 +24,7 @@
 	export default {
 		data() {
 			return {
-				title:"旗舰套系"
+				title:"旗舰整装套系"
 			};
 		},
 		methods:{

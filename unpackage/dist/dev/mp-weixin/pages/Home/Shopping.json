@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "商城",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-adata": "/uview-ui/components/u-adata/u-adata"
+  }
+}

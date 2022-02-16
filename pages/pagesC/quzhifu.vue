@@ -334,16 +334,16 @@
 				that.cartid = arr.join(",")
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
 				if(that.goodsdata[0].swj ==1){
+					console.log("321321312");
 					that.swj = 1;
 					that.swjorderid = that.goodsdata[0].orderid;
 					that.$api.dingj({
 						orderid: that.goodsdata[0].orderid
 					}).then(data => {
 						if (data.data.code == 1) {
-							if (data.data.data.status.price >= that.tijiaozjia && data.data.data.status.price !=
-								0.01) {
+							if (data.data.data.status.price <= that.tijiaozjia && data.data.data.status.price != 0.01) {
 								that.dinjing = data.data.data.status.price
-								that.tijiaozjia = that.tijiaozjia - data.data.data.status.price
+								that.tijiaozjia = that.tijiaozjia - that.dinjing
 							}
 						}
 					})
@@ -361,6 +361,8 @@
 						item["check"] = false
 					})
 					that.xieyi = data.data.data.status
+					uni.setStorageSync("fuwenbeng",data.data.data.status.content)
+					that.buyanzheng = true
 				} else {
 					that.buyanzheng = false
 				}
@@ -490,6 +492,7 @@
 					specids.push(item.specid)
 					cartids.push(item.id)
 				})
+				console.log(1111);
 				if (this.iscartid) {
 					cartids = 0
 				}
@@ -543,6 +546,12 @@
 									})
 
 								}
+							})
+						}else{
+							uni.showToast({
+								title: res.data.msg,
+								duration: 1000,
+								icon: "none"
 							})
 						}
 					})

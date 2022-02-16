@@ -23,7 +23,7 @@
 	export default {
 		data() {
 			return {
-				content: '<h2 style="text-align:center"><u><s>d阿三<strong>大苏打撒旦撒大苏打阿达阿萨啊是阿达阿斯顿啊阿达啊啊阿达啊阿萨阿萨啊实打实大苏打实打实的打撒打撒打撒萨达萨达</strong>萨达萨达是打撒十大打算<img alt=""src="https://v1.uviewui.com/common/logo.png" /></s></u></h2>',
+				content:"", 
 				title: "富文本",
 			};
 		},

@@ -168,8 +168,11 @@
 			</view>
 			<view class="xian"></view>
 			<view class="bai"></view>
-			<view class="content">
+			<!-- <view class="content">
 				<u-parse style="padding: 0 30rpx;" :html="alls.content"></u-parse>
+			</view> -->
+			<view class="" v-for="(item,index) in alls.content" :key="index">
+				<image style="height: 600rpx;" :src="img+item" mode="widthFix"></image>
 			</view>
 		</view>
 		<view style="height: 110rpx;margin-top: 20rpx;"></view>
@@ -609,11 +612,16 @@
 							this.sc = true;
 
 						}
-						// 富文本图片加域名
-						if (this.alls.content != '') {
-							this.alls.content = this.alls.content.replace(/\<img src=\"/gi,
-								'<img src=\"' + this.$imgPath);
-						}
+						// // 富文本图片加域名
+						// if (this.alls.content != '') {
+						// 	this.alls.content = this.alls.content.replace(/\<img src=\"/gi,
+						// 		'<img src=\"' + this.$imgPath);
+						// }
+						let pp = this.alls.content.split(",");
+						this.alls.content = []
+						pp.forEach(item=>{
+							this.alls.content.push(item)
+						})
 						let image = data.data.data.status[0].image.split(",");
 						// 图片加域名
 						image.forEach(item => {

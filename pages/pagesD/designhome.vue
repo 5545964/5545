@@ -196,6 +196,8 @@
 						} else {
 							this.fkjsfjdisfjsl = false
 						}
+					}else{
+						this.fkjsfjdisfjsl = false
 					}
 				})
 				this.$api.desorders({	id: uni.getStorageSync("des_info").id}).then(data => {

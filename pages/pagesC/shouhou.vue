@@ -50,20 +50,6 @@
 			<view class="inputs cet">
 				<view style="width: 100%;">
 					<view class="text">
-						快递公司（选填）
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
-						<u-input inputAlign="left" placeholder-style="color: #999999;margin-left: 30rpx;"
-							v-model="kuaidigongsi" placeholder="请填写快递公司" />
-					</view>
-					<view class="text">
-						快递单号（选填）
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
-						<u-input inputAlign="left" placeholder-style="color: #999999;margin-left: 30rpx;"
-							v-model="kuaididanhao" placeholder="请填写快递单号" type="number" />
-					</view>
-					<view class="text">
 						您的理由
 					</view>
 					<view style="background:#f6f6f6;border-radius:10rpx;margin-top:20rpx;">
@@ -97,8 +83,6 @@
 	export default {
 		data() {
 			return {
-				kuaidigongsi: "",
-				kuaididanhao: "",
 				imgtitle: this.$imgPath,
 				imglist: [],
 				name: "image", //上传
@@ -181,8 +165,6 @@
 					num: bb,
 					tuik_ly: this.text,
 					image: this.imglist,
-					kuaididanhao:this.kuaididanhao,
-					kuaidigongsi:this.kuaidigongsi
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.showToast({

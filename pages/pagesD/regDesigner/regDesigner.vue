@@ -58,12 +58,6 @@
 				上传设计师资质
 			</view>
 			<view class="allimg">
-				<!-- <view class="" v-for="(item,index) in imgList" :key="index" style="position: relative;">
-					<image :src="item" class="imgs" mode="aspectFit"></image>
-					<image src="../../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg" mode="aspectFit">
-					</image>
-				</view>
-				<image @click="chooseImg" src="../../../static/icon_up_ico.png" class="imgs" mode="aspectFit"></image> -->
 				<u-upload width="160" :fileList="kanimg" height="160" :action="action" max-count="9" :header="header"
 					@on-success="shangchuan" @on-remove="deleteimg" :form-data="formData" name="image"
 					size-type="compressed">
@@ -86,7 +80,11 @@
 <script>
 	export default {
 		onLoad(ev) {
-			this.ididiidid = ev.nageid
+			if(ev.nageid){
+				this.ididiidid = ev.nageid
+			}else{
+				this.ididiidid = uni.getStorageSync("level")
+			}
 			console.log(ev);
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
 			// 驳回后修改信息
@@ -226,9 +224,10 @@
 					return false;
 				}
 				//提交信息存入缓存
-				this.inpList.push({
-					level: this.ididiidid
-				})
+				// this.inpList.push({
+				// 	level: this.ididiidid
+				// })
+				uni.setStorageSync("level", this.ididiidid)
 				uni.setStorageSync("inpList", this.inpList)
 				uni.setStorageSync("upimgs", this.upimgs)
 				//检查资料是否填完
@@ -244,7 +243,6 @@
 				if (this.inpList.length == bb.length) {
 					//检查上传的照片
 					if (this.upimgs != '') {
-
 						this.$api.adddes({
 							user_id: uni.getStorageSync("user_info").id,
 							username: this.inpList[0].text,
@@ -254,7 +252,7 @@
 							mobile: this.inpList[2].text,
 							desimage: this.upimgs,
 							addressxq: this.inpList[5].text,
-							level: this.inpList[6].level
+							level: this.ididiidid
 						}).then(data => {
 							if (data.data.code == 1) {
 								let list = {

@@ -87,20 +87,7 @@
 
 			</view>
 		</view>
-		<!-- 底部合计 -->
-		<!-- <view class="" v-if="cartssss"
-			style="display: flex;background-color: #FFFFFF;position: fixed;bottom: 100rpx;padding: 0 30rpx;left: 0;right: 0;">
-			<view class="dksjahk">
-				定金:￥0
-			</view>
-			<view class="dksjahk">
-				定金:￥0
-			</view>
-		</view> -->
 		<view class="car_foot">
-			<!-- <label class="radio">
-				<radio value="" style="transform: scale(0.7);" /><text>全选</text>
-			</label> -->
 			<view class="all-sel-btn centerboth">
 				<text v-if="allSel==true" class="iconfont car-sel" @click="allSelBtn"></text>
 				<text v-else class="iconfont car-unsel" @click="allSelBtn"></text>
@@ -122,22 +109,6 @@
 				</view>
 			</view>
 		</view>
-		<!-- <view class="car-bottom-btn">
-			<view class="all-sel-btn centerboth" @click="allSelBtn">
-				<text v-if="allSel==true" class="iconfont car-sel"></text>
-				<text v-else class="iconfont car-unsel"></text>
-				全选
-			</view>
-			<view class="all-cost centerboth">
-				合计:<text class="icon">￥</text><text class="money">{{allAmount}}</text>
-			</view>
-			<view class="car-btn-box centerboth">
-				<view class="del-btn centerboth" @click="delCars">删除</view>
-				<view class="submit_btn" @click="jsCars">
-					结算({{allNumber}})
-				</view>
-			</view>
-		</view> -->
 		<mask-model ref="askmodel" btnType="1" @confirm="confirm" @cancel="cancel" titleColoe="#666666"
 			cancelColor="#666666" confirmColor="#007AFF" :maskTitle="maskTitle"></mask-model>
 	</view>
@@ -183,15 +154,15 @@
 							} else {
 								cc.push(item)
 							}
-							if (index > 0 && item.shop.id == data.data.data.status[index - 1].shop.id) {
+							// // 算运费
+							// if (index > 0 && item.shop.id == data.data.data.status[index - 1].shop.id) {
 
-							} else {
-								// this.yunfei = this.yunfei + Number(item.shop.yf)
-							}
+							// } else {
+							// 	this.yunfei = this.yunfei + Number(item.shop.yf)
+							// }
 						})
 						this.yuyuecarList = [...aa]
 						this.carList = [...cc]
-						this.getAllMount();
 						let bb = 0
 						data.data.data.status.forEach(item => {
 							bb = bb + 1
@@ -199,8 +170,10 @@
 						if (bb >= 99) {
 							bb = "..."
 						}
+						uni.setStorageSync("cart_num", bb)
 					} else {
 						this.carList = [];
+						this.yuyuecarList = []
 						this.allAmount = 0;
 						uni.setStorageSync("cart_num", 0)
 					}
@@ -214,6 +187,14 @@
 
 					}
 				})
+				if(aa.length == 0){
+					this.yuyuecarList.forEach(item => {
+						if (item.selected) {
+							aa.push(item.id)
+					
+						}
+					})
+				}
 				this.$api.cartdel({
 					id: aa
 				}).then(data => {
@@ -268,7 +249,7 @@
 							num: Number(item.num),
 							xc_price: Number(item.price),
 							orderid: item.orderid,
-							swj:1
+							swj: 0
 						})
 					}
 				})
@@ -284,7 +265,8 @@
 								specidsize: item.specidsize,
 								num: Number(item.num),
 								xc_price: Number(item.price),
-								orderid: item.orderid
+								orderid: item.orderid,
+								swj: 1
 							})
 						}
 					})

@@ -30,12 +30,12 @@
 					<view class="yaoqingma">
 						<!-- 邀请码：321654987 -->
 					</view>
-					<view class="cet" style="margin-top: 30rpx;" @click="tanchuchen">
+					<!-- <view class="cet" style="margin-top: 30rpx;" @click="tanchuchen">
 						<view class="no">
 							￥0.00不可提现(元)
 						</view>
 						<image class="imgs" src="../../static/wenhao.png" mode="aspectFit"></image>
-					</view>
+					</view> -->
 				</view>
 				<view class="tixian" @click="tixian">
 					提佣申请

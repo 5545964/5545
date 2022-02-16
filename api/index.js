@@ -1,6 +1,10 @@
 import request from "./request.js"
 
 export default {
+	// bydshop/sqexpress快递
+	sqexpress(params = {}) {
+		return request.post("/api/bydshop/sqexpress", params);
+	},
 	// 减定金bydshop/dingj
 	dingj(params = {}) {
 		return request.post("/api/bydshop/dingj", params);
@@ -12,6 +16,10 @@ export default {
 	// 协议内容api/Bydidentity/agreement
 	agreement(params = {}) {
 		return request.post("/api/Bydidentity/agreement", params);
+	},
+	// 协议内容api/Bydidentity/agreement
+	agreements(params = {}) {
+		return request.post("/api/Bydidentity/agreements", params);
 	},
 	// 申请报装bydshop/sqlading
 	sqlading(params = {}) {

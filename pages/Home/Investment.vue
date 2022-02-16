@@ -48,9 +48,6 @@
 					<image style="width: 100%;height: 1000rpx;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
 						mode="aspectFit"></image>
 					<view class="be_foot">
-						<!-- <view class="pay" @click="pays">
-							{{pay}}
-						</view> -->
 						<view class="pay" @click="getcontein(0)">
 							成为设计师
 						</view>
@@ -148,9 +145,6 @@
 		<u-popup v-model="show" mode="bottom" length="70%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
-				<!-- <view class="seath">
-					<u-search bg-color="#F2F2F2" @focus="seach_go(888)" v-model="keyword"></u-search>
-				</view> -->
 				<view class="type_list">
 					<view :class="item.check? 'type_item1':'type_item'" v-for="(item,index) in modeList" :key="index"
 						@click="xuanzhesssss(item)">
@@ -275,16 +269,7 @@
 				allssssss: []
 			}
 		},
-		// onShareAppMessage(ev) {
-		// 	return {
-		// 		title: '分享的标题',
-		// 		imageUrl: "https://v1.uviewui.com/common/logo.png",
-		// 		desc: "1111111111111",
-		// 		path: "/pages/Home/Home"
-		// 	}
-		// },
 		onShow() {
-			// this.current = this.list[0].id
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.getstate()
 			this.enjoy()
@@ -349,10 +334,8 @@
 				this.$api.desproMoenys({
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
-
 					if (data.data.code == 1) {
 						if (data.data.data) {
-							// this.pay='支付￥'+data.data.data.status.money
 							this.allssssss = data.data.data.status
 						}
 					}
@@ -399,17 +382,9 @@
 					})
 				}
 			},
-			//
-			//
-			//
 			pingjia(item) {
 				this.dsaa = item
 			},
-			//
-			//
-			//
-			//
-			//
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
 					this.pinglun_list = []
@@ -479,7 +454,6 @@
 			},
 			play(ev) {
 				this.videoContext = uni.createVideoContext(ev.currentTarget.id, this);
-
 				for (var i = 0; i < this.video.length; i++) {
 					if (i != ev) {
 						let video2 = uni.createVideoContext("video" + i, this);
@@ -555,12 +529,6 @@
 								user_id: uni.getStorageSync("user_info").id
 							}).then(data => {
 								that.pay = '去填写资料'
-								// 不支付，支付取消注释
-								// if (data.data.code == 1) {
-								// 	that.pay = '去填写资料'
-								// } else {
-								// 	that.pay = '支付￥' + that.allssssss[ev].money
-								// }
 								that.showContract = true
 							})
 						}
@@ -618,6 +586,8 @@
 							aa.push(item)
 						})
 						this.video = aa
+					}else{
+						this.video = []
 					}
 				})
 				this.$api.recruit().then(data => {
@@ -632,19 +602,6 @@
 				this.$api.dessel({
 					order: ev
 				}).then(data => {
-					// if (data.data.code == 1) {
-					// 	data.data.data.status.forEach(item => {
-					// 		item.createtime = new Date(parseInt(item.createtime) * 1000).toLocaleString()
-					// 			.replace(/:\d{1,2}$/, '');
-					// 		item.createtime = item.createtime.split(" ")
-					// 		item.createtime = item.createtime[0].split("/")
-					// 		item.createtime = item.createtime[0] + "-" + item.createtime[1] + "-" + item
-					// 			.createtime[2]
-					// 		item.label = item.label ? item.label.split(",") : ""
-					// 		item.work = item.work ? item.work.split(",") : ""
-					// 	})
-					// 	this.designerList = data.data.data.status
-					// }
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
 							item.createtime = item.createtime * 1000
@@ -676,12 +633,10 @@
 				this.$api.despro({
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
-
 					if (data.data.code == 1) {
 						if (data.data.data) {
 							this.desinfo = data.data.data.status
 							this.state = data.data.data.status.state
-
 						}
 					}
 				})
@@ -877,21 +832,9 @@
 		background-color: #FFFFFF;
 		width: 100%;
 		height: 110rpx;
-		// position: fixed;
-		// bottom: 100rpx;
 	}
 
 	.pay {
-		// width: 600rpx;
-		// height: 70rpx;
-		// background: #007399;
-		// border-radius: 35rpx;
-		// font-size: 26rpx;
-		// color: #FFFFFF;
-		// text-align: center;
-		// position: relative;
-		// z-index: 100;
-		// line-height: 70rpx;
 		padding: 20rpx 40rpx;
 		background: #007399;
 		border-radius: 35rpx;

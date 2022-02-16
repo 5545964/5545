@@ -53,7 +53,7 @@
 		</swiper>
 		<u-kehu url="./booking/AppointmentDesign" heigth="1000"></u-kehu>
 		<u-back-top :scroll-top="0"></u-back-top>
-		<tab-bar @tabbers="dsad"></tab-bar>
+		<tab-bar></tab-bar>
 	</view>
 </template>
 
@@ -102,7 +102,8 @@
 					content: ""
 				}],
 				current: 0,
-				xinxi: []
+				xinxi: [],
+				imgsss: '<img src=\"' + this.$imgPath
 			};
 		},
 		onShow() {
@@ -111,13 +112,11 @@
 					state: item.id
 				}).then(data => {
 					if (data.data.code == 1) {
-						item.content = data.data.data.status[0].content.replace(/\<img src=\"/gi,
-							'<img src=\"http://bao.scwushen.com');
+						item.content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
+							.imgsss);
 					}
 				})
 			})
-			const res = uni.getSystemInfoSync();
-			this.heigth = res.windowHeight;
 			uni.request({
 				url: 'https://mp.weixin.qq.com/mp/appmsgalbum',
 				data: {
@@ -131,8 +130,8 @@
 				},
 				method: "GET",
 				header: {
-					'custom-header': 'hello' ,//自定义请求头信息
-					
+					'custom-header': 'hello', //自定义请求头信息
+
 				},
 				success: (res) => {
 					this.xinxi = res.data.getalbum_resp.article_list
@@ -145,26 +144,15 @@
 
 				}
 			});
-		},
-		methods: { 
-			shouURl(items){ 
-				var url = encodeURIComponent(items.url)
+			const res = uni.getSystemInfoSync();
+			this.heigth = res.windowHeight;
 
+		},
+		methods: {
+			shouURl(items) {
+				var url = encodeURIComponent(items.url)
 				uni.navigateTo({
 					url: "/pages/Home/shows/shows?url=" + url
-				})
-			},
-			dsad() {
-
-			},
-			alls(ev) {
-				this.$api.bydadout({
-					state: ev
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.content = data.data.data.status[0].content.replace(/\<img src=\"/gi,
-							'<img src=\"http://bao.scwushen.com');
-					}
 				})
 			},
 			lun_change(index) {
@@ -172,9 +160,6 @@
 			},
 			change(index) {
 				this.current = index;
-				if (index <= 4) {
-					this.alls(index)
-				}
 			}
 		}
 	}
@@ -209,7 +194,7 @@
 		margin-bottom: 30rpx;
 		padding: 20rpx;
 	}
-	
+
 
 	.swiper-item {
 		padding: 0 30rpx;
@@ -233,8 +218,9 @@
 			}
 		}
 	}
-	.content{
+
+	.content {
 		padding: 0rpx;
-		  font-size: 0rpx;
+		font-size: 0rpx;
 	}
 </style>

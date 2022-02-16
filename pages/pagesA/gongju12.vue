@@ -28,7 +28,7 @@
 				</view>
 				<view class="dsfedfed" @click="kanzhaopian(item.ewm)">
 					<view class="text">
-						项目沟通群二维码：
+						美居设计群链接：
 					</view>
 					<image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image>
 				</view>

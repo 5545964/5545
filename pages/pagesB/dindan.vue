@@ -28,21 +28,31 @@
 									<view class="text"> 订单编号：{{ items.orderid }} </view>
 									<view class="status" v-show="items.state == 0"> 待付款 </view>
 									<view class="status" v-show="items.state == 1"> 待发货 </view>
-									<!-- <view class="status" v-show="items.state == 2"> 待收货 </view> -->
 									<view class="status" v-show="items.state == 2"> 发货中 </view>
-									<!-- <view class="status" v-show="items.state == 3"> 待评价 </view> -->
 									<view class="status" v-show="items.state == 3"> 已收货 </view>
 									<view class="status" v-show="items.state == 4"> 已完成 </view>
 									<view class="status" v-show="items.state == 5"> 退款审核中 </view>
 									<view class="status" v-show="items.state == 6"> 退款成功 </view>
 									<view class="status" v-show="items.state == 7"> 退款已驳回 </view>
 									<view class="status" v-show="items.state == 9"> 已取消 </view>
-									<view class="status" v-show="items.state == 10"> 退货审核中 </view>
-									<view class="status" v-show="items.state == 11"> 退货成功 </view>
-									<view class="status" v-show="items.state == 12"> 退货已驳回 </view>
-									<view class="status" v-show="items.state == 13"> 换货审核中 </view>
+
+									<block
+										v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
+										<view class="status" v-show="items.states == 0"> 退换货审核中 </view>
+										<view class="status" v-show="items.states == 1"> 同意退换货 </view>
+										<view class="status" v-show="items.states == 2"> 退换货已驳回 </view>
+										<view class="status" v-show="items.states == 3"> 退换货完成 </view>
+									</block>
+
+
+									<!-- <view class="status" v-show="items.state == 10"> 退货审核中 </view> -->
+									<!-- <view class="status" v-show="items.state == 11"> 退货成功 </view> -->
+									<!-- <view class="status" v-show="items.state == 12"> 退货已驳回 </view> -->
+
+									<!-- <view class="status" v-show="items.state == 13"> 换货审核中 </view>
 									<view class="status" v-show="items.state == 14"> 换货成功 </view>
-									<view class="status" v-show="items.state == 15"> 换货已驳回 </view>
+									<view class="status" v-show="items.state == 15"> 换货已驳回 </view> -->
+
 									<view class="status" v-show="items.state == 16"> 报装中 </view>
 									<view class="status" v-show="items.state == 17"> 已安装 </view>
 								</view>
@@ -68,41 +78,6 @@
 										已支付￥{{ items.price }}
 									</view>
 								</view>
-								<!-- 0取消订单 -->
-								<!-- 1立即支付 -->
-								<!-- 2取消退款 -->
-								<!-- 3查看物流 -->
-								<!-- 4确认收货 -->
-								<!-- 5申请退款 -->
-								<!-- 6立即评价 -->
-								<!-- 7申请售后 -->
-
-								<!-- 9已取消/待付款 -->
-
-								<!-- 0 -->
-								<!-- 0取消订单/待付款 -->
-								<!-- 1立即支付/待付款 -->
-								<!-- 1 -->
-								<!-- 5申请退款/代发货 -->
-
-								<!-- 2 -->
-								<!-- 5申请退款/代收获 -->
-								<!-- 3查看物流/代收获 -->
-								<!-- 4确认收货/代收获 -->
-
-								<!-- 3 -->
-								<!-- 6立即评价/待评价 -->
-								<!-- 7申请售后/待评价 -->
-								<!-- 4 -->
-								<!-- 7申请售后/以完成 -->
-								<!-- 5 -->
-								<!-- 5退款审核中/退款中 -->
-								<!-- 6退款成功/退款中 -->
-								<!-- 7退款已驳回/退款中 -->
-
-
-								<!-- 申请退货/申请售后 -->
-								<!-- 申请换货/申请售后 -->
 								<view class="anniu">
 									<view class="button" @click="annui(0, items)" v-if="items.state == 0">
 										取消订单
@@ -120,30 +95,32 @@
 										确认收货
 									</view>
 									<view class="button" @click="annui(7, items)"
-										v-if="items.state == 3 || items.state == 4">
+										v-if="items.state == 3 || items.state == 4 || items.states == 2">
 										申请售后
+									</view>
+									<view class="button" @click="kuaidiwo(items)"
+										v-if="items.states === 1 && items.sqexpressorder ==0">
+										填写快递单号
 									</view>
 									<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 										取消退款
 									</view>
 									<view class="button" @click="delorder(items)"
-										v-if="items.state == 9 || items.state == 4 || items.state == 17">
+										v-if="items.state == 9 || items.state == 4 || items.state == 17 || items.states == 3">
 										删除订单
 									</view>
 									<view class="button" v-if="items.state == 8">
 										已申请退款
 									</view>
-									<view class="button" v-if="items.state == 3" @click="baozhaung(items)">
+									<view class="button" v-if="items.state == 3 || items.states == 2"
+										@click="baozhaung(items)">
 										是否安装
 									</view>
 									<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
 										完成安装
 									</view>
-									<!-- <view class="button" @click="delorder(items)"
-										v-if="items.state == 9 || items.state == 4 || items.state == 3">
-										删除订单
-									</view> -->
-									<!-- <view class="button" @click="annui(6, items)" v-if="items.state == 3">
+									<!-- <view class="button" @click="annui(6, items)"
+										v-if="items.state == 3 || items.states == 2">
 										立即评价
 									</view> -->
 								</view>
@@ -154,6 +131,38 @@
 				</swiper>
 			</view>
 		</view>
+		<!-- 填写快递单号 -->
+		<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					填写快递单号
+				</view>
+				<view style="padding: 0 30rpx;">
+					<view class="">
+						快递公司
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
+							placeholder="请填写快递公司" />
+					</view>
+					<view class="">
+						快递单号
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaididanhao"
+							placeholder="请填写快递单号" type="number" />
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="kuaidiwow(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="kuaidiwow(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<!-- 确认取消该订单 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="show" mode="center">
 			<view class="popup">
@@ -195,7 +204,7 @@
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
 			<view class="popup">
 				<view class="top"> 提示 </view>
-				<view class="cets"> 是否需要安装？ </view>
+				<view class="cets"> 是否需要安装？</view>
 				<view class="xian"> </view>
 				<view class="bottoms">
 					<view class="sdasas" @click="baozhaungshowss(0)"> 取消 </view>
@@ -290,7 +299,11 @@
 	export default {
 		data() {
 			return {
-				zhuangtai: 0,
+				kuaididata: {},
+				kuaididanhao: "",
+				kuaidigongsi: "",
+				kuaidi: false,
+				zhuangtai: 0, //0确认收货，1是否安装，2安装完成
 				qurrsaen: "",
 				qurren: false,
 				code: "",
@@ -356,58 +369,8 @@
 						data_list: [],
 					}
 				],
-				// lists: [{
-				// 		name: "全部",
-				// 	},
-				// 	{
-				// 		name: "待付款",
-				// 	},
-				// 	{
-				// 		name: "待发货",
-				// 	},
-				// 	{
-				// 		name: "待收货",
-				// 	},
-				// 	{
-				// 		name: "待评价",
-				// 	},
-				// 	{
-				// 		name: "已完成",
-				// 	},
-				// 	{
-				// 		name: "退换货",
-				// 	},
-				// ],
-				// list: [{
-				// 		status: "all",
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 0,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 1,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 2,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 3,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 4,
-				// 		data_list: [],
-				// 	},
-				// 	{
-				// 		status: 5,
-				// 		data_list: [],
-				// 	},
-				// ],
 				time: "",
+				mnbvcxz: true
 			};
 		},
 		onLoad(ev) {
@@ -430,18 +393,7 @@
 		onShow() {
 			this.system();
 			this.allsss();
-			this.$api.agreement({
-				state: 5
-			}).then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					this.xieyi = data.data.data.status
-				} else {
-					this.buyanzheng = false
-				}
-			})
+
 		},
 		watch: {
 			shoujiyanzheng(ev, el) {
@@ -451,15 +403,46 @@
 			}
 		},
 		methods: {
-			qurrere(ev) {
-				if (ev == 1) {
-					this.qurren = false
-					this.shoujiyanzheng = true
-					this.zhuangtai = 1
+			kuaidiwow(ev) {
+				if (ev == 0) {
+					this.kuaidi = false
 				} else {
-					this.qurren = false
+					this.$api.sqexpress({
+						orderid: this.kuaididata.orderid,
+						sqexpress: this.kuaidigongsi,
+						sqexpressorder: this.kuaididanhao,
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							icon: "none"
+						})
+						if (data.data.code == 1) {
+							this.kuaidi = false
+							this.allsss();
+						}
+					})
 				}
 			},
+			kuaidiwo(ev) {
+				this.kuaididata = ev
+				console.log(ev.orderid);
+				this.kuaidi = true
+			},
+			tongyiss(ev) {
+				this.$api.agreement({
+					state: ev
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
+						})
+						this.xieyi = data.data.data.status
+					} else {
+						this.mnbvcxz = false;
+					}
+				})
+			},
+
 			jiesubaozhaung(ev) {
 				console.log(ev);
 				this.qurrsaen = ev
@@ -483,16 +466,18 @@
 					this.yuedu = false
 				}
 				if (this.zhuangtai == 0) {
+					this.querenshouhuo()
+				} else if (this.zhuangtai == 1) {
 					this.baozhuangshow = false
 					uni.setStorageSync("baozhaung", this.mnbv.shop)
 					uni.navigateTo({
 						url: "./baozhaung?orderid=" + this.mnbv.orderid + "&tiao=1"
 					})
-				} else {
+				} else if (this.zhuangtai == 2) {
 					this.anzhaungwancheng()
 				}
 			},
-			anzhaungwancheng(){
+			anzhaungwancheng() {
 				this.$api.successloading({
 					orderid: this.qurrsaen.orderid
 				}).then(data => {
@@ -513,18 +498,50 @@
 					this.qurren = false
 				})
 			},
+
+			// 点击弹窗确认打开手机验证
+			//确认收货
+			xuanzhes(ev) {
+				if (ev == 1) {
+					this.tongyiss(2)
+					if (this.mnbvcxz) {
+						this.zhuangtai = 0
+						this.shoujiyanzheng = true;
+					} else {
+						this.querenshouhuo()
+					}
+				}
+				this.shows = false;
+			},
+			// 完成安装
+			qurrere(ev) {
+				if (ev == 1) {
+					this.tongyiss(3)
+					this.shoujiyanzheng = true
+					this.zhuangtai = 2
+				}
+				this.qurren = false
+			},
+			//是否安装
 			baozhaungshowss(ev) {
 				if (ev == 1) {
+					this.tongyiss(3) //错了，3是已安装
+					this.zhuangtai = 1
 					this.shoujiyanzheng = true
 				}
 				this.baozhuangshow = false
 			},
+			// 点击弹窗确认打开手机验证
+
+
+
+
+
 			baozhaung(ev) {
 				this.mnbv = ev
 				this.baozhuangshow = !this.baozhuangshow
 			},
 			delorder(ev) {
-				console.log(ev);
 				let that = this;
 				uni.showModal({
 					title: '是否删除此订单',
@@ -603,7 +620,6 @@
 					url: "../pagesA/goods_data?order_id=" + ev.orderid,
 				});
 			},
-			//订单详情
 			//退款
 			xuanzhea(ev) {
 				switch (ev) {
@@ -620,7 +636,6 @@
 									icon: "none",
 								});
 								this.allsss();
-								// this.current = 
 							}
 						})
 						this.showa = false;
@@ -628,30 +643,22 @@
 					default:
 				}
 			},
-			//收获
-			xuanzhes(ev) {
-				switch (ev) {
-					case 0:
-						this.shows = false;
-						break;
-					case 1:
-						this.$api.sureorder({
-							id: this.order_id
-						}).then(data => {
-							if (data.data.code == 1) {
-								uni.showToast({
-									title: "收货成功",
-									icon: "none",
-								});
-								this.allsss();
-								this.current = 4
-							}
-						})
-						this.shows = false;
-						break;
-					default:
-				}
+			//确认收货
+			querenshouhuo() {
+				this.$api.sureorder({
+					id: this.order_id
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.showToast({
+							title: "收货成功",
+							icon: "none",
+						});
+						this.allsss();
+						this.current = 3
+					}
+				})
 			},
+
 			// 取消订单
 			xuanzhe(ev) {
 				switch (ev) {

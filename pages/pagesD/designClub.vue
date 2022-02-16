@@ -14,6 +14,7 @@
 				</view>
 			</u-navbar>
 		</view>
+		<!-- 切换 -->
 		<view class="">
 			<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 				@change="change"></u-tabs>
@@ -25,13 +26,14 @@
 			</u-video>
 			<u-empty v-else></u-empty>
 		</view>
+		<!-- 设计大咖 -->
 		<view class="" style="height: 100%;" v-if="current==1">
 			<u-empty></u-empty>
 		</view>
 		<!-- 设计师列表 -->
-		<view class="" v-if="current==2">
+		<view style="height: 100%;" v-if="current==2">
 			<!-- 排序 -->
-			<view class="paixu">
+			<view class="paixu" v-if="designerList.length !=0">
 				<view class="paxi">
 					<u-dropdown :mask="true" style="position: relative;z-index: 100;">
 						<u-dropdown-item v-model="value1" :title="tit" :options="options1" @change="xuanzhedsa">
@@ -43,9 +45,10 @@
 						style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="" style="position: relative;z-index: 2;">
+			<view class="" style="position: relative;z-index: 2;"  v-if="designerList.length !=0">
 				<u-club @navgate="navgepage" :rows="designerList"></u-club>
 			</view>
+			<u-empty v-else></u-empty>
 		</view>
 		<view class="" style="height: 100%;" v-if="current==3">
 			<u-empty></u-empty>
@@ -58,9 +61,6 @@
 				<image style="width: 100%;height: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
 					mode="aspectFit"></image>
 				<view class="be_foot">
-					<!-- <view class="pay" @click="pays">
-						{{pay}}
-					</view> -->
 					<view class="pay" @click="getcontein(0)">
 						成为设计师
 					</view>
@@ -131,7 +131,7 @@
 				<view class="" style="height: 700rpx; width: 100%;">
 					<scroll-view scroll-y="true" style="height: 100%;">
 						<image style="width: 100%;height: 4444rpx;"
-							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit">
+							:src="imgsss+'/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png'" mode="widthFix">
 						</image>
 					</scroll-view>
 				</view>
@@ -145,9 +145,6 @@
 		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
-				<!-- <view class="seath">
-					<u-search bg-color="#F2F2F2" @focus="seach_go(888)" v-model="keyword"></u-search>
-				</view> -->
 				<view class="type_list">
 					<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
 						<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">

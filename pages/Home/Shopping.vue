@@ -3,8 +3,6 @@
 		<view class="shop_main">
 			<!-- 轮播 -->
 			<view class="wrap">
-				<!-- <u-swipers @click="lunbochang" img-mode="scaleToFill" :list="lun_list" :border-radius="20"
-					:autoplay="false" :height="300" indicator-pos="bottomLeft"></u-swipers> -->
 				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :current="current" :indicator-dots="true"
 					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
@@ -32,7 +30,6 @@
 				<view class="name">
 					{{item.name}}
 					<view class="bor_bot">
-
 					</view>
 				</view>
 				<view class="lookmore" @click="more(item)">
@@ -97,6 +94,7 @@
 				tabberheigth: 0,
 				navbarheigth: 0,
 				bianright: 0,
+				bianliang:0,
 				bianheigth: 600,
 			};
 		},
@@ -116,9 +114,6 @@
 			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px //最宽边距
 			
 			this.tabberheigth = windows - nn - this.px; //最大下边距
-		},
-		onUnload(){
-			console.log("onUnload");
 		},
 		methods: {
 			end() {
@@ -201,7 +196,6 @@
 				}
 			},
 			more(url) {
-				console.log(url);
 				uni.navigateTo({
 					url: url.url
 				});
@@ -212,7 +206,7 @@
 				});
 			},
 			alls() {
-				//shopicon
+				//shopicon五个小图标
 				this.$api.shopicon().then(data => {
 					if (data.data.code == 1) {
 						this.clsList = data.data.data.data;
@@ -229,6 +223,8 @@
 							}
 						})
 						this.lun_list = aa;
+					}else{
+						this.lun_list = [];
 					}
 				})
 				// 推荐商品
@@ -289,14 +285,11 @@
 							}
 						})
 					}
-
 				})
-
 				// 推荐商品
 			},
 			toproduct(ev, index) {
 				if (index == 0) {
-
 					uni.navigateTo({
 						url: "../pagesC/Shopping?shopid=" + ev.id
 					})

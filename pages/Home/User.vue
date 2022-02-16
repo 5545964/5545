@@ -186,7 +186,6 @@
 				user_info_id: "",
 				img: this.$imgPath,
 				user_info: "",
-				// num_list: ["", "", "", ""],
 				num_list: ["", "", "", "", ""],
 				gongju_list: [{
 						name: "收货地址",
@@ -242,8 +241,7 @@
 						url: "../pagesA/gongju12"
 					}
 				],
-				list: [
-					{
+				list: [{
 						id: 1,
 						name: "待发货"
 					},
@@ -264,27 +262,6 @@
 						name: "已安装"
 					},
 				],
-				// list: [{
-				// 		id: 1,
-				// 		name: "待付款",
-				// 	},
-				// 	{
-				// 		id: 2,
-				// 		name: "待发货"
-				// 	},
-				// 	{
-				// 		id: 3,
-				// 		name: "待收货"
-				// 	},
-				// 	{
-				// 		id: 4,
-				// 		name: "待评价"
-				// 	},
-				// 	{
-				// 		id: 0,
-				// 		name: "全部订单"
-				// 	}
-				// ],
 			};
 		},
 		onShow() {
@@ -297,7 +274,6 @@
 			quxiao(ev) {
 				let aa = this.num_list;
 				aa[ev] = 0
-				console.log(aa);
 				this.num_list = [...aa]
 			},
 			yidong() {
@@ -312,7 +288,6 @@
 				this.tabberheigth = windows - nn - this.px - parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(
 					100) / 100)); //最大下边距
 				this.navbarheigth = 0
-				console.log(this.tabberheigth, this.navbarheigth, windows, nn, this.px);
 			},
 			shuliang(ev) {
 				this.$api.mymake({
@@ -334,6 +309,7 @@
 						}
 					}
 				})
+				// 默认地址
 				this.$api.addressshow({
 					id: ev
 				}).then(data => {
@@ -345,6 +321,7 @@
 						})
 					}
 				})
+				// 用户信息
 				this.$api.myuser({
 					user_id: ev
 				}).then(data => {
@@ -353,11 +330,12 @@
 						uni.setStorageSync("user_info", data.data.data.myuser)
 					}
 				})
+				// 订单数
 				this.$api.myorder({
 					user_id: ev
 				}).then((data) => {
 					if (data.data.code == 1) {
-						let aa = [0, 0, 0, 0,0]
+						let aa = [0, 0, 0, 0, 0]
 						data.data.data.status.forEach((item) => {
 							switch (item.state) {
 								case "1":
@@ -379,8 +357,8 @@
 							}
 						});
 						this.num_list = [...aa]
-					}else{
-						this.num_list = [0, 0, 0, 0,0]
+					} else {
+						this.num_list = [0, 0, 0, 0, 0]
 					}
 				});
 			},
@@ -389,50 +367,6 @@
 					this.user_info = uni.getStorageSync("user_info")
 					this.shuliang(this.user_info.id)
 				}
-				// let code = "";
-				// let iv = "";
-				// let encryptedData = "";
-				// let that = this;
-				// let level = 0;
-				// let pid = 0;
-				// if (uni.getStorageSync("yaoqinglevel")) {
-				// 	level = uni.getStorageSync("yaoqinglevel")
-				// }
-				// if (uni.getStorageSync("yaoqinguid")) {
-				// 	pid = uni.getStorageSync("yaoqinguid")
-				// }
-				// uni.getUserProfile({
-				// 	desc: 'Wexin',
-				// 	success: data => {
-				// 		iv = data.iv;
-				// 		encryptedData = data.encryptedData;
-				// 		uni.login({
-				// 			provider: 'weixin',
-				// 			success: function(loginRes) {
-				// 				code = loginRes.code
-				// 				that.$api.wxlogin({
-				// 					level,
-				// 					code,
-				// 					iv,
-				// 					encryptedData,
-				// 					pid
-				// 				}).then(data => {
-				// 					if (data.data.code == 1) {
-				// 						that.user_info_id = data.data.data.status.id;
-				// 						uni.setStorageSync("token", data.data.data.token);
-				// 						that.shuliang(that.user_info_id)
-				// 					} else {
-				// 						uni.showToast({
-				// 							title: data.data.msg,
-				// 							duration: 1000,
-				// 							icon: "none"
-				// 						})
-				// 					}
-				// 				})
-				// 			}
-				// 		});
-				// 	}
-				// })
 			},
 			gomy() {
 
@@ -472,7 +406,6 @@
 			},
 			async go(ev) {
 				if (await this.$login()) {
-					console.log(ev);
 					uni.navigateTo({
 						url: "../pagesB/dindan?title=" + ev.name + "&current=" + ev.id
 					})

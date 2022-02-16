@@ -58,9 +58,8 @@
 			};
 		},
 		onShow() {
-			this.userinfo = uni.getStorageSync("user_info")
 			this.$api.addressshow({
-				id: this.userinfo.id
+				id: uni.getStorageSync("user_info").id
 			}).then(data => {
 				if (data.data.code == 1) {
 					this.list = data.data.data.status;
@@ -70,6 +69,7 @@
 						}
 					})
 				} else {
+					this.list = []
 					uni.removeStorageSync("address")
 				}
 			})

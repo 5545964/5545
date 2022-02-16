@@ -14,18 +14,6 @@
 			</u-navbar>
 		</view>
 		<view class="home">
-			<!-- <view class="vdsfdss">
-				请选择退款理由
-			</view>
-			<view class="hanaksjh" v-for="(item,index) in list" :key="index">
-				<view class="ssssss">
-					{{item.title}}
-				</view>
-				<view class="danxuan">
-					<view :class="[item.check ? 'active' : 'yuan']" @click="xuanzhe(index)">
-					</view>
-				</view>
-			</view> -->
 			<view class="inputs cet">
 				<view style="width: 100%;">
 					<textarea class="textarea" placeholder-style="color: #999999;" v-model="text"
@@ -147,7 +135,9 @@
 						})
 						uni.$emit("number")
 						setTimeout(()=>{
-							uni.navigateBack(-1)
+							uni.navigateBack({
+								delta:2
+							})
 						},1000)
 					}else{
 						uni.showToast({

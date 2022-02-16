@@ -30,16 +30,7 @@
 				</swiper>
 			</view>
 			<u-adata :list="data_list" @click="go_shop"></u-adata>
-		<!-- 	<u-kehu 
-			:px="px" 
-			:zhongjian="zhongjian" 
-			:widthwidth="widthwidth" 
-			:heigth="navbarheigth"
-			:navbarheigth="navbarheigth" 
-			:tabberheigth="tabberheigth" 
-			:showsss='show'
-			></u-kehu> -->
-			<u-kehu :showsss='show' ></u-kehu>
+			<u-kehu :showsss='show'></u-kehu>
 			<tab-bar @tabbers="dsad"></tab-bar>
 		</view>
 		<u-popup v-model="showssss" mode="center" border-radius="20">
@@ -123,9 +114,6 @@
 				imgurl: this.$imgPath
 			};
 		},
-		onUnload(){
-			console.log("onUnload");
-		},
 		methods: {
 			ended(ev) {
 				this.autoplay = true
@@ -199,10 +187,6 @@
 				}
 			},
 			go_shop(ev) {
-
-				// uni.navigateTo({
-				// 	url: "../pagesC/Shopping?shopid=" + ev.id
-				// })
 				switch (Number(ev.alls.link)) {
 					case 0:
 						// 网页跳转
@@ -249,7 +233,7 @@
 				}
 
 			},
-			goods() {
+			alls() {
 				// 推荐商品
 				this.$api.indexcontent().then(data => {
 					if (data.data.code == 1) {
@@ -265,19 +249,17 @@
 							})
 						})
 						uni.stopPullDownRefresh();
+					} else {
+						this.data_list = []
 					}
 				})
-				// 推荐商品
-			},
-			alls() {
-				this.goods();
 				//轮播图
 				this.$api.banner().then(data => {
-					this.showssss = data.data.data.edit
-					if (uni.getStorageSync("user_info")) {
-						this.showssss = false
-					}
 					if (data.data.code == 1) {
+						this.showssss = data.data.data.edit
+						if (uni.getStorageSync("user_info")) {
+							this.showssss = false
+						}
 						this.lun_list = [];
 						let aa = []
 						data.data.data.status.forEach(item => {
@@ -288,14 +270,15 @@
 						})
 						this.lun_list = aa;
 						uni.stopPullDownRefresh();
+					} else {
+						this.lun_list = []
 					}
 				})
-				//轮播图
 			},
 			yidong() {
 				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
 					uni.setStorageSync("navbarheigth", data.height)
-				}).exec();//顶部自定义navber高
+				}).exec(); //顶部自定义navber高
 				this.system = uni.getSystemInfoSync(); //系统参数
 				this.zhongjian = parseInt(this.system.screenWidth / 2)
 				let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
@@ -312,18 +295,13 @@
 		onLoad() {
 			uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
 				uni.setStorageSync("navbarheigth", data.height)
-			}).exec();//顶部自定义navber高
+			}).exec(); //顶部自定义navber高
 			uni.setStorageSync("shouzhi", 0)
 			const res = uni.getSystemInfoSync()
-			// let that = this;
-			//   uni.$on('update',function(data){
-			//       that.denglu()
-			//     })
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 			this.videoContext = uni.createVideoContext('video')
 		},
 		onShow() {
-			// this.yidong()
 			this.alls()
 			//购物车数量
 			this.$api.shopcart({
@@ -340,7 +318,7 @@
 				}
 				uni.setStorageSync("cart_num", aa)
 			})
-
+			// 默认地址
 			this.$api.addressshow({
 				id: uni.getStorageSync("user_info").id
 			}).then(data => {
@@ -348,15 +326,21 @@
 					data.data.data.status.forEach(item => {
 						if (item.auto == 1) {
 							uni.setStorageSync("address", item)
+						} else {
+							uni.removeStorageSync("address")
 						}
 					})
 				}
 			})
-
+			this.$api.agreements().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					uni.setStorageSync("xieyi",data.data.data.status)
+				}
+			})
 		},
-		watch: {},
-		computed: {},
-		onReachBottom() {},
 		onPullDownRefresh() {
 			this.alls()
 		}

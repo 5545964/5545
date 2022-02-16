@@ -235,51 +235,12 @@
 				<view class="button" v-if="data_list.state == 16" @click="jiesubaozhaung(data_list)">
 					完成安装
 				</view>
-				<!-- <view class="button" @click="delorder(items)"
-					v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
-					删除订单
-				</view> -->
-				<!-- <view class="button" @click="annui(6, data_list)" v-if="data_list.state == 3">
-					立即评价
-				</view> -->
-			</view>
-			<!-- <view class="anniu">
-				<view class="button" @click="annui(0)" v-if="data_list.state == 0">
-					取消订单
-				</view>
-				<view class="button" @click="annui(1)" v-if="data_list.state == 0">
-					立即支付
-				</view>
-				<view class="button" @click="annui(5)" v-if="data_list.state == 1">
-					申请退款
-				</view>
-				<view class="button" @click="annui(3)" v-if="data_list.state == 2">
-					查看物流
-				</view>
-				<view class="button" @click="annui(4)" v-if="data_list.state == 2">
-					确认收货
-				</view>
 				<view class="button" @click="annui(6)" v-if="data_list.state == 3">
 					立即评价
 				</view>
-				<view class="button" @click="annui(7)" v-if="data_list.state == 3 || data_list.state == 4">
-					申请售后
-				</view>
-				<view class="button" @click="annui(2)" v-if="data_list.state == 5">
-					取消退款
-				</view> -->
-			<!-- <view class="button" v-if="items.state == 9">
-					取消售后
-				</view> -->
-			<!-- 	<view @click="delorder(data_list)" class="button"
-					v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 3">
-					删除订单
-				</view>
-				<view class="button" v-if="items.state == 8">
-					已申请退款
-				</view>
-			</view> -->
+			</view>
 		</view>
+		<!-- 确认取消该订单么？ -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="show" mode="center">
 			<view class="popup">
 				<view class="top">
@@ -301,6 +262,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 确认取消退款？ -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
 			<view class="popup">
 				<view class="top">
@@ -335,9 +297,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<!--  -->
-		<!--  -->
-		<!--  -->
+
 		<!-- 是否需要安装 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
 			<view class="popup">
@@ -415,9 +375,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<!--  -->
-		<!--  -->
-		<!--  -->
+		<!-- 确认收到该订单商品？ -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
 			<view class="popup">
 				<view class="top">
@@ -449,7 +407,7 @@
 				//
 				//
 				//
-				zhuangtai:0,
+				zhuangtai: 0,
 				mnbv: "",
 				baozhuangshow: false,
 				code: "",
@@ -486,13 +444,12 @@
 				state: 5
 			}).then(data => {
 				if (data.data.code == 1) {
-					console.log(data);
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
 					this.xieyi = data.data.data.status
 				} else {
-					this.buyanzheng = false
+					// this.buyanzheng = false
 				}
 			})
 		},
@@ -507,15 +464,15 @@
 			//
 			//
 			//
-			qurrere(ev) {
-				if (ev == 1) {
-					this.qurren = false
-					this.shoujiyanzheng = true
-					this.zhuangtai = 1
-				} else {
-					this.qurren = false
-				}
-			},
+			// qurrere(ev) {
+			// 	if (ev == 1) {
+			// 		this.qurren = false
+			// 		this.shoujiyanzheng = true
+			// 		this.zhuangtai = 1
+			// 	} else {
+			// 		this.qurren = false
+			// 	}
+			// },
 			jiesubaozhaung(ev) {
 				this.qurrsaen = ev
 				this.qurren = true
@@ -538,16 +495,20 @@
 					this.yuedu = false
 				}
 				if (this.zhuangtai == 0) {
+					this.querenshouhuo()
+				} else if (this.zhuangtai == 1) {
 					this.baozhuangshow = false
 					uni.setStorageSync("baozhaung", this.mnbv.shop)
 					uni.navigateTo({
 						url: "../pagesB/baozhaung?orderid=" + this.mnbv.orderid + "&tiao=2"
 					})
-				} else {
+				} else if (this.zhuangtai == 2) {
 					this.anzhaungwancheng()
 				}
 			},
-			anzhaungwancheng(){
+
+
+			anzhaungwancheng() {
 				this.$api.successloading({
 					orderid: this.order_idsssss
 				}).then(data => {
@@ -568,12 +529,12 @@
 					this.qurren = false
 				})
 			},
-			baozhaungshowss(ev) {
-				this.baozhuangshow = false
-				if (ev == 1) {
-					this.shoujiyanzheng = true
-				}
-			},
+			// baozhaungshowss(ev) {
+			// 	this.baozhuangshow = false
+			// 	if (ev == 1) {
+			// 		this.shoujiyanzheng = true
+			// 	}
+			// },
 			baozhaung(ev) {
 				this.mnbv = ev
 				this.baozhuangshow = !this.baozhuangshow
@@ -655,28 +616,82 @@
 					url: "/pages/pagesC/Shopping?shopid=" + ev.id,
 				});
 			},
-			xuanzhes(ev) {
-				switch (ev) {
-					case 0:
-						this.shows = false;
-						break;
-					case 1:
-						this.$api.sureorder({
-							id: this.data_list.id
-						}).then(data => {
-							if (data.data.code == 1) {
-								uni.showToast({
-									title: "收货成功",
-									icon: "none",
-								});
-								uni.navigateBack(-1)
-							}
+			tongyiss(ev) {
+				this.$api.agreement({
+					state: ev
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
 						})
-						this.shows = false;
-						break;
-					default:
-				}
+						this.xieyi = data.data.data.status
+					}
+				})
 			},
+			// 点击弹窗确认打开手机验证
+			//确认收货
+			xuanzhes(ev) {
+				if (ev == 1) {
+					this.tongyiss(2)
+					this.zhuangtai = 0
+					this.shoujiyanzheng = true;
+				}
+				this.shows = false;
+			},
+			// 完成安装
+			qurrere(ev) {
+				if (ev == 1) {
+					this.tongyiss(3)
+					this.shoujiyanzheng = true
+					this.zhuangtai = 2
+				}
+				this.qurren = false
+			},
+			//是否安装
+			baozhaungshowss(ev) {
+				if (ev == 1) {
+					this.tongyiss(3)//错了，3是已安装
+					this.zhuangtai = 1
+					this.shoujiyanzheng = true
+				}
+				this.baozhuangshow = false
+			},
+			querenshouhuo() {
+				this.$api.sureorder({
+					id: this.data_list.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.showToast({
+							title: "收货成功",
+							icon: "none",
+						});
+						uni.navigateBack(-1)
+					}
+				})
+			},
+			// 点击弹窗确认打开手机验证
+			// xuanzhes(ev) {
+			// 	switch (ev) {
+			// 		case 0:
+			// 			this.shows = false;
+			// 			break;
+			// 		case 1:
+			// 			this.$api.sureorder({
+			// 				id: this.data_list.id
+			// 			}).then(data => {
+			// 				if (data.data.code == 1) {
+			// 					uni.showToast({
+			// 						title: "收货成功",
+			// 						icon: "none",
+			// 					});
+			// 					uni.navigateBack(-1)
+			// 				}
+			// 			})
+			// 			this.shows = false;
+			// 			break;
+			// 		default:
+			// 	}
+			// },
 			//取消订单
 			xuanzhe(ev) {
 				switch (ev) {

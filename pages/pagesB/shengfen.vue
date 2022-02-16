@@ -40,8 +40,8 @@
 			</swiper>
 			<u-empty v-else></u-empty>
 		</view>
-		<!-- <view class="boyyty cet" v-if="usershengfen < id"> -->
-		<view class="boyyty cet">
+		<view class="boyyty cet" v-if="usershengfen < id">
+		<!-- <view class="boyyty cet"> -->
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
 				￥{{jiage}}元升级
 			</view>
@@ -135,7 +135,7 @@
 				shoujihao: "",
 				baozhuangshow: false,
 				code: "",
-				buyanzheng: false,
+				buyanzheng: true,
 				timea: 0,
 				huoqu: "获取验证码",
 				shoujiyanzheng: false,
