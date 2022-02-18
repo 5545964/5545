@@ -12,6 +12,8 @@
     "u-club": "/uview-ui/components/u-club/u-club",
     "u-parse": "/uview-ui/components/u-parse/u-parse",
     "u-popup": "/uview-ui/components/u-popup/u-popup",
-    "u-pinglun": "/uview-ui/components/u-pinglun/u-pinglun"
+    "u-pinglun": "/uview-ui/components/u-pinglun/u-pinglun",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-icon": "/uview-ui/components/u-icon/u-icon"
   }
 }

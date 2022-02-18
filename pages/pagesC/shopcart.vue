@@ -18,14 +18,14 @@
 			<view class="" v-if="yuyuecarList.length != 0">
 				预约订单
 			</view>
-			<view v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
+			<view  @click="toshopdetail(item)" v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
 				class="car-list" @touchstart="drawStarts" @touchmove="drawMoves" @touchend="drawEnds"
 				:data-index="shopIndex" :style="'right:'+item.right+'px'">
 				<view class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
-					<view class="btn centerboth" v-if="item.selected==true" @click="selThiss(shopIndex)">
+					<view class="btn centerboth" v-if="item.selected==true" @click.stop="selThiss(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
-					<view class="btn centerboth" v-else @click="selThiss(shopIndex)">
+					<view class="btn centerboth" v-else @click.stop="selThiss(shopIndex)">
 						<text class="iconfont car-unsel"></text>
 					</view>
 					<image class="car-img" :src="img+item.shop.simage" mode="aspectFill"></image>
@@ -35,13 +35,13 @@
 							<view class="price-change-num clearfix">
 								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
 								<view class="num-box centerboth">
-									<text class="iconfont car-sub" @click="changeNum(0,shopIndex)"></text>
+									<text class="iconfont car-sub" @click.stop="changeNum(0,shopIndex)"></text>
 									<view>{{item.num}}</view>
-									<text class="iconfont car-add" @click="changeNum(1,shopIndex)"></text>
+									<text class="iconfont car-add" @click.stop="changeNum(1,shopIndex)"></text>
 								</view>
 							</view>
 							<text class="fdsds"> 合计：</text><text
-								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)}}</text>
+								class="fsdfsfs fdsds">￥{{Number(item.price).toFixed(2)}}</text>
 						</view>
 					</view>
 				</view>
@@ -52,14 +52,14 @@
 			<view class="" v-if="carList.length != 0">
 				普通商品
 			</view>
-			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
+			<view @click="toshopdetail(item)" v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
 				@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :data-index="shopIndex"
 				:style="'right:'+item.right+'px'">
 				<view class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
-					<view class="btn centerboth" v-if="item.selected==true" @click="selThis(shopIndex)">
+					<view class="btn centerboth" v-if="item.selected==true" @click.stop="selThis(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
-					<view class="btn centerboth" v-else @click="selThis(shopIndex)">
+					<view class="btn centerboth" v-else @click.stop="selThis(shopIndex)">
 						<text class="iconfont car-unsel"></text>
 					</view>
 					<image class="car-img" :src="img+item.shop.simage" mode="aspectFill"></image>
@@ -69,9 +69,9 @@
 							<view class="price-change-num clearfix">
 								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
 								<view class="num-box centerboth">
-									<text class="iconfont car-sub" @click="changeNum(0,shopIndex)"></text>
+									<text class="iconfont car-sub" @click.stop="changeNum(0,shopIndex)"></text>
 									<view>{{item.num}}</view>
-									<text class="iconfont car-add" @click="changeNum(1,shopIndex)"></text>
+									<text class="iconfont car-add" @click.stop="changeNum(1,shopIndex)"></text>
 								</view>
 							</view>
 							<text class="fdsds"> 合计：</text><text
@@ -138,6 +138,13 @@
 			this.getAllMount();
 		},
 		methods: {
+			// 跳转商品详情
+			toshopdetail(item){
+				console.log(item);
+				uni.navigateTo({
+					url:"./Shopping?shopid="+item.shopid
+				})
+			},
 			allsss() {
 				this.$api.shopcart({
 					id: uni.getStorageSync("user_info").id

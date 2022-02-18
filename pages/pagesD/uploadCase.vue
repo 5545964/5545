@@ -25,7 +25,8 @@
 					<view v-if="index == 0" @click="open()">
 						{{item.name}}
 					</view>
-					<u-input v-else v-model="item.value" input-align="left" :placeholder="item.name" type="text" />
+					<u-input v-else @blur="fcun" v-model="item.value" input-align="left" :placeholder="item.name"
+						type="text" />
 					<!-- {{item.name}} -->
 					<!-- <image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="aspectFit">
 					</image> -->
@@ -41,10 +42,10 @@
 				方案详情填写
 			</view>
 			<view class="inputitem">
-				<input style="width: 100%;" v-model="name" type="text" value="" placeholder="输入名称" />
+				<input style="width: 100%;" @blur="fcun" v-model="name" type="text" value="" placeholder="输入名称" />
 			</view>
 			<view class="areaitem">
-				<textarea style="width: 100%;" v-model="content" value="" placeholder="输入介绍" />
+				<textarea style="width: 100%;" @blur="fcun" v-model="content" value="" placeholder="输入介绍" />
 			</view>
 		</view>
 		<!-- 上传封面 -->
@@ -59,9 +60,9 @@
 					</image>
 				</view>
 				<image v-else @click="fenmianssss" src="../../static/icon_up_ico.png" class="imgs" mode="aspectFit"></image> -->
-				<u-upload style="margin: 10rpx;" @on-uploaded="suolv_uploaded($event)" @on-remove="suolv_remove"
-					:action="action" max-count="1" width="140rpx" height="140rpx" :header="header" :form-data="formData"
-					:name="namess" size-type="compressed">
+				<u-upload style="margin: 10rpx;" :fileList="fenleiimgs" @on-uploaded="suolv_uploaded($event)"
+					@on-remove="suolv_remove" :action="action" max-count="1" width="140rpx" height="140rpx"
+					:header="header" :form-data="formData" :name="namess" size-type="compressed">
 				</u-upload>
 			</view>
 		</view>
@@ -77,9 +78,9 @@
 					</image>
 				</view>
 				<image @click="chooseImg" src="../../static/icon_up_ico.png" class="imgs" mode="aspectFit"></image> -->
-				<u-upload style="margin: 10rpx;" @on-uploaded="uploaded($event)" @on-remove="remove" :action="action"
-					max-count="4" width="140rpx" height="140rpx" :header="header" :form-data="formData" :name="namess"
-					size-type="compressed">
+				<u-upload style="margin: 10rpx;" :fileList="upimgss" @on-uploaded="uploaded($event)" @on-remove="remove"
+					:action="action" max-count="4" width="140rpx" height="140rpx" :header="header" :form-data="formData"
+					:name="namess" size-type="compressed">
 				</u-upload>
 			</view>
 		</view>
@@ -89,16 +90,17 @@
 				上传VR封面
 			</view>
 			<view class="allimg">
-				<u-upload style="margin: 10rpx;" @on-uploaded="vr_uploaded($event)" @on-remove="vr_remove"
-					:action="action" max-count="1" width="140rpx" height="140rpx" :header="header" :form-data="formData"
-					:name="namess" size-type="compressed">
+				<u-upload style="margin: 10rpx;" :fileList="vr_fenleiimgs" @on-uploaded="vr_uploaded($event)"
+					@on-remove="vr_remove" :action="action" max-count="1" width="140rpx" height="140rpx"
+					:header="header" :form-data="formData" :name="namess" size-type="compressed">
 				</u-upload>
 			</view>
 			<view class="" style="display: flex;justify-content: space-between;align-items: center;">
 				<view class="upload_title">
 					上传VR链接
 				</view>
-				<u-input style="width: 70%;text-align: left;" placeholder="请输入VR链接" v-model="vrurl"></u-input>
+				<u-input style="width: 70%;text-align: left;" @blur="fcun" placeholder="请输入VR链接" v-model="vrurl">
+				</u-input>
 			</view>
 
 
@@ -112,7 +114,8 @@
 				<image v-if="videoList !=''" src="../../static/icon_close_ico.png" @click="sanchuvideo()"
 					class="closeImg" mode="aspectFit">
 				</image>
-				<video style="width: 100%;margin: 30rpx 0;height: 400rpx;" v-if="videoList !=''" :src="vider+videoList"></video>
+				<video style="width: 100%;margin: 30rpx 0;height: 400rpx;" v-if="videoList !=''"
+					:src="vider+videoList"></video>
 				<image v-else src="../../static/icon_up_ico.png" @click="shanghcuanvideo" class="imgs" mode="aspectFit">
 				</image>
 			</view>
@@ -196,9 +199,13 @@
 				options1: [],
 				options2: [],
 				upimgs: [],
+				upimgss: [],
 				fenleiimg: [],
+				fenleiimgs: [],
 				suolv_fenleiimg: [],
+				suolv_fenleiimgs: [],
 				vr_fenleiimg: [],
+				vr_fenleiimgs: [],
 				arrs: [],
 				vrurl: "",
 				videoList: "",
@@ -206,11 +213,72 @@
 		},
 		onLoad() {
 			this.getChooseData()
+			let ll = uni.getStorageSync("chengshi")
+			if (ll) {
+				this.sheng = ll[0]
+				this.shi = ll[1]
+				this.qu = ll[2]
+			}
+			let aa = uni.getStorageSync("dropList")
+			if (aa) {
+				this.dropList = aa
+			}
+			let bb = uni.getStorageSync("fanganname")
+			if (bb) {
+				this.name = bb
+			}
+			let cc = uni.getStorageSync("fangancontent")
+			if (cc) {
+				this.content = cc
+			}
+			let dd = uni.getStorageSync("fanganvrurl")
+			if (dd) {
+				this.vrurl = dd
+			}
+			let ee = uni.getStorageSync("videoList")
+			if (ee) {
+				this.videoList = ee
+			}
+			let ff = uni.getStorageSync("fenleiimg")
+			if (ff) {
+				this.fenleiimg = [...ff]
+				ff.forEach(item => {
+					this.fenleiimgs.push({
+						url: this.$imgPath + item
+					})
+				})
+			}
+			let gg = uni.getStorageSync("upimgs")
+			if (gg) {
+				this.upimgs = [...gg]
+				gg.forEach(item => {
+					this.upimgss.push({
+						url: this.$imgPath + item
+					})
+				})
+
+			}
+			let hh = uni.getStorageSync("vr_fenleiimg")
+			if (hh) {
+				this.vr_fenleiimg = [...hh]
+				hh.forEach(item => {
+					this.vr_fenleiimgs.push({
+						url: this.$imgPath + item
+					})
+				})
+
+			}
 		},
 		methods: {
-			gossss(){
+			fcun() {
+				uni.setStorageSync("dropList", this.dropList)
+				uni.setStorageSync("fanganname", this.name)
+				uni.setStorageSync("fangancontent", this.content)
+				uni.setStorageSync("fanganvrurl", this.vrurl)
+			},
+			gossss() {
 				uni.navigateTo({
-					url:"../pagesB/images"
+					url: "../pagesB/images"
 				})
 			},
 			selectImg() {
@@ -221,7 +289,7 @@
 					success: res => {
 						var tempFilePaths = res.tempFilePaths
 						uni.navigateTo({
-							url:"../pagesB/images?img="+tempFilePaths[0]
+							url: "../pagesB/images?img=" + tempFilePaths[0]
 						})
 					}
 				})
@@ -233,6 +301,7 @@
 				this.sheng = e.province.label;
 				this.shi = e.city.label;
 				this.qu = e.area.label
+				uni.setStorageSync("chengshi", [this.sheng, this.shi,this.qu])
 				this.shengshiqu = e.province.label + e.city.label + e.area.label;
 				this.dropList[0].name = this.shengshiqu
 				this.dropList[0].value = this.shengshiqu
@@ -255,6 +324,7 @@
 							success: (uploadFileRes) => {
 								let data = JSON.parse(uploadFileRes.data)
 								that.videoList = data.data.status
+								uni.setStorageSync("videoList", that.videoList)
 								uni.hideLoading();
 							},
 							fail: () => {
@@ -266,6 +336,7 @@
 			},
 			vr_remove(ev) {
 				this.vr_fenleiimg.splice(ev, 1)
+				uni.setStorageSync("vr_fenleiimg", this.vr_fenleiimg)
 			},
 			vr_uploaded(ev) {
 				let aa = ev;
@@ -276,9 +347,11 @@
 					}
 				})
 				this.vr_fenleiimg = [...bb]
+				uni.setStorageSync("vr_fenleiimg", this.vr_fenleiimg)
 			},
 			suolv_remove(ev) {
 				this.fenleiimg.splice(ev, 1)
+				uni.setStorageSync("fenleiimg", this.fenleiimg)
 			},
 			suolv_uploaded(ev) {
 				let aa = ev;
@@ -289,9 +362,11 @@
 					}
 				})
 				this.fenleiimg = [...bb]
+				uni.setStorageSync("fenleiimg", this.fenleiimg)
 			},
 			remove(ev) {
 				this.upimgs.splice(ev, 1)
+				uni.setStorageSync("upimgs", this.upimgs)
 			},
 			uploaded(ev) {
 				let aa = ev;
@@ -302,6 +377,7 @@
 					}
 				})
 				this.upimgs = [...bb]
+				uni.setStorageSync("upimgs", this.upimgs)
 			},
 			// 获取筛选条件
 			getChooseData() {
@@ -436,6 +512,7 @@
 			//删除视频
 			sanchuvideo() {
 				this.videoList = ""
+				uni.setStorageSync("videoList", '')
 			},
 			//删除封面
 			sanchufenmian() {
@@ -447,7 +524,6 @@
 			},
 			// 提交
 			submit() {
-				console.log(this.dropList);
 				let aa = [
 					this.sheng,
 					this.shi,
@@ -465,6 +541,7 @@
 					this.vrurl,
 					this.videoList,
 				]
+				console.log(aa);
 				let bb = []
 				aa.forEach(item => {
 					if (item == '') {
@@ -684,5 +761,4 @@
 			line-height: 70rpx;
 		}
 	}
-	
 </style>

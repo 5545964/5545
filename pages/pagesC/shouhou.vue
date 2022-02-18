@@ -142,12 +142,12 @@
 				})
 			},
 			fa() {
-				if (!this.shangchuan) {
-					return uni.showToast({
-						title: "请检查图片",
-						icon: "none"
-					})
-				}
+				// if (!this.shangchuan) {
+				// 	return uni.showToast({
+				// 		title: "请检查图片",
+				// 		icon: "none"
+				// 	})
+				// }
 				let aa = []
 				let bb = []
 				this.shop_data.forEach(item => {
@@ -164,7 +164,7 @@
 					shopid: aa,
 					num: bb,
 					tuik_ly: this.text,
-					image: this.imglist,
+					image: this.imglist.length>0?this.imglist:'',
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.showToast({

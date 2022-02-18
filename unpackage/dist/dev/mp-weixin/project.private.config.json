@@ -14,15 +14,43 @@
             "list": [
                 {
                     "name": "",
-                    "pathName": "pages/Home/User",
+                    "pathName": "pages/pagesD/designClub",
                     "query": "",
                     "launchMode": "default",
                     "scene": null
                 },
                 {
                     "name": "",
-                    "pathName": "pages/pagesB/dindan",
-                    "query": "title=%E5&current=0",
+                    "pathName": "pages/pagesD/designPage/designPage",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/Home/booking/AppointmentDesign",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/Home/booking/AppointmentDesign",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/Home/booking/AppointmentDesign",
+                    "query": "yuyue=1",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/pagesA/gongju3",
+                    "query": "title=%E6%88%91%E7%9A%84%E8%B6%B3%E8%BF%B9",
                     "scene": null,
                     "launchMode": "default"
                 }

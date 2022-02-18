@@ -152,6 +152,7 @@
 				</view>
 			</view>
 		</view> -->
+		<!-- 手机验证 -->
 		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
 			<view class="yueduwo">
 				<view class="text">
@@ -178,6 +179,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 服务协议和隐私政策 -->
 		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
 			<view class="yueduwo">
 				<view class="text">
@@ -199,8 +201,8 @@
 								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 							</view>
 						</view>
-						<view class="mingcheng" @click="fuwenben">
-							《{{item.name}}{{index}}》
+						<view class="mingcheng" @click="fuwenben(item)">
+							《{{item.name}}》
 						</view>
 					</view>
 				</view>
@@ -209,11 +211,12 @@
 						暂不使用
 					</view>
 					<view class="hkhnij jjhgj" @click="annui()">
-						同意
+						同意协议
 					</view>
 				</view>
 			</view>
 		</u-popup>
+		<!-- 订单支付 -->
 		<u-popup width="640" :closeable="true" border-radius="30" v-model="show" mode="bottom">
 			<view class="popup">
 				<view class="top">
@@ -237,6 +240,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 确认取消该订单么？ -->
 		<u-popup width="640" :closeable="true" border-radius="30" v-model="showa" mode="bottom">
 			<view class="popup">
 				<view class="top">
@@ -265,8 +269,8 @@
 	export default {
 		data() {
 			return {
-				swjorderid:0,
-				swj:0,
+				swjorderid: 0,
+				swj: 0,
 				dinjing: 0,
 				buyanzheng: false,
 				time: 0,
@@ -333,7 +337,7 @@
 				that.zjia = that.zjia.toFixed(2)
 				that.cartid = arr.join(",")
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
-				if(that.goodsdata[0].swj ==1){
+				if (that.goodsdata[0].swj == 1) {
 					console.log("321321312");
 					that.swj = 1;
 					that.swjorderid = that.goodsdata[0].orderid;
@@ -341,32 +345,30 @@
 						orderid: that.goodsdata[0].orderid
 					}).then(data => {
 						if (data.data.code == 1) {
-							if (data.data.data.status.price <= that.tijiaozjia && data.data.data.status.price != 0.01) {
+							if (data.data.data.status.price <= that.tijiaozjia && data.data.data.status.price !=
+								0.01) {
 								that.dinjing = data.data.data.status.price
 								that.tijiaozjia = that.tijiaozjia - that.dinjing
 							}
 						}
 					})
 				}
-				
+
 			}
 			if (ev.title) {
 				that.title = ev.title;
 			}
-			that.$api.agreement({
-				state: 4
-			}).then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					that.xieyi = data.data.data.status
-					uni.setStorageSync("fuwenbeng",data.data.data.status.content)
-					that.buyanzheng = true
-				} else {
-					that.buyanzheng = false
+			let aa = uni.getStorageSync("xieyi")
+			aa.forEach(item => {
+				if (item.state == 4) {
+					that.xieyi.push(item)
 				}
 			})
+			if (that.xieyi.length > 0) {
+				that.buyanzheng = true
+			} else {
+				that.buyanzheng = false
+			}
 		},
 		methods: {
 			go_code() {
@@ -383,21 +385,29 @@
 				}
 			},
 			xianshi() {
-				this.shoujiyanzheng = true;
+				if (this.address) {
+					this.shoujiyanzheng = true;
+				} else {
+					uni.showToast({
+						title: "请选择地址",
+						duration: 1000,
+						icon: "none"
+					})
+				}
 			},
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
 						this.tongyi(1)
+
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
 							icon: "none"
 						})
 					}
-				} else {
-					this.shoujiyanzheng = false;
 				}
+				this.shoujiyanzheng = false;
 			},
 			tongyi(ev) {
 				if (ev == 1) {
@@ -410,7 +420,8 @@
 					this.yuedu = false;
 				}
 			},
-			fuwenben() {
+			fuwenben(ev) {
+				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
 					url: "./fuwenben"
 				})
@@ -547,7 +558,7 @@
 
 								}
 							})
-						}else{
+						} else {
 							uni.showToast({
 								title: res.data.msg,
 								duration: 1000,

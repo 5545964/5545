@@ -338,6 +338,8 @@
 						item["check"] = false
 					})
 					uni.setStorageSync("xieyi",data.data.data.status)
+				}else{
+					uni.setStorageSync("xieyi",[])
 				}
 			})
 		},

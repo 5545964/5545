@@ -101,6 +101,13 @@
   justify-content: space-between;
   margin-bottom: 100rpx;
 }
+.design_list .imgss.data-v-4ac6f66e {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  right: -15rpx;
+  top: 25rpx;
+}
 .asdfghjkl.data-v-4ac6f66e {
   width: 150rpx;
   height: 150rpx;
@@ -109,5 +116,19 @@
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
   background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
+}
+.card.data-v-4ac6f66e {
+  width: 335rpx;
+  height: 420rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40rpx;
+  font-size: 24rpx;
+  color: #000000;
+  text-align: center;
+  padding: 10rpx;
 }
 

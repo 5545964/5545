@@ -148,12 +148,11 @@
 						id: this.data_list[index].id,
 						state: state
 					}).then(data => {
-
 						if (data.data.code == 1) {
 							if (state == 1) {
 								let aa = {
 									title: "接单成功",
-									text: "请前往进行中查看订单",
+									text: "请及时点击美居设计群链接进入业务沟通群进行沟通",
 									botton: "我知道了"
 								}
 								uni.navigateTo({

@@ -438,5 +438,8 @@ export default {
 	delfootxr(params = {}) {
 		return request.post("/api/bydshop/delfootxr", params);
 	},
-
+	// bzxq 安装详情
+	bzxq(params = {}) {
+		return request.post("/api/bydshop/bzxq", params);
+	},
 }

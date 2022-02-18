@@ -252,4 +252,9 @@
   font-weight: 400;
   color: #000000;
 }
+.annuyt.data-v-00101410 {
+  margin-left: 30rpx;
+  font-size: 20rpx;
+  width: 160rpx;
+}
 

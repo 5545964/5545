@@ -32,9 +32,9 @@
 						mode="aspectFit">
 					</image>
 				</swiper-item>
-				<swiper-item>
+				<swiper-item v-if="video">
 					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
-						:src="video"></video>
+						:src="$imgPath+video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -46,9 +46,12 @@
 
 					</view>
 				</view>
-				<!-- <view class="question">
-					?
-				</view> -->
+				<view class="question">
+				
+				</view>
+			</view>
+			<view class="question">
+				免责申明：版权所有权由设计师负责
 			</view>
 		</view>
 		<!-- 设计师 -->
@@ -207,7 +210,8 @@
 						})
 						this.alls = aa;
 						this.vr_image = this.$imgPath + data.data.data.status.vr_image
-						this.video = this.$imgPath + data.data.data.status.video
+						// this.video = this.$imgPath + data.data.data.status.video
+						this.video = data.data.data.status.video
 						this.$api.desxq({
 							id: aa.des.id,
 							user_id: uni.getStorageSync("user_info").id
@@ -245,7 +249,9 @@
 						uni.navigateBack(-1)
 					}, 500)
 				})
-				this.$api.loupanden().then(data => {
+				this.$api.loupanden({
+					limit: 4
+				}).then(data => {
 					if (data.data.code == 1) {
 						this.tuijian = [...data.data.data.status];
 					}
@@ -450,15 +456,10 @@
 		}
 
 		.question {
-			width: 30rpx;
-			height: 30rpx;
 			color: #F5625D;
 			font-size: 24rpx;
-			border: 2rpx solid #F5625D;
-			box-sizing: border-box;
 			text-align: center;
 			line-height: 30rpx;
-			border-radius: 50%;
 			margin-left: 10rpx;
 			margin-top: 10rpx;
 		}

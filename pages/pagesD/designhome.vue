@@ -127,7 +127,7 @@
 				</view>
 			</view>
 			<view class="top_d" @click="changeDesign">
-				切换普通用户
+				切换馨级美居会员
 			</view>
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
@@ -146,12 +146,12 @@
 				user_info: {},
 				desinfo: {},
 				gongju_list: [{
-						name: "我的佣金	",
-						url: "../designyongjin?isshejishi=jjjj"
-					},
-					{
 						name: "我的团队",
 						url: "../../pagesA/gongju11?shejishi=1"
+					},
+					{
+						name: "我的佣金	",
+						url: "../designyongjin?isshejishi=jjjj"
 					},
 					{
 						name: "系统消息",
@@ -161,10 +161,10 @@
 						name: "相关合同",
 						url: "../hetong"
 					},
-					{
-						name: "我的方案",
-						url: "../xiangmu"
-					}
+					// {
+					// 	name: "我的方案",
+					// 	url: "../xiangmu"
+					// }
 				],
 				list: [{
 						id: 1,
@@ -188,7 +188,9 @@
 			dkahdjash() {
 				this.user_info = uni.getStorageSync("user_info");
 				this.desinfo = uni.getStorageSync("des_info")
-				this.$api.addnews({	id: uni.getStorageSync("des_info").id}).then(data => {
+				this.$api.addnews({
+					id: uni.getStorageSync("des_info").id
+				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = uni.getStorageSync("addnews")
 						if (data.data.data.status.length > aa) {
@@ -196,11 +198,13 @@
 						} else {
 							this.fkjsfjdisfjsl = false
 						}
-					}else{
+					} else {
 						this.fkjsfjdisfjsl = false
 					}
 				})
-				this.$api.desorders({	id: uni.getStorageSync("des_info").id}).then(data => {
+				this.$api.desorders({
+					id: uni.getStorageSync("des_info").id
+				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = this.num_list
 						data.data.data.status.forEach(item => {

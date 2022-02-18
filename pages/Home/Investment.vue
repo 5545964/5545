@@ -3,23 +3,24 @@
 		<u-tabs :list="lisst" :weizhi="false" :show-bar="false" :is-scroll="true" :current="currents" @change="changes">
 		</u-tabs>
 		<view style="height: 100%;" v-show="currents == 0">
-			<view class="dkjshisdf">
+			<!-- 切换 -->
+			<view class="">
 				<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
-					@change="change">
-				</u-tabs>
+					@change="change"></u-tabs>
 			</view>
 			<!-- 热门栏目 -->
-			<view v-if="current==0">
+			<view class="" style="height: 100%;" v-if="current==0">
 				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 					@dianzhan="dianzhan">
 				</u-video>
 				<u-empty v-else></u-empty>
 			</view>
-			<!-- 设计师列表 -->
+			<!-- 设计大咖 -->
 			<view class="" style="height: 100%;" v-if="current==1">
 				<u-empty></u-empty>
 			</view>
-			<view class="" v-if="current==2">
+			<!-- 整装设计师 -->
+			<view style="height: 100%;" v-if="current==2">
 				<!-- 排序 -->
 				<view class="paixu">
 					<view class="paxi">
@@ -33,10 +34,12 @@
 							style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 					</view>
 				</view>
-				<view class="" style="position: relative;z-index: 2;">
+				<view class="" style="position: relative;z-index: 2;" v-if="designerList.length !=0">
 					<u-club @navgate="navgepage" :rows="designerList"></u-club>
 				</view>
+				<u-empty v-else></u-empty>
 			</view>
+			<!-- 定制家具设计师 -->
 			<view class="" style="height: 100%;" v-if="current==3">
 				<u-empty></u-empty>
 			</view>
@@ -45,18 +48,23 @@
 				<view class="be_main" style="height: 100%;" v-if="state<0">
 					<view class="be_designer">
 					</view>
-					<image style="width: 100%;height: 1000rpx;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
-						mode="aspectFit"></image>
-					<view class="be_foot">
+					<image style="width: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg" mode="widthFix">
+					</image>
+					<view class="be_foot" v-if="yanzhengtanchaung">
+						<view class="pay" @click="ananana(0)">
+							成为设计师
+						</view>
+						<view class="pay" @click="ananana(1)">
+							成为设计师合伙人
+						</view>
+					</view>
+					<view class="be_foot" v-else>
 						<view class="pay" @click="getcontein(0)">
 							成为设计师
 						</view>
 						<view class="pay" @click="getcontein(1)">
 							成为设计师合伙人
 						</view>
-					</view>
-					<view :style="'height: '+heigth+'px;'">
-
 					</view>
 				</view>
 				<!-- 驳回 -->
@@ -90,7 +98,7 @@
 					<view class="">
 						恭喜你，你已成为设计师
 					</view>
-					<view class="resest" @click="kanhetong" style="margin-top: 250rpx;">
+					<view class="resest" @click="lookcont" style="margin-top: 250rpx;">
 						查看电子合同
 					</view>
 				</view>
@@ -109,11 +117,12 @@
 					</view>
 					<view style="width: 86%;overflow: hidden;">
 						<scroll-view scroll-y="true" style="height: 100%;">
-							<u-parse style="padding:20rpx;" :html="parsesssss"></u-parse>
+							<u-parse :html="parsesssss"></u-parse>
 						</scroll-view>
 					</view>
 				</view>
 			</view>
+
 		</view>
 		<view style="height: 100%;" class="" v-show="currents == 1">
 			<u-empty></u-empty>
@@ -128,10 +137,9 @@
 		<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
 			<view class="contract_main">
 				<!-- 合同pdf -->
-				<view class="" style="    height: 700rpx; width: 100%;">
-					<scroll-view scroll-y="true" style="height: 100%;">
-						<image style="width: 100%;height: 4444rpx;"
-							:src="imgsss+'/uploads/20220107/2921aa0aa63746e12c453c46e965c795.png'" mode="aspectFit">
+				<view class="" style="height: 700rpx; width: 100%;">
+					<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
+						<image style="width: 100%;" :src="tupianwo" mode="widthFix">
 						</image>
 					</scroll-view>
 				</view>
@@ -146,9 +154,10 @@
 			<view class="klks">全部筛选</view>
 			<view class="mids">
 				<view class="type_list">
-					<view :class="item.check? 'type_item1':'type_item'" v-for="(item,index) in modeList" :key="index"
-						@click="xuanzhesssss(item)">
-						{{item.title}}
+					<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
+						<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
+							{{item.title}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -161,8 +170,74 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang" :bottom="heigth"
-			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
+		<!-- 评论弹窗 -->
+		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
+			:pinglun_list="pinglun_list" @guanbi="guanbi" :bottom="heigth"></u-pinglun>
+		<!-- 确保是你本人操作 -->
+		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					确保是你本人操作
+				</view>
+				<view class="textss">
+					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+				</view>
+				<view class="yanzhengma">
+					<view class="cet" style="justify-content: space-around;width: 100%;">
+						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+						</view>
+						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyis(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="tongyis(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 服务协议和隐私政策 -->
+		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					服务协议和隐私政策
+				</view>
+				<view class="textss">
+					感谢您使用宝芸邸，我们会严格
+					按照法律规定存储和使用您的个人
+					信息。您可以阅读以下几项条款了
+					解详细信息。如您同意，请勾选以
+					下几项条款并点击”同意”开始接受
+					我们的服务。
+				</view>
+				<view style="padding:20rpx 0;">
+					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+						:key="index">
+						<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view class="yuan" @click="hahaha(item)">
+								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="mingcheng" @click="fuwenben(item)">
+							《{{item.name}}》
+						</view>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="xieyitongyi(0)">
+						暂不使用
+					</view>
+					<view class="hkhnij jjhgj" @click="xieyitongyi(1)">
+						同意协议
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- <u-kehu :showsss='showsssssssss'></u-kehu> -->
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -172,31 +247,10 @@
 	export default {
 		data() {
 			return {
-				pages: 1,
+				showsssssssss: false,
 				jkl: 100,
-				modeList: [],
-				mobanid: [
-					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
-					'ag6I4iIgY1yo9QDaLolhH-D1e7Rpl_Tszw1SqYZzBDA',
-				],
-				imgsss: this.$imgPath,
-				parsesssss: "",
-				recruit_all: [],
 				heigth: uni.getStorageSync("setheigth"),
-				tit: "综合排序",
-				desinfo: {},
-				designerList: [],
-				video: [],
-				showComment: false,
-				dsaa: {},
-				itemsss: {},
-				dianzhansssss: false,
-				active: -1,
-				state: -1, //  0未审核  1审核通过   2已驳回
-				showContract: false,
-				pay: "",
-				value1: "",
-				show: false,
+				currents: 0,
 				title: "设计师club",
 				lisst: [{
 						name: '设计师club'
@@ -211,8 +265,43 @@
 						name: '供应链club',
 					}
 				],
+				tupianwo: "",
+				// 验证弹窗
+				yanzhengtanchaung: true,
+				yuedu: false,
+				xieyi: [],
+				timea: 0,
+				shoujiyanzheng: false,
+				shoujihao: "",
+				code: "",
+				huoqu: "获取验证码",
+				// 验证弹窗
+				diandedijige: 0,
+				modeList: [],
+				mobanid: [
+					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
+					'ag6I4iIgY1yo9QDaLolhH-D1e7Rpl_Tszw1SqYZzBDA',
+				],
+				heigths: 580,
+				parsesssss: "",
+				recruit_all: [],
+				tit: "综合排序",
+				fenleideid: "",
+				allssssss: [],
+				indexdas: "",
+				pinglun_list: [],
+				video: [],
+				showComment: false,
+				dianzhansssss: false,
+				active: 0,
+				desinfo: {},
+				state: -1, //  0未审核  1审核通过   2已驳回
+				showContract: false,
+				pay: "",
+				value1: "",
+				show: false,
 				list: [{
-						name: '热门栏目',
+						name: '网红佳作',
 						id: 0
 					},
 					{
@@ -237,8 +326,7 @@
 					}
 				],
 				current: 0,
-				currents: 0,
-				videoContext: "",
+				designerList: [],
 				options1: [{
 						label: '智能排序',
 						value: 1,
@@ -264,26 +352,34 @@
 						value: 6,
 					}
 				],
-				pinglun_list: [],
-				fenleideid: "",
-				allssssss: []
+				dsaa: {},
+				pages: 1,
 			}
 		},
 		onShow() {
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
-			this.getstate()
-			this.enjoy()
-			this.getdesproMoenys();
-			this.$api.desmode().then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					this.modeList = data.data.data.status
+			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
+			//验证弹窗
+			let aa = uni.getStorageSync("xieyi")
+			this.xieyi = []
+			aa.forEach(item => {
+				if (item.state == 1) {
+					this.xieyi.push(item)
 				}
 			})
+			if (this.xieyi.length > 0) {
+				this.yanzhengtanchaung = true;
+			} else {
+				this.yanzhengtanchaung = false;
+			}
+			// 验证弹窗
+			this.getstate();
+			this.enjoy()
+			this.enjoys()
+			this.getdesproMoenys()
 		},
 		onLoad(ev) {
+			console.log(ev);
 			if (ev.is_re == 1) {
 				this.current = 4
 			}
@@ -295,40 +391,157 @@
 			}
 		},
 		methods: {
+			changes(index) {
+				this.currents = index
+			},
+			rre(ev) {
+				console.log(ev, "00000");
+			},
+			// 验证弹窗
+			// 协议同意按钮
+			xieyitongyi(ev) {
+				if (ev == 1) {
+					let mm = 0
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							mm++
+						}
+					})
+					if (this.xieyi.length != mm) {
+						return uni.showToast({
+							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					this.shoujiyanzheng = true;
+					this.yuedu = false
+				} else {
+					this.yuedu = false
+				}
+
+			},
+			// 看协议内容
+			fuwenben(ev) {
+				uni.setStorageSync("fuwenbeng", ev.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.name
+				})
+			},
+			// 同意协议
+			hahaha(item) {
+				item.check = !item.check
+			},
+			// 同意后选择协议state
+			// 0销售员注册
+			// 1设计师注册
+			// 2已收货
+			// 3已安装
+			// 4支付前
+			tongyixieyi(ev) {
+				if (this.xieyi.length > 0) {
+					this.yuedu = true;
+				} else {
+					this.shoujiyanzheng = false;
+					this.yuedu = false;
+				}
+			},
+			// 手机验证按钮取消0同意1
+			tongyis(ev) {
+				if (ev == 1) {
+					if (this.code != "") {
+						this.shoujiyanzheng = false
+						this.getcontein(this.diandedijige)
+					} else {
+						uni.showToast({
+							title: "请输入验证码",
+							icon: "none"
+						})
+					}
+				} else {
+					this.shoujiyanzheng = false;
+				}
+			},
+			// 获取验证码倒计时
+			go_code() {
+				if (this.timea == 0) {
+					this.timea = 60
+					let aa = setInterval(() => {
+						this.timea--
+						this.huoqu = this.timea + "s后获取"
+						if (this.timea == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
+			// 判断手机号
+			hahahaa(ev) {
+				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				if (!phoneCodeVerification.test(ev.detail.value)) {
+					uni.showToast({
+						title: "手机号不正确",
+						icon: "none"
+					})
+				}
+			},
+			// 验证弹窗
+			ananana(ev) {
+				this.diandedijige = ev
+				this.yuedu = true
+			},
 			zhongzhi(ev) {
-				let aa = []
 				if (ev == 0) {
 					this.modeList.forEach(item => {
 						item.check = false
 					})
+					this.dessel(0)
 				} else {
+					let aa = []
 					this.modeList.forEach(item => {
 						if (item.check) {
 							aa.push(item.title)
 						}
 					})
+					if (aa.length == 0) {
+						this.dessel(0)
+						this.show = false
+						return
+					}
+					this.$api.deslabel({
+						label: aa
+					}).then(data => {
+						if (data.data.code == 1) {
+							data.data.data.status.forEach((item, index) => {
+								item.createtime = item.createtime * 1000
+								item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
+								item.label = item.label ? item.label.split(",") : ""
+								item.work = item.work ? item.work.split(",") : ""
+							})
+							this.designerList = data.data.data.status
+							this.show = false
+						} else {
+							this.designerList = []
+							this.show = false
+						}
+					})
 				}
+
 			},
 			xuanzhesssss(ev) {
 				ev.check = !ev.check
+			},
+			chongzhi() {
+				this.active = -1
+			},
+			shaixuan() {
+				this.show = false
 			},
 			xuanzhedsa(ev) {
 				let aa = ev - 1
 				this.tit = this.options1[aa].label
 				this.dessel(aa)
 				// 0为智能排序1星级排序2为设计师单量排序3为好评排序4为点赞两排序5为关注量排序
-			},
-			kanhetong() {
-				this.$api.desmyuser({
-					user_id: uni.getStorageSync("user_info").id,
-				}).then(data => {
-					if (data.data.code == 1) {
-						uni.setStorageSync("des_info", data.data.data.myuser)
-						uni.navigateTo({
-							url: "../pagesD/hetong"
-						})
-					}
-				})
 			},
 			getdesproMoenys() {
 				this.$api.desproMoenys({
@@ -337,9 +550,16 @@
 					if (data.data.code == 1) {
 						if (data.data.data) {
 							this.allssssss = data.data.data.status
+							// this.pay = '支付￥' + data.data.data.status.money
 						}
 					}
 				})
+			},
+			pingjia(item) {
+				this.dsaa = item
+			},
+			guanbi() {
+				this.showComment = false
 			},
 			chang(text, pla) {
 				if (pla == "发表评论请文明用语") {
@@ -351,8 +571,7 @@
 						id: this.itemsss.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.enjoy()
+							this.enjoy(1)
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -371,8 +590,7 @@
 						id: this.itemsss.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.enjoy()
+							this.enjoy(1)
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -381,12 +599,11 @@
 						}
 					})
 				}
-			},
-			pingjia(item) {
-				this.dsaa = item
+
 			},
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
+					this.indexdas = index
 					this.pinglun_list = []
 					this.pinglun_list = ev.pl
 					this.pinglun_list.forEach(item => {
@@ -403,20 +620,23 @@
 			},
 			// 跳转设计师详情
 			navgepage(item) {
+				console.log(item);
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
 			},
 			resss() {
-				uni.setStorageSync("reg_des", this.desinfo)
 				uni.navigateTo({
 					url: "../pagesD/regDesigner/regDesigner"
 				})
 			},
+
+			pinglun() {
+				this.showComment = true;
+			},
 			// 点赞
 			async dianzhan(ev) {
 				if (await this.$login()) {
-					this.dianzhansssss = true
 					let type = ev.zans ? 1 : 0;
 					this.$api.zan({
 						state: 0,
@@ -425,8 +645,8 @@
 						type: type
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.enjoy()
 							ev.iszan = !ev.iszan
+							// this.enjoy()
 						}
 					})
 				}
@@ -442,77 +662,24 @@
 						video_id: ev.id,
 						state: state
 					}).then(data => {
-
 						if (data.data.code == 1) {
 							ev.isfollow = !ev.isfollow
 						}
 					})
 				}
 			},
-			df() {
-				this.videoContext.pause()
-			},
-			play(ev) {
-				this.videoContext = uni.createVideoContext(ev.currentTarget.id, this);
-				for (var i = 0; i < this.video.length; i++) {
-					if (i != ev) {
-						let video2 = uni.createVideoContext("video" + i, this);
-						video2.pause();
-					}
-				}
-			},
-			guanbi() {
-				this.showComment = false;
-			},
 			// 跳转填写资料
 			toReg() {
+				this.showContract = false;
 				uni.navigateTo({
+					// url: "./regDesigner/regDesigner?nageid=" + this.allssssss[this.fenleideid].id
 					url: "../pagesD/regDesigner/regDesigner?nageid=" + this.allssssss[this.fenleideid].id
 				})
 			},
-			// 支付填写资料
-			pays() {
-				if (this.pay == "去填写资料") {
-					this.showContract = false
-					this.toReg()
-				} else {
-					this.$api.buylevel({
-						id: this.allssssss[this.fenleideid].id,
-						user_id: uni.getStorageSync("user_info").id
-					}).then(res => {
-						// 重新提交
-						if (res.data.code == 1) {
-							this.showContract = false
-							setTimeout(() => {
-								this.resss()
-							}, 1000)
-						}
-						if (res.data.code == 2000) {
-							let that = this;
-							uni.requestPayment({
-								timeStamp: res.data.data.timeStamp, //当前的时间
-								nonceStr: res.data.data.nonceStr, //随机字符串
-								package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-								signType: res.data.data.signType, //签名算法，暂支持 MD5。
-								paySign: res.data.data.paySign, //签名
-								success: function(res) {
-									uni.showToast({
-										title: "支付成功",
-										icon: "success"
-									})
-									that.toReg()
-									that.showContract = false
-								},
-								fail: function(err) {
-									uni.showToast({
-										title: "支付失败",
-										icon: "error"
-									})
-								}
-							})
-						}
-					})
-				}
+			changeTokens(index, item) {
+				this.active = index
+				this.parsesssss = item.content
+
 			},
 			// 查看合同模板
 			async getcontein(ev) {
@@ -521,16 +688,35 @@
 					uni.requestSubscribeMessage({
 						provider: 'weixin',
 						tmplIds: that.mobanid,
-						success: function(res) {
+						complete: function(res) {
+							// 选的哪一个
 							that.fenleideid = ev;
-							that.looks(that.allssssss[ev].doc_url)
-							that.$api.ispay({
-								id: that.allssssss[ev].id,
-								user_id: uni.getStorageSync("user_info").id
-							}).then(data => {
-								that.pay = '去填写资料'
-								that.showContract = true
-							})
+
+							// 看合同
+							// that.looks(that.allssssss[ev].doc_url)
+							// 查看价格是否大于0
+							if (that.allssssss[ev].money > 0.00) {
+								// 查看是否支付
+								that.$api.ispay({
+									id: that.allssssss[ev].id,
+									user_id: uni.getStorageSync("user_info").id
+								}).then(data => {
+									// that.pay = '去填写资料'
+									// 不支付，支付取消注释
+									if (data.data.code == 1) {
+										// that.pay = '去填写资料'
+										that.toReg()
+									} else {
+										// that.pay = '支付￥' + that.allssssss[ev].money
+										that.pays()
+									}
+									// 协议弹窗
+									// that.showContract = true
+								})
+							} else {
+								that.toReg()
+							}
+
 						}
 					});
 
@@ -548,19 +734,61 @@
 						const filePath = res.tempFilePath;
 						uni.openDocument({
 							filePath,
-							success(res) {
-
-							}
+							success(res) {}
 						})
 					}
 				})
 			},
-			changeTokens(index, item) {
-				this.active = index
-				this.parsesssss = item.content
-
+			// 支付填写资料
+			pays() {
+				let that = this
+				that.$api.buylevel({
+					id: that.allssssss[that.fenleideid].id,
+					user_id: uni.getStorageSync("user_info").id
+				}).then(res => {
+					// 支付
+					if (res.data.code == 200) {
+						uni.requestPayment({
+							timeStamp: res.data.data.timeStamp, //当前的时间
+							nonceStr: res.data.data.nonceStr, //随机字符串
+							package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+							signType: res.data.data.signType, //签名算法，暂支持 MD5。
+							paySign: res.data.data.paySign, //签名
+							success: function(res) {
+								uni.showToast({
+									title: "支付成功",
+									icon: "none"
+								})
+								that.toReg()
+							},
+							fail: function(err) {
+								uni.showToast({
+									title: "支付失败",
+									icon: "none"
+								})
+							}
+						})
+					}
+				})
+				// }
 			},
 			// 热门栏目
+			enjoys() {
+				this.$api.recruit().then(data => {
+					if (data.data.code == 1) {
+						this.recruit_all = data.data.data.status
+						this.parsesssss = this.recruit_all[0].content
+					}
+				})
+				this.$api.desmode().then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
+						})
+						this.modeList = data.data.data.status
+					}
+				})
+			},
 			enjoy() {
 				this.$api.enjoy({
 					user_id: uni.getStorageSync("user_info").id,
@@ -586,16 +814,9 @@
 							aa.push(item)
 						})
 						this.video = aa
-					}else{
-						this.video = []
 					}
 				})
-				this.$api.recruit().then(data => {
-					if (data.data.code == 1) {
-						this.recruit_all = data.data.data.status
-						this.parsesssss = this.recruit_all[0].content
-					}
-				})
+
 			},
 			// 设计师列表
 			dessel(ev) {
@@ -613,10 +834,8 @@
 					}
 				})
 			},
-			changes(index) {
-				this.currents = index
-			},
 			change(index) {
+				this.pages = 1
 				this.current = index
 				if (index == 0) {
 					this.enjoy()
@@ -643,62 +862,23 @@
 			},
 			// 查看合同
 			lookcont() {
-				this.looks(this.desinfo.contrin)
-			},
-			back(ev) {
-				switch (ev) {
-					case 0:
-						uni.navigateBack(-1)
-						break;
-					case 1:
-						uni.switchTab({
-							url: "/pages/Home/Home"
+				this.$api.desmyuser({
+					user_id: uni.getStorageSync("user_info").id,
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("des_info", data.data.data.myuser)
+						uni.navigateTo({
+							url: "../pagesD/hetong"
 						})
-						break;
-					default:
-				}
-			}
+					}
+				})
+			},
 		}
 
 	}
 </script>
 
 <style lang="scss" scoped>
-	// 导航
-	.navbar {
-		.sssss {
-			border: 1px solid #e5e5e5;
-			overflow: hidden;
-			width: 166rpx;
-			height: 60rpx;
-			border-radius: 30rpx;
-			margin-left: 30rpx;
-			display: flex;
-			align-items: center;
-			justify-content: space-around;
-
-			.dsds {
-				padding: 20rpx;
-			}
-
-			.hang {
-				width: 2rpx;
-				height: 26rpx;
-				background-color: #e5e5e5;
-			}
-
-			.fanhui {
-				width: 12rpx;
-				height: 22rpx;
-			}
-
-			.souye {
-				width: 26rpx;
-				height: 24rpx;
-			}
-		}
-	}
-
 	// 排序
 	.paixu {
 		background: #FFFFFF;
@@ -735,6 +915,7 @@
 
 	.clos {
 		position: fixed;
+		bottom: 40rpx;
 		left: 0;
 		right: 0;
 		margin: 0 30rpx;
@@ -832,9 +1013,21 @@
 		background-color: #FFFFFF;
 		width: 100%;
 		height: 110rpx;
+		// position: fixed;
+		// bottom: 0;
 	}
 
 	.pay {
+		// width: 600rpx;
+		// height: 70rpx;
+		// background: #007399;
+		// border-radius: 35rpx;
+		// font-size: 26rpx;
+		// color: #FFFFFF;
+		// text-align: center;
+		// position: relative;
+		// z-index: 100;
+		// line-height: 70rpx;
 		padding: 20rpx 40rpx;
 		background: #007399;
 		border-radius: 35rpx;
@@ -904,9 +1097,9 @@
 			width: 600rpx;
 			height: 70rpx;
 			background: #007399;
+			color: #FFFFFF;
 			border-radius: 35rpx;
 			font-size: 26rpx;
-			color: #FFFFFF;
 			text-align: center;
 			line-height: 70rpx;
 		}
@@ -917,7 +1110,7 @@
 		.mian {
 			display: flex;
 			justify-content: space-between;
-			margin-bottom: 200rpx;
+			margin-bottom: 40rpx;
 			margin-top: 20rpx;
 
 			.mian_left {
@@ -934,6 +1127,7 @@
 				box-sizing: border-box;
 				width: 100rpx;
 				background: #305166;
+				border-left: 4rpx solid #305166;
 			}
 
 			.mian_left_item1 {
@@ -943,6 +1137,7 @@
 				box-sizing: border-box;
 				width: 100rpx;
 				background: #376379;
+				border-left: 4rpx solid #376379;
 			}
 		}
 	}
@@ -1077,8 +1272,155 @@
 		color: #007399;
 	}
 
-	.dkjshisdf {
-		background-color: #FFFFFF;
-		padding: 0 30rpx;
+	/* 底部 */
+	.foot {
+		width: 750rpx;
+		height: 120rpx;
+		background: #FFFFFF;
+		box-shadow: 0px -2rpx 4rpx 0px rgba(0, 0, 0, 0.1);
+		position: fixed;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
 	}
+
+	.foot1 {
+		width: 750rpx;
+		height: 120rpx;
+		background: #FFFFFF;
+		box-shadow: 0px -2rpx 4rpx 0px rgba(0, 0, 0, 0.1);
+		position: fixed;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		/* justify-content: center; */
+	}
+
+	.footInp {
+		width: 500rpx;
+		height: 80rpx;
+		background: #F4F4F4;
+		border-radius: 40rpx;
+		padding-left: 40rpx;
+		box-sizing: border-box;
+		margin-right: 30rpx;
+		margin-left: 10rpx;
+	}
+
+	.footInp1 {
+		width: 470rpx;
+		height: 80rpx;
+		background: #F4F4F4;
+		border-radius: 40rpx;
+		padding-left: 40rpx;
+		line-height: 80rpx;
+		box-sizing: border-box;
+		margin-right: 20rpx;
+		margin-left: 30rpx;
+		color: #999999;
+		font-size: 30rpx;
+	}
+
+	.footImg {
+		width: 60rpx;
+		height: 60rpx;
+		margin-right: 20rpx;
+	}
+
+	.pl_text {
+		width: 300rpx;
+		height: 80rpx;
+		font-size: 28rpx;
+		background-color: #FF4B3C;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 80rpx;
+		border-radius: 36rpx;
+	}
+
+	.foot_btn {
+		width: 120rpx;
+		height: 60rpx;
+		background: #007399;
+		border-radius: 10rpx;
+		text-align: center;
+		line-height: 60rpx;
+		color: #FFFFFF;
+	}
+
+	// 验证弹窗
+	.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+	}
+
+	.yanzhengma {
+		margin: 50rpx 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 230rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
+		}
+	}
+
+	// 验证弹窗
 </style>

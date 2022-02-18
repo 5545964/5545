@@ -40,10 +40,13 @@
 		</view>
 		<!-- <u-cdata :list="list.shop"></u-cdata> -->
 		<view v-for="(item,index) in list.shop" :key="index">
-			<view class="">
+			<!-- <view class="">
 				{{item.name}}
+			</view> -->
+			<view class="" v-if="item.content">
+				<image class="imgs" :src="item.content" mode="widthFix"></image>
 			</view>
-			<u-parse :html="item.content"></u-parse>
+			<!-- <u-parse :html="item.content"></u-parse> -->
 		</view>
 	</view>
 </template>
@@ -52,6 +55,7 @@
 	export default {
 		data() {
 			return {
+				imgtitle:this.$imgPath,
 				autoplay: true,
 				img: this.$imgPath,
 				current: "",
@@ -65,7 +69,11 @@
 		onLoad(ev) {
 			let go_shop = uni.getStorageSync("go_shop")
 			go_shop.image = go_shop.image.split(",")
+			go_shop.shop.forEach(item=>{
+				item.content=this.imgtitle+item.content
+			})
 			this.list = go_shop
+			console.log(this.list,111);
 		},
 		methods: {
 			ended(ev) {
@@ -116,6 +124,11 @@
 </script>
 
 <style lang="scss">
+	.imgs{
+		display: inline-block;
+		max-width: 100%;
+		height: 100%;
+	}
 	.lunbo {
 		width: 100%;
 	}

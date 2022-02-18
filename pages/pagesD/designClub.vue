@@ -30,10 +30,10 @@
 		<view class="" style="height: 100%;" v-if="current==1">
 			<u-empty></u-empty>
 		</view>
-		<!-- 设计师列表 -->
+		<!-- 整装设计师 -->
 		<view style="height: 100%;" v-if="current==2">
 			<!-- 排序 -->
-			<view class="paixu" v-if="designerList.length !=0">
+			<view class="paixu">
 				<view class="paxi">
 					<u-dropdown :mask="true" style="position: relative;z-index: 100;">
 						<u-dropdown-item v-model="value1" :title="tit" :options="options1" @change="xuanzhedsa">
@@ -45,11 +45,12 @@
 						style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="" style="position: relative;z-index: 2;"  v-if="designerList.length !=0">
+			<view class="" style="position: relative;z-index: 2;" v-if="designerList.length !=0">
 				<u-club @navgate="navgepage" :rows="designerList"></u-club>
 			</view>
 			<u-empty v-else></u-empty>
 		</view>
+		<!-- 定制家具设计师 -->
 		<view class="" style="height: 100%;" v-if="current==3">
 			<u-empty></u-empty>
 		</view>
@@ -58,9 +59,17 @@
 			<view class="be_main" style="height: 100%;" v-if="state<0">
 				<view class="be_designer">
 				</view>
-				<image style="width: 100%;height: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg"
-					mode="aspectFit"></image>
-				<view class="be_foot">
+				<image style="width: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg" mode="widthFix">
+				</image>
+				<view class="be_foot" v-if="yanzhengtanchaung">
+					<view class="pay" @click="ananana(0)">
+						成为设计师
+					</view>
+					<view class="pay" @click="ananana(1)">
+						成为设计师合伙人
+					</view>
+				</view>
+				<view class="be_foot" v-else>
 					<view class="pay" @click="getcontein(0)">
 						成为设计师
 					</view>
@@ -129,9 +138,8 @@
 			<view class="contract_main">
 				<!-- 合同pdf -->
 				<view class="" style="height: 700rpx; width: 100%;">
-					<scroll-view scroll-y="true" style="height: 100%;">
-						<image style="width: 100%;height: 4444rpx;"
-							:src="imgsss+'/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png'" mode="widthFix">
+					<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
+						<image style="width: 100%;" :src="tupianwo" mode="widthFix">
 						</image>
 					</scroll-view>
 				</view>
@@ -165,6 +173,70 @@
 		<!-- 评论弹窗 -->
 		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
 			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
+		<!-- 确保是你本人操作 -->
+		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					确保是你本人操作
+				</view>
+				<view class="textss">
+					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+				</view>
+				<view class="yanzhengma">
+					<view class="cet" style="justify-content: space-around;width: 100%;">
+						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+						</view>
+						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="tongyis(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="tongyis(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 服务协议和隐私政策 -->
+		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					服务协议和隐私政策
+				</view>
+				<view class="textss">
+					感谢您使用宝芸邸，我们会严格
+					按照法律规定存储和使用您的个人
+					信息。您可以阅读以下几项条款了
+					解详细信息。如您同意，请勾选以
+					下几项条款并点击”同意”开始接受
+					我们的服务。
+				</view>
+				<view style="padding:20rpx 0;">
+					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+						:key="index">
+						<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view class="yuan" @click="hahaha(item)">
+								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="mingcheng" @click="fuwenben(item)">
+							《{{item.name}}》
+						</view>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="xieyitongyi(0)">
+						暂不使用
+					</view>
+					<view class="hkhnij jjhgj" @click="xieyitongyi(1)">
+						同意协议
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -173,12 +245,23 @@
 	export default {
 		data() {
 			return {
+				tupianwo: "",
+				// 验证弹窗
+				yanzhengtanchaung: true,
+				yuedu: false,
+				xieyi: [],
+				timea: 0,
+				shoujiyanzheng: false,
+				shoujihao: "",
+				code: "",
+				huoqu: "获取验证码",
+				// 验证弹窗
+				diandedijige: 0,
 				modeList: [],
 				mobanid: [
 					'gJOe99DzrAoxLlotExdkNH56NuEr3_3MyMhtKywE83c',
 					'ag6I4iIgY1yo9QDaLolhH-D1e7Rpl_Tszw1SqYZzBDA',
 				],
-				imgsss: this.$imgPath,
 				heigths: 580,
 				parsesssss: "",
 				recruit_all: [],
@@ -199,7 +282,7 @@
 				show: false,
 				title: "设计师club",
 				list: [{
-						name: '热门栏目',
+						name: '网红佳作',
 						id: 0
 					},
 					{
@@ -255,7 +338,23 @@
 			}
 		},
 		onShow() {
+			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
 			this.current = this.list[0].id
+			// this.current = 4
+			//验证弹窗
+			let aa = uni.getStorageSync("xieyi")
+			this.xieyi = []
+			aa.forEach(item => {
+				if (item.state == 1) {
+					this.xieyi.push(item)
+				}
+			})
+			if (this.xieyi.length > 0) {
+				this.yanzhengtanchaung = true;
+			} else {
+				this.yanzhengtanchaung = false;
+			}
+			// 验证弹窗
 			this.getstate();
 			this.enjoy()
 			this.enjoys()
@@ -268,6 +367,102 @@
 			}
 		},
 		methods: {
+			rre(ev) {
+				console.log(ev, "00000");
+			},
+			// 验证弹窗
+			// 协议同意按钮
+			xieyitongyi(ev) {
+				if (ev == 1) {
+					let mm = 0
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							mm++
+						}
+					})
+					if (this.xieyi.length != mm) {
+						return uni.showToast({
+							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					this.shoujiyanzheng = true;
+					this.yuedu = false
+				} else {
+					this.yuedu = false
+				}
+
+			},
+			// 看协议内容
+			fuwenben(ev) {
+				uni.setStorageSync("fuwenbeng", ev.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.name
+				})
+			},
+			// 同意协议
+			hahaha(item) {
+				item.check = !item.check
+			},
+			// 同意后选择协议state
+			// 0销售员注册
+			// 1设计师注册
+			// 2已收货
+			// 3已安装
+			// 4支付前
+			tongyixieyi(ev) {
+				if (this.xieyi.length > 0) {
+					this.yuedu = true;
+				} else {
+					this.shoujiyanzheng = false;
+					this.yuedu = false;
+				}
+			},
+			// 手机验证按钮取消0同意1
+			tongyis(ev) {
+				if (ev == 1) {
+					if (this.code != "") {
+						this.shoujiyanzheng = false
+						this.getcontein(this.diandedijige)
+					} else {
+						uni.showToast({
+							title: "请输入验证码",
+							icon: "none"
+						})
+					}
+				} else {
+					this.shoujiyanzheng = false;
+				}
+			},
+			// 获取验证码倒计时
+			go_code() {
+				if (this.timea == 0) {
+					this.timea = 60
+					let aa = setInterval(() => {
+						this.timea--
+						this.huoqu = this.timea + "s后获取"
+						if (this.timea == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
+			// 判断手机号
+			hahahaa(ev) {
+				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				if (!phoneCodeVerification.test(ev.detail.value)) {
+					uni.showToast({
+						title: "手机号不正确",
+						icon: "none"
+					})
+				}
+			},
+			// 验证弹窗
+			ananana(ev) {
+				this.diandedijige = ev
+				this.yuedu = true
+			},
 			zhongzhi(ev) {
 				if (ev == 0) {
 					this.modeList.forEach(item => {
@@ -281,7 +476,7 @@
 							aa.push(item.title)
 						}
 					})
-					if(aa.length == 0){
+					if (aa.length == 0) {
 						this.dessel(0)
 						this.show = false
 						return
@@ -298,7 +493,7 @@
 							})
 							this.designerList = data.data.data.status
 							this.show = false
-						} else{
+						} else {
 							this.designerList = []
 							this.show = false
 						}
@@ -465,23 +660,35 @@
 					uni.requestSubscribeMessage({
 						provider: 'weixin',
 						tmplIds: that.mobanid,
-						success: function(res) {
+						complete: function(res) {
+							// 选的哪一个
 							that.fenleideid = ev;
-							that.looks(that.allssssss[ev].doc_url)
-							// 查看是否支付
-							that.$api.ispay({
-								id: that.allssssss[ev].id,
-								user_id: uni.getStorageSync("user_info").id
-							}).then(data => {
-								that.pay = '去填写资料'
-								// 不支付，支付取消注释
-								// if (data.data.code == 1) {
-								// 	that.pay = '去填写资料'
-								// } else {
-								// 	that.pay = '支付￥' + that.allssssss[ev].money
-								// }
-								that.showContract = true
-							})
+
+							// 看合同
+							// that.looks(that.allssssss[ev].doc_url)
+							// 查看价格是否大于0
+							if (that.allssssss[ev].money > 0.00) {
+								// 查看是否支付
+								that.$api.ispay({
+									id: that.allssssss[ev].id,
+									user_id: uni.getStorageSync("user_info").id
+								}).then(data => {
+									// that.pay = '去填写资料'
+									// 不支付，支付取消注释
+									if (data.data.code == 1) {
+										// that.pay = '去填写资料'
+										that.toReg()
+									} else {
+										// that.pay = '支付￥' + that.allssssss[ev].money
+										that.pays()
+									}
+									// 协议弹窗
+									// that.showContract = true
+								})
+							} else {
+								that.toReg()
+							}
+
 						}
 					});
 
@@ -507,47 +714,35 @@
 			// 支付填写资料
 			pays() {
 				let that = this
-				if (this.pay == "去填写资料") {
-					that.showContract = false
-					that.toReg()
-				} else {
-					that.$api.buylevel({
-						id: that.allssssss[that.fenleideid].id,
-						user_id: uni.getStorageSync("user_info").id
-					}).then(res => {
-						// 重新提交
-						if (res.data.code == 1) {
-							that.showContract = false
-							setTimeout(() => {
-								that.resss()
-							}, 1000)
-						}
-						// 支付
-						if (res.data.code == 2000) {
-							uni.requestPayment({
-								timeStamp: res.data.data.timeStamp, //当前的时间
-								nonceStr: res.data.data.nonceStr, //随机字符串
-								package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-								signType: res.data.data.signType, //签名算法，暂支持 MD5。
-								paySign: res.data.data.paySign, //签名
-								success: function(res) {
-									uni.showToast({
-										title: "支付成功",
-										icon: "none"
-									})
-									that.showContract = false
-									that.toReg()
-								},
-								fail: function(err) {
-									uni.showToast({
-										title: "支付失败",
-										icon: "none"
-									})
-								}
-							})
-						}
-					})
-				}
+				that.$api.buylevel({
+					id: that.allssssss[that.fenleideid].id,
+					user_id: uni.getStorageSync("user_info").id
+				}).then(res => {
+					// 支付
+					if (res.data.code == 200) {
+						uni.requestPayment({
+							timeStamp: res.data.data.timeStamp, //当前的时间
+							nonceStr: res.data.data.nonceStr, //随机字符串
+							package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+							signType: res.data.data.signType, //签名算法，暂支持 MD5。
+							paySign: res.data.data.paySign, //签名
+							success: function(res) {
+								uni.showToast({
+									title: "支付成功",
+									icon: "none"
+								})
+								that.toReg()
+							},
+							fail: function(err) {
+								uni.showToast({
+									title: "支付失败",
+									icon: "none"
+								})
+							}
+						})
+					}
+				})
+				// }
 			},
 			// 热门栏目
 			enjoys() {
@@ -922,9 +1117,9 @@
 			width: 600rpx;
 			height: 70rpx;
 			background: #007399;
+			color: #FFFFFF;
 			border-radius: 35rpx;
 			font-size: 26rpx;
-			color: #FFFFFF;
 			text-align: center;
 			line-height: 70rpx;
 		}
@@ -1173,4 +1368,79 @@
 		line-height: 60rpx;
 		color: #FFFFFF;
 	}
+
+	// 验证弹窗
+	.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+	}
+
+	.yanzhengma {
+		margin: 50rpx 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 230rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
+		}
+	}
+
+	// 验证弹窗
 </style>

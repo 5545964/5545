@@ -14,7 +14,7 @@
 						</view> -->
 					</view>
 					<view class="bottom">
-						<view class="top-ss" style="flex-wrap:wrap;justify-content: space-around;">
+						<view class="top-ss" style="flex-wrap:wrap;">
 							<view class="top" v-for="(item1,index) in item.label" :key="index">
 								{{item1}}
 							</view>

@@ -75,15 +75,10 @@
   margin-top: -10rpx;
 }
 .shop_list .question.data-v-13c9dc76 {
-  width: 30rpx;
-  height: 30rpx;
   color: #F5625D;
   font-size: 24rpx;
-  border: 2rpx solid #F5625D;
-  box-sizing: border-box;
   text-align: center;
   line-height: 30rpx;
-  border-radius: 50%;
   margin-left: 10rpx;
   margin-top: 10rpx;
 }

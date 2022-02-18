@@ -3,33 +3,6 @@
  * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
  * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
  */
-.navbar .sssss.data-v-c060bdcc {
-  border: 1px solid #e5e5e5;
-  overflow: hidden;
-  width: 166rpx;
-  height: 60rpx;
-  border-radius: 30rpx;
-  margin-left: 30rpx;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-.navbar .sssss .dsds.data-v-c060bdcc {
-  padding: 20rpx;
-}
-.navbar .sssss .hang.data-v-c060bdcc {
-  width: 2rpx;
-  height: 26rpx;
-  background-color: #e5e5e5;
-}
-.navbar .sssss .fanhui.data-v-c060bdcc {
-  width: 12rpx;
-  height: 22rpx;
-}
-.navbar .sssss .souye.data-v-c060bdcc {
-  width: 26rpx;
-  height: 24rpx;
-}
 .paixu.data-v-c060bdcc {
   background: #FFFFFF;
   display: flex;
@@ -60,6 +33,7 @@
 }
 .clos.data-v-c060bdcc {
   position: fixed;
+  bottom: 40rpx;
   left: 0;
   right: 0;
   margin: 0 30rpx;
@@ -201,16 +175,16 @@
   width: 600rpx;
   height: 70rpx;
   background: #007399;
+  color: #FFFFFF;
   border-radius: 35rpx;
   font-size: 26rpx;
-  color: #FFFFFF;
   text-align: center;
   line-height: 70rpx;
 }
 .tokens .mian.data-v-c060bdcc {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 200rpx;
+  margin-bottom: 40rpx;
   margin-top: 20rpx;
 }
 .tokens .mian .mian_left.data-v-c060bdcc {
@@ -225,6 +199,7 @@
   box-sizing: border-box;
   width: 100rpx;
   background: #305166;
+  border-left: 4rpx solid #305166;
 }
 .tokens .mian .mian_left_item1.data-v-c060bdcc {
   font-size: 26rpx;
@@ -233,6 +208,7 @@
   box-sizing: border-box;
   width: 100rpx;
   background: #376379;
+  border-left: 4rpx solid #376379;
 }
 /* 评论 */
 .comment.data-v-c060bdcc {
@@ -344,8 +320,134 @@
   font-weight: 400;
   color: #007399;
 }
-.dkjshisdf.data-v-c060bdcc {
+/* 底部 */
+.foot.data-v-c060bdcc {
+  width: 750rpx;
+  height: 120rpx;
+  background: #FFFFFF;
+  box-shadow: 0px -2rpx 4rpx 0px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.foot1.data-v-c060bdcc {
+  width: 750rpx;
+  height: 120rpx;
+  background: #FFFFFF;
+  box-shadow: 0px -2rpx 4rpx 0px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+.footInp.data-v-c060bdcc {
+  width: 500rpx;
+  height: 80rpx;
+  background: #F4F4F4;
+  border-radius: 40rpx;
+  padding-left: 40rpx;
+  box-sizing: border-box;
+  margin-right: 30rpx;
+  margin-left: 10rpx;
+}
+.footInp1.data-v-c060bdcc {
+  width: 470rpx;
+  height: 80rpx;
+  background: #F4F4F4;
+  border-radius: 40rpx;
+  padding-left: 40rpx;
+  line-height: 80rpx;
+  box-sizing: border-box;
+  margin-right: 20rpx;
+  margin-left: 30rpx;
+  color: #999999;
+  font-size: 30rpx;
+}
+.footImg.data-v-c060bdcc {
+  width: 60rpx;
+  height: 60rpx;
+  margin-right: 20rpx;
+}
+.pl_text.data-v-c060bdcc {
+  width: 300rpx;
+  height: 80rpx;
+  font-size: 28rpx;
+  background-color: #FF4B3C;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 80rpx;
+  border-radius: 36rpx;
+}
+.foot_btn.data-v-c060bdcc {
+  width: 120rpx;
+  height: 60rpx;
+  background: #007399;
+  border-radius: 10rpx;
+  text-align: center;
+  line-height: 60rpx;
+  color: #FFFFFF;
+}
+.yueduwo.data-v-c060bdcc {
   background-color: #FFFFFF;
-  padding: 0 30rpx;
+}
+.yueduwo .jjhgj.data-v-c060bdcc {
+  color: #2979ff;
+  font-size: 30rpx;
+  font-weight: bold;
+  border-left: 1px solid #b9b9b9;
+}
+.yueduwo .hkhnij.data-v-c060bdcc {
+  width: 100%;
+  height: 100%;
+  padding: 26rpx 0;
+  text-align: center;
+}
+.yueduwo .anniusss.data-v-c060bdcc {
+  display: flex;
+  border-top: 1px solid #b9b9b9;
+}
+.yueduwo .mingcheng.data-v-c060bdcc {
+  color: #2979ff;
+}
+.yueduwo .yuan.data-v-c060bdcc {
+  width: 30rpx;
+  height: 30rpx;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.yueduwo .textss.data-v-c060bdcc {
+  padding: 0 26rpx;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.yueduwo .text.data-v-c060bdcc {
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.yanzhengma.data-v-c060bdcc {
+  margin: 50rpx 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.yanzhengma .djkshfks.data-v-c060bdcc {
+  background-color: #e5e5e5;
+  height: 100%;
+  border-radius: 10rpx;
+  width: 230rpx;
+}
+.yanzhengma .annuyt.data-v-c060bdcc {
+  font-size: 28rpx;
+  margin: 0;
 }
 

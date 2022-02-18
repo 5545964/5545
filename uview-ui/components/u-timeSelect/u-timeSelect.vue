@@ -37,6 +37,10 @@
 				type: Number,
 				default: 2000,
 			},
+			datas: {
+				type: String,
+				default: "",
+			},
 			endYear: {
 				type: Number,
 				default: 2030,
@@ -57,14 +61,21 @@
 				day: "",
 				hour: "",
 				minute: "",
-				value: [20, 0, 0],
+				value: [22, 1,16],
 			};
 		},
 
 		mounted() {
 			this.init();
-		},
 
+			// let aa = this.datas.split("-")
+			// aa[0] = Number(aa[0].slice(2))
+			// aa[1] = Number(aa[1]) - 1
+			// aa[2] = Number(aa[2]) - 1
+			// let bb = [aa[0],aa[1],aa[2]]
+			// this.value = [...bb]
+			// console.log(this.value);
+		},
 		watch: {
 			month() {
 				this.initDays();
@@ -109,6 +120,7 @@
 				const selectedMonth = this.months[value[1]];
 				const days = [];
 				const totalDays = new Date(selectedYear, selectedMonth, 0).getDate();
+				console.log(totalDays);
 				for (let day = 1; day <= totalDays; day++) {
 					days.push(day);
 					if (this.currentDate.getDate() === day) {
@@ -155,7 +167,7 @@
 
 			setSelectValue() {
 				const v = this.value;
-
+				console.log(this.value);
 				this.year = this.years[v[0]];
 				this.month = this.months[v[1]];
 				this.day = this.days[v[2]];

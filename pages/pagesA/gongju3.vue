@@ -26,10 +26,9 @@
 					<u-icon name="arrow-down"></u-icon>
 				</view>
 			</view>
-
-			<u-cart :list="list" @click="del"></u-cart>
+			<u-cart :list="list" @kan="dsadsa" @click="del"></u-cart>
 		</view>
-		<u-timeSelect ref="myPicker" @submit="handleSubmit" :start-year="2000" :end-year="2500">
+		<u-timeSelect ref="myPicker" :datas="datas" @submit="handleSubmit" :start-year="2000" :end-year="2500">
 		</u-timeSelect>
 	</view>
 </template>
@@ -51,6 +50,11 @@
 			this.getMyfoot()
 		},
 		methods: {
+			dsadsa(ev){
+				uni.navigateTo({
+					url:"../pagesC/Shopping?shopid="+ev.id
+				})
+			},
 			getMyfoot() {
 				this.$api.myfootxr({
 					user_id: uni.getStorageSync('user_info').id,
@@ -64,7 +68,7 @@
 							img: this.$imgPath + item.content.simage,
 							title: item.content.name,
 							num: item.content.xl,
-							id: item.id
+							id: item.shop_id
 						})
 					});
 
@@ -72,7 +76,6 @@
 			},
 			del(ev, index) {
 				let aa = this.list;
-
 				this.$api.delfootxr({
 					id: ev.id
 				}).then(data => {

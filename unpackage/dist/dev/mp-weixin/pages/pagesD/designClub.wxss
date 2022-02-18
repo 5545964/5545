@@ -202,9 +202,9 @@
   width: 600rpx;
   height: 70rpx;
   background: #007399;
+  color: #FFFFFF;
   border-radius: 35rpx;
   font-size: 26rpx;
-  color: #FFFFFF;
   text-align: center;
   line-height: 70rpx;
 }
@@ -416,5 +416,65 @@
   text-align: center;
   line-height: 60rpx;
   color: #FFFFFF;
+}
+.yueduwo.data-v-3e24414c {
+  background-color: #FFFFFF;
+}
+.yueduwo .jjhgj.data-v-3e24414c {
+  color: #2979ff;
+  font-size: 30rpx;
+  font-weight: bold;
+  border-left: 1px solid #b9b9b9;
+}
+.yueduwo .hkhnij.data-v-3e24414c {
+  width: 100%;
+  height: 100%;
+  padding: 26rpx 0;
+  text-align: center;
+}
+.yueduwo .anniusss.data-v-3e24414c {
+  display: flex;
+  border-top: 1px solid #b9b9b9;
+}
+.yueduwo .mingcheng.data-v-3e24414c {
+  color: #2979ff;
+}
+.yueduwo .yuan.data-v-3e24414c {
+  width: 30rpx;
+  height: 30rpx;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.yueduwo .textss.data-v-3e24414c {
+  padding: 0 26rpx;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.yueduwo .text.data-v-3e24414c {
+  text-align: center;
+  line-height: 100rpx;
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.yanzhengma.data-v-3e24414c {
+  margin: 50rpx 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.yanzhengma .djkshfks.data-v-3e24414c {
+  background-color: #e5e5e5;
+  height: 100%;
+  border-radius: 10rpx;
+  width: 230rpx;
+}
+.yanzhengma .annuyt.data-v-3e24414c {
+  font-size: 28rpx;
+  margin: 0;
 }
 

@@ -142,9 +142,10 @@
 			bofang(ev) {
 				this.autoplay = false
 			},
+			// 手指显示
 			dianjishouzhi() {
 				this.shouzhi = 1
-				uni.setStorageSync("shouzhi", 1)
+				uni.setStorageSync("shouzhi", 0)
 			},
 			goshop(ev) {
 				uni.navigateTo({
@@ -257,6 +258,10 @@
 					uni.navigateTo({
 						url: "../Home/URL/URL?url=" + ev.url
 					})
+					// 2.17cj
+					// uni.navigateTo({
+					// 	url:"../Home/URL/URL?url="+ev.shop.vrurl
+					// })
 				}
 			},
 			async gosheji() {

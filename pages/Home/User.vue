@@ -22,6 +22,7 @@
 				</view>
 			</view>
 		</view>
+		
 		<view class="hahaha" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
 			<view class="cet" @click="gos(0)">
 				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
@@ -37,6 +38,7 @@
 				</view>
 			</view>
 		</view>
+		
 		<view class="top">
 			<view class="top_a" @click="shengfenzhuanqu">
 				<image class="imgs" src="../../static/me_vip_bg.png" mode="aspectFit"></image>
@@ -116,13 +118,15 @@
 							我的优惠券
 						</view>
 					</view>
+					
 					<view class="template" @click="gongju_go('../pagesD/designyongjin','我的佣金')"
-						v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
+						v-if="user_info.bbs.id">
 						<image class="img" :src="'../../static/gongju5.png'" mode="aspectFit"></image>
 						<view class="texts">
 							我的佣金
 						</view>
 					</view>
+					
 					<view class="template" @click="gongju_go('../pagesA/gongju6','安装评价')">
 						<image class="img" :src="'../../static/gongju6.png'" mode="aspectFit"></image>
 						<view class="texts">
@@ -153,17 +157,23 @@
 							我的报装
 						</view>
 					</view>
+					
+					
 					<view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
-						v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
+						v-if="user_info.bbs.id">
+						<!-- user_info.bbs != 0 && user_info !='' && user_info.bbs !=null -->
 						<image class="img" :src="'../../static/gongju11.png'" mode="aspectFit"></image>
 						<view class="texts">
 							我的团队
 						</view>
 					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju12','预约记录')">
+					
+					
+					
+					<view class="template" @click="gongju_go('../pagesA/gongju12','预约设计')">
 						<image class="img" :src="'../../static/gongju12.png'" mode="aspectFit"></image>
 						<view class="texts">
-							预约记录
+							预约设计
 						</view>
 						<view class="dsalhdkjahjad" v-if="fkjsfjdisfjsl"></view>
 					</view>

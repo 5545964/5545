@@ -21,7 +21,7 @@
 					</view>
 					<view class="cet">
 						<view class="text">
-							查看预约详情
+							查看美居设计进度
 						</view>
 						<image class="img" mode="aspectFit" src="../../static/icon_shop_hsmore.png"></image>
 					</view>
@@ -93,6 +93,7 @@
 						})
 						this.fansList = []
 						this.fansList = data.data.data.status.data;
+						this.fansList.reverse()
 						uni.setStorageSync("yuyuejilunum",aa)
 					}
 				})

@@ -5,7 +5,7 @@
 			<view class="">
 				<view class="top_name">
 					<view class="name" style="text-align: center;">
-						设计师-{{alls.username}}
+						设计师-{{alls.username||""}}
 					</view>
 					<u-rate :disabled="disabled" @change="xuanxinxin" :count="count" v-model="alls.star" active-color="#FD7904"></u-rate>
 				</view>

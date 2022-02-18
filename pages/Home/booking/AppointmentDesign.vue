@@ -16,7 +16,7 @@
 		<view v-if="isyuyue != 0">
 			<view class="xunhuan" style="padding: 30rpx;">
 				<view class="dshk">
-					预约进度
+					设计进度
 				</view>
 				<view class="dadsda">
 					<view v-if="state == 0">
@@ -34,20 +34,43 @@
 							您的预约已完成
 						</view>
 					</view>
-				<!-- 	<view style="padding: 30rpx 0;" v-if="state == 2&&states==1&&!fans.wstate">
-						<view class="cxz" style="text-align: center;">
-							设计师已设计完成，请支付尾金￥{{fans.wprice||0}}
-						</view>
-						<view class="ndajs" @click="zhifuyuyue(1)">
-							支付尾金￥{{fans.wprice||0}}
-						</view>
-					</view> -->
 					<view style="padding: 30rpx 0;" v-if="states == 0">
 						<view class="cxz" style="text-align: center;">
 							您的预约申请已通过审核，请支付诚意金￥{{mony||0}},诚意金可在美居订单购物时抵扣！
 						</view>
 						<view class="ndajs" @click="zhifuyuyue(0)">
 							请支付诚意金“{{mony||0}}元"
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="xunhuan" style="padding: 30rpx;">
+				<view class="dshk">
+					预约编号
+				</view>
+				<view class="dadsda">
+					<view style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+						<view class="cxz">
+							订单编号
+						</view>
+						<view class="cxz">
+							{{fans.orderid}}
+						</view>
+					</view>
+					<view style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+						<view class="cxz">
+							设计师编号
+						</view>
+						<view class="cxz">
+							{{fans.desbh.bh}}
+						</view>
+					</view>
+					<view style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+						<view class="cxz">
+							销售编号
+						</view>
+						<view class="cxz">
+							{{fans.xsbh.bh}}
 						</view>
 					</view>
 				</view>
@@ -81,7 +104,19 @@
 								:placeholder="items.text" />
 						</view>
 					</view>
+
 					<!-- 单行输入框 -->
+					<!-- 验证码 -->
+					<view class="inputs" v-if="items.id == 2 && isyuyue == 0">
+						<view class="cxz">
+							验证码
+						</view>
+						<view class="asd cet">
+							<u-input style="width: 170rpx;height: 100%;" v-model="code" :type="type"
+								placeholder="请输入验证码" />
+							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						</view>
+					</view>
 					<!-- 弹出选项 -->
 					<view class="inputs" v-if="items.type == 'Picker'">
 						<view class="cxz">
@@ -160,7 +195,7 @@
 										</view>
 									</view>
 									<image @click="sanchuhsuahsuhd(indexc)" v-if="itemc.del"
-										style="width: 28rpx;height: 28rpx;position: absolute;top: 30rpx;right: 20rpx;"
+										style="width: 36rpx;height: 36rpx;position: absolute;top: 0;right: 20rpx;"
 										src="../../../static/icon_close_ico.png" mode="aspectFit"></image>
 								</view>
 								<view class="czzxczx nbnbn" v-if="isadd" @click="add">
@@ -196,6 +231,7 @@
 							</view>
 						</view>
 					</view>
+
 					<!-- 其他选项 -->
 					<!-- 上传 -->
 					<view class="inputas" v-if="items.type == 'upload'">
@@ -258,6 +294,7 @@
 	export default {
 		data() {
 			return {
+				code: "",
 				niannum: 0,
 				nianlist: [],
 				nianning: false,
@@ -289,14 +326,8 @@
 						id: 1,
 						age: "",
 						select: 10000,
-						del: false
-					},
-					{
-						id: 2,
-						age: "",
-						select: 10000,
 						del: true
-					}
+					},
 				],
 				//性别选项
 				man_list: [{
@@ -446,7 +477,10 @@
 				states: "",
 				colorssss: [],
 				stylessss: [],
-				huxinssss: []
+				huxinssss: [],
+				timea: 0,
+				huoqu: '获取验证码'
+
 			};
 		},
 		onLoad(ev) {
@@ -498,6 +532,19 @@
 			})
 		},
 		methods: {
+			go_code() {
+				if (this.timea == 0) {
+					this.timea = 60
+					let aa = setInterval(() => {
+						this.timea--
+						this.huoqu = this.timea + "s后获取"
+						if (this.timea == 0) {
+							clearInterval(aa)
+							this.huoqu = '获取验证码'
+						}
+					}, 1000)
+				}
+			},
 			nianopen(ev) {
 				console.log(ev);
 				this.niannum = ev
@@ -893,6 +940,12 @@
 							name: "旧房",
 							id: 12,
 							image: ""
+						},
+						{
+							check: false,
+							name: "其他",
+							id: 100,
+							image: ""
 						}
 					]
 					this.popshow = true;
@@ -1229,5 +1282,11 @@
 		font-size: 26rpx;
 		font-weight: 400;
 		color: #000000;
+	}
+
+	.annuyt {
+		margin-left: 30rpx;
+		font-size: 20rpx;
+		width: 160rpx;
 	}
 </style>

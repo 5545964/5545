@@ -42,8 +42,15 @@
 			</view>
 			<!-- 设计列表 -->
 			<view class="design_list">
-				<view class="" v-for="(item,index) in desinger.zp" @click.stop="todetails(item)" :key="index">
-					<u-design-card :list="item" />
+				<view class="card" style="position: relative;" v-for="(item,index) in desinger.zp"
+					@click.stop="todetails(item)" :key="index">
+					<!-- <u-design-card :list="item"/> -->
+					<image :src="img+list.simage" style="border-radius: 20rpx;" mode="aspectFit"></image>
+					<view class="gghGG" style="margin-top: 24rpx;">
+						{{list.name}}
+					</view>
+					<image @click="sanchu(item)" class="imgss" src="../../../static/icon_close_ico.png"
+						mode="aspectFit"></image>
 				</view>
 			</view>
 		</view>
@@ -77,57 +84,7 @@
 			};
 		},
 		created() {
-			let user_id = uni.getStorageSync("user_info").id
-			this.$api.des({
-				user_id
-			}).then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.zp.forEach(item => {
-						item.image = item.image.split(",")[0]
-					})
-					this.desinger = data.data.data.status
-					this.list_s[0].num = this.desinger.manyi
-					this.list_s[1].num = this.desinger.zy
-					this.list_s[2].num = this.desinger.yj
-					this.list_s[3].num = this.desinger.cy
-					this.$api.desmyuser({
-						user_id
-					}).then(data => {
-						if (data.data.code == 1) {
-							let aa = data.data.data.myuser
-							uni.setStorageSync("des_info", data.data.data.myuser)
-							if (aa.nickname == null || aa.wechat == null || aa.work == null || aa.yb ==
-								null) {
-								uni.navigateTo({
-									url: "../../pagesB/my?isdesign=1"
-								})
-							}
-						}
-					})
-				} else {
-					uni.reLaunch({
-						url: "/pages/Home/Investment?is_re=1"
-					})
-					// uni.showModal({
-					// 	title: data.data.msg,
-					// 	success(res) {
-					// 		if (res.confirm) {
-
-					// 		} else if (res.cancel) {
-					// 			uni.navigateBack({
-					// 				delta: 1
-					// 			})
-					// 		}
-
-					// 	},
-					// 	fail() {
-					// 		uni.navigateBack({
-					// 			delta: 1
-					// 		})
-					// 	}
-					// })
-				}
-			})
+			this.alls()
 		},
 		computed: {
 			list1() {
@@ -137,6 +94,64 @@
 			}
 		},
 		methods: {
+			alls() {
+				let user_id = uni.getStorageSync("user_info").id
+				this.$api.des({
+					user_id
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.zp.forEach(item => {
+							item.image = item.image.split(",")[0]
+						})
+						this.desinger = data.data.data.status
+						this.list_s[0].num = this.desinger.manyi
+						this.list_s[1].num = this.desinger.zy
+						this.list_s[2].num = this.desinger.yj
+						this.list_s[3].num = this.desinger.cy
+						this.$api.desmyuser({
+							user_id
+						}).then(data => {
+							if (data.data.code == 1) {
+								let aa = data.data.data.myuser
+								uni.setStorageSync("des_info", data.data.data.myuser)
+								if (aa.nickname == null || aa.wechat == null || aa.work == null || aa.yb ==
+									null) {
+									uni.navigateTo({
+										url: "../../pagesB/my?isdesign=1"
+									})
+								}
+							}
+						})
+					} else {
+						uni.reLaunch({
+							url: "/pages/Home/Investment?is_re=1"
+						})
+					}
+				})
+			},
+			sanchu(item) {
+				let that = this;
+				uni.showModal({
+					title: '提示',
+					content: '是否删除此作品',
+					success: function(res) {
+						if (res.confirm) {
+							that.$api.delefa({
+								id: item.id,
+								user_id: uni.getStorageSync("des_info")
+							}).then(data => {
+								if (data.data.code == 1) {
+									that.alls()
+									uni.showToast({
+										title: data.data.msg,
+										icon: "success"
+									})
+								}
+							})
+						}
+					}
+				});
+			},
 			todetails(item) {
 				uni.navigateTo({
 					url: "../../pagesC/DesignDetail?id=" + JSON.stringify(item)
@@ -268,6 +283,14 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-bottom: 100rpx;
+
+		.imgss {
+			width: 50rpx;
+			height: 50rpx;
+			position: absolute;
+			right: -15rpx;
+			top: 25rpx;
+		}
 	}
 
 	.asdfghjkl {
@@ -278,5 +301,20 @@
 		background-clip: padding-box, border-box;
 		background-origin: padding-box, border-box;
 		background-image: linear-gradient(to bottom, #007399, #007399), linear-gradient(135deg, #8ebfce, #3391b0);
+	}
+
+	.card {
+		width: 335rpx;
+		height: 420rpx;
+		background: #FFFFFF;
+		border-radius: 20rpx;
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+		margin-top: 40rpx;
+		font-size: 24rpx;
+		color: #000000;
+		text-align: center;
+		padding: 10rpx;
 	}
 </style>

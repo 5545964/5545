@@ -92,7 +92,7 @@
 										查看物流
 									</view>
 									<view class="button" @click="annui(4, items)" v-if="items.state == 2">
-										确认收货
+										确认签收
 									</view>
 									<view class="button" @click="annui(7, items)"
 										v-if="items.state == 3 || items.state == 4 || items.states == 2">
@@ -119,10 +119,13 @@
 									<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
 										完成安装
 									</view>
-									<!-- <view class="button" @click="annui(6, items)"
+									<view class="button" v-if="items.state == 16&&items.bz==1" @click="lookdetails(items)">
+										查看安装详情
+									</view>
+									<view class="button" @click="annui(6, items)"
 										v-if="items.state == 3 || items.states == 2">
 										立即评价
-									</view> -->
+									</view>
 								</view>
 							</view>
 							<u-empty v-if="item.data_list.length == 0" text="暂无订单" mode="list"></u-empty>
@@ -131,6 +134,54 @@
 				</swiper>
 			</view>
 		</view>
+		<!-- 查看安装详情 -->
+		<u-popup width="500" border-radius="30" v-model="anzhuang" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					安装详情
+				</view>
+				<view style="padding: 0 30rpx;">
+					<view class="">
+						姓名
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
+							placeholder="请填写快递公司" />
+					</view>
+					<view class="">
+						电话
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aphone"
+							placeholder="请填写快递单号" type="number" />
+					</view>
+					<view v-if="bzxq.abh" class="">
+						<view class="">
+							安装人员编号
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.abh"
+								placeholder="请填写快递单号" type="number" />
+						</view>
+					</view>
+					<view class="">
+						预计上门时间
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.atime"
+							placeholder="请填写快递单号" type="number" />
+					</view>
+				</view>
+				<!-- <view class="anniusss">
+					<view class="hkhnij" @click="anzhuang=false">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="anzhuang=false">
+						同意
+					</view>
+				</view> -->
+			</view>
+		</u-popup>
 		<!-- 填写快递单号 -->
 		<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
 			<view class="yueduwo">
@@ -207,9 +258,9 @@
 				<view class="cets"> 是否需要安装？</view>
 				<view class="xian"> </view>
 				<view class="bottoms">
-					<view class="sdasas" @click="baozhaungshowss(0)"> 取消 </view>
-					<view class="czcxc" @click="baozhaungshowss(1)" v-if="buyanzheng"> 确定 </view>
-					<view class="czcxc" @click="tanchuanbaozhuang()" v-else> 确定 </view>
+					<view class="sdasas" @click="baozhaungshowss(0)"> 否 </view>
+					<view class="czcxc" @click="baozhaungshowss(1)" v-if="buyanzheng"> 是 </view>
+					<view class="czcxc" @click="tanchuanbaozhuang()" v-else> 是</view>
 				</view>
 			</view>
 		</u-popup>
@@ -286,7 +337,7 @@
 						暂不使用
 					</view>
 					<view class="hkhnij jjhgj" @click="tanchuanbaozhuang()">
-						同意
+						同意协议
 					</view>
 				</view>
 			</view>
@@ -299,6 +350,8 @@
 	export default {
 		data() {
 			return {
+				bzxq:{},
+				anzhuang:false,
 				kuaididata: {},
 				kuaididanhao: "",
 				kuaidigongsi: "",
@@ -403,6 +456,15 @@
 			}
 		},
 		methods: {
+			// 查看安装详情 
+			lookdetails(item){
+				this.$api.bzxq({id:item.bzid}).then(data=>{
+					if(data.data.code==1){
+						this.bzxq=data.data.data.status
+						this.anzhuang=true
+					}
+				})
+			},
 			kuaidiwow(ev) {
 				if (ev == 0) {
 					this.kuaidi = false
