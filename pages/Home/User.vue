@@ -118,7 +118,7 @@
 							我的优惠券
 						</view>
 					</view>
-					
+					<!-- ../pagesD/designyongjin -->
 					<view class="template" @click="gongju_go('../pagesD/designyongjin','我的佣金')"
 						v-if="user_info.bbs.id">
 						<image class="img" :src="'../../static/gongju5.png'" mode="aspectFit"></image>
@@ -159,14 +159,13 @@
 					</view>
 					
 					
-					<view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
+					<!-- <view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
 						v-if="user_info.bbs.id">
-						<!-- user_info.bbs != 0 && user_info !='' && user_info.bbs !=null -->
 						<image class="img" :src="'../../static/gongju11.png'" mode="aspectFit"></image>
 						<view class="texts">
 							我的团队
 						</view>
-					</view>
+					</view> -->
 					
 					
 					

@@ -31,7 +31,7 @@
 			</view>
 		</view>
 		<view class="home" style="height: 100%;">
-			<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
+			<u-video v-if="video.length != 0"  @play="bofang" @ended="ended" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 				@dianzhan="dianzhan"></u-video>
 			<u-empty v-else></u-empty>
 		</view>
@@ -128,6 +128,12 @@
 			this.alls()
 		},
 		methods: {
+			ended(ev) {
+				console.log(ev,"ev");
+			},
+			bofang(ev) {
+				console.log(ev,"ev1");
+			},
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
 					this.dianzhansssss = true

@@ -49,10 +49,6 @@
 				￥{{jiage}}元升级
 			</view>
 		</view>
-
-		<!--  -->
-		<!--  -->
-		<!--  -->
 		<!-- 确保是你本人操作 -->
 		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
 			<view class="yueduwo">
@@ -117,9 +113,6 @@
 				</view>
 			</view>
 		</u-popup>
-		<!--  -->
-		<!--  -->
-		<!--  -->
 	</view>
 </template>
 
@@ -164,19 +157,17 @@
 				this.isdes = 1
 				aa = 1
 			}
-			this.$api.agreement({
-				state: aa
-			}).then(data => {
-				if (data.data.code == 1) {
-					console.log(data);
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					this.xieyi = data.data.data.status
-				} else {
-					this.buyanzheng = false
+			let vv = uni.getStorageSync("xieyi")
+			vv.forEach(item=>{
+				if(item.state == aa){
+					this.xieyi.push(item)
 				}
 			})
+			if(this.xieyi.length >0){
+				this.buyanzheng = true
+			}else{
+				this.buyanzheng = false
+			}
 			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
 				if (this.isdes == 0) {
 					this.usershengfen = uni.getStorageSync("user_info").bbs.id

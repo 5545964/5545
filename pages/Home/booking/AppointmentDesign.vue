@@ -67,7 +67,7 @@
 					</view>
 					<view style="display: flex;justify-content: space-between;padding: 20rpx 0;">
 						<view class="cxz">
-							销售编号
+							美居会员编号
 						</view>
 						<view class="cxz">
 							{{fans.xsbh.bh}}

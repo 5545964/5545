@@ -5,11 +5,13 @@
  */
 .home .hahahahaxczxc .wins.data-v-6b49f230 {
   text-align: center;
-  width: 40%;
+  width: 20%;
 }
 .home .hahahahaxczxc .win.data-v-6b49f230 {
   text-align: center;
   width: 20%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .home .hahahahaxczxc .czcxczcxc.data-v-6b49f230:nth-child(odd) {
   background-color: #EBEEF5;

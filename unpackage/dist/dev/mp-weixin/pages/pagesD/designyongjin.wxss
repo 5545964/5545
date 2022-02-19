@@ -42,7 +42,7 @@
   padding: 20rpx 0;
 }
 .home .hahahahaxczxc .ccxv.data-v-612edce8 {
-  padding: 0 30rpx;
+  padding: 30rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -126,13 +126,15 @@
   display: flex;
 }
 .home .back .tixian.data-v-612edce8 {
-  margin-top: 20rpx;
-  width: 200rpx;
+  position: absolute;
+  right: 0;
+  top: 200rpx;
+  width: 180rpx;
   height: 70rpx;
   line-height: 70rpx;
   text-align: center;
   background: #FFFFFF;
-  border-radius: 35rpx;
+  border-radius: 35rpx 0 0 35rpx;
   font-size: 28rpx;
   font-weight: 400;
   color: #007399;
@@ -193,5 +195,9 @@
 .navbar .navbar_top .souye.data-v-612edce8 {
   width: 26rpx;
   height: 24rpx;
+}
+.fanhui.data-v-612edce8 {
+  width: 8rpx;
+  height: 16rpx;
 }
 

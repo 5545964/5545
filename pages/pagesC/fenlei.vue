@@ -34,19 +34,15 @@
 				</swiper-item>
 				<swiper-item v-if="list.video != ''">
 					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
-						:src="list.video"></video>
+						:src="img+list.video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
 		<!-- <u-cdata :list="list.shop"></u-cdata> -->
 		<view v-for="(item,index) in list.shop" :key="index">
-			<!-- <view class="">
-				{{item.name}}
-			</view> -->
 			<view class="" v-if="item.content">
 				<image class="imgs" :src="item.content" mode="widthFix"></image>
 			</view>
-			<!-- <u-parse :html="item.content"></u-parse> -->
 		</view>
 	</view>
 </template>
@@ -55,7 +51,6 @@
 	export default {
 		data() {
 			return {
-				imgtitle:this.$imgPath,
 				autoplay: true,
 				img: this.$imgPath,
 				current: "",
@@ -68,9 +63,10 @@
 		},
 		onLoad(ev) {
 			let go_shop = uni.getStorageSync("go_shop")
+			this.title = go_shop.name
 			go_shop.image = go_shop.image.split(",")
 			go_shop.shop.forEach(item=>{
-				item.content=this.imgtitle+item.content
+				item.content=this.img+item.content
 			})
 			this.list = go_shop
 			console.log(this.list,111);

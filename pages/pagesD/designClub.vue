@@ -63,18 +63,18 @@
 				</image>
 				<view class="be_foot" v-if="yanzhengtanchaung">
 					<view class="pay" @click="ananana(0)">
-						成为设计师
+						成为1级设计师会员
 					</view>
 					<view class="pay" @click="ananana(1)">
-						成为设计师合伙人
+						成为2级设计师会员
 					</view>
 				</view>
 				<view class="be_foot" v-else>
 					<view class="pay" @click="getcontein(0)">
-						成为设计师
+						成为1级设计师会员
 					</view>
 					<view class="pay" @click="getcontein(1)">
-						成为设计师合伙人
+						成为2级设计师会员
 					</view>
 				</view>
 			</view>
@@ -266,7 +266,6 @@
 				parsesssss: "",
 				recruit_all: [],
 				tit: "综合排序",
-				fenleideid: "",
 				allssssss: [],
 				indexdas: "",
 				pinglun_list: [],
@@ -644,8 +643,15 @@
 			// 跳转填写资料
 			toReg() {
 				this.showContract = false;
+				let aa = 0
+				if(this.diandedijige == 0){
+					aa = 5
+				}else{
+					aa = 3
+				}
 				uni.navigateTo({
-					url: "./regDesigner/regDesigner?nageid=" + this.allssssss[this.fenleideid].id
+					// url: "./regDesigner/regDesigner?nageid=" + this.allssssss[this.diandedijige].id
+					url: "./regDesigner/regDesigner?nageid=" + aa
 				})
 			},
 			changeTokens(index, item) {
@@ -662,7 +668,7 @@
 						tmplIds: that.mobanid,
 						complete: function(res) {
 							// 选的哪一个
-							that.fenleideid = ev;
+							that.diandedijige = ev;
 
 							// 看合同
 							// that.looks(that.allssssss[ev].doc_url)
@@ -714,8 +720,15 @@
 			// 支付填写资料
 			pays() {
 				let that = this
+				let aa = 0
+				if(that.diandedijige == 0){
+					aa = 5
+				}else{
+					aa = 3
+				}
 				that.$api.buylevel({
-					id: that.allssssss[that.fenleideid].id,
+					// id: that.allssssss[that.diandedijige].id,
+					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
 					// 支付

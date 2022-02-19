@@ -43,14 +43,16 @@
 			<!-- 设计列表 -->
 			<view class="design_list">
 				<view class="card" style="position: relative;" v-for="(item,index) in desinger.zp"
-					@click.stop="todetails(item)" :key="index">
-					<!-- <u-design-card :list="item"/> -->
-					<image :src="img+list.simage" style="border-radius: 20rpx;" mode="aspectFit"></image>
-					<view class="gghGG" style="margin-top: 24rpx;">
-						{{list.name}}
+					 :key="index">
+					<image @click="todetails(item)" :src="imgtitle+item.simage" style="border-radius: 20rpx;" mode="aspectFit"></image>
+					<view @click="todetails(item)" class="gghGG" style="margin-top: 24rpx;">
+						{{item.name}}
 					</view>
-					<image @click="sanchu(item)" class="imgss" src="../../../static/icon_close_ico.png"
+					<image v-if="!aaa" @click="sanchu(item)" class="imgss" src="../../../static/icon_close_ico.png"
 						mode="aspectFit"></image>
+				</view>
+				<view class="daddasdass" v-if="desinger.zp.length!=0" @click="aaa = !aaa">
+					<text v-if="aaa">删除作品</text><text v-else>完成</text>
 				</view>
 			</view>
 		</view>
@@ -62,6 +64,7 @@
 	export default {
 		data() {
 			return {
+				aaa: true,
 				imgtitle: this.$imgPath,
 				desinger: {},
 				list_s: [{
@@ -108,6 +111,13 @@
 						this.list_s[1].num = this.desinger.zy
 						this.list_s[2].num = this.desinger.yj
 						this.list_s[3].num = this.desinger.cy
+						
+						if(this.desinger.zp.length == 0){
+							this.aaa = false
+						}else{
+							this.aaa = true
+						}
+						console.log(this.aaa);
 						this.$api.desmyuser({
 							user_id
 						}).then(data => {
@@ -289,7 +299,7 @@
 			height: 50rpx;
 			position: absolute;
 			right: -15rpx;
-			top: 25rpx;
+			top: -20rpx;
 		}
 	}
 
@@ -316,5 +326,18 @@
 		color: #000000;
 		text-align: center;
 		padding: 10rpx;
+	}
+
+	.daddasdass {
+		margin-top: 160rpx;
+		height: 80rpx;
+		line-height: 80rpx;
+		text-align: center;
+		background: #e25c5c;
+		border-radius: 10rpx;
+		font-size: 30rpx;
+		font-weight: 400;
+		color: #FFFFFF;
+		width: 100%;
 	}
 </style>

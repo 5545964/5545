@@ -146,9 +146,10 @@
 		},
 		methods: {
 			go_shop(ev) {
-				uni.setStorageSync("go_shop",ev)
+				// uni.setStorageSync("go_shop",ev)
 				uni.navigateTo({
-					url: "./fenlei"
+					// url: "./fenlei"
+					url:"./FlagshipDetail?id="+ev.id
 				})
 			},
 			goshop(ev) {
@@ -181,9 +182,9 @@
 					if (data.data.code == 1) {
 						this.cateList = data.data.data.status
 						this.swichMenu(0)
-						if (this.cateList[0].id != 31 || this.cateList[0].id != 32 || this.cateList[0].id != 33) {
-							this.mmok = 0
-						}
+						// if (this.cateList[0].id != 31 || this.cateList[0].id != 32 || this.cateList[0].id != 33) {
+						// 	this.mmok = 1
+						// }
 					}
 				})
 			},

@@ -7,8 +7,11 @@
 					<view class="name pad">
 						{{userinfo.username}}
 					</view>
+					<view class="name" style="font-size:15px;margin-bottom:30rpx;">
+						{{userinfo.bbs.type}}
+					</view>
 					<view class="text pad">
-						{{userinfo.biaoti||"不止设计 · 共赢卓越"}}
+						{{userinfo.biaoti||"设计师买手整装平台"}}
 					</view>
 					<view class="add pad">
 						{{cardinfo.city||""}}
@@ -21,7 +24,7 @@
 						<view v-for="(item,index) in rinima" :key="index">
 							<view class="cet vxcvx" v-if="item !=''" @click="copy(item,index)">
 								<image class="img" :src="'../../static/icons'+index+'.png'" mode="aspectFit"></image>
-								<view class="text" style="width: 100rpx;" v-if="index == 5">
+								<view class="text" style="width: 100rpx;" v-if="index == 3">
 									{{item}}
 								</view>
 							</view>
@@ -112,20 +115,22 @@
 			this.rinima.push(this.userinfo.mobile)
 			this.rinima.push(this.userinfo.email)
 			this.rinima.push(this.userinfo.wechat)
-			this.rinima.push(this.userinfo.qq)
-			this.rinima.push("")
+			// this.rinima.push(this.userinfo.qq)
+			// this.rinima.push("")
 			this.rinima.push("导航到我的公司！")
 			this.userinfo.work.split(",").forEach(item => {
 				this.imgList.push({
 					image: this.$imgPath + item
 				})
 			})
-			this.$api.loupanden().then(data => {
+			this.$api.loupanden({
+				limit:10
+			}).then(data => {
 				if (data.data.code == 1) {
-					data.data.data.status.sort(function () {
+					data.data.data.status.data.sort(function () {
 					 return Math.random() - 0.5;   // 值为 -0.5 ~ 0.5 的随机数
 					});
-					this.tuijian = [...data.data.data.status];
+					this.tuijian = [...data.data.data.status.data];
 				}
 			})
 		},

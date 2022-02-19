@@ -1,6 +1,10 @@
 import request from "./request.js"
 
 export default {
+	// bydshop/userag 
+	userag(params = {}) {
+		return request.post("/api/bydshop/userag", params);
+	},
 	// bydshop/sqexpress快递
 	sqexpress(params = {}) {
 		return request.post("/api/bydshop/sqexpress", params);
@@ -240,7 +244,7 @@ export default {
 	ordertui(params = {}) {
 		return request.post("/api/bydshop/ordertui", params);
 	},
-	// 我的订单 /api/bydshop/myorderI 
+	// 我的订单 /api/bydshop/myorder
 	myorder(params = {}) {
 		return request.post("/api/bydshop/myorder", params);
 	},

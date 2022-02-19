@@ -14,8 +14,8 @@
 			</u-navbar>
 		</view>
 		<view class="home">
-			<view class="back">
-				<view class="">
+			<view class="back" style="justify-content: center;align-items: center;">
+				<view style="position: relative;">
 					<view class="dads">
 						<view class="mony xiaosize">
 							￥
@@ -23,51 +23,22 @@
 						<view class="mony dasize">
 							{{canprice}}
 						</view>
+					</view>
+					<view class="mony xiaosize" style="font-size:24rpx;text-align: center;margin-top: 20rpx;">
+						可提现金额
+					</view>
+					<view class="cet" style="margin-top: 50rpx;" @click="wodeteam">
 						<view class="mony xiaosize">
-							可提现(元)
+							我的团队
 						</view>
+						<u-icon name="arrow-right" color="#ffffff" size="26"></u-icon>
 					</view>
-					<view class="yaoqingma">
-						<!-- 邀请码：321654987 -->
-					</view>
-					<!-- <view class="cet" style="margin-top: 30rpx;" @click="tanchuchen">
-						<view class="no">
-							￥0.00不可提现(元)
-						</view>
-						<image class="imgs" src="../../static/wenhao.png" mode="aspectFit"></image>
-					</view> -->
 				</view>
 				<view class="tixian" @click="tixian">
 					提佣申请
 				</view>
 			</view>
-			<view style="background-color: #FFFFFF;height: 180rpx;"></view>
-			<view class="center">
-				<view class="">
-					<view class="text">
-						总佣金(元)
-					</view>
-					<view class="number">
-						￥{{allprice}}
-					</view>
-				</view>
-				<view class="">
-					<view class="text">
-						可提佣金(元)
-					</view>
-					<view class="number">
-						￥{{canprice}}
-					</view>
-				</view>
-			</view>
-			<view class="">
-				<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
-			</view>
 			<view class="hahahahaxczxc" v-show="current == 0">
-				<view class="erji">
-					<u-tabs :inactive-color="'#999999'" :bg-color="''" :bold="false" :showBar="false" :list="lists"
-						:weizhi="false" :is-scroll="false" :current="currents" @change="changes"></u-tabs>
-				</view>
 				<view class="ccxv">
 					<view class="text">
 						选择时间
@@ -92,9 +63,9 @@
 					<view class="win">
 						佣金收益
 					</view>
-					<view class="win">
+					<!-- <view class="win">
 						备注
-					</view>
+					</view> -->
 				</view>
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
 					<view class="vdfdd" v-if="item.money==currents">
@@ -110,9 +81,9 @@
 						<view class="win">
 							{{item.price||0}}
 						</view>
-						<view class="win">
+						<!-- <view class="win">
 							{{item.type==0?'商品':'拉新'}}
-						</view>
+						</view> -->
 					</view>
 				</view>
 			</view>
@@ -240,6 +211,11 @@
 			})
 		},
 		methods: {
+			wodeteam(){
+				uni.navigateTo({
+					url:"../pagesA/gongju11?shejishi=1"
+				})
+			},
 			getdata() {
 				// 1是设计师
 				this.$api.mysub({
@@ -346,7 +322,7 @@
 			}
 
 			.ccxv {
-				padding: 0 30rpx;
+				padding: 30rpx;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
@@ -443,13 +419,15 @@
 			}
 
 			.tixian {
-				margin-top: 20rpx;
-				width: 200rpx;
+				position: absolute;
+				right: 0;
+				top: 200rpx;
+				width: 180rpx;
 				height: 70rpx;
 				line-height: 70rpx;
 				text-align: center;
 				background: #FFFFFF;
-				border-radius: 35rpx;
+				border-radius: 35rpx 0 0 35rpx;
 				font-size: 28rpx;
 				font-weight: 400;
 				color: #007399;
@@ -526,5 +504,9 @@
 				height: 24rpx;
 			}
 		}
+	}
+	.fanhui {
+		width: 8rpx;
+		height: 16rpx;
 	}
 </style>

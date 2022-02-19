@@ -44,7 +44,7 @@
 						<view class="name">
 							{{itemc.name}}
 						</view>
-						<view class="name">
+						<view class="name" style="margin: 20rpx 0;">
 							规格：{{itemc.specidsize}}
 						</view>
 						<view class="">
@@ -136,7 +136,7 @@
 				<view v-if="buyanzheng" class="button" @click="xianshi">
 					提交订单
 				</view>
-				<view v-else class="button" @click="annui()">
+				<view v-else class="button" @click="yuyuesss = true">
 					提交订单
 				</view>
 			</view>
@@ -210,7 +210,7 @@
 					<view class="hkhnij" @click="tongyi(0)">
 						暂不使用
 					</view>
-					<view class="hkhnij jjhgj" @click="annui()">
+					<view class="hkhnij jjhgj" @click="bjnm">
 						同意协议
 					</view>
 				</view>
@@ -262,6 +262,28 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 确认取消该订单么？ -->
+		<u-popup width="640" :closeable="true" border-radius="30" v-model="yuyuesss" mode="center">
+			<view class="popup">
+				<view class="top">
+					提示
+				</view>
+				<view class="cets" style="font-size: 36rpx;">
+					是否预约定制柜设计师
+				</view>
+				<view class="xian">
+
+				</view>
+				<view class="bottoms">
+					<view class="sdasas" @click="yuyueyuyue(0)">
+						取消
+					</view>
+					<view class="czcxc" @click="yuyueyuyue(1)">
+						预约
+					</view>
+				</view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -269,6 +291,7 @@
 	export default {
 		data() {
 			return {
+				yuyuesss: false,
 				swjorderid: 0,
 				swj: 0,
 				dinjing: 0,
@@ -298,7 +321,9 @@
 				goodsdata: [],
 				cartid: 0,
 				orderid: "",
-				iscartid: true
+				iscartid: true,
+				dzg: 0,
+				xieyiid: []
 			};
 		},
 		onLoad(ev) {
@@ -362,6 +387,7 @@
 			aa.forEach(item => {
 				if (item.state == 4) {
 					that.xieyi.push(item)
+					that.xieyiid.push(item.id)
 				}
 			})
 			if (that.xieyi.length > 0) {
@@ -371,6 +397,40 @@
 			}
 		},
 		methods: {
+			// 同意协议
+			bjnm() {
+				// if (this.buyanzheng) {
+					let mm = 0
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							mm++
+						}
+					})
+					if (this.xieyi.length != mm) {
+						return uni.showToast({
+							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					this.shoujiyanzheng = false;
+					this.yuedu = false
+				// }
+				this.xieyiid.forEach(item => {
+					this.$api.userag({
+						userid: uni.getStorageSync("user_info").id,
+						agid: item
+					})
+				})
+
+				this.yuedu = false
+				this.yuyuesss = true
+			},
+			// 预约定制柜设计师
+			yuyueyuyue(ev) {
+				this.yuedu = false
+				this.dzg = ev
+				this.annui()
+			},
 			go_code() {
 				if (this.time == 0) {
 					this.time = 60
@@ -477,22 +537,8 @@
 				}
 			},
 			annui() {
-				if (this.buyanzheng) {
-					let mm = 0
-					this.xieyi.forEach(item => {
-						if (item.check) {
-							mm++
-						}
-					})
-					if (this.xieyi.length != mm) {
-						return uni.showToast({
-							title: "请阅读并同意协议",
-							icon: "none"
-						})
-					}
-					this.shoujiyanzheng = false;
-					this.yuedu = false
-				}
+				this.yuyuesss = false
+				
 				let shopids = []
 				let specidsizes = []
 				let specids = []
@@ -520,7 +566,8 @@
 						type: 0,
 						specidsize: specidsizes,
 						specid: specids,
-						price: this.tijiaozjia
+						price: this.tijiaozjia,
+						dzg: this.dzg
 					}).then(res => {
 						if (res.data.code == 200) {
 							this.orderid = res.data.orderid
@@ -1006,7 +1053,7 @@
 				}
 
 				.name {
-					margin-bottom: 40rpx;
+					// margin-bottom: 40rpx;
 					font-size: 24rpx;
 					font-weight: 400;
 					color: #333333;

@@ -2,11 +2,8 @@
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
 			<view class="" style="width: 690rpx;height: 390rpx;">
-				<video v-if="!item.video" :id="'video' + index" class="vide" @play="playing"
-					src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4"
-					@error="videoErrorCallback" controls></video>
-				<video v-else :id="'video' + index" class="vide" @play="playing" :src="item.video"
-					@error="videoErrorCallback" controls></video>
+				<video :id="'video' + item.id" class="vide" @play="playing" :src="item.video" @error="videoErrorCallback"
+					controls></video>
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">
 				<button open-type="share" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">
@@ -16,8 +13,10 @@
 					</view>
 				</button>
 				<view class="dasdxz" @click="collection(item)">
-					<image class="img" v-show="!item.isfollow" :src="'../../../static/shiping1.png'" mode="aspectFit"></image>
-					<image class="img" v-show="item.isfollow" :src="'../../../static/shiping1true.png'" mode="aspectFit"></image>
+					<image class="img" v-show="!item.isfollow" :src="'../../../static/shiping1.png'" mode="aspectFit">
+					</image>
+					<image class="img" v-show="item.isfollow" :src="'../../../static/shiping1true.png'"
+						mode="aspectFit"></image>
 					<view class="text">
 						收藏
 					</view>
@@ -29,8 +28,10 @@
 					</view>
 				</view>
 				<view class="dasdxz" @click="dianzhan(item,index)">
-					<image class="img" v-show="!item.iszan" :src="'../../../static/shiping3.png'" mode="aspectFit"></image>
-					<image class="img" v-show="item.iszan" :src="'../../../static/shiping3true.png'" mode="aspectFit"></image>
+					<image class="img" v-show="!item.iszan" :src="'../../../static/shiping3.png'" mode="aspectFit">
+					</image>
+					<image class="img" v-show="item.iszan" :src="'../../../static/shiping3true.png'" mode="aspectFit">
+					</image>
 					<view class="text">
 						{{item.zan||0}}
 					</view>
@@ -78,6 +79,7 @@
 		},
 		data() {
 			return {
+				videoContext: "",
 				list: [],
 				dijige: 0,
 			}
@@ -92,11 +94,39 @@
 		},
 		mounted() {
 			this.list = [...this.vlist]
-			// this.$emit("pinglun", this.list[this.dijige], this.dijige);
+			console.log(this.videoContext);
 		},
 		methods: {
-			playing(ev) {
+			playing(e) {
+				let that = this;
+				let currentId = e.currentTarget.id; // 获取当前视频id
+				that.videoContent = uni.createVideoContext(currentId);
+				let trailer = that.list;
+				trailer.forEach(function(item, index) { // 获取json对象并遍历, 停止非当前视频
+					if (item.video != null && item.video != "") {
+						let temp = 'video' + item.id;
+						if (temp != currentId) {
+							uni.createVideoContext(temp,that).pause(); //暂停视频播放事件
+							console.log(uni.createVideoContext(temp,that));
+						}
+					}
+
+				})
+
+			},
+			playingss(ev) {
 				this.$emit("play", ev);
+				let videoContext = uni.createVideoContext(ev.currentTarget.id)
+				this.list.forEach((item, index) => {
+					if (item.video != null && item.video != "") {
+						let temp = 'video' + index;
+						console.log(temp != ev.currentTarget.id);
+						if (temp != ev.currentTarget.id) {
+							console.log(temp);
+							uni.createVideoContext(temp).pause(); //暂停视频播放事件
+						}
+					}
+				})
 			},
 			share(ev) {
 				this.$emit("share", ev);

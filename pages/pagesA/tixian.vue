@@ -23,21 +23,21 @@
 					<view class="" v-if="item.money==currents&&item.type==current">
 						<view class="top-top">
 							<view class="cet">
-								<view :class="[item.check ? 'active' : 'yuan']" @click="xuanzhe(index)"
+								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
 									v-show="currents == 0">
 								</view>
 								<view class="cdscdf">
 									2021-08-09 14:25:25
 								</view>
 							</view>
-							<view class="rigtt">
+							<view class="rigtt" @click="god(item)">
 								<view class="text">
 									查看订单详情
 								</view>
 								<image class="img" src="../../static/icon_shop_hsmore.png" mode="aspectFit"></image>
 							</view>
 						</view>
-						<view class="top-bottom">
+						<view class="top-bottom" @click="god(item)">
 							<view class="">
 								<view class="text">
 									订单编号：{{item.order_id}}
@@ -71,7 +71,7 @@
 					<view class="" v-if="item.money==currents&&item.type==current">
 						<view class="top-top">
 							<view class="cet">
-								<view :class="[item.check ? 'active' : 'yuan']" @click="xuanzhe(index)"
+								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
 									v-show="currents == 0">
 								</view>
 								<view class="cdscdf">
@@ -147,6 +147,11 @@
 
 		},
 		methods: {
+			god(ev){
+				uni.navigateTo({
+					url:"./goods_data?order_id="+ev.order_id
+				})
+			},
 			shengfen() {
 				if (uni.getStorageSync("user_info").freelance_id != null && uni.getStorageSync("user_info").freelance_id != '') {
 					let list = {
@@ -166,7 +171,7 @@
 
 			},
 			xuanzhe(ev) {
-				this.datas[ev].check = !this.datas[ev].check;
+				this.datas[ev].checked = !this.datas[ev].checked;
 			},
 			changes(index) {
 				this.currents = index;

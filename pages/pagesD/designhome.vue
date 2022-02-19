@@ -145,10 +145,11 @@
 				img: this.$imgPath,
 				user_info: {},
 				desinfo: {},
-				gongju_list: [{
-						name: "我的团队",
-						url: "../../pagesA/gongju11?shejishi=1"
-					},
+				gongju_list: [
+					// {
+					// 	name: "我的团队",
+					// 	url: "../../pagesA/gongju11?shejishi=1"
+					// },
 					{
 						name: "我的佣金	",
 						url: "../designyongjin?isshejishi=jjjj"

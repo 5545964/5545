@@ -115,7 +115,7 @@
 				this.navbarheigth = 0
 			}
 			this.bianheigth = this.tabberheigth - 300;
-			this.bianheigths = this.tabberheigth - 500;
+			this.bianheigths = this.tabberheigth - 400;
 			// this.bianrights = this.widthwidth;
 			// this.bianright = this.widthwidth;
 		},

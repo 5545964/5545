@@ -512,6 +512,8 @@
 									data.data.data.status.forEach(item => {
 										aa = aa + 1
 									})
+								}else{
+									aa = 0
 								}
 								if (aa >= 99) {
 									aa = "..."

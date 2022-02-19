@@ -35,10 +35,13 @@
 							<view class="price-change-num clearfix">
 								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
 								<view class="num-box centerboth">
-									<text class="iconfont car-sub" @click.stop="changeNum(0,shopIndex)"></text>
+									<text class="iconfont car-sub" @click.stop="changeNums(0,shopIndex)"></text>
 									<view>{{item.num}}</view>
-									<text class="iconfont car-add" @click.stop="changeNum(1,shopIndex)"></text>
+									<text class="iconfont car-add" @click.stop="changeNums(1,shopIndex)"></text>
 								</view>
+							</view>
+							<view class="fdsds">
+								<text class="fdsds"> 规格：</text>{{item.specidsize}}
 							</view>
 							<text class="fdsds"> 合计：</text><text
 								class="fsdfsfs fdsds">￥{{Number(item.price).toFixed(2)}}</text>
@@ -52,10 +55,10 @@
 			<view class="" v-if="carList.length != 0">
 				普通商品
 			</view>
-			<view @click="toshopdetail(item)" v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
+			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
 				@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :data-index="shopIndex"
 				:style="'right:'+item.right+'px'">
-				<view class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
+				<view class="list" @click="toshopdetail(item)" :class="{ 'aaaaaaaaaa': item.right == 0 }">
 					<view class="btn centerboth" v-if="item.selected==true" @click.stop="selThis(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
@@ -73,6 +76,9 @@
 									<view>{{item.num}}</view>
 									<text class="iconfont car-add" @click.stop="changeNum(1,shopIndex)"></text>
 								</view>
+							</view>
+							<view class="fdsds">
+								<text class="fdsds"> 规格：</text>{{item.specidsize}}
 							</view>
 							<text class="fdsds"> 合计：</text><text
 								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)}}</text>
@@ -492,6 +498,30 @@
 				this.carList = []
 				this.carList = [...carList]
 				that.getAllMount();
+			},
+			changeNums: function(type, index) { //适用于根据数量改变购物车
+				var that = this;
+				var carList = that.yuyuecarList;
+				let aa = Number(carList[index].num)
+				if (type == 0) {
+					if (aa <= 1) {
+						return false;
+					}
+					aa = aa - 1
+				} else {
+					if (aa >= carList[index].shop.shopkucun) {
+						uni.showToast({
+							title: '库存不足',
+							icon: 'none'
+						})
+						return false;
+					}
+					aa = aa + 1
+				}
+				carList[index].num = aa;
+				this.yuyuecarList = []
+				this.yuyuecarList = [...carList]
+				that.getAllMounts();
 			},
 			//开始触摸滑动
 			drawStarts(e) {

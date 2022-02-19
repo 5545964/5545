@@ -25,6 +25,8 @@
 						<scroll-view :style="'height: ' + height + 'px;'" scroll-y="true">
 							<view class="swiper-item" v-for="(items, indexs) in item.data_list" :key="indexs">
 								<view class="top" @click="goods(items)">
+
+
 									<view class="text"> 订单编号：{{ items.orderid }} </view>
 									<view class="status" v-show="items.state == 0"> 待付款 </view>
 									<view class="status" v-show="items.state == 1"> 待发货 </view>
@@ -35,7 +37,6 @@
 									<view class="status" v-show="items.state == 6"> 退款成功 </view>
 									<view class="status" v-show="items.state == 7"> 退款已驳回 </view>
 									<view class="status" v-show="items.state == 9"> 已取消 </view>
-
 									<block
 										v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
 										<view class="status" v-show="items.states == 0"> 退换货审核中 </view>
@@ -43,16 +44,6 @@
 										<view class="status" v-show="items.states == 2"> 退换货已驳回 </view>
 										<view class="status" v-show="items.states == 3"> 退换货完成 </view>
 									</block>
-
-
-									<!-- <view class="status" v-show="items.state == 10"> 退货审核中 </view> -->
-									<!-- <view class="status" v-show="items.state == 11"> 退货成功 </view> -->
-									<!-- <view class="status" v-show="items.state == 12"> 退货已驳回 </view> -->
-
-									<!-- <view class="status" v-show="items.state == 13"> 换货审核中 </view>
-									<view class="status" v-show="items.state == 14"> 换货成功 </view>
-									<view class="status" v-show="items.state == 15"> 换货已驳回 </view> -->
-
 									<view class="status" v-show="items.state == 16"> 报装中 </view>
 									<view class="status" v-show="items.state == 17"> 已安装 </view>
 								</view>
@@ -119,7 +110,8 @@
 									<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
 										完成安装
 									</view>
-									<view class="button" v-if="items.state == 16&&items.bz==1" @click="lookdetails(items)">
+									<view class="button" v-if="items.state == 16&&items.bz==1"
+										@click="lookdetails(items)">
 										查看安装详情
 									</view>
 									<view class="button" @click="annui(6, items)"
@@ -226,19 +218,6 @@
 				</view>
 			</view>
 		</u-popup>
-		<!-- 确认安装完成 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="qurren" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 是否安装完成 </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="qurrere(0)"> 取消 </view>
-					<view class="czcxc" @click="qurrere(1)" v-if="buyanzheng"> 确定 </view>
-					<view class="czcxc" @click="anzhaungwancheng()" v-else> 确定 </view>
-				</view>
-			</view>
-		</u-popup>
 		<!-- 确认取消退款 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
 			<view class="popup">
@@ -251,33 +230,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<!-- 是否需要安装 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 是否需要安装？</view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="baozhaungshowss(0)"> 否 </view>
-					<view class="czcxc" @click="baozhaungshowss(1)" v-if="buyanzheng"> 是 </view>
-					<view class="czcxc" @click="tanchuanbaozhuang()" v-else> 是</view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 确认收到该订单商品 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 确认收到该订单商品？ </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="xuanzhes(0)"> 取消 </view>
-					<view class="czcxc" @click="xuanzhes(1)"> 确定 </view>
-				</view>
-			</view>
-		</u-popup>
 		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
-
 		<!-- 确保是你本人操作 -->
 		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
 			<view class="yueduwo">
@@ -336,12 +289,54 @@
 					<view class="hkhnij" @click="tongyi(0)">
 						暂不使用
 					</view>
-					<view class="hkhnij jjhgj" @click="tanchuanbaozhuang()">
+					<view class="hkhnij jjhgj" @click="tongyixieyi()">
 						同意协议
 					</view>
 				</view>
 			</view>
 		</u-popup>
+		<!-- 确认安装完成 -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="qurren" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 是否安装完成 </view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="qurren = false"> 取消 </view>
+					<view class="czcxc" @click="dakaishouji(2)" v-if="yianzhaungkaiguan"> 确定 </view>
+					<view class="czcxc" @click="anzhaungwancheng()" v-else> 确定 </view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 是否需要安装 -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 是否需要安装？</view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="baozhuangshow = false"> 否 </view>
+					<view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
+					<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view>
+				</view>
+			</view>
+		</u-popup>
+		<!-- 确认收到商品 -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 确认收到该订单商品？ </view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="xuanzhes(0)"> 取消 </view>
+					<view class="czcxc" v-if="querenqianshoukaiguan" @click="dakaishouji(0)">
+						确定
+					</view>
+					<view class="czcxc" v-else @click="querenshouhuo"> 确定 </view>
+				</view>
+			</view>
+		</u-popup>
+	
 	</view>
 </template>
 
@@ -350,8 +345,17 @@
 	export default {
 		data() {
 			return {
-				bzxq:{},
-				anzhuang:false,
+				// 已安装
+				yianzhaungkaiguan: true,
+				yianzhaungxieyi: [],
+				// 是否安装
+				shifouanzhaungkaiguan: true,
+				shifouanzhaungxieyi: [],
+				// 确认收货
+				querenqianshoukaiguan: true,
+				querenqianshouxieyi: [],
+				bzxq: {},
+				anzhuang: false,
 				kuaididata: {},
 				kuaididanhao: "",
 				kuaidigongsi: "",
@@ -423,12 +427,11 @@
 					}
 				],
 				time: "",
-				mnbvcxz: true
 			};
 		},
 		onLoad(ev) {
 			uni.$on("number", () => {
-				this.current = 6
+				// this.current = 6
 			})
 			uni.$on("yuwancheng", () => {
 				this.current = 5
@@ -447,6 +450,57 @@
 			this.system();
 			this.allsss();
 
+
+			let aa = uni.getStorageSync("xieyi")
+			// // 已安装3
+			// yianzhaungkaiguan: true,
+			// yianzhaungxieyi: [],
+			// // 是否安装5
+			// shifouanzhaungkaiguan: true,
+			// shifouanzhaungxieyi: [],
+			// // 确认收货2
+			// querenqianshoukaiguan: true,
+			// querenqianshouxieyi: [],
+
+			if (aa) {
+				this.yiwanchengxieyi = [];
+				this.yianzhaungxieyi = [];
+				this.shifouanzhaungxieyi = [];
+				this.querenqianshouxieyi = [];
+				aa.forEach(item => {
+					if (item.state == 3) {
+						this.yianzhaungxieyi.push(item)
+					}
+					if (item.state == 5) {
+						this.shifouanzhaungxieyi.push(item)
+					}
+					if (item.state == 2) {
+						this.querenqianshouxieyi.push(item)
+					}
+				})
+				if (this.yianzhaungxieyi.length > 0) {
+					this.yianzhaungkaiguan = true
+				} else {
+					this.yianzhaungkaiguan = false
+				}
+				if (this.shifouanzhaungxieyi.length > 0) {
+					this.shifouanzhaungkaiguan = true
+				} else {
+					this.shifouanzhaungkaiguan = false
+				}
+				if (this.querenqianshouxieyi.length > 0) {
+					this.querenqianshoukaiguan = true
+				} else {
+					this.querenqianshoukaiguan = false
+				}
+
+			} else {
+				this.yianzhaungkaiguan = false
+				this.shifouanzhaungkaiguan = false
+				this.querenqianshoukaiguan = false
+			}
+
+
 		},
 		watch: {
 			shoujiyanzheng(ev, el) {
@@ -456,15 +510,38 @@
 			}
 		},
 		methods: {
+			// 切换协议内容
+			dakaishouji(ev) {
+				this.zhuangtai = ev
+				if (ev == 0) {
+					this.xieyi = this.querenqianshouxieyi
+					this.buyanzheng = this.querenqianshoukaiguan
+					this.shows = false
+				}
+				if (ev == 1) {
+					this.xieyi = this.shifouanzhaungxieyi
+					this.buyanzheng = this.shifouanzhaungkaiguan
+					this.baozhuangshow = false
+				}
+				if (ev == 2) {
+					this.xieyi = this.yianzhaungxieyi
+					this.buyanzheng = this.yianzhaungkaiguan
+					this.qurren = false
+				}
+				this.shoujiyanzheng = true
+			},
 			// 查看安装详情 
-			lookdetails(item){
-				this.$api.bzxq({id:item.bzid}).then(data=>{
-					if(data.data.code==1){
-						this.bzxq=data.data.data.status
-						this.anzhuang=true
+			lookdetails(item) {
+				this.$api.bzxq({
+					id: item.bzid
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.bzxq = data.data.data.status
+						this.anzhuang = true
 					}
 				})
 			},
+			// 填写快递单号
 			kuaidiwow(ev) {
 				if (ev == 0) {
 					this.kuaidi = false
@@ -485,32 +562,18 @@
 					})
 				}
 			},
+			// 打开快递弹窗
 			kuaidiwo(ev) {
 				this.kuaididata = ev
-				console.log(ev.orderid);
 				this.kuaidi = true
 			},
-			tongyiss(ev) {
-				this.$api.agreement({
-					state: ev
-				}).then(data => {
-					if (data.data.code == 1) {
-						data.data.data.status.forEach(item => {
-							item["check"] = false
-						})
-						this.xieyi = data.data.data.status
-					} else {
-						this.mnbvcxz = false;
-					}
-				})
-			},
-
+			// 完成安装
 			jiesubaozhaung(ev) {
-				console.log(ev);
 				this.qurrsaen = ev
 				this.qurren = true
 			},
-			tanchuanbaozhuang() {
+			// 同意协议
+			tongyixieyi() {
 				if (this.buyanzheng) {
 					let mm = 0
 					this.xieyi.forEach(item => {
@@ -529,16 +592,40 @@
 				}
 				if (this.zhuangtai == 0) {
 					this.querenshouhuo()
-				} else if (this.zhuangtai == 1) {
-					this.baozhuangshow = false
-					uni.setStorageSync("baozhaung", this.mnbv.shop)
-					uni.navigateTo({
-						url: "./baozhaung?orderid=" + this.mnbv.orderid + "&tiao=1"
-					})
-				} else if (this.zhuangtai == 2) {
+				}
+				if (this.zhuangtai == 1) {
+					this.shifouanzhuangdsadas()
+				}
+				if (this.zhuangtai == 2) {
 					this.anzhaungwancheng()
 				}
 			},
+			// 去报装
+			shifouanzhuangdsadas() {
+				this.baozhuangshow = false
+				uni.setStorageSync("baozhaung", this.mnbv.shop)
+				uni.navigateTo({
+					url: "./baozhaung?orderid=" + this.mnbv.orderid + "&tiao=1"
+				})
+			},
+			//确认收货
+			querenshouhuo() {
+				this.shows = false
+				this.$api.sureorder({
+					id: this.order_id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.shows = false
+						uni.showToast({
+							title: "收货成功",
+							icon: "none",
+						});
+						this.allsss();
+						this.current = 3
+					}
+				})
+			},
+			// 已安装
 			anzhaungwancheng() {
 				this.$api.successloading({
 					orderid: this.qurrsaen.orderid
@@ -548,8 +635,7 @@
 							title: "安装完成",
 							icon: "success"
 						})
-						this.shoujiyanzheng = false
-						this.yuedu = false
+						this.qurren = false
 						this.allsss();
 					} else {
 						uni.showToast({
@@ -557,52 +643,14 @@
 							icon: "success"
 						})
 					}
-					this.qurren = false
 				})
 			},
-
-			// 点击弹窗确认打开手机验证
-			//确认收货
-			xuanzhes(ev) {
-				if (ev == 1) {
-					this.tongyiss(2)
-					if (this.mnbvcxz) {
-						this.zhuangtai = 0
-						this.shoujiyanzheng = true;
-					} else {
-						this.querenshouhuo()
-					}
-				}
-				this.shows = false;
-			},
-			// 完成安装
-			qurrere(ev) {
-				if (ev == 1) {
-					this.tongyiss(3)
-					this.shoujiyanzheng = true
-					this.zhuangtai = 2
-				}
-				this.qurren = false
-			},
-			//是否安装
-			baozhaungshowss(ev) {
-				if (ev == 1) {
-					this.tongyiss(3) //错了，3是已安装
-					this.zhuangtai = 1
-					this.shoujiyanzheng = true
-				}
-				this.baozhuangshow = false
-			},
-			// 点击弹窗确认打开手机验证
-
-
-
-
-
+			// 报装是否安装
 			baozhaung(ev) {
 				this.mnbv = ev
 				this.baozhuangshow = !this.baozhuangshow
 			},
+			// 删除此订单
 			delorder(ev) {
 				let that = this;
 				uni.showModal({
@@ -610,7 +658,6 @@
 					content: ev.orderid,
 					success: function(res) {
 						if (res.confirm) {
-							console.log('用户点击确定');
 							that.$api.deleorder({
 								orderid: ev.orderid
 							}).then(data => {
@@ -623,20 +670,19 @@
 									that.allsss()
 								}
 							})
-						} else if (res.cancel) {
-							console.log('用户点击取消');
 						}
 					}
 				});
 			},
+			// 初始化数据
 			allsss() {
 				this.$api.myorder({
 					user_id: uni.getStorageSync("user_info").id,
 				}).then((data) => {
+					this.list.forEach((item, index) => {
+						item.data_list = [];
+					});
 					if (data.data.code == 1) {
-						this.list.forEach((item, index) => {
-							item.data_list = [];
-						});
 						this.list[0].data_list = data.data.data.status;
 						data.data.data.status.forEach((item) => {
 							switch (item.state) {
@@ -658,101 +704,57 @@
 								default:
 							}
 						});
-						// this.list[0].data_list = [];
-						// this.list[0].data_list = [...data.data.data.status];
-						// this.chulidata();
 					}
 				});
 			},
-			//订单
-			order() {
-				this.$api.myorderI({
-					user_id: 1,
-				}).then((data) => {
-					if (data.data.code == 1) {
-
-					}
-				});
-			},
-			//订单
 			//订单详情
 			goods(ev) {
-				// let aa = JSON.stringify(ev)
 				uni.navigateTo({
 					url: "../pagesA/goods_data?order_id=" + ev.orderid,
 				});
 			},
 			//退款
 			xuanzhea(ev) {
-				switch (ev) {
-					case 0:
-						this.showa = false;
-						break;
-					case 1:
-						this.$api.qxorder({
-							orderid: this.order_id
-						}).then(data => {
-							if (data.data.code == 1) {
-								uni.showToast({
-									title: data.data.msg,
-									icon: "none",
-								});
-								this.allsss();
-							}
-						})
-						this.showa = false;
-						break;
-					default:
+				if (ev == 1) {
+					this.$api.qxorder({
+						orderid: this.order_id
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: data.data.msg,
+								icon: "none",
+							});
+							this.allsss();
+						}
+					})
 				}
+				this.showa = false;
 			},
-			//确认收货
-			querenshouhuo() {
-				this.$api.sureorder({
-					id: this.order_id
-				}).then(data => {
-					if (data.data.code == 1) {
-						uni.showToast({
-							title: "收货成功",
-							icon: "none",
-						});
-						this.allsss();
-						this.current = 3
-					}
-				})
-			},
-
 			// 取消订单
 			xuanzhe(ev) {
-				switch (ev) {
-					case 0:
-						this.show = false;
-						break;
-					case 1:
-						this.$api
-							.orderdzf({
-								id: this.hahahaxuanzhe.id,
-							})
-							.then((data) => {
-								if (data.data.code == 1) {
-									uni.showToast({
-										title: "订单取消成功",
-										duration: 1000,
-										icon: "success",
-									});
-									this.allsss();
-									this.show = false;
-									this.current = 0
-								} else {
-									uni.showToast({
-										title: data.data.msg,
-										duration: 1000,
-										icon: "success",
-									});
-								}
+				if (ev == 1) {
+					this.$api.orderdzf({
+						id: this.hahahaxuanzhe.id,
+					}).then((data) => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "订单取消成功",
+								duration: 1000,
+								icon: "success",
 							});
-						break;
-					default:
+							this.show = false;
+							this.current = 0
+							this.allsss();
+						} else {
+							uni.showToast({
+								title: data.data.msg,
+								duration: 1000,
+								icon: "success",
+							});
+						}
+					});
 				}
+				this.show = false;
 			},
 			annui(ev, item) {
 				//0取消订单
@@ -841,52 +843,21 @@
 					default:
 				}
 			},
-			//处理数据
-			chulidata() {
-				this.list.forEach((item, index) => {
-					if (index != 0) {
-						item.data_list = [];
-					}
-				});
-				this.list[0].data_list.forEach((item) => {
-					switch (item.state) {
-						case "0":
-							this.list[1].data_list.push(item);
-							break;
-						case "1":
-							this.list[2].data_list.push(item);
-							break;
-						case "2":
-							this.list[3].data_list.push(item);
-							break;
-						case "16":
-							this.list[4].data_list.push(item);
-							break;
-						case "17":
-							this.list[5].data_list.push(item);
-							break;
-						default:
-							if (item.state != 9) {
-								this.list[6].data_list.push(item);
-							}
-					}
-				});
-				// this.list[2].data_list.forEach(item => {
-				// 	dayjs(item.updatetime).format('YYYY-MM-DD');
-
-				// })
-			},
+			// 轮播图高
 			system() {
 				let system = uni.getSystemInfoSync();
 				this.height = system.windowHeight;
 			},
+			// 轮播图切换
 			lun_change(ev) {
 				this.current = ev.detail.current;
 			},
+			// 切换
 			change(ev) {
 				this.current = ev;
 				this.title = this.lists[ev].name
 			},
+			// 返回
 			back(ev) {
 				switch (ev) {
 					case 0:
@@ -900,15 +871,18 @@
 					default:
 				}
 			},
+			// 同意协议
 			hahaha(item) {
 				item.check = !item.check
 			},
+			// 康复文本
 			fuwenben(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.name
 				})
 			},
+			// 检测验证码
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
@@ -924,17 +898,16 @@
 					this.shoujiyanzheng = false;
 				}
 			},
+			// 打开阅读
 			tongyi(ev) {
 				if (ev == 1) {
-					this.xieyi.forEach(item => {
-						item.check = false
-					})
 					this.yuedu = true;
 				} else {
 					this.shoujiyanzheng = false;
 					this.yuedu = false;
 				}
 			},
+			// 验证手机号
 			hahahaa(ev) {
 				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
@@ -944,6 +917,7 @@
 					})
 				}
 			},
+			// 获取验证码
 			go_code() {
 				if (this.timea == 0) {
 					this.timea = 60

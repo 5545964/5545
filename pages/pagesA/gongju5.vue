@@ -21,7 +21,7 @@
 							￥
 						</view>
 						<view class="mony dasize">
-							0.00
+							{{canprice}}
 						</view>
 						<view class="mony xiaosize">
 							可提现(元)
@@ -30,12 +30,12 @@
 					<view class="yaoqingma">
 						<!-- 邀请码：321654987 -->
 					</view>
-					<view class="cet" style="margin-top: 30rpx;" @click="tanchuchen">
+					<!-- <view class="cet" style="margin-top: 30rpx;" @click="tanchuchen">
 						<view class="no">
 							￥0.00不可提现(元)
 						</view>
 						<image class="imgs" src="../../static/wenhao.png" mode="aspectFit"></image>
-					</view>
+					</view> -->
 				</view>
 				<view class="tixian" @click="tixian">
 					提佣申请
@@ -48,7 +48,7 @@
 						总佣金(元)
 					</view>
 					<view class="number">
-						￥5555.66
+						￥{{allprice}}
 					</view>
 				</view>
 				<view class="">
@@ -56,7 +56,7 @@
 						可提佣金(元)
 					</view>
 					<view class="number">
-						￥4444.66
+						￥{{canprice}}
 					</view>
 				</view>
 			</view>
@@ -96,22 +96,22 @@
 						备注
 					</view>
 				</view>
-				<view class="czcxczcxc" v-for="(item,index) in 50" :key="index">
-					<view class="vdfdd">
+				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
+					<view class="vdfdd" v-if="item.money==currents">
 						<view class="win">
-							123456789
+							{{item.order_id}}
 						</view>
 						<view class="win">
-							完成
+							{{item.state==1?'已完成':"未完成"}}
 						</view>
 						<view class="win">
-							666.56
+							{{item.cjprice||0}}
 						</view>
 						<view class="win">
-							100.00
+							{{item.price||0}}
 						</view>
 						<view class="win">
-							来源
+							{{item.type==0?'商品':'拉新'}}
 						</view>
 					</view>
 				</view>
@@ -141,8 +141,11 @@
 					<view class="win">
 						提佣进度
 					</view>
+					<view class="win">
+						关联订单
+					</view>
 				</view>
-				<view class="czcxczcxc" v-for="(item,index) in 10" :key="index">
+				<view class="czcxczcxc" v-for="(item,index) in 0" :key="index">
 					<view class="vdfdd">
 						<view class="wins">
 							11月8日 16:43
@@ -155,6 +158,13 @@
 						</view>
 						<view class="win">
 							完成
+						</view>
+						<view class="win cet">
+							<view class="">
+								查看订单
+							</view>
+							<image style="width: 10rpx;height: 16rpx;margin-left: 10rpx;"
+								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 						</view>
 					</view>
 				</view>
@@ -183,7 +193,10 @@
 	export default {
 		data() {
 			return {
-				show:false,
+				isshejishiss: 0,
+				allprice: 0,
+				canprice: 0,
+				show: false,
 				datas: new Date().toISOString().slice(0, 10),
 				lists: [{
 						name: "直接佣金"
@@ -201,15 +214,49 @@
 						name: "提现明细"
 					}
 				],
-				title: "",
+				monList: [],
+				title: "我的佣金",
 			};
 		},
 		onLoad(ev) {
-			this.title = ev.title;
+
+			if (ev.title) {
+				this.title = ev.title;
+			}
+			if (ev.isshejishi) {
+				this.isshejishiss = 1;
+			}
 
 		},
+		onShow() {
+			this.getdata()
+			this.$api.desmyuser({
+				user_id: uni.getStorageSync("user_info").id,
+			}).then(data => {
+				if (data.data.code == 1) {
+					let aa = data.data.data.myuser
+					uni.setStorageSync("des_info", data.data.data.myuser)
+				}
+			})
+		},
 		methods: {
-			guanbi(){
+			getdata() {
+				// 1是设计师
+				this.$api.mysub({
+					type: this.isshejishiss,
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.monList = data.data.data.status
+						this.allprice = data.data.data.all.toFixed(2);
+						this.canprice = data.data.data.can.toFixed(2);
+						uni.setStorageSync("monList", this.monList)
+					} else {
+						uni.setStorageSync("monList", [])
+					}
+				})
+			},
+			guanbi() {
 				this.show = false
 			},
 			tanchuchen() {
@@ -217,7 +264,7 @@
 			},
 			tixian() {
 				uni.navigateTo({
-					url: "./tixian?title=提佣申请"
+					url: "../pagesA/tixian"
 				})
 			},
 			openDatetimePicker() {
@@ -225,7 +272,6 @@
 			},
 			handleSubmit(e) {
 				this.datas = `${e.year}-${e.month}-${e.day}`;
-
 			},
 			changes(index) {
 				this.currents = index;
@@ -256,12 +302,14 @@
 		.hahahahaxczxc {
 			.wins {
 				text-align: center;
-				width: 40%;
+				width: 20%;
 			}
 
 			.win {
 				text-align: center;
 				width: 20%;
+				text-overflow: ellipsis;
+				overflow: hidden;
 			}
 
 			.czcxczcxc:nth-child(odd) {
@@ -415,9 +463,9 @@
 		}
 
 	}
-	
-	.tanchu{
-		.top{
+
+	.tanchu {
+		.top {
 			width: 640rpx;
 			height: 90rpx;
 			line-height: 90rpx;
@@ -427,7 +475,8 @@
 			font-weight: 400;
 			color: #FEFEFE;
 		}
-		.center{
+
+		.center {
 			padding: 50rpx;
 			background: #F8F8F8;
 			text-align: center;
@@ -435,7 +484,8 @@
 			font-weight: 400;
 			color: #333333;
 		}
-		.text{
+
+		.text {
 			width: 640rpx;
 			height: 80rpx;
 			text-align: center;

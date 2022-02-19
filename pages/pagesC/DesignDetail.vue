@@ -34,7 +34,7 @@
 				</swiper-item>
 				<swiper-item v-if="video">
 					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
-						:src="$imgPath+video"></video>
+						:src="imgPath+video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -93,6 +93,7 @@
 	export default {
 		data() {
 			return {
+				imgPath:this.$imgPath,
 				disabled: false,
 				autoplay: true,
 				budakai: false,
