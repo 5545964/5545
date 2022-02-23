@@ -52,7 +52,7 @@
 						mode="aspectFit"></image>
 				</view>
 				<view class="daddasdass" v-if="desinger.zp.length!=0" @click="aaa = !aaa">
-					<text v-if="aaa">删除作品</text><text v-else>完成</text>
+					<text v-if="aaa">管理作品</text><text v-else>完成</text>
 				</view>
 			</view>
 		</view>
@@ -68,11 +68,7 @@
 				imgtitle: this.$imgPath,
 				desinger: {},
 				list_s: [{
-						name: "满意度",
-						num: 0
-					},
-					{
-						name: "成单率",
+						name: "创意度",
 						num: 0
 					},
 					{
@@ -80,7 +76,11 @@
 						num: 0
 					},
 					{
-						name: "创意度",
+						name: "成单率",
+						num: 0
+					},
+					{
+						name: "满意度",
 						num: 0
 					}
 				],
@@ -107,17 +107,16 @@
 							item.image = item.image.split(",")[0]
 						})
 						this.desinger = data.data.data.status
-						this.list_s[0].num = this.desinger.manyi
-						this.list_s[1].num = this.desinger.zy
-						this.list_s[2].num = this.desinger.yj
-						this.list_s[3].num = this.desinger.cy
+						this.list_s[3].num = this.desinger.manyi
+						this.list_s[2].num = this.desinger.zy
+						this.list_s[1].num = this.desinger.yj
+						this.list_s[0].num = this.desinger.cy
 						
 						if(this.desinger.zp.length == 0){
 							this.aaa = false
 						}else{
 							this.aaa = true
 						}
-						console.log(this.aaa);
 						this.$api.desmyuser({
 							user_id
 						}).then(data => {

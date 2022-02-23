@@ -30,21 +30,33 @@
 					</view>
 				</view>
 			</view>
-			<view style="margin-top: 100rpx;">
+			<view @click="show = true"
+				style="margin:25px 0;wxcs_style_margin:50rpx 0;display:flex;justify-content:space-between;align-items:center;">
+				<view class="">
+					常用理由
+				</view>
+				<view class="">
+					{{qwer}}
+				</view>
+			</view>
+			<view>
 				<view class="centre" v-for="(itemc, indexc) in shop_data" :key="indexc" @click="xuansss(indexc)">
-					<view :class="[itemc.checked ? 'yuan' : 'yuans']">
-
+					<view class="cet" style="width: 10%;">
+						<view :class="[itemc.checked ? 'yuan' : 'yuans']"></view>
 					</view>
-					<view style="margin-left: 20rpx;">
-						<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
-					</view>
-					<view style="margin-left: 10rpx;">
-						<view class="name">
-							{{ itemc.name }}
+					<view class="cet" style="width: 90%;">
+						<view>
+							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
-						<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-							class="fsdfsfs fdsds">￥{{itemc.sonprice}}</text>
+						<view style="margin-left: 10rpx;">
+							<view class="name">
+								{{ itemc.name }}
+							</view>
+							<text class="fdsds">共{{itemc.num}}件 合计：</text><text
+								class="fsdfsfs fdsds">￥{{itemc.sonprice}}</text>
+						</view>
 					</view>
+
 				</view>
 			</view>
 			<view class="inputs cet">
@@ -61,8 +73,9 @@
 						添加图片：
 					</view>
 					<view class="asdsss">
-						<u-upload width="160" height="160" @on-remove="remove" :action="action" @on-uploaded="uploaded" max-count="12"
-							:header="header" :form-data="formData" :name="name" size-type="compressed"></u-upload>
+						<u-upload width="160" height="160" @on-remove="remove" :action="action" @on-uploaded="uploaded"
+							max-count="12" :header="header" :form-data="formData" :name="name" size-type="compressed">
+						</u-upload>
 					</view>
 				</view>
 			</view>
@@ -75,6 +88,7 @@
 				提交申请
 			</view>
 		</view>
+		<u-select v-model="show" @confirm="changyong" :list="list"></u-select>
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
 	</view>
 </template>
@@ -83,6 +97,30 @@
 	export default {
 		data() {
 			return {
+				qwer: "请选择",
+				show: false,
+				list: [{
+						value: '1',
+						label: '不是自己想要的样式和颜色'
+					},
+					{
+						value: '2',
+						label: '商品与页面描述不符'
+					},
+					{
+						value: '2',
+						label: '商品价格变化'
+					},
+					{
+						value: '2',
+						label: '商品质量问题'
+					},
+					{
+						value: '2',
+						label: '其他'
+					}
+
+				],
 				imgtitle: this.$imgPath,
 				imglist: [],
 				name: "image", //上传
@@ -112,6 +150,10 @@
 			this.shop_data = [...this.alls_item.shop]
 		},
 		methods: {
+			changyong(ev) {
+				this.qwer = ev[0].label
+				console.log(ev);
+			},
 			xuansss(ev) {
 				let aa = this.shop_data
 
@@ -123,8 +165,8 @@
 			xuan(ev) {
 				this.shsh = ev
 			},
-			remove(ev){
-				this.imglist.splice(ev,1)
+			remove(ev) {
+				this.imglist.splice(ev, 1)
 			},
 			uploaded(ev) {
 				let aa = ev;
@@ -163,8 +205,8 @@
 					orderid: this.alls_item.orderid,
 					shopid: aa,
 					num: bb,
-					tuik_ly: this.text,
-					image: this.imglist.length>0?this.imglist:'',
+					tuik_ly: this.text + "-" + this.qwer,
+					image: this.imglist.length > 0 ? this.imglist : '',
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.showToast({

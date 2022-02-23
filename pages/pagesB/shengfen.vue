@@ -41,7 +41,7 @@
 			<u-empty v-else></u-empty>
 		</view>
 		<view class="boyyty cet" v-if="usershengfen < id">
-		<!-- <view class="boyyty cet"> -->
+			<!-- <view class="boyyty cet"> -->
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
 				￥{{jiage}}元升级
 			</view>
@@ -158,14 +158,14 @@
 				aa = 1
 			}
 			let vv = uni.getStorageSync("xieyi")
-			vv.forEach(item=>{
-				if(item.state == aa){
+			vv.forEach(item => {
+				if (item.state == aa) {
 					this.xieyi.push(item)
 				}
 			})
-			if(this.xieyi.length >0){
+			if (this.xieyi.length > 0) {
 				this.buyanzheng = true
-			}else{
+			} else {
 				this.buyanzheng = false
 			}
 			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
@@ -180,7 +180,7 @@
 		},
 		watch: {
 			shoujiyanzheng: function(val, oldVal) {
-				if(!val){
+				if (!val) {
 					console.log(val);
 					this.code = ""
 				}
@@ -202,16 +202,36 @@
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						this.tongyi(1)
+						// 验证验证码
+						this.$api.emsyzphone({
+							phone: this.shoujihao,
+							yzm: this.code
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.tongyi(1)
+							} else {
+								uni.showToast({
+									title: "验证码错误",
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
+							duration: 1000,
 							icon: "none"
 						})
 					}
 				} else {
+					this.time = 0
+					this.code = ''
+					this.shoujihao = ''
 					this.shoujiyanzheng = false;
 				}
+
+
 			},
 			tongyi(ev) {
 				if (ev == 1) {
@@ -235,17 +255,33 @@
 			},
 			// 获取验证码
 			go_code() {
-
 				if (this.timea == 0) {
-					this.timea = 60
-					let aa = setInterval(() => {
-						this.timea--
-						this.huoqu = this.timea + "s后获取"
-						if (this.timea == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+					this.$api.emsphone({
+						phone: this.shoujihao
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
 				}
 			},
 			tanchuanbaozhuang() {
@@ -266,7 +302,6 @@
 					this.yuedu = false
 				}
 				this.baozhuangshow = false
-				console.log("协议同意");
 				this.topay()
 			},
 			//

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="home">
-			<view class="top">
+			<view class="top" :style="'background-image: url('+backsss+')'">
 				<image class="img" src="../../static/login.png" mode="aspectFit"></image>
 				<view class="tops">
 					<view class="name pad">
@@ -36,11 +36,11 @@
 			<view style="padding: 30rpx;background-color: #FFFFFF;" v-html="cardinfo.content">
 			</view>
 			<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==1">
-				<u-swiper height="400" :effect3d="true" img-mode="aspectFit" :list="imgList"></u-swiper>
+				<u-swiper height="400" :effect3d="true" img-mode="aspectFit" @click="goss" :list="imgList"></u-swiper>
 			</view>
-			
+
 		</view>
-		
+
 		<view class="anniuss">
 			<view class="kuang">
 				<button open-type="contact" class="annuiwwww" type="default">
@@ -68,17 +68,18 @@
 		<view class="works">
 			<view class="title">
 				<view class="name">
-					优享作品
+					旗舰整装套系
 					<view class="bor_bot">
-		
+
 					</view>
 				</view>
 			</view>
-			<view class="design_list">
-				<view class="" v-for="(item,index) in tuijian" :key="item" v-if="index <= 1">
-					<u-design-card :tiaozhuan="'../pagesC/DesignDetail'" :list="item" />
-				</view>
-			</view>
+			<!-- <view class="design_list"> -->
+			<!-- <view class="" v-for="(item,index) in tuijian" :key="item" v-if="index <= 1"> -->
+			<!-- <u-design-card :tiaozhuan="'../pagesC/DesignDetail'" :list="item" /> -->
+			<u-adata :list="tuijian" @click="go_shop"></u-adata>
+			<!-- </view> -->
+			<!-- </view> -->
 		</view>
 	</view>
 </template>
@@ -87,11 +88,12 @@
 	export default {
 		data() {
 			return {
-				tuijian:[],
+				backsss: this.$imgPath + "/uploads/20220221/7999ee50b489c9084c7861cc5192a74f.jpg",
+				tuijian: [],
 				imgList: [],
 				rinima: [],
 				imgtitle: this.$imgPath,
-				userinfo: {},
+				userinfo: "",
 				list: {},
 				background: {
 					background: ''
@@ -111,6 +113,7 @@
 				this.state = ev.state;
 			}
 			this.getcard()
+
 			this.userinfo = uni.getStorageSync("des_info")
 			this.rinima.push(this.userinfo.mobile)
 			this.rinima.push(this.userinfo.email)
@@ -118,23 +121,44 @@
 			// this.rinima.push(this.userinfo.qq)
 			// this.rinima.push("")
 			this.rinima.push("导航到我的公司！")
-			this.userinfo.work.split(",").forEach(item => {
-				this.imgList.push({
-					image: this.$imgPath + item
-				})
+			this.$api.setcategory().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						this.imgList.push({
+							image: this.$imgPath + item.image,
+							id:item.id
+						})
+					})
+					this.imgList.shift()
+				}
 			})
-			this.$api.loupanden({
-				limit:10
+			this.$api.qjset({
+				setid: 13,
+				page: 1,
+				limit: 10
 			}).then(data => {
 				if (data.data.code == 1) {
-					data.data.data.status.data.sort(function () {
-					 return Math.random() - 0.5;   // 值为 -0.5 ~ 0.5 的随机数
+					data.data.data.status.data.forEach(item => {
+						item.image = item.simage
+					})
+					data.data.data.status.data.sort(function() {
+						return Math.random() - 0.5; // 值为 -0.5 ~ 0.5 的随机数
 					});
 					this.tuijian = [...data.data.data.status.data];
 				}
 			})
 		},
 		methods: {
+			goss(ev){
+				uni.navigateTo({
+					url:"../pagesC/FlagshipSet?id="+this.imgList[ev].id
+				})
+			},
+			go_shop(ev) {
+				uni.navigateTo({
+					url:"../pagesC/FlagshipDetail?id="+ev.id
+				})
+			},
 			// 获取电子名片
 			getcard() {
 				this.$api.business({
@@ -270,7 +294,6 @@
 		.top {
 			width: 100%;
 			height: 725rpx;
-			background-image: url(../../static/beijin.jpg);
 			background-size: cover;
 			background-repeat: no-repeat;
 			padding: 30rpx;
@@ -348,13 +371,13 @@
 			}
 		}
 	}
-	
+
 	// 优享作品
 	.works {
-		padding: 0 30rpx;
+		// padding: 0 30rpx;
 		margin-top: -120rpx;
 		margin-bottom: 60rpx;
-	
+
 		.title {
 			padding: 50rpx 30rpx;
 			box-sizing: border-box;
@@ -362,19 +385,19 @@
 			align-items: center;
 			justify-content: center;
 		}
-	
+
 		.name {
 			font-size: 30rpx;
 			color: #000000;
 		}
-	
+
 		.bor_bot {
 			width: 100%;
 			height: 10rpx;
 			background: #7AB8C8;
 			margin-top: -10rpx;
 		}
-	
+
 		.question {
 			width: 30rpx;
 			height: 30rpx;
@@ -388,7 +411,7 @@
 			margin-left: 10rpx;
 			margin-top: 10rpx;
 		}
-	
+
 		.design_list {
 			display: flex;
 			align-items: center;

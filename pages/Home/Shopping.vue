@@ -207,11 +207,7 @@
 			},
 			alls() {
 				//shopicon五个小图标
-				this.$api.shopicon().then(data => {
-					if (data.data.code == 1) {
-						this.clsList = data.data.data.data;
-					}
-				})
+				this.clsList = uni.getStorageSync("icon").shop
 				//lunbotu
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
@@ -294,12 +290,11 @@
 						url: "../pagesC/Shopping?shopid=" + ev.id
 					})
 				} else if (index == 1) {
-					let aa = ev.alls
+					uni.setStorageSync("fdklfjdsfjsfhks",ev.alls)
 					uni.navigateTo({
-						url: "../pagesC/DesignDetail?id=" + JSON.stringify(aa)
+						url: "../pagesC/DesignDetail"
 					})
 				} else if (index == 2) {
-
 					uni.navigateTo({
 						url: "../pagesC/FlagshipDetail?id=" + ev.alls.id
 					})

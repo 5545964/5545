@@ -14,8 +14,8 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class=""  style="height: 100%;">
-			<u-FlagshipSuite />
+		<view class="" style="height: 100%;">
+			<u-FlagshipSuite/>
 		</view>
 	</view>
 </template>
@@ -24,10 +24,12 @@
 	export default {
 		data() {
 			return {
-				title:"旗舰整装套系"
+				title: "旗舰整装套系",
 			};
 		},
-		methods:{
+		onLoad(ev) {
+		},
+		methods: {
 			back(ev) {
 				switch (ev) {
 					case 0:
@@ -46,7 +48,7 @@
 </script>
 
 <style lang="scss" scoped>
-// 导航
+	// 导航
 	.navbar {
 		.sssss {
 			border: 1px solid #e5e5e5;
@@ -80,5 +82,4 @@
 			}
 		}
 	}
-
 </style>

@@ -28,9 +28,10 @@
 				</view>
 				<view class="dsfedfed" @click="kanzhaopian(item.ewm)">
 					<view class="text">
-						美居设计群链接：
+						点击加入美居设计群
+						<!-- 链接： -->
 					</view>
-					<image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image>
+					<!-- <image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image> -->
 				</view>
 			</view>
 		</view>
@@ -61,19 +62,22 @@
 		// },
 		methods: {
 			kanzhaopian(ev) {
-				let aa = [this.$imgPath + ev]
-				uni.previewImage({
-					urls: aa,
-					longPressActions: {
-						itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function(data) {
+				uni.navigateTo({
+					url:"../Home/URL/URL?url="+ev
+				})
+				// let aa = [this.$imgPath + ev]
+				// uni.previewImage({
+				// 	urls: aa,
+				// 	longPressActions: {
+				// 		itemList: ['发送给朋友', '保存图片', '收藏'],
+				// 		success: function(data) {
 
-						},
-						fail: function(err) {
+				// 		},
+				// 		fail: function(err) {
 
-						}
-					}
-				});
+				// 		}
+				// 	}
+				// });
 			},
 			bindIcon(icon) {
 				return this.$imgPath + icon;

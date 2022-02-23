@@ -3,78 +3,23 @@
 		<view class="datas">
 			<view class="dsaada" v-if="index%2==0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image :src="imgPath+item.image" mode="aspectFit"></image>
+					<image v-if="item.image != ''" :src="imgPath+item.image" mode="aspectFit"></image>
+					<video :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
 				</view>
-				<view class="" v-show="!item.isgo">
-					<view class="cet">
-						<view class="ssj gghGG">
-							<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
-						</view>
-					</view>
+				<view class="ssj gghGG">
+					<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
 				</view>
-				<view class="" v-show="item.isgo">
-					<view class="cet">
-						<view class="ssj ">
-							<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
-						</view>
-					</view>
-					
-					<view class="kjhkjh">
-						<view class="left_mony">
-							<text>￥</text>{{item.xc_price}}
-						</view>
-						<view class="rigth_monys">
-							<view class="rigth_mony">
-								<text>￥</text>{{item.cb_price}}
-							</view>
-						</view>
-					</view>
-					<view class="kjhkjh">
-						<view class="dsadsdxz">
-							<view class="xccxcc">
-								抢购
-							</view>
-						</view>
-					</view>
-				</view>
+
 			</view>
 		</view>
 		<view class="datas">
-			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index"
-				 @click="xuanzhong(item)">
+			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image :src="imgPath+item.image" mode="aspectFit"></image>
+					<image v-if="item.image != ''" :src="imgPath+item.image" mode="aspectFit"></image>
+					<video :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
 				</view>
-				<view class="" v-show="!item.isgo">
-					<view class="cet">
-						<view class="ssj gghGG">
-							<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
-						</view>
-					</view>
-				</view>
-				<view class="" v-show="item.isgo">
-					<view class="cet">
-						<view class="ssj">
-							<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
-						</view>
-					</view>
-					<view class="kjhkjh">
-						<view class="left_mony">
-							<text>￥</text>{{item.xc_price}}
-						</view>
-						<view class="rigth_monys">
-							<view class="rigth_mony">
-								<text>￥</text>{{item.cb_price}}
-							</view>
-						</view>
-					</view>
-					<view class="kjhkjh">
-						<view class="dsadsdxz">
-							<view class="xccxcc">
-								抢购
-							</view>
-						</view>
-					</view>
+				<view class="ssj gghGG">
+					<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
 				</view>
 			</view>
 		</view>
@@ -101,7 +46,24 @@
 		methods: {
 			xuanzhong(ev) {
 				this.$emit('click', ev);
-			}
+			},
+			playing(e) {
+				let that = this;
+				let currentId = e.currentTarget.id; // 获取当前视频id
+
+				that.videoContent = uni.createVideoContext(currentId);
+				let trailer = that.list;
+				trailer.forEach(function(item, index) { // 获取json对象并遍历, 停止非当前视频
+					if (item.video != null && item.video != "") {
+						let temp = 'video' + item.id;
+						if (temp != currentId) {
+							uni.createVideoContext(temp,that).pause(); //暂停视频播放事件
+						}
+					}
+			
+				})
+			
+			},
 		}
 	};
 </script>

@@ -199,11 +199,11 @@
 				}
 			},
 			go_kefu(ev) {
-				if (this.title != "客服") {
-					return uni.navigateTo({
-						url: this.url
-					})
-				}
+				// if (this.title != "客服") {
+				// 	return uni.navigateTo({
+				// 		url: this.url
+				// 	})
+				// }
 				this.show = false;
 				switch (ev) {
 					case 0:

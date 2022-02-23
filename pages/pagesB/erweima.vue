@@ -40,9 +40,9 @@
 				this.title = ev.title
 			}
 			if (ev.level) {
-				this.level = uni.getStorageSync("des_info").bbs.id
+				this.level = uni.getStorageSync("des_info").bbs.id || 0
 			}else{
-				this.level = uni.getStorageSync("user_info").bbs.id
+				this.level = uni.getStorageSync("user_info").bbs.id || 0
 			}
 			this.getewm()
 		},

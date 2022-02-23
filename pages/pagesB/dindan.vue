@@ -25,8 +25,6 @@
 						<scroll-view :style="'height: ' + height + 'px;'" scroll-y="true">
 							<view class="swiper-item" v-for="(items, indexs) in item.data_list" :key="indexs">
 								<view class="top" @click="goods(items)">
-
-
 									<view class="text"> 订单编号：{{ items.orderid }} </view>
 									<view class="status" v-show="items.state == 0"> 待付款 </view>
 									<view class="status" v-show="items.state == 1"> 待发货 </view>
@@ -70,25 +68,34 @@
 									</view>
 								</view>
 								<view class="anniu">
+									<!-- 待支付 -->
 									<view class="button" @click="annui(0, items)" v-if="items.state == 0">
 										取消订单
 									</view>
 									<view class="button" @click="annui(1, items)" v-if="items.state == 0">
 										立即支付
 									</view>
+									<!-- 带发货 -->
 									<view class="button" @click="annui(5, items)" v-if="items.state == 1">
 										申请退款
 									</view>
+									<!-- 待收货 -->
 									<view class="button" @click="annui(3, items)" v-if="items.state == 2">
 										查看物流
 									</view>
 									<view class="button" @click="annui(4, items)" v-if="items.state == 2">
 										确认签收
 									</view>
+
 									<view class="button" @click="annui(7, items)"
 										v-if="items.state == 3 || items.state == 4 || items.states == 2">
 										申请售后
 									</view>
+									<view class="button" @click="annui(8, items)"
+										v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
+										取消售后
+									</view>
+
 									<view class="button" @click="kuaidiwo(items)"
 										v-if="items.states === 1 && items.sqexpressorder ==0">
 										填写快递单号
@@ -97,7 +104,7 @@
 										取消退款
 									</view>
 									<view class="button" @click="delorder(items)"
-										v-if="items.state == 9 || items.state == 4 || items.state == 17 || items.states == 3">
+										v-if="items.state == 9 || items.state == 4 || items.state == 17 || items.states == 3 ||items.state == 6">
 										删除订单
 									</view>
 									<view class="button" v-if="items.state == 8">
@@ -114,9 +121,11 @@
 										@click="lookdetails(items)">
 										查看安装详情
 									</view>
-									<view class="button" @click="annui(6, items)"
-										v-if="items.state == 3 || items.states == 2">
+									<view class="button" @click="baozhuangpngji(0, items)" v-if="items.state == 17">
 										立即评价
+									</view>
+									<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
+										报装评价
 									</view>
 								</view>
 							</view>
@@ -230,6 +239,18 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- quxiaoshouhou -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="quxiaoshouhou" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 确认取消售后？ </view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="shouhoou(0)"> 取消 </view>
+					<view class="czcxc" @click="shouhoou(1)"> 确定 </view>
+				</view>
+			</view>
+		</u-popup>
 		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
 		<!-- 确保是你本人操作 -->
 		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
@@ -325,10 +346,10 @@
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
 			<view class="popup">
 				<view class="top"> 提示 </view>
-				<view class="cets"> 确认收到该订单商品？ </view>
+				<view class="cets"> 确认签收该订单商品？ </view>
 				<view class="xian"> </view>
 				<view class="bottoms">
-					<view class="sdasas" @click="xuanzhes(0)"> 取消 </view>
+					<view class="sdasas" @click="shows = false"> 取消 </view>
 					<view class="czcxc" v-if="querenqianshoukaiguan" @click="dakaishouji(0)">
 						确定
 					</view>
@@ -336,7 +357,7 @@
 				</view>
 			</view>
 		</u-popup>
-	
+
 	</view>
 </template>
 
@@ -345,6 +366,9 @@
 	export default {
 		data() {
 			return {
+				shouhouitem: "",
+				quxiaoshouhou: false,
+				shoujihao: "",
 				// 已安装
 				yianzhaungkaiguan: true,
 				yianzhaungxieyi: [],
@@ -427,6 +451,7 @@
 					}
 				],
 				time: "",
+				pingjiaok: 0
 			};
 		},
 		onLoad(ev) {
@@ -510,6 +535,28 @@
 			}
 		},
 		methods: {
+			shouhoou(ev) {
+				if (ev == 1) {
+					this.$api.xqsh({
+						orderid: this.shouhouitem.orderid
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.allsss()
+							this.quxiaoshouhou = false
+						}
+						uni.showToast({
+							title: data.data.msg,
+							icon: "none"
+						})
+					})
+				} else {
+					this.quxiaoshouhou = false
+				}
+			},
+			baozhuangpngji(okj, ev) {
+				this.pingjiaok = okj
+				this.annui(6, ev)
+			},
 			// 切换协议内容
 			dakaishouji(ev) {
 				this.zhuangtai = ev
@@ -761,7 +808,7 @@
 				//1立即支付
 				//2取消退款
 				//3查看物流
-				//4确认收货
+
 				//5申请退款
 				//6立即评价
 				switch (ev) {
@@ -812,9 +859,11 @@
 						break;
 					case 3:
 						uni.navigateTo({
-							url: "../pagesC/wuliu?id=" + item.id,
+							url: "../pagesC/wuliu?id=" + item.id + "&express=" + item.express + "&expressorder=" + item
+								.expressorder,
 						});
 						break;
+						//4确认收货
 					case 4:
 						this.order_id = item.id
 						this.shows = true;
@@ -832,13 +881,17 @@
 						break;
 					case 6:
 						uni.navigateTo({
-							url: "../pagesC/pingjia?item=" + JSON.stringify(item)
+							url: "../pagesC/pingjia?item=" + JSON.stringify(item) + "&okj=" + this.pingjiaok
 						});
 						break;
 					case 7:
 						uni.navigateTo({
 							url: "../pagesC/shouhou?item=" + JSON.stringify(item)
 						});
+						break;
+					case 8:
+						this.shouhouitem = item
+						this.quxiaoshouhou = true
 						break;
 					default:
 				}
@@ -886,8 +939,22 @@
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						this.tongyi(1)
-						this.shoujiyanzheng = false
+						// 验证验证码
+						this.$api.emsyzphone({
+							phone: this.shoujihao,
+							yzm: this.code
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.tongyi(1)
+								this.shoujiyanzheng = false
+							} else {
+								uni.showToast({
+									title: "验证码错误",
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
@@ -920,16 +987,35 @@
 			// 获取验证码
 			go_code() {
 				if (this.timea == 0) {
-					this.timea = 60
-					let aa = setInterval(() => {
-						this.timea--
-						this.huoqu = this.timea + "s后获取"
-						if (this.timea == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+					this.$api.emsphone({
+						phone: this.shoujihao
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
+
 				}
+
 			},
 		},
 	};

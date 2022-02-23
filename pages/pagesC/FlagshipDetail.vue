@@ -40,7 +40,7 @@
 		</view>
 		<view class="u-menu-wrap">
 			<scroll-view style="height: 520px;" scroll-y scroll-with-animation class="u-tab-view menu-scroll-view"
-				:scroll-top="scrollTop" >
+				:scroll-top="scrollTop">
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item"
 					:class="index%2==0? 'mian_left_item':'mian_left_item1'"
 					:style="current==index?'border-left: 4rpx solid #FD7904;':''" @tap.stop="swichMenu(index)">
@@ -50,7 +50,8 @@
 			<scroll-view style="height: 520px;" :scroll-top="scrollRightTop" scroll-y scroll-with-animation
 				class="right-box" @scroll="rightScroll" :scroll-into-view="itemId">
 				<view class="class-item" :id="'item' + index" v-for="(item,index) in tabbar" :key="index">
-					<view style="text-align:center;height:50rpx;line-height:50rpx;background:#305166;color: #fff;">
+					<view :class="index%2==0? 'mian_left_items':'mian_left_item1s'"
+						style="text-align:center;height:50rpx;line-height:50rpx;color: #fff;">
 						{{item.name}}
 					</view>
 					<view v-if="item.desdesdesdesde == 1">
@@ -78,7 +79,7 @@
 									v-if="items.fzb != null && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit">
 								</image>
-								<image :src="img+items.shop.photo" style="width: 640rpx;" mode="widthFix"></image>
+								<image :src="img+items.shop.photo" style="width: 640rpx;" mode="widthFix" ></image>
 							</view>
 						</view>
 					</view>
@@ -139,10 +140,10 @@
 		},
 		onLoad(ev) {
 			this.shenme_id = ev.id
+			this.allss(this.shenme_id)
 			this.videoContext = uni.createVideoContext('video')
 		},
 		onShow() {
-			this.allss(this.shenme_id)
 			this.getMenuItemTop()
 		},
 		methods: {
@@ -365,33 +366,6 @@
 					}
 				})
 			},
-			// change(index) {
-			// 	this.active = index;
-			// 	let aa = []
-			// 	if (this.leftlist[index].id == 1) {
-			// 		if (this.alls.designer == "") {
-			// 			this.desdesdesdesde = 0
-			// 			this.alls.xq.forEach(item => {
-			// 				if (this.leftlist[index].id == item.leftid) {
-			// 					aa.push(item)
-			// 				}
-			// 			})
-			// 		} else {
-			// 			this.desDetails(this.alls.designer)
-			// 			this.desdesdesdesde = 1
-			// 		}
-			// 	} else if (this.leftlist[index].id == 2) {
-			// 		this.desdesdesdesde = 2
-			// 	} else {
-			// 		this.desdesdesdesde = 0
-			// 		this.alls.xq.forEach(item => {
-			// 			if (this.leftlist[index].id == item.leftid) {
-			// 				aa.push(item)
-			// 			}
-			// 		})
-			// 	}
-			// 	this.xq_img = aa
-			// },
 			back(ev) {
 				switch (ev) {
 					case 0:
@@ -429,6 +403,7 @@
 					query.select('.' + elClass).fields({
 						size: true
 					}, res => {
+						console.log(res, elClass);
 						// 如果节点尚未生成，res值为null，循环调用执行
 						if (!res) {
 							setTimeout(() => {
@@ -436,7 +411,7 @@
 							}, 10);
 							return;
 						}
-						
+
 						this[dataVal] = res.height;
 						resolve();
 					}).exec();
@@ -462,6 +437,7 @@
 			async leftMenuStatus(index) {
 				this.current = index;
 				// 如果为0，意味着尚未初始化
+				console.log(this.menuHeight, this.menuItemHeight, "this.menuHeight,this.menuItemHeight");
 				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
 					await this.getElRect('menu-scroll-view', 'menuHeight');
 					await this.getElRect('u-tab-item', 'menuItemHeight');
@@ -474,16 +450,17 @@
 				new Promise(resolve => {
 					let selectorQuery = uni.createSelectorQuery();
 					selectorQuery.selectAll('.class-item').boundingClientRect((rects) => {
+						console.log(rects, "rects");
 						// 如果节点尚未生成，rects值为[](因为用selectAll，所以返回的是数组)，循环调用执行
 						if (!rects.length) {
 							setTimeout(() => {
 								this.getMenuItemTop();
-							}, 1000);
+							}, 5000);
 							return;
 						}
 						rects.forEach((rect) => {
 							// 这里减去rects[0].top，是因为第一项顶部可能不是贴到导航栏(比如有个搜索框的情况)
-							this.arr.push(rect.top.toFixed(2) - rects[0].top.toFixed(2) );
+							this.arr.push(rect.top.toFixed(2) - rects[0].top.toFixed(2));
 							resolve();
 						})
 					}).exec()
@@ -528,6 +505,14 @@
 	.u-menu-wrap {
 		flex: 1;
 		display: flex;
+
+		.mian_left_items {
+			background: #305166;
+		}
+
+		.mian_left_item1s {
+			background: #376379;
+		}
 
 		.mian_left_item {
 			font-size: 26rpx;

@@ -213,7 +213,7 @@
 						id: index
 					})
 					that.shopList = data.data.data.status.data
-					// console.log(that.$refs.collapseall);
+
 					that.$nextTick(() => {
 						that.$refs.collapseall[0].init()
 						// that.$refs.collapseall[this.current].init()

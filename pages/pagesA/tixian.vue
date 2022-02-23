@@ -27,7 +27,7 @@
 									v-show="currents == 0">
 								</view>
 								<view class="cdscdf">
-									2021-08-09 14:25:25
+									{{item.createtime}}
 								</view>
 							</view>
 							<view class="rigtt" @click="god(item)">
@@ -38,21 +38,16 @@
 							</view>
 						</view>
 						<view class="top-bottom" @click="god(item)">
-							<view class="">
-								<view class="text">
-									订单编号：{{item.order_id}}
-								</view>
-								<view class="text">
-									订单名称：订单订单
-								</view>
+							<view class="text">
+								订单编号：{{item.order_id}}
 							</view>
-							<view class="">
-								<view class="text">
-									订单价格：￥{{item.cjprice}}
-								</view>
-								<view class="text">
-									可提佣金：￥{{item.price}}
-								</view>
+						</view>
+						<view class="top-bottom" @click="god(item)">
+							<view class="text">
+								订单价格：￥{{item.cjprice}}
+							</view>
+							<view class="text">
+								可提佣金：￥{{item.price}}
 							</view>
 						</view>
 					</view>
@@ -100,8 +95,11 @@
 			</view>
 		</view>
 		<view class="bottomssss cet" v-show="currents == 0">
-			<view class="dasdasdxzxcx" @click="shengfen">
+			<view class="dasdasdxzxcx" v-if="tiao" @click="shengfen">
 				提交申请
+			</view>
+			<view class="dasdasdxzxcx" @click="qianyue" v-else>
+				去签约
 			</view>
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign" :po_hei="100"></u-kehu>
@@ -109,6 +107,7 @@
 </template>
 
 <script>
+	import dayjs from 'dayjs'
 	export default {
 		data() {
 			return {
@@ -131,38 +130,121 @@
 					}
 				],
 				title: "提现申请",
+				tiao: true,
 			};
 		},
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title;
 			}
+		},
+		onShow() {
 			let data = uni.getStorageSync("monList")
 			if (data.length != 0) {
 				data.forEach(item => {
 					item["checked"] = false
+					item.createtime = dayjs(item.createtime * 1000).format('YYYY-MM-DD HH:mm:ss')
 				})
 				this.datas = [...data]
 			}
+			let userid = uni.getStorageSync("user_info").id
+			// 智慧型查询是否签约
+			this.$api.querysuccess({
+				user_id: userid
+			}).then(data => {
+				// 成功
+				if (data.data.code == 200) {
+					if (uni.getStorageSync("user_info").rw == 0) {
+						this.rw()
+					} else {
+						return this.tiao = true
+					}
+				}
+				// 未签约
+				if (data.data.code == 1) {
+					this.tiao = false
 
+					return
+				}
+				//为实名认证
+				if (data.data.code == 0) {
+					this.tiao = false
+					uni.showToast({
+						title: "您还未实名认证",
+						icon: "error",
+						duration: 1000
+					})
+					setTimeout(() => {
+						uni.navigateTo({
+							url: "./shengfen"
+						})
+					}, 1000)
+					return
+				}
+			})
 		},
 		methods: {
-			god(ev){
+			qianyue() {
+				this.$api.contract({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					uni.setStorageSync("bbghb", data.data.data.data)
+					if (data.data.code == 1) {
+						uni.navigateTo({
+							url: "../Home/URL/URL?url=0"
+						})
+					}
+				})
+			},
+			rw() {
+				let userid = uni.getStorageSync("user_info").id
+				this.$api.gettask({
+					user_id: userid
+				}).then(data => {
+					if (data.data.code == 1) {
+						console.log(data.data.data);
+					} else {
+						this.rw()
+					}
+				})
+			},
+			god(ev) {
 				uni.navigateTo({
-					url:"./goods_data?order_id="+ev.order_id
+					url: "./goods_data?order_id=" + ev.order_id
 				})
 			},
 			shengfen() {
-				if (uni.getStorageSync("user_info").freelance_id != null && uni.getStorageSync("user_info").freelance_id != '') {
-					let list = {
-						title: "提佣成功",
-						text: "你的提佣申请已成功",
-						botton: "我知道了",
-						navbar: "提佣成功"
-					}
-					uni.navigateTo({
-						url: "../pagesD/regSuccess?list=" + JSON.stringify(list)
+				if (uni.getStorageSync("user_info").freelance_id != null && uni.getStorageSync("user_info").freelance_id !=
+					'') {
+					let aa = []
+					this.datas.forEach(item => {
+						if (item.checked) {
+							aa.push(item.id)
+						}
 					})
+					if (aa.length >= 1) {
+						this.$api.sqty({
+							userid: uni.getStorageSync("user_info").id,
+							orderid: aa
+						}).then(data => {
+							if (data.data.code == 1) {
+								let list = {
+									title: "提佣成功",
+									text: "你的提佣申请已成功",
+									botton: "我知道了",
+									navbar: "提佣成功"
+								}
+								uni.navigateTo({
+									url: "../pagesD/regSuccess?list=" + JSON.stringify(list)
+								})
+							} else {
+								uni.showToast({
+									title: data.data.msg,
+									icon: "none"
+								})
+							}
+						})
+					}
 				} else {
 					uni.navigateTo({
 						url: "./shengfen"
@@ -232,7 +314,6 @@
 
 		.top-bottom {
 			padding: 30rpx;
-			border-top: 1px solid #DEDEDE;
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
@@ -246,6 +327,7 @@
 		}
 
 		.top-top {
+			border-bottom: 1px solid #DEDEDE;
 			padding: 30rpx;
 			display: flex;
 			align-items: center;

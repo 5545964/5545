@@ -55,7 +55,7 @@
 						订单编号
 					</view>
 					<view class="win">
-						状态
+						订单状态
 					</view>
 					<view class="win">
 						成交金额
@@ -68,7 +68,8 @@
 					</view> -->
 				</view>
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
-					<view class="vdfdd" v-if="item.money==currents">
+					<!-- <view class="vdfdd" v-if="item.tixian==0 && item.sq==0 "> -->
+					<view class="vdfdd">
 						<view class="win">
 							{{item.order_id}}
 						</view>

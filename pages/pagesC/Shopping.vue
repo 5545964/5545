@@ -271,9 +271,9 @@
 						</view>
 					</view>
 				</view>
-				<view class=""
-					style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 150rpx;">
-					<view class="" style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
+				<view
+					style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 150rpx;margin-top: 20rpx;">
+					<view style="font-size: 24rpx;font-weight: 800;">
 						数量
 					</view>
 					<view class="num_add">
@@ -410,7 +410,7 @@
 			};
 		},
 		onLoad(ev) {
-			console.log(ev);
+
 			// 商品id
 			this.shopid = ev.shopid;
 			// 商品id
@@ -434,7 +434,7 @@
 		},
 		methods: {
 			kansss(ev) {
-				console.log(ev, );
+
 				let that = this;
 				uni.previewImage({
 					urls: this.list,
@@ -512,7 +512,7 @@
 									data.data.data.status.forEach(item => {
 										aa = aa + 1
 									})
-								}else{
+								} else {
 									aa = 0
 								}
 								if (aa >= 99) {
@@ -541,7 +541,7 @@
 							specid: this.alls.son[this.isSize].id,
 							specidsize: this.alls.son[this.isSize].spections,
 						}]
-						console.log(this.alls,"alls");
+
 						uni.navigateTo({
 							url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) +
 								"&yf=" +
@@ -621,7 +621,7 @@
 						// }
 						let pp = this.alls.content.split(",");
 						this.alls.content = []
-						pp.forEach(item=>{
+						pp.forEach(item => {
 							this.alls.content.push(item)
 						})
 						let image = data.data.data.status[0].image.split(",");

@@ -14,7 +14,26 @@
 			</u-navbar>
 		</view>
 		<view style="padding: 30rpx;" class="">
-			<view v-if="list.length<=0" style="margin-top: 200rpx;" class="">
+			<view v-if="list.length<=0" style="margin-top: 50rpx;" class="">
+				<view class="aass">
+					请手动查询<text style="color: #999;">(长按复制)</text>
+				</view>
+				<view class="">
+					<view class="aass" style="color: #999;">
+						快递公司:
+					</view>
+					<view class="aass" @longtap="copy(0)">
+						{{express}}
+					</view>
+				</view>
+				<view class="">
+					<view class="aass" style="color: #999;">
+						快递编号:
+					</view>
+					<view class="aass" @longtap="copy(1)">
+						{{expressorder}}
+					</view>
+				</view>
 				<u-empty text="数据为空" mode="list"></u-empty>
 			</view>
 			<u-time-line>
@@ -46,22 +65,45 @@
 
 <script>
 	export default {
-		onLoad(e) {
-
-			this.$api.lookexpress({
-				id:e.id
-			}).then(data=>{
-
-				this.list=data.data.data.status.data
-			})
-		},
 		data() {
 			return {
-				list:[],
-				title:"查看物流"
+				express: "",
+				expressorder: "",
+				list: [],
+				title: "查看物流"
 			}
 		},
+		onLoad(ev) {
+			// this.express = ev.express
+			this.expressorder = ev.expressorder
+			this.$api.lookexpress({
+				id: ev.id
+			}).then(data => {
+				if (data.data.code == 1) {
+					this.express = data.data.data.status.conpany.title
+					this.list = data.data.data.status.data
+					console.log(this.list);
+				}
+			})
+		},
 		methods: {
+			copy(ev) {
+				let aa = ""
+				if (ev == 0) {
+					aa = this.express
+				} else {
+					aa = this.expressorder
+				}
+				uni.setClipboardData({
+					data: aa,
+					success: () => {
+						uni.showToast({
+							title: '复制成功',
+							icon:"none"
+						})
+					}
+				});
+			},
 			back(ev) {
 				switch (ev) {
 					case 0:
@@ -75,12 +117,13 @@
 					default:
 				}
 			}
-		}
+		},
+		
 	}
 </script>
 
 <style lang="scss">
-.u-node {
+	.u-node {
 		width: 20rpx;
 		height: 20rpx;
 		border-radius: 50%;
@@ -119,6 +162,12 @@
 		border-radius: 20rpx;
 		/* margin-left: 20rpx; */
 	}
+
+	.aass {
+		height: 50rpx;
+		line-height: 50rpx;
+	}
+
 	// 导航
 	.navbar {
 		.sssss {
@@ -131,27 +180,26 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
-	
+
 			.dsds {
 				padding: 20rpx;
 			}
-	
+
 			.hang {
 				width: 2rpx;
 				height: 26rpx;
 				background-color: #e5e5e5;
 			}
-	
+
 			.fanhui {
 				width: 12rpx;
 				height: 22rpx;
 			}
-	
+
 			.souye {
 				width: 26rpx;
 				height: 24rpx;
 			}
 		}
 	}
-	
 </style>

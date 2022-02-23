@@ -1,7 +1,7 @@
 <template>
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
-			<view class="" style="width: 690rpx;height: 390rpx;">
+			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;">
 				<video :id="'video' + item.id" class="vide" @play="playing" :src="item.video" @error="videoErrorCallback"
 					controls></video>
 			</view>
@@ -43,7 +43,7 @@
 					</view>
 				</button>
 			</view>
-			<view v-else>
+			<view v-else style="">
 				<button @click="del(item)" class="dasdxz"
 					style="margin: 0;padding: 0;background-color: #FFFFFF;justify-content:flex-end">
 					<view class="text" style="padding: 0rpx 10rpx;border-radius:10rpx;border:1px solid #606266">
@@ -94,7 +94,6 @@
 		},
 		mounted() {
 			this.list = [...this.vlist]
-			console.log(this.videoContext);
 		},
 		methods: {
 			playing(e) {
@@ -107,26 +106,11 @@
 						let temp = 'video' + item.id;
 						if (temp != currentId) {
 							uni.createVideoContext(temp,that).pause(); //暂停视频播放事件
-							console.log(uni.createVideoContext(temp,that));
 						}
 					}
 
 				})
 
-			},
-			playingss(ev) {
-				this.$emit("play", ev);
-				let videoContext = uni.createVideoContext(ev.currentTarget.id)
-				this.list.forEach((item, index) => {
-					if (item.video != null && item.video != "") {
-						let temp = 'video' + index;
-						console.log(temp != ev.currentTarget.id);
-						if (temp != ev.currentTarget.id) {
-							console.log(temp);
-							uni.createVideoContext(temp).pause(); //暂停视频播放事件
-						}
-					}
-				})
 			},
 			share(ev) {
 				this.$emit("share", ev);

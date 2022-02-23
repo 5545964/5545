@@ -23,10 +23,11 @@
 			pages: {
 				type: Number,
 				default: 1
-			}
+			},
 		},
 		data() {
 			return {
+				aas:0,
 				list: [{
 					id: 0,
 					name: ""

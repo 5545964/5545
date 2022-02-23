@@ -73,8 +73,8 @@
 						</view>
 						<view class="cet" style="justify-content: space-between;width: 60%;">
 							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-								<u-input inputAlign="left" size="200" v-model="code"
-									placeholder="请输入验证码" type="number" />
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
 							</view>
 							<button class="annuyt" @click="go_code">{{huoqu}}</button>
 						</view>
@@ -348,7 +348,7 @@
 				}];
 				this.avatarss = this.desinfo.avatar.slice(this.$imgPath.length)
 				this.list[1].inp = this.desinfo.nickname
-				this.list[2].inp = "暂无编号";
+				this.list[2].inp = this.desinfo.bh;
 				this.list[3].inp = this.desinfo.username
 				this.list[4].inp = this.desinfo.bbs.type;
 				this.list[5].inp = this.desinfo.wechat
@@ -362,15 +362,41 @@
 		methods: {
 			go_code() {
 				if (this.time == 0) {
-					this.time = 60
-					let aa = setInterval(() => {
-						this.time--
-						this.huoqu = this.time + "s后获取"
-						if (this.time == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+					this.$api.emsphone({
+						phone: this.list[6].inp
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
+					// this.time = 60
+					// let aa = setInterval(() => {
+					// 	this.time--
+					// 	this.huoqu = this.time + "s后获取"
+					// 	if (this.time == 0) {
+					// 		clearInterval(aa)
+					// 		this.huoqu = '获取验证码'
+					// 	}
+					// }, 1000)
 				}
 			},
 			asdfg(ev) {
@@ -464,10 +490,51 @@
 				})
 			},
 			tijiao(ev) {
+				if (this.code != "") {
+					// 验证验证码
+					this.$api.emsyzphone({
+						phone: this.list[6].inp,
+						yzm: this.code
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.tijiaos(ev)
+						} else {
+							uni.showToast({
+								title: "验证码错误",
+								duration: 1000,
+								icon: "none"
+							})
+						}
+					})
+				} else {
+					uni.showToast({
+						title: "请输入验证码",
+						duration: 1000,
+						icon: "none"
+					})
+				}
+			},
+			tijiaos(ev) {
+				// let codes = 0
+				// this.$api.emsyzphone({
+				// 	phone: this.list[6].inp,
+				// 	yzm: this.code
+				// }).then(data => {
+				// 	if (data.data.code == 1) {
+				// 		codes = 1
+				// 	}
+				// })
+				// // 18111220821
+				// if (codes != 1) {
+				// 	return uni.showToast({
+				// 		title: "验证码错误",
+				// 		duration: 1000,
+				// 		icon: "none"
+				// 	})
+				// }
 				if (this.isdes == 1) {
 					if (!this.list[1].inp || !this.list[3].inp || !this.list[5].inp ||
-						!this.list[6].inp || !this.list[7].inp || !this.list[8].inp || !this.list[9].inp || !this.list[10]
-						.inp
+						!this.list[6].inp || !this.list[7].inp || !this.list[8].inp
 					) {
 						uni.showModal({
 							title: "请填写完整信息"

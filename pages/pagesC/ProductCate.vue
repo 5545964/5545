@@ -77,7 +77,7 @@
 				<u-bdata :list="destaoxi" @click="go_shop"></u-bdata>
 			</scroll-view>
 		</view>
-		<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">
 				<view class="kongjian">
@@ -198,7 +198,7 @@
 						id: index
 					})
 					that.shopList = data.data.data.status.data
-					// console.log(that.$refs.collapseall);
+
 					that.$nextTick(() => {
 						that.$refs.collapseall[0].init()
 						// that.$refs.collapseall[this.current].init()

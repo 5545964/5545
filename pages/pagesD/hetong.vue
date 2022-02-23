@@ -19,7 +19,7 @@
 				<view class="template" v-for="(item,index) in alls" :key="index" @click="kan(item)">
 					<view class="cet">
 						<view class="texts">
-							{{item.type}}
+							{{item.ag.name}}
 						</view>
 						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 					</view>
@@ -33,7 +33,7 @@
 	export default {
 		data() {
 			return {
-				title: "相关合同",
+				title: "相关协议",
 				alls: []
 			};
 		},
@@ -43,28 +43,39 @@
 			}
 		},
 		onShow() {
-			this.alls = []
-			uni.getStorageSync("des_info").contrins.split(",").forEach((item,index) => {
-				this.alls.push({
-					type: "合同"+(index+1),
-					doc_url: this.$imgPath + item
-				})
+			// this.alls = []
+			// uni.getStorageSync("des_info").contrins.split(",").forEach((item,index) => {
+			// 	this.alls.push({
+			// 		type: "合同"+(index+1),
+			// 		doc_url: this.$imgPath + item
+			// 	})
+			// })
+			this.$api.myag({
+				userid:uni.getStorageSync("user_info").id
+			}).then(data=>{
+				if(data.data.code == 1){
+					this.alls = data.data.data.status
+				}
 			})
 
 		},
 		methods: {
 			kan(ev) {
-				uni.downloadFile({
-					url: ev.doc_url,
-					success(res) {
-						uni.openDocument({
-							filePath:res.tempFilePath,
-							success(res) {
-
-							}
-						})
-					}
+				uni.setStorageSync("fuwenbeng", ev.ag.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.ag.name
 				})
+				// uni.downloadFile({
+				// 	url: ev.doc_url,
+				// 	success(res) {
+				// 		uni.openDocument({
+				// 			filePath:res.tempFilePath,
+				// 			success(res) {
+
+				// 			}
+				// 		})
+				// 	}
+				// })
 			},
 			back(ev) {
 				switch (ev) {

@@ -534,14 +534,12 @@
 					this.dropList[4].value,
 					this.dropList[5].value,
 					this.name,
-					this.content,
 					this.upimgs,
 					this.fenleiimg,
 					this.vr_fenleiimg,
 					this.vrurl,
 					this.videoList,
 				]
-				console.log(aa);
 				let bb = []
 				aa.forEach(item => {
 					if (item == '') {

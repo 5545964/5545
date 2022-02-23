@@ -85,7 +85,7 @@
 			}else{
 				this.ididiidid = uni.getStorageSync("level")
 			}
-			console.log(ev);
+
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
 			// 驳回后修改信息
 			let info = uni.getStorageSync("inpList");
@@ -166,27 +166,39 @@
 				],
 				imgList: [],
 				upimgs: [],
+				timea:0
 			};
 		},
 		methods: {
 			go_code() {
-				if (this.time == 0) {
-					if (!(/^[1]([3-9])[0-9]{9}$/.test(this.inpList[2].text))) {
-						uni.showToast({
-							title: "请检查手机号码",
-							icon: "none"
-						})
-						return
-					}
-					this.time = 60
-					let aa = setInterval(() => {
-						this.time--
-						this.huoqu = this.time + "s后获取"
-						if (this.time == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+				console.log(111111111);
+				if (this.timea == 0) {
+					this.$api.emsphone({
+						phone: this.inpList[2].text
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
 				}
 			},
 			shangchuan(ev) {
@@ -212,24 +224,36 @@
 			deleteimg(index) {
 				this.upimgs.splice(index, 1)
 			},
-			// 提交
-			submit() {
-				//判断手机号
-				if (!(/^[1]([3-9])[0-9]{9}$/.test(this.inpList[2].text))) {
-					uni.showToast({
-						title: "手机号码有误，请重填",
-						icon: "none"
-					})
-					this.inpList[2].text = ""
-					return false;
-				}
-				//提交信息存入缓存
-				// this.inpList.push({
-				// 	level: this.ididiidid
-				// })
+			submit(){
 				uni.setStorageSync("level", this.ididiidid)
 				uni.setStorageSync("inpList", this.inpList)
 				uni.setStorageSync("upimgs", this.upimgs)
+				if (this.code != "") {
+					// 验证验证码
+					this.$api.emsyzphone({
+						phone: this.inpList[2].text,
+						yzm: this.code
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.submits()
+						} else {
+							uni.showToast({
+								title: "验证码错误",
+								duration: 1000,
+								icon: "none"
+							})
+						}
+					})
+				} else {
+					uni.showToast({
+						title: "请输入验证码",
+						duration: 1000,
+						icon: "none"
+					})
+				}
+			},
+			// 提交
+			submits() {
 				//检查资料是否填完
 				let bb = []
 				this.inpList.forEach(item => {

@@ -262,23 +262,29 @@
 				</view>
 			</view>
 		</u-popup>
-		<!-- 确认取消该订单么？ -->
-		<u-popup width="640" :closeable="true" border-radius="30" v-model="yuyuesss" mode="center">
-			<view class="popup">
-				<view class="top">
-					提示
-				</view>
-				<view class="cets" style="font-size: 36rpx;">
+		<!-- 是否预约定制柜设计师 -->
+		<u-popup width="640" border-radius="30" v-model="yuyuesss" mode="center">
+			<view class="yueduwo">
+				<view class="text" style="font-size: 36rpx;">
 					是否预约定制柜设计师
 				</view>
-				<view class="xian">
-
+				<view class="textss" style="margin:10rpx;">
+					免责条款 
 				</view>
-				<view class="bottoms">
-					<view class="sdasas" @click="yuyueyuyue(0)">
+				<view class="textss" style="margin:10rpx;">
+					1、同意宝芸邸平台把客户本人电话，名字发给第三方定制柜公司来提供定制柜设计，制作，安装等售前售后服务；
+				</view>
+				<view class="textss" style="margin:10rpx;">
+					2、客户本人与第三方的设计、制作、安装等一切售前及售后服务与宝芸邸平台无关。
+				</view>
+				<view class="textss" style="margin:10rpx;font-size: 24rpx;">
+					请仔细阅读以上免责条款，点击预约即视为同意
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="yuyueyuyue(0)">
 						取消
 					</view>
-					<view class="czcxc" @click="yuyueyuyue(1)">
+					<view class="hkhnij jjhgj" @click="yuyueyuyue(1)">
 						预约
 					</view>
 				</view>
@@ -351,7 +357,7 @@
 			}
 			if (ev.goodsdata) {
 				let aa = JSON.parse(ev.goodsdata)
-				console.log(aa, "ss");
+
 				let arr = []
 				that.goodsdata = [...aa];
 				that.goodsdata.forEach(item => {
@@ -363,7 +369,7 @@
 				that.cartid = arr.join(",")
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
 				if (that.goodsdata[0].swj == 1) {
-					console.log("321321312");
+
 					that.swj = 1;
 					that.swjorderid = that.goodsdata[0].orderid;
 					that.$api.dingj({
@@ -431,17 +437,31 @@
 				this.dzg = ev
 				this.annui()
 			},
-			go_code() {
-				if (this.time == 0) {
-					this.time = 60
-					let aa = setInterval(() => {
-						this.time--
-						this.huoqu = this.time + "s后获取"
-						if (this.time == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+			go_code() { 
+				let _this = this
+				if (_this.time == 0) {
+					_this.$api.emsphone({
+						phone: _this.shoujihao
+					}).then(data => {
+						if(data.data.code == 1){
+							_this.time = 60
+							let aa = setInterval(() => {
+								_this.time--
+								_this.huoqu = _this.time + "s后获取"
+								if (_this.time == 0) {
+									clearInterval(aa)
+									_this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						}else{ 
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
+					
 				}
 			},
 			xianshi() {
@@ -455,19 +475,38 @@
 					})
 				}
 			},
-			tongyis(ev) {
+			tongyis(ev) { 
 				if (ev == 1) {
-					if (this.code != "") {
-						this.tongyi(1)
+					if (this.code != "") { 
+						this.$api.emsyzphone({
+							phone: this.shoujihao,
+							yzm:this.code
+						}).then(data => {
+							if(data.data.code == 1){
+								this.tongyi(1)
+							}else{
+								uni.showToast({
+									title: "验证码错误",
+									duration: 1000,
+									icon: "none"
+								})
+							} 
+						})
 
 					} else {
 						uni.showToast({
-							title: "请输入验证码",
+							title: "验证码错误",
+							duration: 1000,
 							icon: "none"
 						})
 					}
+				}else{ 
+					this.time =0
+					this.code =''
+					this.shoujihao = ''
+					this.shoujiyanzheng = false;
 				}
-				this.shoujiyanzheng = false;
+				
 			},
 			tongyi(ev) {
 				if (ev == 1) {
@@ -487,7 +526,7 @@
 				})
 			},
 			hahaha(item) {
-				console.log(item);
+
 				item.check = !item.check
 			},
 			aaaaaa() {
@@ -549,7 +588,7 @@
 					specids.push(item.specid)
 					cartids.push(item.id)
 				})
-				console.log(1111);
+
 				if (this.iscartid) {
 					cartids = 0
 				}

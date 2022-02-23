@@ -91,7 +91,7 @@
 					<image class="img" src="../../static/icon_me_more.png" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="top_b">
+			<!-- <view class="top_b">
 				<view class="quanju">
 					<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
 						<view class="cart-num" v-if="index <=1 && num_list[index] != 0">
@@ -107,7 +107,7 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="top_c">
 				<view class="text">
 					常用工具
@@ -122,7 +122,7 @@
 							</view>
 						</view>
 						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
-						<view class="dsalhdkjahjad" v-if="index == 2 && fkjsfjdisfjsl"></view>
+						<view class="dsalhdkjahjad" v-if="index == 1 && fkjsfjdisfjsl"></view>
 					</view>
 				</view>
 			</view>
@@ -159,7 +159,7 @@
 						url: "../messg"
 					},
 					{
-						name: "相关合同",
+						name: "相关协议",
 						url: "../hetong"
 					},
 					// {
@@ -259,8 +259,7 @@
 					uni.requestSubscribeMessage({
 						provider: 'weixin',
 						tmplIds: ['P9sDe92NgZMcD2lKBvrLniyriLRhaxIyOGF8tH5El8o'],
-						success: function(res) {
-							console.log(res, "pppppp");
+						complete: function(res) {
 							uni.navigateTo({
 								url: ev + "?title=" + title
 							})

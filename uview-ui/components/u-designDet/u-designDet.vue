@@ -46,17 +46,10 @@
 				</view>
 				<view class="top-ss sss">
 					<view class="dasjbash">
-						满意度
+						创意度
 					</view>
 					<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
-						:show-percent="false" :percent="alls.manyi" />
-				</view>
-				<view class="top-ss sss">
-					<view class="dasjbash">
-						成单率
-					</view>
-					<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
-						:show-percent="false" :percent="alls.zy" />
+						:show-percent="false" :percent="alls.cy" />
 				</view>
 				<view class="top-ss sss">
 					<view class="dasjbash">
@@ -67,10 +60,17 @@
 				</view>
 				<view class="top-ss sss">
 					<view class="dasjbash">
-						创意度
+						成单率
 					</view>
 					<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
-						:show-percent="false" :percent="alls.cy" />
+						:show-percent="false" :percent="alls.zy" />
+				</view>
+				<view class="top-ss sss">
+					<view class="dasjbash">
+						满意度
+					</view>
+					<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
+						:show-percent="false" :percent="alls.manyi" />
 				</view>
 			</view>
 		</view>

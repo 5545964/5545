@@ -275,7 +275,7 @@
 			},
 			//点赞
 			dianzhan(ev) {
-				console.log(ev);
+
 				this.budakai = false;
 				let aa = ""
 				if (ev.zans != null && ev.zans != '') {
@@ -291,7 +291,7 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						// this.allss()
-						console.log(aa);
+
 						if (aa == 0) {
 							this.des.zan = this.des.zan + 1
 							this.des.zans = {
@@ -339,7 +339,7 @@
 			},
 			pinglun(ev) {
 				let aa = ev
-				console.log(ev.pl);
+
 				this.pinglun_list = ev.pl;
 				this.itemsss = aa;
 				if (this.budakai) {

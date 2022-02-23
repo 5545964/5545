@@ -54,7 +54,7 @@
 		},
 		methods: {
 			pageA(ev) {
-				console.log(ev);
+
 				this.shuo = false;
 			},
 			pageB(ev) {

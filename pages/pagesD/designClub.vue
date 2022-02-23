@@ -54,10 +54,14 @@
 		<view class="" style="height: 100%;" v-if="current==3">
 			<u-empty></u-empty>
 		</view>
+		
 		<!-- 成为设计师 -->
 		<view style="height: 100%;" v-if="current==4">
 			<view class="be_main" style="height: 100%;" v-if="state<0">
 				<view class="be_designer">
+				</view>
+				<view  @click="getcontein(0)">
+					会员
 				</view>
 				<image style="width: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg" mode="widthFix">
 				</image>
@@ -77,7 +81,9 @@
 						成为2级设计师会员
 					</view>
 				</view>
+				
 			</view>
+			
 			<!-- 驳回 -->
 			<view class="reject" v-if="state==2">
 				<image src="../../static/icon_me_reject.png" class="imgrej" mode="aspectFit"></image>
@@ -338,8 +344,9 @@
 		},
 		onShow() {
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
-			this.current = this.list[0].id
-			// this.current = 4
+			// this.current = this.list[0].id
+			// this.current = uni.getStorageSync("ggug")
+			this.change(uni.getStorageSync("ggug"))
 			//验证弹窗
 			let aa = uni.getStorageSync("xieyi")
 			this.xieyi = []
@@ -367,7 +374,7 @@
 		},
 		methods: {
 			rre(ev) {
-				console.log(ev, "00000");
+
 			},
 			// 验证弹窗
 			// 协议同意按钮
@@ -421,8 +428,23 @@
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						this.shoujiyanzheng = false
-						this.getcontein(this.diandedijige)
+						// 验证验证码
+						this.$api.emsyzphone({
+							phone: this.shoujihao,
+							yzm: this.code
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.shoujiyanzheng = false
+								this.getcontein(this.diandedijige)
+							} else {
+								uni.showToast({
+									title: "验证码错误",
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
+
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
@@ -436,15 +458,32 @@
 			// 获取验证码倒计时
 			go_code() {
 				if (this.timea == 0) {
-					this.timea = 60
-					let aa = setInterval(() => {
-						this.timea--
-						this.huoqu = this.timea + "s后获取"
-						if (this.timea == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+					this.$api.emsphone({
+						phone: this.shoujihao
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
 				}
 			},
 			// 判断手机号
@@ -592,7 +631,7 @@
 			},
 			// 跳转设计师详情
 			navgepage(item) {
-				console.log(item);
+
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
@@ -644,9 +683,9 @@
 			toReg() {
 				this.showContract = false;
 				let aa = 0
-				if(this.diandedijige == 0){
+				if (this.diandedijige == 0) {
 					aa = 5
-				}else{
+				} else {
 					aa = 3
 				}
 				uni.navigateTo({
@@ -721,9 +760,9 @@
 			pays() {
 				let that = this
 				let aa = 0
-				if(that.diandedijige == 0){
+				if (that.diandedijige == 0) {
 					aa = 5
-				}else{
+				} else {
 					aa = 3
 				}
 				that.$api.buylevel({
@@ -822,6 +861,7 @@
 			change(index) {
 				this.pages = 1
 				this.current = index
+				uni.setStorageSync("ggug", index)
 				if (index == 0) {
 					this.enjoy()
 				}

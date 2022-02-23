@@ -69,7 +69,7 @@
 				item.content=this.img+item.content
 			})
 			this.list = go_shop
-			console.log(this.list,111);
+
 		},
 		methods: {
 			ended(ev) {

@@ -71,7 +71,7 @@
 		<view class="works" v-if="!isDesign">
 			<view class="title">
 				<view class="name">
-					热门推荐搭配
+					代表作品
 					<view class="bor_bot">
 
 					</view>
@@ -187,7 +187,7 @@
 			async pinglun(ev) {
 				if (await this.$login()) {
 					let aa = ev
-					console.log(ev.pl);
+
 					this.pinglun_list = ev.pl
 					this.itemsss = aa;
 					if (this.budakai) {

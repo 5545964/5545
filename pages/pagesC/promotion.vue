@@ -93,7 +93,7 @@
 			};
 		},
 		onUnload(){
-			console.log("onUnload");
+
 		},
 		methods: {
 			ended(ev) {

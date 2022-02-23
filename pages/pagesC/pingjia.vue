@@ -53,12 +53,20 @@
 				shopid: "",
 				orderid: "",
 				alls_item: {},
-				shangchuan: false
+				shangchuan: false,
+				state:0
 			};
 		},
 		onLoad(ev) {
+			if(ev.okj != 0){
+				this.state = 1
+				this.title="报装评价"
+			}
 			if (ev.title) {
 				this.title = ev.title
+			}
+			if (ev.state) {
+				this.state = 1
 			}
 			this.alls_item = JSON.parse(ev.item)
 
@@ -92,6 +100,7 @@
 					aa.push(item.id)
 				})
 				this.$api.pl({
+					state:this.state,
 					content: this.text,
 					image: this.imglist,
 					orderid: this.alls_item.orderid,

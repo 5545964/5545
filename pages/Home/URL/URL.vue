@@ -16,7 +16,11 @@
 			}
 		},
 		onLoad(val) {
-			this.url = val.url
+			if(val.url == 0){
+				this.url = uni.getStorageSync("bbghb")
+			}else{
+				this.url = val.url
+			}
 			// 设置当前的title 如果外链中有的话将被覆盖
 			if(this.isNotEmpty(val.title)){
 				this.setTitle(val.title);

@@ -16,11 +16,11 @@
 		<view class="dskdk" v-if="mydesigner.length != 0">
 			<view class="hahaha" v-for="(item,indexs) in mydesigner" :key="indexs" @click="changePage(item)">
 				<view class="jdhfd">
-					<view style="width: 34%;">
+					<view style="width:34%;display:flex;flex-flow:column;align-items:center;justify-content: center;">
 						<view class="hhi">
 							<image class="imgd" :src="img + item.avatar" mode="aspectFit"></image>
 						</view>
-						<view class="dadasdad">
+						<view class="dadasdad" style="margin-top:20rpx;">
 							{{item.username}}
 						</view>
 					</view>
@@ -66,7 +66,7 @@
 				title: "我的关注",
 				list: ['个性创新', "个性", "个性创"],
 				mydesigner: [],
-				
+
 			};
 		},
 		onShow() {
@@ -81,11 +81,11 @@
 						if (item.des != null) {
 							let aa = []
 							let bb = []
-							if(item.des.desimage){
-								aa = item.des.desimage.split(',')
+							if (item.des.work) {
+								aa = item.des.work.split(',')
 							}
 							let labels = item.des.label
-							if( labels){
+							if (labels) {
 								bb = labels.split(',')
 							}
 							this.mydesigner.push({
@@ -94,23 +94,22 @@
 								username: item.des.username,
 								list: bb,
 								list_s: [{
-										name: "满意度",
-										num: item.des.manyi
-									},
-									{
 										name: "创意度",
 										num: item.des.cy
 									},
 									{
-										name: "成单率",
+										name: "专业度",
 										num: item.des.yj
 									},
 									{
-										name: "专业度",
+										name: "成单率",
 										num: item.des.zy
+									},
+									{
+										name: "满意度",
+										num: item.des.manyi
 									}
 								],
-								work: item.des.work,
 								star: item.star,
 								createtime: item.createtime,
 								image: this.$imgPath + aa[0]
@@ -212,10 +211,11 @@
 			}
 
 			.dasjbash {
-				width: 30%;
+				width: 50%;
 				font-size: 12rpx;
 				font-weight: 400;
 				color: #333333;
+				text-align: center;
 			}
 
 			.top-ss {

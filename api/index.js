@@ -1,6 +1,67 @@
 import request from "./request.js"
 
-export default {
+export default { 
+	// bydshop/pots
+	pots(params = {}) {
+		return request.post("/api/bydshop/pots", params);
+	},
+	// bydshop/xqsh
+	xqsh(params = {}) {
+		return request.post("/api/bydshop/xqsh", params);
+	},
+	// /api/bydshop/sqty
+	sqty(params = {}) {
+		return request.post("/api/bydshop/sqty", params);
+	},
+	// api/bydshop/taskstatus
+	taskstatus(params = {}) {
+		return request.post("/api/bydshop/taskstatus", params);
+	},
+	// /api/bydshop/gettask
+	gettask(params = {}) {
+		return request.post("/api/bydshop/gettask", params);
+	},
+	// 验证码/api/ems/sends
+	emsphone(params = {}) {
+		return request.post("/api/ems/sends", params);
+	},
+	// 验证验证码/api/ems/sends
+	emsyzphone(params = {}) {
+		return request.post("/api/ems/sendsyz", params);
+	},
+	
+	// 用户上传身份证正反面照片/api/bydshop/userupload
+	userupload(params = {}) {
+		return request.post("/api/bydshop/userupload", params);
+	},
+	// 慧型用户信息查询/api/bydshop/userinfo
+	userinfo(params = {}) {
+		return request.post("/api/bydshop/userinfo", params);
+	},
+	// 智慧型签约授权/api/bydshop/contract
+	contract(params = {}) {
+		return request.post("/api/bydshop/contract", params);
+	},
+	// 智慧型查询是否签约成功/api/bydshop/querysuccess
+	querysuccess(params = {}) {
+		return request.post("/api/bydshop/querysuccess", params);
+	},
+	// 智慧型实名认证/api/bydshop/realname
+	realname(params = {}) {
+		return request.post("/api/bydshop/realname", params);
+	},
+	// 智慧型注册/api/bydshop/myreg
+	myreg(params = {}) {
+		return request.post("/api/bydshop/myreg", params);
+	},
+	// 智慧型用户信息上传/api/bydshop/zhxmy
+	zhxmy(params = {}) {
+		return request.post("/api/bydshop/zhxmy", params);
+	},
+	// bydshop/myag
+	myag(params = {}) {
+		return request.post("/api/bydshop/myag", params);
+	},
 	// bydshop/userag 
 	userag(params = {}) {
 		return request.post("/api/bydshop/userag", params);
@@ -37,18 +98,9 @@ export default {
 	deleorder(params = {}) {
 		return request.post("/api/bydshop/deleorder", params);
 	},
-	// 实名认证/api/bydshop/realname
-	realname(params = {}) {
-		return request.post("/api/bydshop/realname", params);
-	},
-	// 上传身份证/api/bydshop/userupload
-	userupload(params = {}) {
-		return request.post("/api/bydshop/userupload", params);
-	},
-	// 智慧型注册/api/bydshop/myreg
-	myreg(params = {}) {
-		return request.post("/api/bydshop/myreg", params);
-	},
+
+	
+
 	// /api/byd_user/activtz
 	activtz(params = {}) {
 		return request.post("/api/byd_user/activtz", params);

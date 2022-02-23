@@ -22,23 +22,23 @@
 				</view>
 			</view>
 		</view>
-		
-		<view class="hahaha" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
-			<view class="cet" @click="gos(0)">
+
+		<view class="hahaha" >
+			<view class="cet" @click="gos(0)" v-if="des_user.bbs !=null">
 				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
 				<view class="text">
 					电子名片
 				</view>
 			</view>
-			<view class="xian"></view>
-			<view class="cet" @click="gos(1)">
+			<view class="xian" v-if="des_user.bbs !=null"></view>
+			<view class="cet" @click="gos(1)" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
 				<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
 				<view class="text">
 					专属二维码
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="top">
 			<view class="top_a" @click="shengfenzhuanqu">
 				<image class="imgs" src="../../static/me_vip_bg.png" mode="aspectFit"></image>
@@ -119,14 +119,13 @@
 						</view>
 					</view>
 					<!-- ../pagesD/designyongjin -->
-					<view class="template" @click="gongju_go('../pagesD/designyongjin','我的佣金')"
-						v-if="user_info.bbs.id">
+					<view class="template" @click="gongju_go('../pagesD/designyongjin','我的佣金')" v-if="user_info.bbs.id">
 						<image class="img" :src="'../../static/gongju5.png'" mode="aspectFit"></image>
 						<view class="texts">
 							我的佣金
 						</view>
 					</view>
-					
+
 					<view class="template" @click="gongju_go('../pagesA/gongju6','安装评价')">
 						<image class="img" :src="'../../static/gongju6.png'" mode="aspectFit"></image>
 						<view class="texts">
@@ -157,8 +156,8 @@
 							我的报装
 						</view>
 					</view>
-					
-					
+
+
 					<!-- <view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
 						v-if="user_info.bbs.id">
 						<image class="img" :src="'../../static/gongju11.png'" mode="aspectFit"></image>
@@ -166,15 +165,22 @@
 							我的团队
 						</view>
 					</view> -->
-					
-					
-					
+
+
+
 					<view class="template" @click="gongju_go('../pagesA/gongju12','预约设计')">
 						<image class="img" :src="'../../static/gongju12.png'" mode="aspectFit"></image>
 						<view class="texts">
 							预约设计
 						</view>
 						<view class="dsalhdkjahjad" v-if="fkjsfjdisfjsl"></view>
+					</view>
+					<view class="template" @click="gongju_go('../pagesD/hetong','我的协议')">
+						<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
+						<view class="texts">
+							我的协议
+						</view>
+						<view class="dsalhdkjahjad" v-if="false"></view>
 					</view>
 				</view>
 			</view>
@@ -271,6 +277,7 @@
 						name: "已安装"
 					},
 				],
+				des_user:"",
 			};
 		},
 		onShow() {
@@ -278,6 +285,14 @@
 				this.user_info = uni.getStorageSync("user_info")
 				this.shuliang(this.user_info.id)
 			}
+			this.$api.desmyuser({
+				user_id: uni.getStorageSync("user_info").id
+			}).then(data => {
+				if (data.data.code == 1) {
+					uni.setStorageSync("des_info", data.data.data.myuser)
+					this.des_user = data.data.data.myuser
+				}
+			})
 		},
 		methods: {
 			quxiao(ev) {

@@ -37,11 +37,11 @@
 											{{item.title}}
 										</view>
 										<view class="timess">
-											{{item.create_time}}
+											{{item.refreshtime_text}}
 										</view>
 									</view>
 									<view class="">
-										<image class="imghjk" :src="item.cover_img_1_1" mode="aspectFit">
+										<image class="imghjk" :src="imgPath+item.simage" mode="aspectFit">
 										</image>
 									</view>
 								</view>
@@ -103,8 +103,12 @@
 				}],
 				current: 0,
 				xinxi: [],
+				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath
 			};
+		},
+		onReachBottom(ev) {
+			console.log(ev);
 		},
 		onShow() {
 			this.lists.forEach(item => {
@@ -117,42 +121,26 @@
 					}
 				})
 			})
-			uni.request({
-				url: 'https://mp.weixin.qq.com/mp/appmsgalbum',
-				data: {
-					action: 'getalbum',
-					__biz: "Mzg5NDMzMjI3Mw%3D%3D",
-					album_id: "2000816369738498049",
-					count: "10",
-					begin_msgid: "2247486223",
-					begin_itemidx: "1",
-					f: "json"
-				},
-				method: "GET",
-				header: {
-					'custom-header': 'hello', //自定义请求头信息
-
-				},
-				success: (res) => {
-					this.xinxi = res.data.getalbum_resp.article_list
-					this.xinxi.forEach((item, index) => {
-						this.xinxi[index].create_time = this.xinxi[index].create_time * 1000
+			this.$api.pots({
+				limit: 1000
+			}).then(data => {
+				if (data.data.code == 1) {
+					console.log(data);
+					data.data.data.status.data.forEach(item => {
+						item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
 					})
-					this.xinxi.forEach((item, index) => {
-						this.xinxi[index].create_time = dayjs(item.create_time).format('YYYY/MM/DD')
-					})
-
+					this.xinxi = data.data.data.status.data
 				}
-			});
+			})
 			const res = uni.getSystemInfoSync();
 			this.heigth = res.windowHeight;
 
 		},
 		methods: {
-			shouURl(items) {
-				var url = encodeURIComponent(items.url)
+			shouURl(ev) {
+				uni.setStorageSync("fuwenbeng",ev.content)
 				uni.navigateTo({
-					url: "/pages/Home/shows/shows?url=" + url
+					url:"../pagesC/fuwenben"
 				})
 			},
 			lun_change(index) {

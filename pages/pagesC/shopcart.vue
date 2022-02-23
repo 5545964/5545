@@ -18,10 +18,10 @@
 			<view class="" v-if="yuyuecarList.length != 0">
 				预约订单
 			</view>
-			<view  @click="toshopdetail(item)" v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
+			<view  v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
 				class="car-list" @touchstart="drawStarts" @touchmove="drawMoves" @touchend="drawEnds"
 				:data-index="shopIndex" :style="'right:'+item.right+'px'">
-				<view class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
+				<view @click="toshopdetail(item)"class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
 					<view class="btn centerboth" v-if="item.selected==true" @click.stop="selThiss(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
@@ -146,7 +146,7 @@
 		methods: {
 			// 跳转商品详情
 			toshopdetail(item){
-				console.log(item);
+
 				uni.navigateTo({
 					url:"./Shopping?shopid="+item.shopid
 				})

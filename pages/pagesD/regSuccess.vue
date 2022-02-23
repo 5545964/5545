@@ -31,19 +31,25 @@
 	export default {
 		data() {
 			return {
-				list: {}
+				list: {},
+				tiao:1
 			}
 		},
 		onLoad(ev) {
 			if (ev.list) {
 				this.list = JSON.parse(ev.list);
 			}
+			if (ev.tiao) {
+				this.tiao = 2
+			}
 		},
 		methods: {
 			back(ev) {
 				switch (ev) {
 					case 0:
-						uni.navigateBack(-1)
+						uni.navigateBack({
+							delta:this.tiao
+						})
 						break;
 					case 1:
 						uni.switchTab({

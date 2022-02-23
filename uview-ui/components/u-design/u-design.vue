@@ -124,7 +124,7 @@
 			alls() {
 				this.$api.loupanden({
 					page: this.pagess,
-					limit: 4
+					limit: 10
 				}).then(data => {
 					if (data.data.code == 1) {
 						if (data.data.data.status.data.length != 0) {
@@ -160,6 +160,7 @@
 					}
 				})
 			},
+			// 选项回调
 			confirm(e) {
 				this.dropList[this.selindex].name = e[0].label
 				let aa = []
@@ -171,11 +172,14 @@
 						aa.push(item)
 					}
 				})
-				console.log(aa);
 				this.lou_list = aa
 			},
 			// 搜索
 			seach_go() {
+				this.dropList.forEach((item, index) => {
+					item.name = "选择" + item.name1
+					item.save = []
+				})
 				this.$api.loupanlike({
 					name: this.keyword
 				}).then(data => {
@@ -241,18 +245,30 @@
 					}
 				})
 				this.arrs = arr
-				this.options2 = [] //
-
+				let mm = []
 				// 渲染的数据
 				for (let i = 0; i < arr.length; i++) {
 					if (i > 0 && arr[i][`${key}`] == arr[i - 1][`${key}`]) {
 						continue
 					} else {
-						this.options2.push(arr[i])
+						mm.push(arr[i])
 					}
 				}
+				console.log(mm[0][this.labelName], this.labelName);
+				this.options2 = this.unique(mm) //
 				this.dropList[indexs].save = this.options2
 			},
+			unique(arr) {
+				for (var i = 0; i < arr.length; i++) {
+					for (var j = i + 1; j < arr.length; j++) {
+						if (arr[i][this.labelName] == arr[j][this.labelName]) { //第一个等同于第二个，splice方法删除第二个
+							arr.splice(j, 1);
+							j--;
+						}
+					}
+				}
+				return arr;
+			}
 		}
 	}
 </script>

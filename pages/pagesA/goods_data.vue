@@ -22,7 +22,7 @@
 					<view class="cet cdsfsdfs">
 						<image class="img" src="../../static/loudou.png" mode="aspectFit"></image>
 						<view class="jhjk">
-							一天后自动取消订单
+							{{daojishi}}后自动取消订单
 						</view>
 					</view>
 				</view>
@@ -148,6 +148,10 @@
 					<view class="dmskajd">创建时间：</view>
 					<view class="djkshfk">{{data_list.create_at}}</view>
 				</view>
+				<view class="kfosjd" v-if="data_list.paytime">
+					<view class="dmskajd">支付时间：</view>
+					<view class="djkshfk">{{data_list.paytime}}</view>
+				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">订单备注：</view>
 					<view class="djkshfk">{{data_list.content||"无备注"}}</view>
@@ -214,6 +218,10 @@
 					v-if="data_list.state == 3 || data_list.state == 4 || data_list.states == 2">
 					申请售后
 				</view>
+				<view class="button" @click="annui(8)"
+					v-if="data_list.state == 10 || data_list.state == 11 || data_list.state == 12 || data_list.state == 13 || data_list.state == 14 || data_list.state == 15">
+					取消售后
+				</view>
 				<view class="button" @click="kuaidiwo()" v-if="data_list.states === 1 && data_list.sqexpressorder ==0">
 					填写快递单号
 				</view>
@@ -236,8 +244,11 @@
 				<view class="button" v-if="data_list.state == 16&&data_list.bz==1" @click="lookdetails()">
 					查看安装详情
 				</view>
-				<view class="button" @click="annui(6)" v-if="data_list.state == 3 || data_list.states == 2">
+				<view class="button" @click="baozhuangpngji(0, items)" v-if="items.state == 17">
 					立即评价
+				</view>
+				<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
+					报装评价
 				</view>
 			</view>
 		</view>
@@ -410,6 +421,18 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- quxiaoshouhou -->
+		<u-popup width="640" :closeable="true" border-radius="10" v-model="quxiaoshouhou" mode="center">
+			<view class="popup">
+				<view class="top"> 提示 </view>
+				<view class="cets"> 确认取消售后？ </view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="shouhoou(0)"> 取消 </view>
+					<view class="czcxc" @click="shouhoou(1)"> 确定 </view>
+				</view>
+			</view>
+		</u-popup>
 		<!-- 确认安装完成 -->
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="qurren" mode="center">
 			<view class="popup">
@@ -456,9 +479,15 @@
 </template>
 
 <script>
+	import dayjs from 'dayjs'
+	dayjs.extend(require('dayjs/plugin/duration'));
 	export default {
 		data() {
 			return {
+				quxiaoshouhou: false,
+				dinshiqi: "",
+				shoujihao: "",
+				pingjiaok: 0,
 				// 已安装
 				yianzhaungkaiguan: true,
 				yianzhaungxieyi: [],
@@ -495,10 +524,11 @@
 				show: false,
 				shows: false,
 				showa: false,
-				title: "商品详情",
+				title: "订单详情",
 				data_list: {},
 				img_list: [],
-				order_idsssss: ""
+				order_idsssss: "",
+				daojishi: "",
 			}
 		},
 		onLoad(ev) {
@@ -567,6 +597,28 @@
 			}
 		},
 		methods: {
+			shouhoou(ev) {
+				if (ev == 1) {
+					this.$api.xqsh({
+						orderid: this.data_list.orderid
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.quxiaoshouhou = false
+							uni.navigateBack(-1)
+						}
+						uni.showToast({
+							title: data.data.msg,
+							icon: "none"
+						})
+					})
+				} else {
+					this.quxiaoshouhou = false
+				}
+			},
+			baozhuangpngji(okj, ev) {
+				this.pingjiaok = okj
+				this.annui(6, ev)
+			},
 			// 切换协议内容
 			dakaishouji(ev) {
 				this.zhuangtai = ev
@@ -706,7 +758,6 @@
 				this.mnbv = this.data_list
 				this.baozhuangshow = !this.baozhuangshow
 			},
-			
 			// 删除此订单
 			delorder() {
 				let that = this;
@@ -733,6 +784,45 @@
 					}
 				});
 			},
+			countDown() {
+				let that = this;
+				let end = that.data_list.cretime * 1000
+				that.dinshiqi = setInterval(() => {
+					let aa = that.addtimes(end)
+					that.daojishi = aa.hours + ":" + aa.minutes + ":" + aa.seconds
+					if (aa.hours == "00" && aa.minutes == "00" && aa.seconds == "00") {
+						clearInterval(that.dinshiqi)
+					}
+				}, 1000)
+			},
+			// 计算时间
+			addtimes(time) {
+				let dateNow = new Date();
+				let timeDiff = time * 1000 - dateNow.getTime(); // 时间差的毫秒数
+				let leavel1 = timeDiff % (24 * 3600 * 1000);
+				let hours = Math.floor(leavel1 / (3600 * 1000));
+
+				let leavel2 = timeDiff % (3600 * 1000);
+				let minutes = Math.floor(leavel2 / (60 * 1000));
+
+				let leavel3 = timeDiff % (60 * 1000);
+				let seconds = Math.floor(leavel3 / 1000);
+				if (hours < 10) {
+					hours = "0" + hours
+				}
+				if (minutes < 10) {
+					minutes = "0" + minutes
+				}
+				if (seconds < 10) {
+					seconds = "0" + seconds
+				}
+				let aa = {
+					hours,
+					minutes,
+					seconds
+				}
+				return aa
+			},
 			// 初始化数据
 			allsss() {
 				this.$api.myorder({
@@ -743,13 +833,20 @@
 						data.data.data.status.forEach(item => {
 							if (item.orderid == this.order_idsssss) {
 								this.data_list = item;
-								let img = this.data_list.image;
-								this.img_list = img.split(",")
+								if (this.data_list.paytime) {
+									this.data_list.paytime = dayjs(this.data_list.paytime * 1000).format(
+										'YYYY-MM-DD HH:mm:ss')
+								}
+								if (this.data_list.image) {
+									let img = this.data_list.image;
+									this.img_list = img.split(",")
+								}
+								this.countDown()
 							}
 						})
 					}
 				})
-			},	
+			},
 			//退款
 			xuanzhea(ev) {
 				if (ev == 1) {
@@ -812,19 +909,6 @@
 				}
 				this.baozhuangshow = false
 			},
-			// querenshouhuo() {
-			// 	this.$api.sureorder({
-			// 		id: this.data_list.id
-			// 	}).then(data => {
-			// 		if (data.data.code == 1) {
-			// 			uni.showToast({
-			// 				title: "收货成功",
-			// 				icon: "none",
-			// 			});
-			// 			uni.navigateBack(-1)
-			// 		}
-			// 	})
-			// },
 			//取消订单
 			xuanzhe(ev) {
 				switch (ev) {
@@ -908,7 +992,8 @@
 						break;
 					case 3:
 						uni.navigateTo({
-							url: "../pagesC/wuliu?id=" + this.data_list.id,
+							url: "../pagesC/wuliu?id=" + this.data_list.id + "&express=" + this.data_list.express + "&expressorder=" + this.data_list
+								.expressorder,
 						});
 						break;
 					case 4:
@@ -927,7 +1012,8 @@
 						break;
 					case 6:
 						uni.navigateTo({
-							url: "../pagesC/pingjia?item=" + JSON.stringify(this.data_list)
+							url: "../pagesC/pingjia?item=" + JSON.stringify(this.data_list) + "&okj=" + this
+								.pingjiaok
 						})
 						break;
 					case 7:
@@ -935,6 +1021,9 @@
 						uni.navigateTo({
 							url: "../pagesC/shouhou?item=" + JSON.stringify(this.data_list)
 						});
+						break;
+					case 8:
+						this.quxiaoshouhou = true
 						break;
 					default:
 				}
@@ -964,8 +1053,22 @@
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						this.tongyi(1)
-						this.shoujiyanzheng = false
+						// 验证验证码
+						this.$api.emsyzphone({
+							phone: this.shoujihao,
+							yzm: this.code
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.tongyi(1)
+								this.shoujiyanzheng = false
+							} else {
+								uni.showToast({
+									title: "验证码错误",
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
@@ -998,18 +1101,34 @@
 			},
 			go_code() {
 				if (this.timea == 0) {
-					this.timea = 60
-					let aa = setInterval(() => {
-						this.timea--
-						this.huoqu = this.timea + "s后获取"
-						if (this.timea == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+					this.$api.emsphone({
+						phone: this.shoujihao
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
 				}
 			},
-
 		}
 	}
 </script>

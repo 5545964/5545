@@ -74,7 +74,7 @@
 			// aa[2] = Number(aa[2]) - 1
 			// let bb = [aa[0],aa[1],aa[2]]
 			// this.value = [...bb]
-			// console.log(this.value);
+
 		},
 		watch: {
 			month() {
@@ -120,7 +120,7 @@
 				const selectedMonth = this.months[value[1]];
 				const days = [];
 				const totalDays = new Date(selectedYear, selectedMonth, 0).getDate();
-				console.log(totalDays);
+
 				for (let day = 1; day <= totalDays; day++) {
 					days.push(day);
 					if (this.currentDate.getDate() === day) {
@@ -167,7 +167,7 @@
 
 			setSelectValue() {
 				const v = this.value;
-				console.log(this.value);
+
 				this.year = this.years[v[0]];
 				this.month = this.months[v[1]];
 				this.day = this.days[v[2]];

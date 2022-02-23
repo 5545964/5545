@@ -140,6 +140,13 @@
 				this.$emit("guanbi")
 			},
 			confirm_hf() {
+				if(this.pinglun_text == ""){
+					uni.showToast({
+						title:"请输入内容",
+						icon:"none"
+					})
+					return
+				}
 				this.$emit("chang", this.pinglun_text, this.place)
 				this.place = "发表评论请文明用语"
 				this.pinglun_text = ""

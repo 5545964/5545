@@ -19,21 +19,42 @@
 					基本信息
 				</view>
 				<view class="dsadsa">
-					<view class="">
-						<view class="name">
-							真实姓名
-						</view>
-						<view class="name">
-							身份证号码
+					<view class="name">
+						真实姓名
+					</view>
+					<view class="name">
+						<u-input inputAlign="right" size="200" v-model="name" placeholder="请填写真实姓名" type="text" />
+					</view>
+				</view>
+				<view class="dsadsa">
+					<view class="name">
+						手机号码
+					</view>
+					<view class="name">
+						<u-input inputAlign="right" size="200" v-model="pgone" placeholder="请填写您的手机号码" type="number" />
+					</view>
+				</view>
+				<view class="dsadsa">
+					<view class="name">
+						短信验证码
+					</view>
+					<view class="yanzhengma">
+						<view class="cet" style="justify-content: space-around;width: 100%;">
+							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
+							</view>
+							<button class="annuyt" @click="go_code">{{huoqu}}</button>
 						</view>
 					</view>
-					<view class="">
-						<view class="name">
-							<input type="text" inputAlign="right" v-model="name" placeholder="请填写真实姓名" />
-						</view>
-						<view class="name">
-							<input type="text" v-model="card_id" placeholder="请填写您的身份证号码" />
-						</view>
+				</view>
+				<view class="dsadsa">
+					<view class="name">
+						身份证号码
+					</view>
+					<view class="name" style="width: 70%;">
+						<u-input inputAlign="right" size="200" v-model="card_id" placeholder="请填写您的身份证号码"
+							type="number" />
 					</view>
 				</view>
 			</view>
@@ -61,28 +82,27 @@
 					银行卡信息
 				</view>
 				<view class="dsadsa">
-					<view class="">
-						<view class="name">
-							银行卡号
-						</view>
-						<view class="name">
-							银行卡开户行
-						</view>
+					<view class="name">
+						银行卡号
 					</view>
-					<view class="">
-						<view class="name">
-							<input type="text" inputAlign="right" v-model="yinghangka" placeholder="请填写银行卡号" />
-						</view>
-						<view class="name">
-							<input type="text" v-model="kaihuhang" placeholder="请填写您的银行卡开户行" />
-						</view>
+					<view class="name" style="width: 70%;">
+						<u-input inputAlign="right" size="200" v-model="yinghangka" placeholder="请填写银行卡号"
+							type="number" />
+					</view>
+				</view>
+				<view class="dsadsa">
+					<view class="name">
+						银行卡开户行
+					</view>
+					<view class="name">
+						<u-input inputAlign="right" size="200" v-model="kaihuhang" placeholder="请填写您的银行卡开户行"
+							type="text" />
 					</view>
 				</view>
 			</view>
 		</view>
-		<view style="height: 110rpx;">
-
-		</view>
+		<!-- <view style="height: 110rpx;">
+		</view> -->
 		<view class="bottomssss cet">
 			<view class="dasdasdxzxcx" @click="tijiao">
 				提交
@@ -95,6 +115,10 @@
 	export default {
 		data() {
 			return {
+				huoqu: "获取验证码",
+				timea: 0,
+				code: "",
+				pgone: "",
 				zhen: "",
 				bei: "",
 				renxiang_bg: require('../../static/renxiang_bg.png'),
@@ -115,31 +139,6 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
-
-
-		},
-		onShow() {
-			this.aa = uni.getStorageSync("user_info")
-			if (this.aa.mobile != null && this.aa.mobile != "") {
-				this.$api.myreg({
-					phone: this.aa.mobile,
-					user_id: this.aa.id
-				}).then(data => {
-					console.log(data);
-				}).catch(data => {
-					console.log(data);
-				})
-			} else {
-				uni.showToast({
-					title: "请设置手机号",
-					icon: "error"
-				})
-				setTimeout(() => {
-					uni.navigateTo({
-						url: "../pagesB/my"
-					})
-				}, 1000)
-			}
 		},
 		methods: {
 			successs(ev) {
@@ -153,7 +152,6 @@
 				this.bei = ''
 			},
 			success(ev) {
-				console.log(ev);
 				this.zhen = ev.data.status
 				uni.showToast({
 					title: "正面上传成功",
@@ -163,53 +161,118 @@
 			remove(ev) {
 				this.zhen = ''
 			},
-			tijiao() {
-				if (this.zhen == "") {
-					return uni.showToast({
-						title: "请上传身份证正面",
-						icon: "error"
-					})
-				}
-				if (this.bei == "") {
-					return uni.showToast({
-						title: "请上传身份证背面",
-						icon: "error"
-					})
-				}
-				let aa = 0
-				this.$api.userupload({
-					user_id: this.aa.id,
-					image: this.zhen,
-					type: 0
+			dsada() {
+				this.$api.realname({
+					user_id: uni.getStorageSync("user_info").id,
 				}).then(data => {
-					aa++
-					console.log(data);
-					this.$api.userupload({
-						user_id: this.aa.id,
-						image: this.bei,
-						type: 1
-					}).then(data => {
-						aa++
-						console.log(data);
-					})
-				})
-				if(aa == 2){
-					let list = {
-						title: "提交成功",
-						text: "你的提佣申请已提交成功",
-						botton: "我知道了",
-						navbar: "提交成功"
+					if (data.data.code == 1) {
+						let list = {
+							title: "提交成功",
+							text: "你的提佣申请已提交成功",
+							botton: "我知道了",
+							navbar: "提交成功"
+						}
+						uni.navigateTo({
+							url: "../pagesD/regSuccess?list=" + JSON.stringify(list) + "&tiao=2"
+						})
 					}
-					uni.navigateTo({
-						url: "../pagesD/regSuccess?list=" + JSON.stringify(list)
-					})
-				}else{
-					uni.showToast({
-						title: "请检查",
+				})
+			},
+			tijiao() {
+				let user_id = uni.getStorageSync("user_info").id
+				if (this.yinghangka == "" && this.kaihuhang == "" && this.card_id == "" &&
+					this.name == "" && this.pgone == "" && this.zhen == "" && this.bei == "") {
+					return uni.showToast({
+						title: "请检查资料",
 						icon: "error"
 					})
 				}
-				
+				if (this.code != "") {
+					// 验证验证码
+					this.$api.emsyzphone({
+						phone: this.pgone,
+						yzm: this.code
+					}).then(data => {
+						if (data.data.code != 1) {
+							return uni.showToast({
+								title: "验证码错误",
+								icon: "none"
+							})
+						}
+					})
+				} else {
+					return uni.showToast({
+						title: "请输入验证码",
+						icon: "none"
+					})
+				}
+
+				// 先注册
+				this.$api.myreg({
+					phone: this.pgone,
+					user_id: user_id
+				}).then(data => {
+					if (data.data.code == 1) {
+						// 上传身份证
+						if (this.zhen == "") {
+							return uni.showToast({
+								title: "请上传身份证正面",
+								icon: "error"
+							})
+						} else {
+							this.$api.userupload({
+								user_id: user_id,
+								image: this.zhen,
+								type: 0
+							}).then(data => {
+								if (data.data.code != 1) {
+									uni.showToast({
+										title: data.data.msg,
+										icon: "error"
+									})
+								}
+							})
+						}
+						if (this.bei == "") {
+							return uni.showToast({
+								title: "请上传身份证背面",
+								icon: "error"
+							})
+						} else {
+							this.$api.userupload({
+								user_id: user_id,
+								image: this.bei,
+								type: 1
+							}).then(data => {
+								if (data.data.code != 1) {
+									uni.showToast({
+										title: data.data.msg,
+										icon: "error"
+									})
+								}
+							})
+						}
+						// 上传银行卡信息
+						this.$api.zhxmy({
+							userid: user_id,
+							bankid: this.yinghangka,
+							bankname: this.kaihuhang,
+							idcardnum: this.card_id,
+							realname: this.name
+						}).then(data => {
+							if (data.data.code == 1) {
+								aa = aa + 1
+							} else {
+								uni.showToast({
+									title: data.data.msg,
+									icon: "error"
+								})
+							}
+						})
+					} else {
+						return this.dsada()
+					}
+				})
 			},
 			back(ev) {
 				switch (ev) {
@@ -223,17 +286,59 @@
 						break;
 					default:
 				}
-			}
+			},
+			// 获取验证码
+			go_code() {
+				if (this.pgone != "") {
+					if (this.timea == 0) {
+						this.$api.emsphone({
+							phone: this.pgone
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.code = ""
+								uni.showToast({
+									title: "发送成功",
+									duration: 1000,
+									icon: "none"
+								})
+								this.timea = 60
+								let aa = setInterval(() => {
+									this.timea--
+									this.huoqu = this.timea + "s后获取"
+									if (this.timea == 0) {
+										clearInterval(aa)
+										this.huoqu = '获取验证码'
+									}
+								}, 1000)
+							} else {
+								uni.showToast({
+									title: "发送失败",
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
+					}
+				} else {
+					uni.showToast({
+						title: "请输入手机号",
+						duration: 1000,
+						icon: "none"
+					})
+				}
+
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.bottomssss {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
+		// z-index: 1000;
+		// position: fixed;
+		// bottom: 0;
+		// left: 0;
+		// right: 0;
 		height: 110rpx;
 		background: #FFFFFF;
 
@@ -339,6 +444,26 @@
 				width: 26rpx;
 				height: 24rpx;
 			}
+		}
+	}
+
+	.yanzhengma {
+		margin: 40rpx 0px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.djkshfks {
+			background-color: #e5e5e5;
+			height: 100%;
+			border-radius: 10rpx;
+			width: 230rpx;
+		}
+
+		.annuyt {
+			font-size: 28rpx;
+			margin: 0;
+			margin-left: 20rpx;
 		}
 	}
 </style>

@@ -129,10 +129,10 @@
 		},
 		methods: {
 			ended(ev) {
-				console.log(ev,"ev");
+
 			},
 			bofang(ev) {
-				console.log(ev,"ev1");
+
 			},
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
@@ -217,7 +217,7 @@
 						aa.push(item)
 					}
 				})
-				console.log(aa);
+
 				this.show = false;
 			},
 			change(ev) {
@@ -410,8 +410,6 @@
 
 		.type_item {
 			padding: 0 40rpx;
-			// width: 210rpx;
-			// height: 70rpx;
 			background: #F6F6F6;
 			border-radius: 35rpx;
 			font-size: 26rpx;

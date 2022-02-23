@@ -40,7 +40,7 @@
 				});
 			},
 			go(ev) {
-				console.log(ev);
+
 				switch (Number(ev.link)) {
 					case 0:
 						// 网页跳转

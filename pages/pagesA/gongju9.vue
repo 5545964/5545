@@ -18,18 +18,16 @@
 				<u-search bg-color="#f6f6f6" placeholder="输入关键字搜索"></u-search>
 			</view>
 			<view class="swiper">
-				<view class="swiper-item" v-for="(items,indexs) in list" :key="indexs" @click="goods(items)">
-					<view class="top">
+				<view class="swiper-item" v-for="(items,indexs) in list" :key="indexs">
+					<view class="top"  @click="goods(items)">
 						<view class="text"> 订单编号：{{ items.orderid }} </view>
-						<!-- <view class="status" v-show="items.state == 5"> 退款审核中 </view>
-						<view class="status" v-show="items.state == 6"> 退款成功 </view>
-						<view class="status" v-show="items.state == 7"> 退款已驳回 </view> -->
-						<view class="status" v-show="items.state == 10"> 退货审核中 </view>
-						<view class="status" v-show="items.state == 11"> 退货成功 </view>
-						<view class="status" v-show="items.state == 12"> 退货已驳回 </view>
-						<view class="status" v-show="items.state == 13"> 换货审核中 </view>
-						<view class="status" v-show="items.state == 14"> 换货成功 </view>
-						<view class="status" v-show="items.state == 15"> 换货已驳回 </view>
+						<block
+							v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
+							<view class="status" v-show="items.states == 0"> 退换货审核中 </view>
+							<view class="status" v-show="items.states == 1"> 同意退换货 </view>
+							<view class="status" v-show="items.states == 2"> 退换货已驳回 </view>
+							<view class="status" v-show="items.states == 3"> 退换货完成 </view>
+						</block>
 					</view>
 					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
 						<view class="">
@@ -53,7 +51,7 @@
 						</view>
 					</view>
 					<view class="anniu">
-						<view class="button" @click="annui(0, items)" v-if="items.state == 0">
+						<!-- <view class="button" @click="annui(0, items)" v-if="items.state == 0">
 							取消订单
 						</view>
 						<view class="button" @click="annui(1, items)" v-if="items.state == 0">
@@ -66,32 +64,39 @@
 							查看物流
 						</view>
 						<view class="button" @click="annui(4, items)" v-if="items.state == 2">
-							确认收货
+							确认签收
 						</view>
-						<view class="button" @click="annui(7, items)" v-if="items.state == 3 || items.state == 4">
+						<view class="button" @click="annui(7, items)"
+							v-if="items.state == 3 || items.state == 4 || items.states == 2">
 							申请售后
+						</view> -->
+						<view class="button" @click="kuaidiwo(items)"
+							v-if="items.states === 1 && items.sqexpressorder ==0">
+							填写快递单号
 						</view>
-						<view class="button" @click="annui(2, items)" v-if="items.state == 5">
+						<!-- <view class="button" @click="annui(2, items)" v-if="items.state == 5">
 							取消退款
-						</view>
+						</view> -->
 						<view class="button" @click="delorder(items)"
-							v-if="items.state == 9 || items.state == 4 || items.state == 17">
+							v-if="items.state == 9 || items.state == 4 || items.state == 17 || items.states == 3">
 							删除订单
 						</view>
-						<view class="button" v-if="items.state == 8">
+						<!-- <view class="button" v-if="items.state == 8">
 							已申请退款
 						</view>
-						<view class="button" v-if="items.state == 3" @click="baozhaung(items)">
+						<view class="button" v-if="items.state == 3 || items.states == 2"
+							@click="baozhaung(items)">
 							是否安装
 						</view>
 						<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
 							完成安装
 						</view>
-						<!-- <view class="button" @click="delorder(items)"
-							v-if="items.state == 9 || items.state == 4 || items.state == 3">
-							删除订单
-						</view> -->
-						<!-- <view class="button" @click="annui(6, items)" v-if="items.state == 3">
+						<view class="button" v-if="items.state == 16&&items.bz==1"
+							@click="lookdetails(items)">
+							查看安装详情
+						</view>
+						<view class="button" @click="annui(6, items)"
+							v-if="items.state == 3 || items.states == 2">
 							立即评价
 						</view> -->
 					</view>
@@ -119,6 +124,38 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 填写快递单号 -->
+		<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					填写快递单号
+				</view>
+				<view style="padding: 0 30rpx;">
+					<view class="">
+						快递公司
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
+							placeholder="请填写快递公司" />
+					</view>
+					<view class="">
+						快递单号
+					</view>
+					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaididanhao"
+							placeholder="请填写快递单号" type="number" />
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="kuaidiwow(0)">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="kuaidiwow(1)">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
 	</view>
 </template>
@@ -127,6 +164,7 @@
 	export default {
 		data() {
 			return {
+				kuaidi:false,
 				imgtitle: this.$imgPath,
 				showa: false,
 				title: "我的售后",
@@ -139,28 +177,52 @@
 			}
 			this.allsss()
 		},
-		onShow() {
-
-		},
 		methods: {
+			// 填写快递单号
+			kuaidiwow(ev) {
+				if (ev == 0) {
+					this.kuaidi = false
+				} else {
+					this.$api.sqexpress({
+						orderid: this.kuaididata.orderid,
+						sqexpress: this.kuaidigongsi,
+						sqexpressorder: this.kuaididanhao,
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							icon: "none"
+						})
+						if (data.data.code == 1) {
+							this.kuaidi = false
+							this.allsss();
+						}
+					})
+				}
+			},
+			// 打开快递弹窗
+			kuaidiwo(ev) {
+				this.kuaididata = ev
+				this.kuaidi = true
+			},
 			allsss() {
 				this.$api.myorder({
 					user_id: uni.getStorageSync("user_info").id,
 				}).then((data) => {
 					if (data.data.code == 1) {
+						let aa = []
 						data.data.data.status.forEach(item => {
 							if (item.state == 10 || item.state == 11 || item.state == 12 || item.state ==
 								13 || item.state == 14 || item.state == 15) {
-								this.list.push(item)
+								aa.push(item)
 							}
 						})
+						this.list = aa
 					}
 				});
 			},
 			goods(ev) {
-				let aa = JSON.stringify(ev)
 				uni.navigateTo({
-					url: '../pagesA/goods_data?data=' + aa
+					url: '../pagesA/goods_data?order_id=' + ev.orderid
 				})
 			},
 			xuanzhea(ev) {
@@ -413,6 +475,57 @@
 			font-size: 30rpx;
 			font-weight: 400;
 			color: #FEFEFE;
+		}
+	}.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
 		}
 	}
 </style>

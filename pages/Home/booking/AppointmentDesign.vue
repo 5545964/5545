@@ -14,32 +14,41 @@
 			</u-navbar>
 		</view>
 		<view v-if="isyuyue != 0">
+			<!-- <view> -->
 			<view class="xunhuan" style="padding: 30rpx;">
 				<view class="dshk">
 					设计进度
 				</view>
 				<view class="dadsda">
-					<view v-if="state == 0">
+					<view v-if="state == 0  && mony =='0.00'">
+						<!-- <view> -->
 						<view class="cxz">
-							已提交成功，等待平台审核
+							已提交成功，等待我们联系！
+							<!-- 等待平台审核 -->
 						</view>
 					</view>
 					<view v-if="state == 1&&states == 1">
+						<!-- <view> -->
 						<view class="cxz">
 							定金已支付，等待设计师设计完成
 						</view>
 					</view>
 					<view v-if="state == 2&&states==1&&fans.wstate">
+						<!-- <view> -->
 						<view class="cxz">
 							您的预约已完成
 						</view>
 					</view>
-					<view style="padding: 30rpx 0;" v-if="states == 0">
+					<view style="padding: 30rpx 0;" v-if="states == 0 && mony !='0.00'">
+						<!-- <view style="padding: 30rpx 0;"> -->
 						<view class="cxz" style="text-align: center;">
-							您的预约申请已通过审核，请支付诚意金￥{{mony||0}},诚意金可在美居订单购物时抵扣！
+							您的预约申请已通过审核!
 						</view>
 						<view class="ndajs" @click="zhifuyuyue(0)">
-							请支付诚意金“{{mony||0}}元"
+							{{mony||0}}元
+						</view>
+						<view class="cxz" style="text-align:center;margin-top:30rpx;">
+							请支付诚意金，我们会尽快完成更美的设计！诚意金可在美居订单购物时抵扣！
 						</view>
 					</view>
 				</view>
@@ -57,7 +66,7 @@
 							{{fans.orderid}}
 						</view>
 					</view>
-					<view style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+					<view v-if="fans.desbh.bh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
 						<view class="cxz">
 							设计师编号
 						</view>
@@ -65,12 +74,20 @@
 							{{fans.desbh.bh}}
 						</view>
 					</view>
-					<view style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+					<view v-if="fans.xsbh.bh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
 						<view class="cxz">
 							美居会员编号
 						</view>
 						<view class="cxz">
 							{{fans.xsbh.bh}}
+						</view>
+					</view>
+					<view v-if="fans.userbh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+						<view class="cxz">
+							馨级美居会员编号
+						</view>
+						<view class="cxz">
+							{{fans.userbh}}
 						</view>
 					</view>
 				</view>
@@ -263,6 +280,7 @@
 		<view class="annui" v-if="isyuyue == 0" @click="tijiao">
 			提交预约
 		</view>
+		<u-toast ref="uToast" />
 		<u-picker mode="time" v-model="shijianshow" @confirm="zhishizhege"></u-picker>
 		<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">{{chuanzhi.name}}</view>
@@ -533,20 +551,40 @@
 		},
 		methods: {
 			go_code() {
-				if (this.timea == 0) {
-					this.timea = 60
-					let aa = setInterval(() => {
-						this.timea--
-						this.huoqu = this.timea + "s后获取"
-						if (this.timea == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+				let _this = this
+				if (_this.timea == 0) {
+					_this.$api.emsphone({
+						phone: _this.data_list.phone
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							_this.timea = 60
+							let aa = setInterval(() => {
+								_this.timea--
+								_this.huoqu = _this.timea + "s后获取"
+								if (_this.timea == 0) {
+									clearInterval(aa)
+									_this.huoqu = '获取验证码'
+								}
+							}, 1000)
+
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
+
 				}
 			},
 			nianopen(ev) {
-				console.log(ev);
+
 				this.niannum = ev
 				this.nianning = true
 			},
@@ -562,6 +600,7 @@
 						fail: function(err) {}
 					}
 				});
+
 			},
 			kan(itemv) {
 				uni.previewImage({
@@ -574,12 +613,12 @@
 				});
 			},
 			sanchuhsuahsuhd(ev) {
-				console.log(ev);
+
 				this.man_data.splice(ev, 1)
 				this.isadd = true
 			},
 			zhishizhege(ev) {
-				console.log(ev);
+
 				this.data_list[this.chuanzhi.obj] = ev.year + '-' + ev.month + "-" + ev.day
 			},
 			address(ev) {
@@ -822,57 +861,87 @@
 			//提交按钮
 			async tijiao() {
 				if (await this.$login()) {
-					let that = this;
-					uni.requestSubscribeMessage({
-						tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
-						success: function(res) {
-							that.data_list["user_id"] = uni.getStorageSync("user_info").id;
-							let aa = that.data_list.people;
-							let bb = [];
-							let cc = false;
-							if (!that.data_list.people) {
+					if (this.code != "") {
+						// 验证验证码
+						this.$api.emsyzphone({
+							phone: this.data_list.phone,
+							yzm: this.code
+						}).then(data => {
+							if (data.data.code == 1) {
+								let that = this;
+								uni.requestSubscribeMessage({
+									tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
+									complete: function(res) {
+										that.data_list["user_id"] = uni.getStorageSync("user_info").id;
+										let aa = that.data_list.people;
+										let bb = [];
+										let cc = false;
+										if (!that.data_list.people) {
+											return uni.showToast({
+												title: "请选择人员",
+												duration: 1000,
+												icon: "none"
+											})
+										}
+										for (let i in aa) {
+											if (aa[i].select != 10000 && aa[i].age != "") {
+												bb.push(aa[i].age + "_" + aa[i].id)
+											} else {
+												cc = true
+												break;
+											}
+										}
+										if (cc) {
+											return uni.showToast({
+												title: "请检查人员选项",
+												icon: "none"
+											})
+										}
+										// that.data_list.yzm = that.code
+										that.data_list.people = bb
+										let dd = Object.keys(that.data_list).length;
+										if (dd != 15) {
+											return uni.showToast({
+												title: "请检查",
+												icon: "none"
+											})
+										}
+										that.$api.yydes(that.data_list).then(data => {
+											if (data.data.code == 1) {
+												setTimeout(() => {
+													uni.navigateBack(-1)
+												}, 2000)
+												that.$refs.uToast.show({
+													title: '提交预约成功，请到个人中心-预约设计查看进度安排',
+													duration: 2000
+												})
+											} else {
+												uni.showToast({
+													title: data.data.msg,
+													duration: 1000,
+													icon: "none"
+												})
+											}
+
+										})
+									},
+								});
+
+							} else {
 								return uni.showToast({
-									title: "请选择人员",
+									title: "验证码错误",
 									duration: 1000,
 									icon: "none"
 								})
 							}
-							for (let i in aa) {
-								if (aa[i].select != 10000 && aa[i].age != "") {
-									bb.push(aa[i].age + "_" + aa[i].id)
-								} else {
-									cc = true
-									break;
-								}
-							}
-							if (cc) {
-								return uni.showToast({
-									title: "请检查人员选项",
-									icon: "none"
-								})
-							}
-							that.data_list.people = bb
-							let dd = Object.keys(that.data_list).length;
-							if (dd != 15) {
-								return uni.showToast({
-									title: "请检查",
-									icon: "none"
-								})
-							}
-							that.$api.yydes(that.data_list).then(data => {
-								if (data.data.code == 1) {
-									setTimeout(() => {
-										uni.navigateBack(-1)
-									}, 1000)
-								}
-								uni.showToast({
-									title: data.data.msg,
-									duration: 1000,
-									icon: "none"
-								})
-							})
-						}
-					});
+						})
+					} else {
+						return uni.showToast({
+							title: "请输入验证码",
+							icon: "none"
+						})
+					}
+
 
 				}
 			},

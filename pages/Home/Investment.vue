@@ -359,6 +359,7 @@
 		onShow() {
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
+			this.change(uni.getStorageSync("ggug"))
 			//验证弹窗
 			let aa = uni.getStorageSync("xieyi")
 			this.xieyi = []
@@ -379,7 +380,7 @@
 			this.getdesproMoenys()
 		},
 		onLoad(ev) {
-			console.log(ev);
+
 			if (ev.is_re == 1) {
 				this.current = 4
 			}
@@ -395,7 +396,7 @@
 				this.currents = index
 			},
 			rre(ev) {
-				console.log(ev, "00000");
+
 			},
 			// 验证弹窗
 			// 协议同意按钮
@@ -449,8 +450,23 @@
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						this.shoujiyanzheng = false
-						this.getcontein(this.diandedijige)
+						// 验证验证码
+						this.$api.emsyzphone({
+							phone: this.shoujihao,
+							yzm: this.code
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.shoujiyanzheng = false
+								this.getcontein(this.diandedijige)
+							} else {
+								uni.showToast({
+									title: "验证码错误",
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
+					
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
@@ -464,15 +480,32 @@
 			// 获取验证码倒计时
 			go_code() {
 				if (this.timea == 0) {
-					this.timea = 60
-					let aa = setInterval(() => {
-						this.timea--
-						this.huoqu = this.timea + "s后获取"
-						if (this.timea == 0) {
-							clearInterval(aa)
-							this.huoqu = '获取验证码'
+					this.$api.emsphone({
+						phone: this.shoujihao
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.showToast({
+								title: "发送成功",
+								duration: 1000,
+								icon: "none"
+							})
+							this.timea = 60
+							let aa = setInterval(() => {
+								this.timea--
+								this.huoqu = this.timea + "s后获取"
+								if (this.timea == 0) {
+									clearInterval(aa)
+									this.huoqu = '获取验证码'
+								}
+							}, 1000)
+						} else {
+							uni.showToast({
+								title: "发送失败",
+								duration: 1000,
+								icon: "none"
+							})
 						}
-					}, 1000)
+					})
 				}
 			},
 			// 判断手机号
@@ -487,7 +520,7 @@
 			},
 			// 验证弹窗
 			ananana(ev) {
-				console.log(ev, "vevvvvv");
+
 				this.diandedijige = ev
 				this.yuedu = true
 			},
@@ -621,7 +654,7 @@
 			},
 			// 跳转设计师详情
 			navgepage(item) {
-				console.log(item);
+
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
@@ -691,7 +724,7 @@
 			},
 			// 查看合同模板
 			async getcontein(ev) {
-				console.log(ev, "vevvvvv");
+
 				if (await this.$login()) {
 					let that = this;
 					uni.requestSubscribeMessage({
@@ -853,6 +886,7 @@
 			change(index) {
 				this.pages = 1
 				this.current = index
+				uni.setStorageSync("ggug",index)
 				if (index == 0) {
 					this.enjoy()
 				}

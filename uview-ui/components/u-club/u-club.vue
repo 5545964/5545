@@ -22,31 +22,32 @@
 						<view class="fsfds">
 							<view class="top-ss sss">
 								<view class="dasjbash">
-									满意度
-								</view>
-								<u-line-progress style="width: 75%;height:50rpx ;" active-color="#479ABB" :height="10"
-									:show-percent="false" :percent="item.manyi" />
-							</view>
-							<view class="top-ss sss">
-								<view class="dasjbash">
-									成单率
-								</view>
-								<u-line-progress style="width: 75%;height:50rpx ;" active-color="#479ABB" :height="10"
-									:show-percent="false" :percent="item.yj" />
-							</view>
-							<view class="top-ss sss">
-								<view class="dasjbash">
-									专业度
+									创意度
 								</view>
 								<u-line-progress style="width: 75%;height:50rpx ;" active-color="#479ABB" :height="10"
 									:show-percent="false" :percent="item.cy" />
 							</view>
 							<view class="top-ss sss">
 								<view class="dasjbash">
-									创意度
+									专业度
+								</view>
+								<u-line-progress style="width: 75%;height:50rpx ;" active-color="#479ABB" :height="10"
+									:show-percent="false" :percent="item.yj" />
+							</view>
+							<view class="top-ss sss">
+								<view class="dasjbash">
+									成单率
 								</view>
 								<u-line-progress style="width: 75%;height:50rpx ;" active-color="#479ABB" :height="10"
 									:show-percent="false" :percent="item.zy" />
+							</view>
+							
+							<view class="top-ss sss">
+								<view class="dasjbash">
+									满意度
+								</view>
+								<u-line-progress style="width: 75%;height:50rpx ;" active-color="#479ABB" :height="10"
+									:show-percent="false" :percent="item.manyi" />
 							</view>
 						</view>
 					</view>
@@ -105,12 +106,12 @@
 		watch: {
 			rows(ev) {
 				this.alls = [...this.rows]
-				console.log(this.alls);
+
 			},
 		},
 		mounted() {
 			this.alls = [...this.rows]
-			console.log(this.alls, "this.allsthis.alls");
+
 		},
 		methods: {
 			// 跳转设计师详情

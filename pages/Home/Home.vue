@@ -7,9 +7,10 @@
 				</view>
 			</u-navbar>
 			<view class="navlist cet" style="justify-content: space-between;">
-				<view class="text" v-for="(item,index) in list" :key="index" @click="go(item.url,index)">
+				<view v-if="item.switch == 1" class="text" v-for="(item,index) in list" :key="index"
+					@click="go(item.page,index)">
 					<view class="color_text hhnhb">
-						{{item.top}}
+						{{item.up}}
 					</view>
 					<view class="color_text hhnhb">
 						{{item.down}}
@@ -80,37 +81,7 @@
 				data_list: [],
 				lun_list: [],
 				keyword: "",
-				list: [{
-						top: "楼盘",
-						down: "设计",
-						url: "../pagesC/HouseDesign",
-					},
-					{
-						top: "旗舰整装",
-						down: "套系",
-						url: "../pagesC/FlagshipSet",
-					},
-					{
-						top: "设计师",
-						down: "club ",
-						url: "../pagesD/designClub",
-					},
-					{
-						top: "工长",
-						down: "club",
-						url: "#",
-					},
-					{
-						top: "社区生活",
-						down: "club",
-						url: "#",
-					},
-					{
-						top: "佳作",
-						down: "分享",
-						url: "./jiazhuo",
-					}
-				],
+				list: [],
 				imgurl: this.$imgPath
 			};
 		},
@@ -187,6 +158,9 @@
 				}
 			},
 			go_shop(ev) {
+				if (ev.alls.video != "" && ev.alls.video != null) {
+					return true;
+				}
 				switch (Number(ev.alls.link)) {
 					case 0:
 						// 网页跳转
@@ -239,18 +213,45 @@
 					if (data.data.code == 1) {
 						this.data_list = [];
 						data.data.data.status.forEach((item, index) => {
-							this.data_list.push({
-								id: item.id,
-								isgo: false,
-								price: item.xc_price,
-								title: item.name,
-								image: item.image,
-								alls: item
-							})
+							if (item.video != "" && item.video != null) {
+								this.data_list.push({
+									id: item.id,
+									title: item.name,
+									image: "",
+									video: item.video,
+									alls: item
+								})
+							} else {
+								this.data_list.push({
+									id: item.id,
+									title: item.name,
+									image: item.image,
+									video: "",
+									alls: item
+								})
+							}
+
 						})
 						uni.stopPullDownRefresh();
 					} else {
 						this.data_list = []
+					}
+				})
+				this.$api.shopicon().then(data => {
+					if (data.data.code == 1) {
+						let aa = {
+							shop: [],
+							home: []
+						}
+						data.data.data.data.forEach(item => {
+							if (item.state == 0) {
+								aa.shop.push(item)
+							} else {
+								aa.home.push(item)
+							}
+						})
+						this.list = [...aa.home]
+						uni.setStorageSync("icon", aa)
 					}
 				})
 				//轮播图
@@ -289,7 +290,7 @@
 				this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px; //最宽边距
 				this.tabberheigth = windows - nn - this.px; //最大下边距
 				this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100)); //最大上边距
-				console.log(this.tabberheigth, this.navbarheigth, windows, nn, this.px);
+
 			},
 		},
 		onLoad() {
@@ -303,6 +304,7 @@
 		},
 		onShow() {
 			this.alls()
+			uni.setStorageSync("ggug", 0)
 			//购物车数量
 			this.$api.shopcart({
 				id: uni.getStorageSync("user_info").id
@@ -337,9 +339,9 @@
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
-					uni.setStorageSync("xieyi",data.data.data.status)
-				}else{
-					uni.setStorageSync("xieyi",[])
+					uni.setStorageSync("xieyi", data.data.data.status)
+				} else {
+					uni.setStorageSync("xieyi", [])
 				}
 			})
 		},

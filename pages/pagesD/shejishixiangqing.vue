@@ -340,7 +340,7 @@
 						age: ""
 					}
 					let bb = item.split("_")[1]
-					console.log(bb);
+
 					if (bb == 0) {
 						obj.sex = "先生"
 					} else if (bb == 1) {
