@@ -63,18 +63,32 @@
 					<view class="win">
 						佣金收益
 					</view>
-					<!-- <view class="win">
-						备注
-					</view> -->
 				</view>
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
-					<!-- <view class="vdfdd" v-if="item.tixian==0 && item.sq==0 "> -->
 					<view class="vdfdd">
 						<view class="win">
 							{{item.order_id}}
 						</view>
 						<view class="win">
-							{{item.state==1?'已完成':"未完成"}}
+							<!-- <text v-if="item.state == 0">     待付款         </text>
+							<text v-if="item.state == 1">     待发货         </text>
+							<text v-if="item.state == 2">     发货中         </text>
+							<text v-if="item.state == 3">     已收货         </text>
+							<text v-if="item.state == 4">     已完成         </text>
+							<text v-if="item.state == 5">     退款审核中     </text>
+							<text v-if="item.state == 6">     退款成功       </text>
+							<text v-if="item.state == 7">     退款已驳回     </text>
+							<text v-if="item.state == 9">     已取消         </text>
+							<text v-if="item.state == 10">    退货审核中     </text>
+							<text v-if="item.state == 11">    退货成功       </text>
+							<text v-if="item.state == 12">    退货已驳回     </text>
+							<text v-if="item.state == 13">    换货审核中     </text>
+							<text v-if="item.state == 14">    换货成功       </text>
+							<text v-if="item.state == 15">    换货已驳回     </text>
+							<text v-if="item.state == 16">    报装中         </text>
+							<text v-if="item.state == 17">    已安装         </text> -->
+							<text v-if="item.wstate == 0"> 已付设计定金 </text>
+							<text v-if="item.state >= 0 && item.state >= 17"> 已下单付款 </text>
 						</view>
 						<view class="win">
 							{{item.cjprice||0}}
@@ -82,9 +96,6 @@
 						<view class="win">
 							{{item.price||0}}
 						</view>
-						<!-- <view class="win">
-							{{item.type==0?'商品':'拉新'}}
-						</view> -->
 					</view>
 				</view>
 			</view>
@@ -212,19 +223,34 @@
 			})
 		},
 		methods: {
-			wodeteam(){
+			wodeteam() {
 				uni.navigateTo({
-					url:"../pagesA/gongju11?shejishi=1"
+					url: "../pagesA/gongju11?shejishi=1"
 				})
 			},
 			getdata() {
 				// 1是设计师
+				this.monList = []
+				if (this.isshejishiss == 1) {
+					this.$api.desorders({
+						id: uni.getStorageSync("des_info").id
+					}).then(data => {
+						if (data.data.code == 1) {
+							data.data.data.status.forEach(item => {
+								item["order_id"] = item.orderid
+								item["cjprice"] = item.price
+								item.price = 0
+							})
+							this.monList = [...data.data.data.status]
+						}
+					})
+				}
 				this.$api.mysub({
 					type: this.isshejishiss,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.monList = data.data.data.status
+						this.monList = [...data.data.data.status]
 						this.allprice = data.data.data.all.toFixed(2);
 						this.canprice = data.data.data.can.toFixed(2);
 						uni.setStorageSync("monList", this.monList)
@@ -506,6 +532,7 @@
 			}
 		}
 	}
+
 	.fanhui {
 		width: 8rpx;
 		height: 16rpx;

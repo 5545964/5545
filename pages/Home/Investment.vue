@@ -795,6 +795,9 @@
 					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
+					if(res.data.code == 400){
+						that.toReg()
+					}
 					// 支付
 					if (res.data.code == 200) {
 						uni.requestPayment({

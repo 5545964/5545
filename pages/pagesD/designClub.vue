@@ -60,9 +60,7 @@
 			<view class="be_main" style="height: 100%;" v-if="state<0">
 				<view class="be_designer">
 				</view>
-				<view  @click="getcontein(0)">
-					会员
-				</view>
+				
 				<image style="width: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg" mode="widthFix">
 				</image>
 				<view class="be_foot" v-if="yanzhengtanchaung">
@@ -631,7 +629,6 @@
 			},
 			// 跳转设计师详情
 			navgepage(item) {
-
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
@@ -770,6 +767,9 @@
 					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
+					if(res.data.code == 400){
+						that.toReg()
+					}
 					// 支付
 					if (res.data.code == 200) {
 						uni.requestPayment({

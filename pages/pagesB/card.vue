@@ -29,7 +29,6 @@
 								</view>
 							</view>
 						</view>
-
 					</view>
 				</scroll-view>
 			</view>
@@ -38,9 +37,7 @@
 			<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==1">
 				<u-swiper height="400" :effect3d="true" img-mode="aspectFit" @click="goss" :list="imgList"></u-swiper>
 			</view>
-
 		</view>
-
 		<view class="anniuss">
 			<view class="kuang">
 				<button open-type="contact" class="annuiwwww" type="default">
@@ -50,6 +47,30 @@
 			<view class="kuang" @click="gohome">
 				<image class="img" src="../../static/icon_me_shouye.png" mode="aspectFit"></image>
 			</view>
+		</view>
+		<view class="works" style="display:flex;flex-flow:column;justify-content:center;align-items: center;">
+			<view class="title">
+				<view class="name">
+					小程序二维码
+					<view class="bor_bot">
+
+					</view>
+				</view>
+			</view>
+			<view class="homeewm cet">
+				<image class="img" @click="kan(ewmsrc)" :src="ewmsrc" mode="widthFix"></image>
+			</view>
+		</view>
+		<view class="works">
+			<view class="title">
+				<view class="name">
+					旗舰整装套系
+					<view class="bor_bot">
+
+					</view>
+				</view>
+			</view>
+			<u-adata :list="tuijian" @click="go_shop"></u-adata>
 		</view>
 		<view class="navbar">
 			<u-navbar :is-back="false" title-color="#FFFFFF" :title="title" :background="background">
@@ -63,23 +84,6 @@
 					</view>
 				</view>
 			</u-navbar>
-		</view>
-		<!-- 优享作品 -->
-		<view class="works">
-			<view class="title">
-				<view class="name">
-					旗舰整装套系
-					<view class="bor_bot">
-
-					</view>
-				</view>
-			</view>
-			<!-- <view class="design_list"> -->
-			<!-- <view class="" v-for="(item,index) in tuijian" :key="item" v-if="index <= 1"> -->
-			<!-- <u-design-card :tiaozhuan="'../pagesC/DesignDetail'" :list="item" /> -->
-			<u-adata :list="tuijian" @click="go_shop"></u-adata>
-			<!-- </view> -->
-			<!-- </view> -->
 		</view>
 	</view>
 </template>
@@ -102,6 +106,10 @@
 				state: 0,
 				cardinfo: {},
 				desinfo: {},
+				ewmsrc: "",
+				latitude: 30.602673,
+				longitude: 103.975896
+
 			};
 		},
 		onLoad(ev) {
@@ -126,7 +134,7 @@
 					data.data.data.status.forEach(item => {
 						this.imgList.push({
 							image: this.$imgPath + item.image,
-							id:item.id
+							id: item.id
 						})
 					})
 					this.imgList.shift()
@@ -144,19 +152,41 @@
 					data.data.data.status.data.sort(function() {
 						return Math.random() - 0.5; // 值为 -0.5 ~ 0.5 的随机数
 					});
-					this.tuijian = [...data.data.data.status.data];
+					this.tuijian = [data.data.data.status.data[0], data.data.data.status.data[2]];
+				}
+			})
+			this.$api.ewm({
+				id: uni.getStorageSync("user_info").id,
+				level: uni.getStorageSync("des_info").bbs.id || 0
+			}).then(data => {
+				if (data.data.code == 1) {
+					this.ewmsrc = data.data.data.status
+					if (data.data.data.status.longitude && data.data.data.status.latitude) {
+						this.longitude = data.data.data.status.longitude
+						this.latitude = data.data.data.status.latitude
+					}
 				}
 			})
 		},
 		methods: {
-			goss(ev){
+			kan(ev) {
+				uni.previewImage({
+					urls: [ev],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
+			goss(ev) {
 				uni.navigateTo({
-					url:"../pagesC/FlagshipSet?id="+this.imgList[ev].id
+					url: "../pagesC/FlagshipSet?id=" + this.imgList[ev].id
 				})
 			},
 			go_shop(ev) {
 				uni.navigateTo({
-					url:"../pagesC/FlagshipDetail?id="+ev.id
+					url: "../pagesC/FlagshipDetail?id=" + ev.id
 				})
 			},
 			// 获取电子名片
@@ -175,14 +205,18 @@
 				})
 			},
 			go() {
+				let that = this;
+				console.log(that.latitude,that.longitude,Number(that.latitude),Number(that.longitude));
 				uni.openLocation({
-					latitude: 30.60195606045137, //要去的纬度-地址       
-					longitude: 103.97588054382395, //要去的经度-地址
+					latitude: Number(that.latitude),
+					longitude: Number(that.longitude),
+					name:"宝芸邸生活家具(成都体验中心)",
+					address:"四川省成都市武侯区成双大道585号旭耀鞋业4栋",
 					success: function() {
 
 					},
 					fail: function(error) {
-
+						
 					}
 				});
 			},
@@ -375,7 +409,7 @@
 	// 优享作品
 	.works {
 		// padding: 0 30rpx;
-		margin-top: -120rpx;
+		// margin-top: -120rpx;
 		margin-bottom: 60rpx;
 
 		.title {
@@ -417,6 +451,19 @@
 			align-items: center;
 			flex-wrap: wrap;
 			justify-content: space-between;
+		}
+	}
+
+	.homeewm {
+		width: 690rpx;
+		height: 690rpx;
+		background: #FFFFFF;
+		border-radius: 20rpx;
+
+		.img {
+			width: 490rpx;
+			height: 490rpx;
+			border-radius: 10rpx;
 		}
 	}
 </style>
