@@ -287,9 +287,11 @@
 			tanchuanbaozhuang() {
 				if (this.buyanzheng) {
 					let mm = 0
+					let aa = []
 					this.xieyi.forEach(item => {
 						if (item.check) {
 							mm++
+							aa.push(item)
 						}
 					})
 					if (this.xieyi.length != mm) {
@@ -298,6 +300,12 @@
 							icon: "none"
 						})
 					}
+					aa.forEach(item => {
+						this.$api.userag({
+							userid: uni.getStorageSync("user_info").id,
+							agid: item.id
+						})
+					})
 					this.shoujiyanzheng = false;
 					this.yuedu = false
 				}

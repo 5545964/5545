@@ -25,7 +25,8 @@
 								<view class="daasa">
 									查看详情
 								</view>
-								<image class="img" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
+								<image class="img" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit">
+								</image>
 							</view>
 						</view>
 						<view class="win">
@@ -50,7 +51,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="hahahadadda">
+					<view class="hahahadadda" v-if="item.jdtime =='' || item.jdtime ==null">
 						<view class="text qwe" @click="jiedan(index,0)">
 							拒绝
 						</view>
@@ -104,7 +105,7 @@
 		},
 		onShow() {
 			this.getdata()
-			
+
 		},
 		methods: {
 			jujueshanshu(ev) {

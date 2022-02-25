@@ -101,6 +101,7 @@
 				</view>
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 		<!-- <view style="height: 110rpx;">
 		</view> -->
 		<view class="bottomssss cet">
@@ -118,9 +119,8 @@
 				huoqu: "获取验证码",
 				timea: 0,
 				code: "",
-				pgone: "",
-				zhen: "",
-				bei: "",
+				zhen: "/uploads/20220225/aa244369646aea5b3024e9491760f969.jpg",
+				bei: "/uploads/20220225/736b8b68834b200ae90d2e6d9178c122.jpg",
 				renxiang_bg: require('../../static/renxiang_bg.png'),
 				guohui_bg: require('../../static/guohui_bg.png'),
 				upname: "image", //上传
@@ -128,6 +128,7 @@
 				header: {}, //上传
 				action: this.$shangchuan + "/api/byd_user/addpostspic", //图片上传接口
 				name: "",
+				pgone: "",
 				card_id: "",
 				yinghangka: "",
 				kaihuhang: "",
@@ -175,102 +176,105 @@
 						uni.navigateTo({
 							url: "../pagesD/regSuccess?list=" + JSON.stringify(list) + "&tiao=2"
 						})
+					} else {
+						this.$refs.uToast.show({
+							title: data.data.data.data
+						})
 					}
 				})
 			},
 			tijiao() {
 				let user_id = uni.getStorageSync("user_info").id
-				if (this.yinghangka == "" && this.kaihuhang == "" && this.card_id == "" &&
-					this.name == "" && this.pgone == "" && this.zhen == "" && this.bei == "") {
+				if (this.yinghangka == "" || this.kaihuhang == "" || this.card_id == "" || this.name == "" || this.pgone ==
+					"" || this.zhen == "" || this.bei == "" || this.code == "") {
 					return uni.showToast({
 						title: "请检查资料",
 						icon: "error"
 					})
 				}
-				if (this.code != "") {
-					// 验证验证码
-					this.$api.emsyzphone({
-						phone: this.pgone,
-						yzm: this.code
-					}).then(data => {
-						if (data.data.code != 1) {
-							return uni.showToast({
-								title: "验证码错误",
-								icon: "none"
-							})
-						}
-					})
-				} else {
-					return uni.showToast({
-						title: "请输入验证码",
-						icon: "none"
-					})
-				}
-
-				// 先注册
-				this.$api.myreg({
+				// 验证验证码
+				this.$api.emsyzphone({
 					phone: this.pgone,
-					user_id: user_id
+					yzm: this.code
 				}).then(data => {
+					if (data.data.code != 1) {
+						return uni.showToast({
+							title: "验证码错误",
+							icon: "none"
+						})
+					}
 					if (data.data.code == 1) {
-						// 上传身份证
-						if (this.zhen == "") {
-							return uni.showToast({
-								title: "请上传身份证正面",
-								icon: "error"
-							})
-						} else {
-							this.$api.userupload({
-								user_id: user_id,
-								image: this.zhen,
-								type: 0
-							}).then(data => {
-								if (data.data.code != 1) {
-									uni.showToast({
-										title: data.data.msg,
-										icon: "error"
-									})
-								}
-							})
-						}
-						if (this.bei == "") {
-							return uni.showToast({
-								title: "请上传身份证背面",
-								icon: "error"
-							})
-						} else {
-							this.$api.userupload({
-								user_id: user_id,
-								image: this.bei,
-								type: 1
-							}).then(data => {
-								if (data.data.code != 1) {
-									uni.showToast({
-										title: data.data.msg,
-										icon: "error"
-									})
-								}
-							})
-						}
-						// 上传银行卡信息
-						this.$api.zhxmy({
-							userid: user_id,
-							bankid: this.yinghangka,
-							bankname: this.kaihuhang,
-							idcardnum: this.card_id,
-							realname: this.name
+						uni.showLoading({
+							title: '上传中',
+							mask: true
+						});
+						// 先注册
+						this.$api.myreg({
+							phone: this.pgone,
+							user_id: user_id
 						}).then(data => {
 							if (data.data.code == 1) {
-								aa = aa + 1
-							} else {
-								uni.showToast({
-									title: data.data.msg,
-									icon: "error"
+								// 上传身份证正面
+								this.$api.userupload({
+									user_id: user_id,
+									image: this.zhen,
+									type: 0
+								}).then(data => {
+									if (data.data.code == 1) {
+										// 请上传身份证背面
+										this.$api.userupload({
+											user_id: user_id,
+											image: this.bei,
+											type: 1
+										}).then(data => {
+											if (data.data.code == 1) {
+												// 上传银行卡信息
+												this.$api.zhxmy({
+													userid: user_id,
+													bankid: this.yinghangka,
+													bankname: this.kaihuhang,
+													idcardnum: this.card_id,
+													realname: this.name
+												}).then(data => {
+													uni.hideLoading();
+													if (data.data.code == 1) {
+														this.dsada()
+													} else {
+														this.$refs.uToast.show({
+															title: data
+																.data.msg
+														})
+													}
+												})
+											} else {
+												uni.hideLoading();
+												this.$refs.uToast.show({
+													title: data.data.msg + "重试"
+												})
+											}
+										})
+									} else {
+										uni.hideLoading();
+										this.$refs.uToast.show({
+											title: data.data.msg
+										})
+									}
 								})
+							} else {
+								uni.hideLoading();
+								this.$refs.uToast.show({
+									title: "请修改信息重试!"
+								})
+								this.yinghangka == ""
+								this.kaihuhang == ""
+								this.card_id == ""
+								this.name == ""
+								this.pgone == ""
+								this.zhen == ""
+								this.bei == ""
+								this.code == ""
 							}
 						})
-					} else {
-						return this.dsada()
 					}
 				})
 			},

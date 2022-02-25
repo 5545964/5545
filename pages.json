@@ -203,7 +203,10 @@
 					"navigationBarTitleText": "预约记录",
 					"enablePullDownRefresh": false,
 					"navigationStyle": "custom",
-					"navigationBarTextStyle": "black"
+					"navigationBarTextStyle": "black",
+					"usingComponents": {
+						"cell": "plugin://materialPlugin/cell"
+					}
 				}
 			}, {
 				"path": "tixian",

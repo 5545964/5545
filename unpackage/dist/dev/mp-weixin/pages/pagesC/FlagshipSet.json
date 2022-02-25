@@ -4,6 +4,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
-    "u-flagship-suite": "/uview-ui/components/u-FlagshipSuite/u-FlagshipSuite"
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-empty": "/uview-ui/components/u-empty/u-empty"
   }
 }

@@ -269,7 +269,7 @@
 					是否预约定制柜设计师
 				</view>
 				<view class="textss" style="margin:10rpx;">
-					免责条款 
+					免责条款
 				</view>
 				<view class="textss" style="margin:10rpx;">
 					1、同意宝芸邸平台把客户本人电话，名字发给第三方定制柜公司来提供定制柜设计，制作，安装等售前售后服务；
@@ -376,8 +376,7 @@
 						orderid: that.goodsdata[0].orderid
 					}).then(data => {
 						if (data.data.code == 1) {
-							if (data.data.data.status.price <= that.tijiaozjia && data.data.data.status.price !=
-								0.01) {
+							if (data.data.data.status.price <= that.tijiaozjia) {
 								that.dinjing = data.data.data.status.price
 								that.tijiaozjia = that.tijiaozjia - that.dinjing
 							}
@@ -406,26 +405,31 @@
 			// 同意协议
 			bjnm() {
 				// if (this.buyanzheng) {
-					let mm = 0
-					this.xieyi.forEach(item => {
-						if (item.check) {
-							mm++
-						}
-					})
-					if (this.xieyi.length != mm) {
-						return uni.showToast({
-							title: "请阅读并同意协议",
-							icon: "none"
-						})
+				let mm = 0
+				let aa = []
+				this.xieyi.forEach(item => {
+					if (item.check) {
+						mm++
+						aa.push(item)
 					}
-					this.shoujiyanzheng = false;
-					this.yuedu = false
-				// }
-				this.xieyiid.forEach(item => {
+				})
+				if (this.xieyi.length != mm) {
+					return uni.showToast({
+						title: "请阅读并同意协议",
+						icon: "none"
+					})
+				}
+				aa.forEach(item => {
 					this.$api.userag({
 						userid: uni.getStorageSync("user_info").id,
-						agid: item
+						agid: item.id
 					})
+				})
+				this.shoujiyanzheng = false;
+				this.yuedu = false
+				// }
+				this.xieyiid.forEach(item => {
+
 				})
 
 				this.yuedu = false
@@ -437,13 +441,13 @@
 				this.dzg = ev
 				this.annui()
 			},
-			go_code() { 
+			go_code() {
 				let _this = this
 				if (_this.time == 0) {
 					_this.$api.emsphone({
 						phone: _this.shoujihao
 					}).then(data => {
-						if(data.data.code == 1){
+						if (data.data.code == 1) {
 							_this.time = 60
 							let aa = setInterval(() => {
 								_this.time--
@@ -453,7 +457,7 @@
 									_this.huoqu = '获取验证码'
 								}
 							}, 1000)
-						}else{ 
+						} else {
 							uni.showToast({
 								title: "发送失败",
 								duration: 1000,
@@ -461,7 +465,7 @@
 							})
 						}
 					})
-					
+
 				}
 			},
 			xianshi() {
@@ -475,22 +479,22 @@
 					})
 				}
 			},
-			tongyis(ev) { 
+			tongyis(ev) {
 				if (ev == 1) {
-					if (this.code != "") { 
+					if (this.code != "") {
 						this.$api.emsyzphone({
 							phone: this.shoujihao,
-							yzm:this.code
+							yzm: this.code
 						}).then(data => {
-							if(data.data.code == 1){
+							if (data.data.code == 1) {
 								this.tongyi(1)
-							}else{
+							} else {
 								uni.showToast({
 									title: "验证码错误",
 									duration: 1000,
 									icon: "none"
 								})
-							} 
+							}
 						})
 
 					} else {
@@ -500,13 +504,13 @@
 							icon: "none"
 						})
 					}
-				}else{ 
-					this.time =0
-					this.code =''
+				} else {
+					this.time = 0
+					this.code = ''
 					this.shoujihao = ''
 					this.shoujiyanzheng = false;
 				}
-				
+
 			},
 			tongyi(ev) {
 				if (ev == 1) {
@@ -577,7 +581,7 @@
 			},
 			annui() {
 				this.yuyuesss = false
-				
+
 				let shopids = []
 				let specidsizes = []
 				let specids = []

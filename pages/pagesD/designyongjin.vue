@@ -64,31 +64,20 @@
 						佣金收益
 					</view>
 				</view>
-				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
+				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
 					<view class="vdfdd">
 						<view class="win">
 							{{item.order_id}}
 						</view>
 						<view class="win">
-							<!-- <text v-if="item.state == 0">     待付款         </text>
-							<text v-if="item.state == 1">     待发货         </text>
-							<text v-if="item.state == 2">     发货中         </text>
-							<text v-if="item.state == 3">     已收货         </text>
-							<text v-if="item.state == 4">     已完成         </text>
-							<text v-if="item.state == 5">     退款审核中     </text>
-							<text v-if="item.state == 6">     退款成功       </text>
-							<text v-if="item.state == 7">     退款已驳回     </text>
-							<text v-if="item.state == 9">     已取消         </text>
-							<text v-if="item.state == 10">    退货审核中     </text>
-							<text v-if="item.state == 11">    退货成功       </text>
-							<text v-if="item.state == 12">    退货已驳回     </text>
-							<text v-if="item.state == 13">    换货审核中     </text>
-							<text v-if="item.state == 14">    换货成功       </text>
-							<text v-if="item.state == 15">    换货已驳回     </text>
-							<text v-if="item.state == 16">    报装中         </text>
-							<text v-if="item.state == 17">    已安装         </text> -->
-							<text v-if="item.wstate == 0"> 已付设计定金 </text>
-							<text v-if="item.state >= 0 && item.state >= 17"> 已下单付款 </text>
+							<text v-if="item.states == 0">待付设计定金</text>
+							<text v-if="item.states == 1">已付设计定金</text>
+							<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
+							<text v-if="item.statess >= 0 && item.statess <4">已下单付款</text>
+						 	<text v-if="item.statess >= 4">订单完成</text>
+							<text v-if="item.sq == 0">佣金未申请</text>
+							<text v-if="item.sq == 1">佣金申请中</text>
+							<text v-if="item.tixian == 1">佣金申请成功</text>
 						</view>
 						<view class="win">
 							{{item.cjprice||0}}
@@ -202,7 +191,6 @@
 			};
 		},
 		onLoad(ev) {
-
 			if (ev.title) {
 				this.title = ev.title;
 			}
@@ -213,16 +201,23 @@
 		},
 		onShow() {
 			this.getdata()
-			this.$api.desmyuser({
-				user_id: uni.getStorageSync("user_info").id,
-			}).then(data => {
-				if (data.data.code == 1) {
-					let aa = data.data.data.myuser
-					uni.setStorageSync("des_info", data.data.data.myuser)
-				}
-			})
+			this.$api.desmyuser({user_id: uni.getStorageSync("user_info").id}).then(data=>{if(data.data.code == 1) {uni.setStorageSync("des_info", data.data.data.myuser)}})
 		},
 		methods: {
+			goods(ev) {
+				if(ev.sex){
+					uni.setStorageSync("des_order", ev)
+					uni.navigateTo({
+						url: "./shejishixiangqing?isdes=1"
+					})
+				}else{
+					uni.showToast({
+						title:"此订单不能查看详情!",
+						icon:"error"
+					})
+				}
+				
+			},
 			wodeteam() {
 				uni.navigateTo({
 					url: "../pagesA/gongju11?shejishi=1"
@@ -241,7 +236,7 @@
 								item["cjprice"] = item.price
 								item.price = 0
 							})
-							this.monList = [...data.data.data.status]
+							this.monList = [...this.monList,...data.data.data.status]
 						}
 					})
 				}
@@ -250,7 +245,7 @@
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.monList = [...data.data.data.status]
+						this.monList = [...this.monList,...data.data.data.status]
 						this.allprice = data.data.data.all.toFixed(2);
 						this.canprice = data.data.data.can.toFixed(2);
 						uni.setStorageSync("monList", this.monList)

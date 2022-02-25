@@ -1,9 +1,15 @@
 <script>
 	export default {
 		onLaunch(ev) {
+			console.log(ev);
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
 			}
+			// if(ev.query.orderid){
+			// 	uni.navigateTo({
+			// 		url:"pages/pagesC/Shopping?orderid="+ev.query.orderid+"&shopid="+ev.query.shopid
+			// 	})
+			// }
 			if (ev.query.level) {
 				if(ev.query.level === "undefined"){
 				    console.log('is undefined');
@@ -17,11 +23,12 @@
 				uni.navigateTo({
 					url: "pages/pagesD/start"
 				})
-			} else {
-				uni.navigateTo({
-					url: ev.path + "?shopid=" + ev.query.shopid
-				})
 			}
+			//  else {
+			// 	uni.navigateTo({
+			// 		url: ev.path + "?shopid=" + ev.query.shopid
+			// 	})
+			// }
 		}
 	}
 </script>

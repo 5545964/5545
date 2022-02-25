@@ -27,10 +27,11 @@
 					</view>
 				</view>
 				<view class="dsfedfed" @click="kanzhaopian(item.ewm)">
-					<view class="text">
+					<!-- <view class="text">
 						点击加入美居设计群
-						<!-- 链接： -->
-					</view>
+						
+					</view> -->
+					<cell @startmessage='startmessage' contactText="点击加入美居设计群" @completemessage="completemessage" :url='item.ewm'>点击加入美居设计群</cell>
 					<!-- <image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image> -->
 				</view>
 			</view>
@@ -61,6 +62,12 @@
 		// 	this.gethomepage();
 		// },
 		methods: {
+			startmessage(ev){
+				console.log(ev,"startmessage");
+			},
+			completemessage(ev){
+				console.log(ev,"completemessage");
+			},
 			kanzhaopian(ev) {
 				uni.navigateTo({
 					url:"../Home/URL/URL?url="+ev

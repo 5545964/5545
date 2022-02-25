@@ -122,7 +122,7 @@
 			}
 			this.getcard()
 
-			this.userinfo = uni.getStorageSync("des_info")
+			this.userinfo = uni.getStorageSync("user_info")
 			this.rinima.push(this.userinfo.mobile)
 			this.rinima.push(this.userinfo.email)
 			this.rinima.push(this.userinfo.wechat)
@@ -132,12 +132,14 @@
 			this.$api.setcategory().then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.forEach(item => {
-						this.imgList.push({
-							image: this.$imgPath + item.image,
-							id: item.id
-						})
+						if (item.image != null && item.image != "") {
+							this.imgList.push({
+								image: this.$imgPath + item.image,
+								id: item.id
+							})
+						}
+
 					})
-					this.imgList.shift()
 				}
 			})
 			this.$api.qjset({
@@ -152,7 +154,7 @@
 					data.data.data.status.data.sort(function() {
 						return Math.random() - 0.5; // 值为 -0.5 ~ 0.5 的随机数
 					});
-					this.tuijian = [data.data.data.status.data[0], data.data.data.status.data[2]];
+					this.tuijian = [data.data.data.status.data[0], data.data.data.status.data[1]];
 				}
 			})
 			this.$api.ewm({
@@ -180,6 +182,7 @@
 				});
 			},
 			goss(ev) {
+				console.log(ev);
 				uni.navigateTo({
 					url: "../pagesC/FlagshipSet?id=" + this.imgList[ev].id
 				})
@@ -206,17 +209,17 @@
 			},
 			go() {
 				let that = this;
-				console.log(that.latitude,that.longitude,Number(that.latitude),Number(that.longitude));
+				console.log(that.latitude, that.longitude, Number(that.latitude), Number(that.longitude));
 				uni.openLocation({
 					latitude: Number(that.latitude),
 					longitude: Number(that.longitude),
-					name:"宝芸邸生活家具(成都体验中心)",
-					address:"四川省成都市武侯区成双大道585号旭耀鞋业4栋",
+					name: "宝芸邸生活家具(成都体验中心)",
+					address: "四川省成都市武侯区成双大道585号旭耀鞋业4栋",
 					success: function() {
 
 					},
 					fail: function(error) {
-						
+
 					}
 				});
 			},

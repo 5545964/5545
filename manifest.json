@@ -95,7 +95,13 @@
 			"scope.userLocation": {
 				"desc": "宝芸邸正在获取您的定位"
 			}
-		}
+		},
+		"plugins": {		
+			"materialPlugin": {
+				"version": "1.0.5",
+		        "provider": "wx4d2deeab3aed6e5a"
+			}
+		} 
 	},
 	"mp-alipay": {
 		"usingComponents": true

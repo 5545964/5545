@@ -24,15 +24,19 @@
 				type: Number,
 				default: 1
 			},
+			currents: {
+				type: Number,
+				default: 13
+			}
 		},
 		data() {
 			return {
-				aas:0,
+				aas: 0,
 				list: [{
 					id: 0,
 					name: ""
 				}],
-				current: 0,
+				current: 13,
 				data_list: [],
 				img: this.$imgPath,
 				pagess: 1
@@ -42,9 +46,10 @@
 			pages(val) {
 				this.pagess = this.pages
 				this.quehuan(this.current)
-			},
+			}
 		},
 		mounted() {
+			this.current = this.currents
 			this.pagess = this.pages
 			this.alls()
 		},
@@ -56,19 +61,18 @@
 						this.list.forEach(item => {
 							item["name"] = item.title
 						})
-						this.current = this.list[0].id
-						this.quehuan(this.list[0].id)
+						this.quehuan(this.currents)
 					}
 				})
 			},
 			change(ev) {
-				this.$emit("pageB",this.pagess)
+				this.$emit("pageB", this.pagess)
 				this.current = ev
 				this.quehuan(ev)
 				this.data_list = [];
 			},
-			checks(){
-				this.$emit("pageA",this.pagess)
+			checks() {
+				this.$emit("pageA", this.pagess)
 			},
 			quehuan(ev) {
 				this.$api.qjset({

@@ -117,7 +117,7 @@
 							{{items.name}}
 						</view>
 						<view class="asd">
-							<u-input style="width: 100%;height: 100%;" v-model="data_list[items.obj]" :type="type"
+							<u-input style="width: 100%;height: 100%;" @blur="baochun" v-model="data_list[items.obj]" :type="type"
 								:placeholder="items.text" />
 						</view>
 					</view>
@@ -178,7 +178,7 @@
 							{{items.name}}
 						</view>
 						<view class="asd" style="width: 70%;">
-							<textarea style="width: 100%;" placeholder-style="color: #999999;"
+							<textarea style="width: 100%;" placeholder-style="color: #999999;" @blur="baochun"
 								v-model="data_list[items.obj]" :placeholder="items.text" :auto-height="true" />
 						</view>
 					</view>
@@ -512,6 +512,7 @@
 				this.isyuyue = ev.yuyue;
 				this.gethomepage();
 			}
+			this.data_list = uni.getStorageSync("dataKKlist") || {}
 			this.$api.color().then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.forEach(item => {
@@ -550,6 +551,10 @@
 			})
 		},
 		methods: {
+			baochun(){
+				console.log(this.data_list);
+				uni.setStorageSync("dataKKlist",this.data_list)
+			},
 			go_code() {
 				let _this = this
 				if (_this.timea == 0) {
@@ -618,10 +623,11 @@
 				this.isadd = true
 			},
 			zhishizhege(ev) {
-
 				this.data_list[this.chuanzhi.obj] = ev.year + '-' + ev.month + "-" + ev.day
+				this.baochun()
 			},
 			address(ev) {
+				console.log(this.data_list,1);
 				let that = this;
 				let aa = ''
 				let bb = that.data_list
@@ -630,6 +636,8 @@
 						bb[ev.obj] = res.address;
 						that.data_list = {}
 						that.data_list = bb
+						console.log(that.data_list);
+						that.baochun()
 					}
 				});
 			},
@@ -850,6 +858,7 @@
 			//弹出层选中之后赋值
 			change() {
 				this.data_list[this.chuanzhi.obj] = this.sel_list;
+				this.baochun()
 				this.popshow = false;
 			},
 			//弹出层选项还原默认
@@ -1355,7 +1364,6 @@
 
 	.annuyt {
 		margin-left: 30rpx;
-		font-size: 20rpx;
-		width: 160rpx;
+		font-size: 30rpx;
 	}
 </style>

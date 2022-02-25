@@ -91,7 +91,7 @@
 					<image class="img" src="../../static/icon_me_more.png" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="top_b">
+			<!-- <view class="top_b">
 				<view class="quanju">
 					<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
 						<view class="cart-num" v-if="index <=1 && num_list[index] != 0">
@@ -107,7 +107,7 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="top_c">
 				<view class="text">
 					常用工具

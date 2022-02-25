@@ -88,10 +88,9 @@
 
 		</view>
 		<view class="bngh" v-if="isyuyue == 0">
-			<view class="annui" @click="tijiao(0)" style="background-color: #EFEFEF;color: #333333;">
-				<!-- 上传二维码 -->
+			<!-- <view class="annui" @click="tijiao(0)" style="background-color: #EFEFEF;color: #333333;">
 				查看二维码
-			</view>
+			</view> -->
 			<!-- <view class="annui" @click="tijiao(1)" v-if="desOrder.state == 1">
 				确认完成
 			</view> -->

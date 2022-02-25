@@ -67,7 +67,7 @@
 							</template>
 						</view>
 					</view>
-					<view class="yanzhengma">
+					<view class="yanzhengma" v-if="yanzhengshoujihao != items.inp">
 						<view class="cxz">
 							验证码
 						</view>
@@ -188,6 +188,7 @@
 	export default {
 		data() {
 			return {
+				yanzhengshoujihao:"",
 				time: 0,
 				huoqu: "获取验证码",
 				code: "",
@@ -327,6 +328,7 @@
 				this.list[4].inp = this.desinfo.bbs.type;
 				this.list[5].inp = this.desinfo.wechat;
 				this.list[6].inp = this.desinfo.mobile;
+				this.yanzhengshoujihao = this.desinfo.mobile
 				this.list[7].inp = this.desinfo.yb;
 				this.list[8].inp = this.desinfo.email;
 				this.list[9].inp = this.desinfo.address;
@@ -340,7 +342,6 @@
 						})
 					})
 				}
-
 			} else {
 				this.desinfo = uni.getStorageSync("user_info")
 				this.avatar = [{
@@ -357,6 +358,7 @@
 				this.list[8].inp = this.desinfo.email
 				this.list[9].inp = this.desinfo.address
 				this.list[10].inp = this.desinfo.addressxq
+				this.yanzhengshoujihao = this.list[6].inp
 			}
 		},
 		methods: {
@@ -490,6 +492,10 @@
 				})
 			},
 			tijiao(ev) {
+				if( this.yanzhengshoujihao == this.list[6].inp){
+					this.tijiaos(ev)
+					return
+				}
 				if (this.code != "") {
 					// 验证验证码
 					this.$api.emsyzphone({

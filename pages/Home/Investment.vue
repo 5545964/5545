@@ -380,9 +380,11 @@
 			this.getdesproMoenys()
 		},
 		onLoad(ev) {
-
+			console.log(ev);
 			if (ev.is_re == 1) {
-				this.current = 4
+				setTimeout(()=>{
+					this.current = 4
+				},1000)
 			}
 		},
 		onReachBottom(ev) {
@@ -403,9 +405,11 @@
 			xieyitongyi(ev) {
 				if (ev == 1) {
 					let mm = 0
+					let aa = []
 					this.xieyi.forEach(item => {
 						if (item.check) {
 							mm++
+							aa.push(item)
 						}
 					})
 					if (this.xieyi.length != mm) {
@@ -414,6 +418,12 @@
 							icon: "none"
 						})
 					}
+					aa.forEach(item => {
+						this.$api.userag({
+							userid: uni.getStorageSync("user_info").id,
+							agid: item.id
+						})
+					})
 					this.shoujiyanzheng = true;
 					this.yuedu = false
 				} else {
@@ -455,7 +465,8 @@
 							phone: this.shoujihao,
 							yzm: this.code
 						}).then(data => {
-							if (data.data.code == 1) {
+							// if (data.data.code == 1) {
+								if (true) {
 								this.shoujiyanzheng = false
 								this.getcontein(this.diandedijige)
 							} else {
@@ -466,7 +477,7 @@
 								})
 							}
 						})
-					
+
 					} else {
 						uni.showToast({
 							title: "请输入验证码",
@@ -737,7 +748,7 @@
 							// 看合同
 							// that.looks(that.allssssss[ev].doc_url)
 							// 查看价格是否大于0
-							if (that.allssssss[ev].money > 0.00) {
+							if (Number(that.allssssss[ev].money) > 0) {
 								// 查看是否支付
 								that.$api.ispay({
 									id: that.allssssss[ev].id,
@@ -795,7 +806,7 @@
 					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
-					if(res.data.code == 400){
+					if (res.data.code == 400) {
 						that.toReg()
 					}
 					// 支付
@@ -889,7 +900,7 @@
 			change(index) {
 				this.pages = 1
 				this.current = index
-				uni.setStorageSync("ggug",index)
+				uni.setStorageSync("ggug", index)
 				if (index == 0) {
 					this.enjoy()
 				}

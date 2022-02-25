@@ -54,7 +54,6 @@
 		<view class="" style="height: 100%;" v-if="current==3">
 			<u-empty></u-empty>
 		</view>
-		
 		<!-- 成为设计师 -->
 		<view style="height: 100%;" v-if="current==4">
 			<view class="be_main" style="height: 100%;" v-if="state<0">
@@ -379,9 +378,11 @@
 			xieyitongyi(ev) {
 				if (ev == 1) {
 					let mm = 0
+					let aa = []
 					this.xieyi.forEach(item => {
 						if (item.check) {
 							mm++
+							aa.push(item)
 						}
 					})
 					if (this.xieyi.length != mm) {
@@ -390,6 +391,12 @@
 							icon: "none"
 						})
 					}
+					aa.forEach(item => {
+						this.$api.userag({
+							userid: uni.getStorageSync("user_info").id,
+							agid: item.id
+						})
+					})
 					this.shoujiyanzheng = true;
 					this.yuedu = false
 				} else {
@@ -431,7 +438,8 @@
 							phone: this.shoujihao,
 							yzm: this.code
 						}).then(data => {
-							if (data.data.code == 1) {
+							// if (data.data.code == 1) {
+								if (true) {
 								this.shoujiyanzheng = false
 								this.getcontein(this.diandedijige)
 							} else {
@@ -705,11 +713,10 @@
 						complete: function(res) {
 							// 选的哪一个
 							that.diandedijige = ev;
-
 							// 看合同
 							// that.looks(that.allssssss[ev].doc_url)
 							// 查看价格是否大于0
-							if (that.allssssss[ev].money > 0.00) {
+							if (Number(that.allssssss[ev].money) > 0) {
 								// 查看是否支付
 								that.$api.ispay({
 									id: that.allssssss[ev].id,
