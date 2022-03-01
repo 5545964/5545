@@ -18,8 +18,9 @@
 		<view class="lunbo">
 			<swiper style="width: 100%;height: 450rpx;" :current="currents" :indicator-dots="true" :circular="true"
 				:autoplay="autoplay" :interval="3000" :duration="1000">
-				<swiper-item v-for="(item,index) in list" :key="index" @click="kaniamg(item)">
-					<image style="width: 100%;height: 450rpx;" :src="item" mode="aspectFit"></image>
+				<swiper-item v-for="(item,index) in alls.imagexq" :key="index" @click="kaniamgss(item)">
+					<!-- gosheji -->
+					<image style="width: 100%;height: 450rpx;" :src="img+item.image" mode="aspectFit"></image>
 				</swiper-item>
 				<swiper-item style="position: relative;" v-if="vr_image != ''">
 					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image"
@@ -79,7 +80,7 @@
 									v-if="items.fzb != null && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit">
 								</image>
-								<image :src="img+items.shop.photo" style="width: 640rpx;" mode="widthFix" ></image>
+								<image :src="img+items.shop.photo" style="width: 640rpx;" mode="widthFix"></image>
 							</view>
 						</view>
 					</view>
@@ -172,6 +173,23 @@
 				uni.navigateTo({
 					url: "./Shopping?shopid=" + ev
 				})
+			},
+			kaniamgss(ev) {
+				console.log(ev);
+				if (ev.jump == 0) {
+					let aa = [this.img + ev.image]
+					uni.previewImage({
+						urls: aa,
+						longPressActions: {
+							itemList: ['发送给朋友', '保存图片', '收藏'],
+							success: function(data) {},
+							fail: function(err) {}
+						}
+					});
+				} else {
+					this.gosheji()
+				}
+
 			},
 			kaniamg(ev) {
 				let aa = [ev]

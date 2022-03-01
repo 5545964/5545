@@ -1,7 +1,7 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			console.log(ev);
+			console.log(process.env.NODE_ENV);
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
 			}

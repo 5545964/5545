@@ -1,124 +1,124 @@
 {
-	"name": "宝芸邸", //应用名称
-	"appid": "__UNI__E06E380", //应用标识
-	"description": "宝芸邸", //应用描述
-	"versionName": "1.0.0", //版本名称，例如：1.0.0
-	"versionCode": "1", //版本号，例如：36
-	"transformPx": false, //是否转换项目的px，为true时将px转换为rpx，为false时，px为传统的实际像素
+    "name" : "宝芸邸", //应用名称
+    "appid" : "__UNI__E06E380", //应用标识
+    "description" : "宝芸邸", //应用描述
+    "versionName" : "1.0.0", //版本名称，例如：1.0.0
+    "versionCode" : "1", //版本号，例如：36
+    "transformPx" : false, //是否转换项目的px，为true时将px转换为rpx，为false时，px为传统的实际像素
 
-	/* 5+App特有相关 */
-	"app-plus": {
-		"safearea": {
-			"bottom": {
-				"offset": "none"
-			}
-		},
-		"optimization": {
-			"subPackages": true
-		},
-		"runmode": "liberate", // 开启分包优化后，必须配置资源释放模式
-		"usingComponents": true,
-		"nvueCompiler": "uni-app",
-		"compilerVersion": 3,
-		"splashscreen": {
-			"alwaysShowBeforeRender": true,
-			"waiting": true,
-			"autoclose": true,
-			"delay": 0
-		},
-		/* 模块配置 */
-		"modules": {
-			"OAuth": {}
-		},
-		/* 应用发布信息 */
-		"distribute": {
-			/* android打包配置 */
-			"android": {
-				"permissions": [
-					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
-					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.CAMERA\"/>",
-					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
-					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
-					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
-					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
-					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-				]
-			},
-			/* ios打包配置 */
-			"ios": {},
-			/* SDK配置 */
-			"sdkConfigs": {
-				"oauth": {
-					"weixin": {
-						"appid": "wx00e9e5b843259a9d",
-						"appsecret": "5a47f8a3b97773614c77da7900a896a3",
-						"UniversalLinks": ""
-					}
-				}
-			},
-			"splashscreen": {
-				"androidStyle": "common"
-			}
-		}
-	},
-	/* 快应用特有相关 */
-	"quickapp": {},
-	/* 小程序特有相关 */
-	"mp-weixin": {
-		"appid": "wx00e9e5b843259a9d",
-		"setting": {
-			"urlCheck": true,
-			"postcss": true,
-			"minified": true,
-			"checkSiteMap": false,
-			"es6": true,
-			"enhance": true,
-			"uglifyFileName": true
-		},
-		"usingComponents": true,
-		"permission": {
-			"scope.userLocation": {
-				"desc": "宝芸邸正在获取您的定位"
-			}
-		},
-		"plugins": {		
-			"materialPlugin": {
-				"version": "1.0.5",
-		        "provider": "wx4d2deeab3aed6e5a"
-			}
-		} 
-	},
-	"mp-alipay": {
-		"usingComponents": true
-	},
-	"mp-baidu": {
-		"usingComponents": true
-	},
-	"mp-toutiao": {
-		"usingComponents": true
-	},
-	"h5": {
-		"template": "template.h5.html",
-		"router": {
-			"mode": "history"
-		},
-		"sdkConfigs": {
-			"maps": {}
-		}
-	}
+    /* 5+App特有相关 */
+    "app-plus" : {
+        "safearea" : {
+            "bottom" : {
+                "offset" : "none"
+            }
+        },
+        "optimization" : {
+            "subPackages" : true
+        },
+        "runmode" : "liberate", // 开启分包优化后，必须配置资源释放模式
+        "usingComponents" : true,
+        "nvueCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : true,
+            "waiting" : true,
+            "autoclose" : true,
+            "delay" : 0
+        },
+        /* 模块配置 */
+        "modules" : {
+            "OAuth" : {}
+        },
+        /* 应用发布信息 */
+        "distribute" : {
+            /* android打包配置 */
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-feature android:name=\"android.hardware.camera\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ]
+            },
+            /* ios打包配置 */
+            "ios" : {},
+            /* SDK配置 */
+            "sdkConfigs" : {
+                "oauth" : {
+                    "weixin" : {
+                        "appid" : "wx00e9e5b843259a9d",
+                        "appsecret" : "5a47f8a3b97773614c77da7900a896a3",
+                        "UniversalLinks" : ""
+                    }
+                }
+            },
+            "splashscreen" : {
+                "androidStyle" : "common"
+            }
+        }
+    },
+    /* 快应用特有相关 */
+    "quickapp" : {},
+    /* 小程序特有相关 */
+    "mp-weixin" : {
+        "appid" : "wx00e9e5b843259a9d",
+        "setting" : {
+            "urlCheck" : true,
+            "postcss" : true,
+            "minified" : true,
+            "checkSiteMap" : false,
+            "es6" : true,
+            "enhance" : true,
+            "uglifyFileName" : true
+        },
+        "usingComponents" : true,
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "宝芸邸正在获取您的定位"
+            }
+        },
+        "plugins" : {
+            "materialPlugin" : {
+                "version" : "1.0.5",
+                "provider" : "wx4d2deeab3aed6e5a"
+            }
+        }
+    },
+    "mp-alipay" : {
+        "usingComponents" : true
+    },
+    "mp-baidu" : {
+        "usingComponents" : true
+    },
+    "mp-toutiao" : {
+        "usingComponents" : true
+    },
+    "h5" : {
+        "template" : "template.h5.html",
+        "router" : {
+            "mode" : "history"
+        },
+        "sdkConfigs" : {
+            "maps" : {}
+        }
+    }
 }
