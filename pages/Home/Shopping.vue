@@ -14,7 +14,7 @@
 			</view>
 			<!-- 分类 -->
 			<view class="shop_cls">
-				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)">
+				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)" v-if="item.switch == 1">
 					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;"
 						mode="aspectFit">
 					</image>

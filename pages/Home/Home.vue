@@ -255,13 +255,17 @@
 								aa.wanghong.push(item)
 							}
 						})
-						let bb = 1
+						let bb = 0
 						aa.wanghong.forEach(item => {
-							if (item.switch == 1 && bb == 1) {
+							if (item.switch == 1 && bb == 0) {
 								bb++
 								uni.setStorageSync("ggug", item.id)
 							}
 						})
+						console.log(bb,aa.wanghong.length);
+						if(bb == 0){
+							uni.setStorageSync("ggug", 0)
+						}
 						this.list = [...aa.home]
 						uni.setStorageSync("icon", aa)
 
