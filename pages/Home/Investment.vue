@@ -5,22 +5,22 @@
 		<view style="height: 100%;" v-show="currents == 0">
 			<!-- 切换 -->
 			<view class="">
-				<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
-					@change="change"></u-tabs>
+				<u-tabss :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
+					@change="change"></u-tabss>
 			</view>
 			<!-- 热门栏目 -->
-			<view class="" style="height: 100%;" v-if="current==0">
+			<view class="" style="height: 100%;" v-if="current==12">
 				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 					@dianzhan="dianzhan">
 				</u-video>
 				<u-empty v-else></u-empty>
 			</view>
 			<!-- 设计大咖 -->
-			<view class="" style="height: 100%;" v-if="current==1">
+			<view class="" style="height: 100%;" v-if="current==13">
 				<u-empty></u-empty>
 			</view>
 			<!-- 整装设计师 -->
-			<view style="height: 100%;" v-if="current==2">
+			<view style="height: 100%;" v-if="current==14">
 				<!-- 排序 -->
 				<view class="paixu">
 					<view class="paxi">
@@ -40,15 +40,15 @@
 				<u-empty v-else></u-empty>
 			</view>
 			<!-- 定制家具设计师 -->
-			<view class="" style="height: 100%;" v-if="current==3">
+			<view class="" style="height: 100%;" v-if="current==15">
 				<u-empty></u-empty>
 			</view>
 			<!-- 成为设计师 -->
-			<view style="height: 100%;" v-if="current==4">
+			<view style="height: 100%;" v-if="current==16">
 				<view class="be_main" style="height: 100%;" v-if="state<0">
 					<view class="be_designer">
 					</view>
-					<image style="width: 100%;" src="../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg" mode="widthFix">
+					<image style="width: 100%;" :src="dasdsdas+mmmmmm" mode="widthFix">
 					</image>
 					<view class="be_foot" v-if="yanzhengtanchaung">
 						<view class="pay" @click="ananana(0)">
@@ -66,6 +66,7 @@
 							成为2级设计师会员
 						</view>
 					</view>
+					<view style="height: 110rpx;" class=""/>
 				</view>
 				<!-- 驳回 -->
 				<view class="reject" v-if="state==2">
@@ -104,7 +105,7 @@
 				</view>
 			</view>
 			<!-- 招募令 -->
-			<view class="tokens" style="height: 100%;" v-if="current==5">
+			<view class="tokens" style="height: 100%;" v-if="current==17">
 				<view class="mian" style="height: 100%;">
 					<view class="mian_left" id="mianleft">
 						<scroll-view scroll-y="true" style="height: 100%;">
@@ -122,7 +123,6 @@
 					</view>
 				</view>
 			</view>
-
 		</view>
 		<view style="height: 100%;" class="" v-show="currents == 1">
 			<u-empty></u-empty>
@@ -247,6 +247,8 @@
 	export default {
 		data() {
 			return {
+				mmmmmm: "",
+				dasdsdas: this.$imgPath,
 				showsssssssss: false,
 				jkl: 100,
 				heigth: uni.getStorageSync("setheigth"),
@@ -300,30 +302,31 @@
 				pay: "",
 				value1: "",
 				show: false,
-				list: [{
-						name: '网红佳作',
-						id: 0
-					},
-					{
-						name: '设计大咖',
-						id: 1
-					},
-					{
-						name: '整装设计师',
-						id: 2
-					},
-					{
-						name: '定制家具设计师',
-						id: 3
-					},
-					{
-						name: '成为设计师',
-						id: 4
-					},
-					{
-						name: '招募令',
-						id: 5
-					}
+				list: [
+					// {
+					// 	name: '网红佳作',
+					// 	id: 0
+					// },
+					// {
+					// 	name: '设计大咖',
+					// 	id: 1
+					// },
+					// {
+					// 	name: '整装设计师',
+					// 	id: 2
+					// },
+					// {
+					// 	name: '定制家具设计师',
+					// 	id: 3
+					// },
+					// {
+					// 	name: '成为设计师',
+					// 	id: 4
+					// },
+					// {
+					// 	name: '招募令',
+					// 	id: 5
+					// }
 				],
 				current: 0,
 				designerList: [],
@@ -357,6 +360,12 @@
 			}
 		},
 		onShow() {
+			this.list = uni.getStorageSync('icon').wanghong
+			this.list.forEach(item => {
+				if (item.id == 16) {
+					this.mmmmmm = item.image
+				}
+			})
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
 			this.change(uni.getStorageSync("ggug"))
@@ -388,7 +397,7 @@
 			}
 		},
 		onReachBottom(ev) {
-			if (this.current == 0) {
+			if (this.current == 12) {
 				this.pages = this.pages + 1
 				this.enjoy()
 			}
@@ -898,16 +907,17 @@
 				})
 			},
 			change(index) {
+				console.log(index);
 				this.pages = 1
 				this.current = index
 				uni.setStorageSync("ggug", index)
-				if (index == 0) {
+				if (index == 12) {
 					this.enjoy()
 				}
-				if (index > 0 && index < 4) {
+				if (index > 12 && index < 16) {
 					this.dessel(0)
 				}
-				if (index == 4) {
+				if (index == 16) {
 					this.getstate()
 				}
 			},

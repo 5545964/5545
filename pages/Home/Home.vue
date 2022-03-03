@@ -241,17 +241,30 @@
 					if (data.data.code == 1) {
 						let aa = {
 							shop: [],
-							home: []
+							home: [],
+							wanghong: []
 						}
 						data.data.data.data.forEach(item => {
 							if (item.state == 0) {
 								aa.shop.push(item)
-							} else {
+							}
+							if (item.state == 1) {
 								aa.home.push(item)
+							}
+							if (item.state == 2) {
+								aa.wanghong.push(item)
+							}
+						})
+						let bb = 1
+						aa.wanghong.forEach(item => {
+							if (item.switch == 1 && bb == 1) {
+								bb++
+								uni.setStorageSync("ggug", item.id)
 							}
 						})
 						this.list = [...aa.home]
 						uni.setStorageSync("icon", aa)
+
 					}
 				})
 				//轮播图
@@ -304,7 +317,6 @@
 		},
 		onShow() {
 			this.alls()
-			uni.setStorageSync("ggug", 0)
 			//购物车数量
 			this.$api.shopcart({
 				id: uni.getStorageSync("user_info").id
