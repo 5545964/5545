@@ -23,7 +23,7 @@
 			</view>
 		</view>
 
-		<view class="hahaha" >
+		<view class="hahaha">
 			<view class="cet" @click="gos(0)" v-if="des_user.bbs !=null">
 				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
 				<view class="text">
@@ -189,6 +189,7 @@
 			</view>
 		</view>
 		<u-kehu :navis="false"></u-kehu>
+		<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -197,6 +198,7 @@
 	export default {
 		data() {
 			return {
+				showssss: true,
 				fkjsfjdisfjsl: false,
 				user_info_id: "",
 				img: this.$imgPath,
@@ -277,24 +279,36 @@
 						name: "已安装"
 					},
 				],
-				des_user:"",
+				des_user: "",
 			};
 		},
 		onShow() {
-			if (uni.getStorageSync("user_info")) {
-				this.user_info = uni.getStorageSync("user_info")
-				this.shuliang(this.user_info.id)
-			}
-			this.$api.desmyuser({
-				user_id: uni.getStorageSync("user_info").id
-			}).then(data => {
-				if (data.data.code == 1) {
-					uni.setStorageSync("des_info", data.data.data.myuser)
-					this.des_user = data.data.data.myuser
-				}
-			})
+			this.alls()
 		},
 		methods: {
+			alls() {
+				if (uni.getStorageSync("user_info")) {
+					this.showssss = false
+					this.user_info = uni.getStorageSync("user_info")
+					this.shuliang(this.user_info.id)
+				} else {
+					this.showssss = true
+				}
+				this.$api.desmyuser({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("des_info", data.data.data.myuser)
+						this.des_user = data.data.data.myuser
+					}
+				})
+			},
+			denglu() {
+				this.alls()
+			},
+			budenglu() {
+				// this.showssss = false
+			},
 			quxiao(ev) {
 				let aa = this.num_list;
 				aa[ev] = 0

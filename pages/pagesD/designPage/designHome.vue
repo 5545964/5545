@@ -162,8 +162,9 @@
 				});
 			},
 			todetails(item) {
+				uni.setStorageSync("fdklfjdsfjsfhks",item)
 				uni.navigateTo({
-					url: "../../pagesC/DesignDetail?id=" + JSON.stringify(item)
+					url: "../../pagesC/DesignDetail"
 				})
 			},
 			uploadCase() {

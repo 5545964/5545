@@ -80,7 +80,7 @@
 						name: "户型分类"
 					}
 				],
-				title: "佳作分享",
+				title: "",
 				pinglun_list: [],
 				video: [],
 				showComment: false,

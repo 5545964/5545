@@ -34,7 +34,7 @@
 	export default {
 		data() {
 			return {
-				title: "楼盘设计",
+				title: "",
 				list: [{
 					name: '楼盘设计'
 				}, {
@@ -46,6 +46,11 @@
 				pages: 1,
 				shuo: true,
 			};
+		},
+		onLoad(ev) {
+			if(ev.title){
+				this.title = ev.title
+			}
 		},
 		onReachBottom(ev) {
 			if (this.shuo) {

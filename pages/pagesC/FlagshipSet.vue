@@ -36,7 +36,7 @@
 	export default {
 		data() {
 			return {
-				title: "旗舰整装套系",
+				title: "",
 				aas: 0,
 				list: [{
 					id: 0,
@@ -52,6 +52,9 @@
 		onLoad(ev) {
 			if (ev.id) {
 				this.currents = ev.id
+			}
+			if(ev.title){
+				this.title = ev.title
 			}
 			this.alls()
 		},

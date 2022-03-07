@@ -45,6 +45,7 @@
 
 <style lang="scss" scoped>
 	.gghGG {
+		width: 100%;
 		overflow: hidden;
 		/*超出的部分隐藏起来。*/
 		white-space: nowrap;
@@ -61,7 +62,7 @@
 		display: flex;
 		align-items: center;
 		flex-direction: column;
-		margin-top: 40rpx;
+		margin-top: 20rpx;
 		font-size: 24rpx;
 		color: #000000;
 		text-align: center;

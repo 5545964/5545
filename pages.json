@@ -85,6 +85,24 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/Home/gongzhang",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false,
+				"navigationBarTextStyle": "black"
+			}
+
+		}, {
+			"path": "pages/Home/shequshenghuo",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false,
+				"navigationBarTextStyle": "black"
+			}
+
 		}
 	],
 	"subPackages": [{
@@ -465,19 +483,17 @@
 					"navigationBarTextStyle": "black"
 				}
 
-			}
-		    ,{
-                    "path" : "fenlei",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "分类",
-                    "enablePullDownRefresh": false,
+			}, {
+				"path": "fenlei",
+				"style": {
+					"navigationBarTitleText": "分类",
+					"enablePullDownRefresh": false,
 					"navigationStyle": "custom",
 					"navigationBarTextStyle": "black"
-                }
-                
-                }
-            ]
+				}
+
+			}
+		]
 	}, {
 		"root": "pages/pagesD",
 		"pages": [{

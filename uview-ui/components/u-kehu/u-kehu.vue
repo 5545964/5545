@@ -10,18 +10,10 @@
 					<view class="dad">
 						预约设计
 					</view>
-					<!-- <view class="cet">
-						<view class="dasds">
-							<image :src="img" mode="aspectFit"></image>
-						</view>
-					</view> -->
-					<!-- <view class="dad cet">
-						{{title}}
-					</view> -->
 				</view>
 			</view>
 		</view>
-		<view class="">
+		<view class="" v-if="false">
 			<view class="djsa cet" id="yuan" @touchend="ends" @touchmove.stop="moves"
 				:style="'top: '+bianheigths+'rpx;left: '+bianrights+'rpx;'">
 				<view class="" @click="xianshiqianggou">

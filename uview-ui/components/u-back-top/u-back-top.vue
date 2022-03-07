@@ -53,12 +53,12 @@
 			// 返回顶部按钮到底部的距离，单位rpx
 			bottom: {
 				type: [Number, String],
-				default: 200
+				default: 160
 			},
 			// 返回顶部按钮到右边的距离，单位rpx
 			right: {
 				type: [Number, String],
-				default: 40
+				default: 60
 			},
 			// 层级
 			zIndex: {
@@ -68,9 +68,9 @@
 			// 图标的样式，对象形式
 			iconStyle: {
 				type: Object,
-				default() {
+				default () {
 					return {
-						color: '#909399',
+						color: '#ffffff',
 						fontSize: '38rpx'
 					}
 				}
@@ -78,7 +78,7 @@
 			// 整个组件的样式
 			customStyle: {
 				type: Object,
-				default() {
+				default () {
 					return {}
 				}
 			}
@@ -87,7 +87,7 @@
 			showBackTop(nVal, oVal) {
 				// 当组件的显示与隐藏状态发生跳变时，修改组件的层级和不透明度
 				// 让组件有显示和消失的动画效果，如果用v-if控制组件状态，将无设置动画效果
-				if(nVal) {
+				if (nVal) {
 					this.uZIndex = this.zIndex;
 					this.opacity = 1;
 				} else {
@@ -124,7 +124,7 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/style.components.scss";
-	
+
 	.u-back-top {
 		width: 80rpx;
 		height: 80rpx;
@@ -133,16 +133,16 @@
 		@include vue-flex;
 		flex-direction: column;
 		justify-content: center;
-		background-color: #E1E1E1;
+		background-color: #007399;
 		color: $u-content-color;
 		align-items: center;
 		transition: opacity 0.4s;
-		
+
 		&__content {
 			@include vue-flex;
 			flex-direction: column;
 			align-items: center;
-			
+
 			&__tips {
 				font-size: 24rpx;
 				transform: scale(0.8);

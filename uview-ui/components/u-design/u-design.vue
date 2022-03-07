@@ -128,6 +128,11 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						if (data.data.data.status.data.length != 0) {
+							data.data.data.status.data.forEach(item => {
+								item.lc = item.lc + "楼"
+								item.dh = item.dh + "栋"
+								item.qs = item.qs + "期"
+							})
 							this.lou_list = [...this.lou_list, ...data.data.data.status.data];
 							this.lou_lists = [...this.lou_lists, ...data.data.data.status.data];
 						} else {

@@ -2,9 +2,8 @@
 	<view>
 		<view class="tabber">
 			<u-navbar id="navbar" :is-back="false">
-				<view class="sssss">
-					<image src="../../static/icon_home_logo.png" mode="aspectFit"></image>
-				</view>
+				<!-- <view>				</view> -->
+				<image class="sssss" src="../../static/icon_home_logo.png" mode="widthFix"></image>
 			</u-navbar>
 			<view class="navlist cet" style="justify-content: space-between;">
 				<view v-if="item.switch == 1" class="text" v-for="(item,index) in list" :key="index"
@@ -34,32 +33,15 @@
 			<u-kehu :showsss='show'></u-kehu>
 			<tab-bar @tabbers="dsad"></tab-bar>
 		</view>
-		<u-popup v-model="showssss" mode="center" border-radius="20">
-			<view class="popimgsss cet">
-				<view class="">
-					<view class="tetx-cet cde">
-						您还未登录
-					</view>
-					<view class="tetx-cet">
-						请登录后在进行操作
-					</view>
-					<view @click="denglu" class="tetx-cet login">
-						立即登录
-					</view>
-					<view @click="budenglu" class="tetx-cet" style="color: #c2c2c2;">
-						暂不登录
-					</view>
-				</view>
-				<image @click="budenglu" style="width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;"
-					src="../../static/icon_close_ico.png" mode="aspectFit"></image>
-			</view>
-		</u-popup>
+		<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
+		<u-back-top :scroll-top="scrollTop"></u-back-top>
 	</view>
 </template>
 <script>
 	export default {
 		data() {
 			return {
+				scrollTop: 0,
 				//
 				//
 				//
@@ -85,7 +67,58 @@
 				imgurl: this.$imgPath
 			};
 		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
+		},
 		methods: {
+			budenglugengxin() {
+				this.alls()
+				//购物车数量
+				this.$api.shopcart({
+					id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					let aa = 0
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							aa = aa + 1
+						})
+					}
+					if (aa >= 99) {
+						aa = "..."
+					}
+					uni.setStorageSync("cart_num", aa)
+				})
+				// 默认地址
+				this.$api.addressshow({
+					id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							if (item.auto == 1) {
+								uni.setStorageSync("address", item)
+							} else {
+								uni.removeStorageSync("address")
+							}
+						})
+					}
+				})
+				this.$api.agreements().then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
+						})
+						uni.setStorageSync("xieyi", data.data.data.status)
+					} else {
+						uni.setStorageSync("xieyi", [])
+					}
+				})
+			},
+			denglu() {
+				this.budenglugengxin()
+			},
+			budenglu() {
+				// this.showssss = false
+			},
 			ended(ev) {
 				this.autoplay = true
 			},
@@ -94,20 +127,6 @@
 			},
 			bofang(ev) {
 				this.autoplay = false
-			},
-			async denglu() {
-				if (await this.$login()) {
-					this.showssss = false
-				} else {
-					uni.showToast({
-						title: "登陆失败，请重试",
-						duration: 1000,
-						icon: "none"
-					})
-				}
-			},
-			budenglu() {
-				this.showssss = false
 			},
 			gaizhi(ev) {
 				this.current = ev.detail.current
@@ -194,18 +213,9 @@
 				})
 			},
 			go(ev, index) {
-				if (index == 3 || index == 4) {
-					uni.showToast({
-						title: "该功能正在开发中",
-						icon: "error",
-						duration: 1000
-					})
-				} else {
-					uni.navigateTo({
-						url: ev
-					})
-				}
-
+				uni.navigateTo({
+					url: ev
+				})
 			},
 			alls() {
 				// 推荐商品
@@ -262,8 +272,8 @@
 								uni.setStorageSync("ggug", item.id)
 							}
 						})
-						console.log(bb,aa.wanghong.length);
-						if(bb == 0){
+						console.log(bb, aa.wanghong.length);
+						if (bb == 0) {
 							uni.setStorageSync("ggug", 0)
 						}
 						this.list = [...aa.home]
@@ -274,10 +284,7 @@
 				//轮播图
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
-						this.showssss = data.data.data.edit
-						if (uni.getStorageSync("user_info")) {
-							this.showssss = false
-						}
+						this.islogin(data)
 						this.lun_list = [];
 						let aa = []
 						data.data.data.status.forEach(item => {
@@ -292,6 +299,13 @@
 						this.lun_list = []
 					}
 				})
+			},
+			islogin(data) {
+				uni.setStorageSync("showssss", data.data.data.edit)
+				this.showssss = data.data.data.edit
+				if (uni.getStorageSync("user_info")) {
+					this.showssss = false
+				}
 			},
 			yidong() {
 				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
@@ -320,46 +334,7 @@
 			this.videoContext = uni.createVideoContext('video')
 		},
 		onShow() {
-			this.alls()
-			//购物车数量
-			this.$api.shopcart({
-				id: uni.getStorageSync("user_info").id
-			}).then(data => {
-				let aa = 0
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						aa = aa + 1
-					})
-				}
-				if (aa >= 99) {
-					aa = "..."
-				}
-				uni.setStorageSync("cart_num", aa)
-			})
-			// 默认地址
-			this.$api.addressshow({
-				id: uni.getStorageSync("user_info").id
-			}).then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						if (item.auto == 1) {
-							uni.setStorageSync("address", item)
-						} else {
-							uni.removeStorageSync("address")
-						}
-					})
-				}
-			})
-			this.$api.agreements().then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					uni.setStorageSync("xieyi", data.data.data.status)
-				} else {
-					uni.setStorageSync("xieyi", [])
-				}
-			})
+			this.budenglugengxin()
 		},
 		onPullDownRefresh() {
 			this.alls()
@@ -369,6 +344,7 @@
 </script>
 <style lang='scss' scoped>
 	.wrap {
+
 		padding: 0 40rpx;
 	}
 
@@ -391,36 +367,7 @@
 	}
 
 	.sssss {
-		height: 34rpx;
 		width: 290rpx;
 		padding: 0 30rpx;
-	}
-
-	.popimgsss {
-		position: relative;
-		width: 542rpx;
-		height: 564rpx;
-		background-image: url(../../static/logo.jpg);
-		background-repeat: no-repeat;
-		background-size: 100% 100%;
-
-		.login {
-			padding: 10rpx;
-			background: #00688e;
-			color: #ffffff;
-			border-radius: 10rpx;
-			margin: 10rpx;
-		}
-
-		.cde {
-			padding-top: 200rpx;
-			font-size: 30rpx;
-			font-weight: bold;
-		}
-
-		.tetx-cet {
-			text-align: center;
-			line-height: 50rpx;
-		}
 	}
 </style>

@@ -1,8 +1,5 @@
 import api from '@/api'
 
-// if (await this.$login()) {
-// 		async 		
-// 	}
 function log() {
 	return new Promise((resolve, reject) => {
 		let level = 0;

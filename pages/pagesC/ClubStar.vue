@@ -126,8 +126,8 @@
 			// 	}
 			// })
 			this.$api.loupanden({
-				pages:1,
-				limit:2
+				pages: 1,
+				limit: 2
 			}).then(data => {
 				if (data.data.code == 1) {
 					this.tuijian = [...data.data.data.status.data];
@@ -214,11 +214,18 @@
 				}
 			},
 			async dianzhan(ev) {
+				console.log(ev);
+				// alls.zans !=null && alls.zans != ''
 				if (await this.$login()) {
 					let aa = ""
 					if (ev.zans != null && ev.zans != '') {
+						ev.zans = null
 						aa = 1
 					} else {
+						ev.zans = {
+							aa: "",
+							bb: ""
+						}
 						aa = 0
 					}
 					this.$api.zan({
@@ -229,7 +236,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							this.budakai = false
-							this.desDetails()
+							// this.desDetails()
 						}
 					})
 				}

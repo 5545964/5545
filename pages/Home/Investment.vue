@@ -1,6 +1,6 @@
 <template>
 	<view style="height: 100%;">
-		<u-tabs :list="lisst" :weizhi="false" :show-bar="false" :is-scroll="true" :current="currents" @change="changes">
+		<u-tabs :list="lisst" :weizhi="false" :show-bar="false" :isScroll="true" :current="currents" @change="changes">
 		</u-tabs>
 		<view style="height: 100%;" v-show="currents == 0">
 			<!-- 切换 -->
@@ -13,11 +13,11 @@
 				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 					@dianzhan="dianzhan">
 				</u-video>
-				<u-empty v-else></u-empty>
+				<u-empty  text="数据更新中，敬请期待！" v-else></u-empty>
 			</view>
 			<!-- 设计大咖 -->
 			<view class="" style="height: 100%;" v-if="current==13">
-				<u-empty></u-empty>
+				<u-empty text="数据更新中，敬请期待！"></u-empty>
 			</view>
 			<!-- 整装设计师 -->
 			<view style="height: 100%;" v-if="current==14">
@@ -37,11 +37,11 @@
 				<view class="" style="position: relative;z-index: 2;" v-if="designerList.length !=0">
 					<u-club @navgate="navgepage" :rows="designerList"></u-club>
 				</view>
-				<u-empty v-else></u-empty>
+				<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 			</view>
 			<!-- 定制家具设计师 -->
 			<view class="" style="height: 100%;" v-if="current==15">
-				<u-empty></u-empty>
+				<u-empty text="数据更新中，敬请期待！"></u-empty>
 			</view>
 			<!-- 成为设计师 -->
 			<view style="height: 100%;" v-if="current==16">
@@ -125,13 +125,13 @@
 			</view>
 		</view>
 		<view style="height: 100%;" class="" v-show="currents == 1">
-			<u-empty></u-empty>
+			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
 		<view style="height: 100%;" v-show="currents == 2">
-			<u-empty></u-empty>
+			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
 		<view style="height: 100%;" v-show="currents == 3">
-			<u-empty></u-empty>
+			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
 		<!-- 合同弹窗 -->
 		<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
@@ -389,10 +389,9 @@
 			this.getdesproMoenys()
 		},
 		onLoad(ev) {
-			console.log(ev);
 			if (ev.is_re == 1) {
 				setTimeout(()=>{
-					this.current = 4
+					this.current = 16
 				},1000)
 			}
 		},
