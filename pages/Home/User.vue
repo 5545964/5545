@@ -198,7 +198,7 @@
 	export default {
 		data() {
 			return {
-				showssss: true,
+				showssss: false,
 				fkjsfjdisfjsl: false,
 				user_info_id: "",
 				img: this.$imgPath,
@@ -283,6 +283,7 @@
 			};
 		},
 		onShow() {
+			this.showssss = uni.getStorageSync("showssss")
 			this.alls()
 		},
 		methods: {
@@ -292,7 +293,7 @@
 					this.user_info = uni.getStorageSync("user_info")
 					this.shuliang(this.user_info.id)
 				} else {
-					this.showssss = true
+					// this.showssss = true
 				}
 				this.$api.desmyuser({
 					user_id: uni.getStorageSync("user_info").id

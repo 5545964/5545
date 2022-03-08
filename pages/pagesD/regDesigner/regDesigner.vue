@@ -171,10 +171,10 @@
 		},
 		methods: {
 			go_code() {
-				console.log(111111111);
 				if (this.timea == 0) {
 					this.$api.emsphone({
-						phone: this.inpList[2].text
+						phone: this.inpList[2].text,
+						user_id:uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

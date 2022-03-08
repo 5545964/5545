@@ -61,25 +61,62 @@
 		},
 
 		methods: {
+			// getPhoneNumber(e) {
+			// 	console.log(e.detail.code)
+			// 	this.code = e.detail.code
+			// },
+			// 授权手机号
 			getPhoneNumber(e) {
-				console.log(e.detail.code)
-				this.code = e.detail.code
+				console.log(e);
+				let key = uni.getStorageSync("key")
+				let WXBizDataCrypt = require("@/utils/cryptojs/RdWXBizDataCrypt.js")
+				var pc = new WXBizDataCrypt(key)
+				var data = pc.decryptData(e.detail.encryptedData, e.detail.iv)
+				let datas = JSON.parse(data)
+				console.log('解密后 data: ', datas)
+				if (uni.getStorageSync("user_info").mobile == datas.phoneNumber) {
+					this.phone = false
+					uni.showToast({
+						title: '已有手机号',
+						icon: "none",
+						duration: 1000
+					});
+					return
+				}
+				this.$api.mobile({
+					user_id: uni.getStorageSync("user_info").id,
+					mobile: datas.phoneNumber
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.phone = false
+						uni.showToast({
+							title: "获取成功",
+							icon: "none"
+						})
+					}else{
+						uni.showToast({
+							title: data.data.msg,
+							icon: "none"
+						})
+					}
+					
+				})
 			},
 			xuanzhea() {
 				this.phone = false;
 			},
 			async denglu() {
-				// if (await this.$login()) {
-				// this.$emit("denglu")
-				this.show = false
-				this.phone = true
-				// } else {
-				// 	uni.showToast({
-				// 		title: "登陆失败，请重试",
-				// 		duration: 1000,
-				// 		icon: "none"
-				// 	})
-				// }
+				if (await this.$login()) {
+					this.$emit("denglu")
+					this.show = false
+					this.phone = true
+				} else {
+					uni.showToast({
+						title: "登陆失败，请重试",
+						duration: 1000,
+						icon: "none"
+					})
+				}
 			},
 			budenglu() {
 				this.$emit("budenglu")

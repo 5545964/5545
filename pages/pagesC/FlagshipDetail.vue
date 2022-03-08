@@ -17,7 +17,7 @@
 		<!-- 轮播 -->
 		<view class="lunbo">
 			<swiper style="width: 100%;height: 450rpx;" :current="currents" :indicator-dots="true" :circular="true"
-				:autoplay="autoplay" :interval="3000" :duration="1000">
+				:autoplay="autoplay" :interval="3000" :duration="1000" @change="gaizhi">
 				<swiper-item v-for="(item,index) in alls.imagexq" :key="index" @click="kaniamgss(item)">
 					<!-- gosheji -->
 					<image style="width: 100%;height: 450rpx;" :src="img+item.image" mode="aspectFit"></image>
@@ -148,6 +148,17 @@
 			this.getMenuItemTop()
 		},
 		methods: {
+			gaizhi(ev) {
+				let aa = this.alls.imagexq.length
+				if (this.vr_image != "") {
+					aa += 1
+				}
+				if (ev.detail.current == aa) {
+					this.videoContext.play()
+				} else {
+					this.videoContext.pause()
+				}
+			},
 			ended(ev) {
 				this.autoplay = true
 			},

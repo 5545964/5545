@@ -486,7 +486,7 @@
 			return {
 				quxiaoshouhou: false,
 				dinshiqi: "",
-				shoujihao: "",
+				shoujihao: uni.getStorageSync("user_info").mobile,
 				pingjiaok: 0,
 				// 已安装
 				yianzhaungkaiguan: true,
@@ -1110,7 +1110,8 @@
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
-						phone: this.shoujihao
+						phone: this.shoujihao,
+						user_id:uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

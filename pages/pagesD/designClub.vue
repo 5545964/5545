@@ -256,7 +256,7 @@
 				xieyi: [],
 				timea: 0,
 				shoujiyanzheng: false,
-				shoujihao: "",
+				shoujihao: uni.getStorageSync("user_info").mobile,
 				code: "",
 				huoqu: "获取验证码",
 				// 验证弹窗
@@ -473,7 +473,8 @@
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
-						phone: this.shoujihao
+						phone: this.shoujihao,
+						user_id:uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

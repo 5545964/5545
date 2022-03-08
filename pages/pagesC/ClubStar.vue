@@ -78,7 +78,7 @@
 				</view>
 			</view>
 			<view class="design_list">
-				<view class="" v-for="(item,index) in tuijian" :key="item" v-if="index <= 1">
+				<view class="" v-for="(item,index) in tuijian" :key="index" v-if="index <= 1">
 					<u-design-card :list="item" />
 				</view>
 			</view>
@@ -220,12 +220,14 @@
 					let aa = ""
 					if (ev.zans != null && ev.zans != '') {
 						ev.zans = null
+						ev.zan--
 						aa = 1
 					} else {
 						ev.zans = {
 							aa: "",
 							bb: ""
 						}
+						ev.zan++
 						aa = 0
 					}
 					this.$api.zan({

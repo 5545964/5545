@@ -25,7 +25,8 @@ function log() {
 								pid
 							}).then(data => {
 								if (data.data.code == 1) {
-									uni.setStorageSync("token", data.data.data.token);
+									uni.setStorageSync("token", data.data.data);
+									uni.setStorageSync("key", data.data.data.status.key);
 									api.myuser({
 										user_id: data.data.data.status.id
 									}).then(data => {

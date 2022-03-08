@@ -365,7 +365,8 @@
 			go_code() {
 				if (this.time == 0) {
 					this.$api.emsphone({
-						phone: this.list[6].inp
+						phone: this.list[6].inp,
+						user_id:uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

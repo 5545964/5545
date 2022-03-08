@@ -305,7 +305,7 @@
 				time: 0,
 				huoqu: "获取验证码",
 				code: "",
-				shoujihao: "",
+				shoujihao: uni.getStorageSync("user_info").mobile,
 				shoujiyanzheng: false,
 				xieyi: [],
 				yuedu: false,
@@ -445,7 +445,8 @@
 				let _this = this
 				if (_this.time == 0) {
 					_this.$api.emsphone({
-						phone: _this.shoujihao
+						phone: _this.shoujihao,
+						user_id:uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							_this.time = 60

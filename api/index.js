@@ -1,6 +1,23 @@
 import request from "./request.js"
 
-export default { 
+export default {
+	
+	// /api/bydshop/pf
+	desljpf(params = {}) {
+		return request.post("/api/bydshop/desljpf", params);
+	},
+	// /api/bydshop/pf
+	pf(params = {}) {
+		return request.post("/api/bydshop/pf", params);
+	},
+	// api/bydshop/map
+	map(params = {}) {
+		return request.post("/api/bydshop/map", params);
+	},
+	// /api/byd_user/mobile
+	mobile(params = {}) {
+		return request.post("/api/byd_user/mobile", params);
+	},
 	// bydshop/pots
 	pots(params = {}) {
 		return request.post("/api/bydshop/pots", params);
@@ -29,7 +46,7 @@ export default {
 	emsyzphone(params = {}) {
 		return request.post("/api/ems/sendsyz", params);
 	},
-	
+
 	// 用户上传身份证正反面照片/api/bydshop/userupload
 	userupload(params = {}) {
 		return request.post("/api/bydshop/userupload", params);
@@ -99,7 +116,7 @@ export default {
 		return request.post("/api/bydshop/deleorder", params);
 	},
 
-	
+
 
 	// /api/byd_user/activtz
 	activtz(params = {}) {

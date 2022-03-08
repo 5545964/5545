@@ -16,54 +16,66 @@
 			};
 		},
 		mounted() {
-			if (this.zairu) {
-				this.zairu = false
-				this.$api.indexbar().then(data => {
-					if (data.data.code == 1) {
-						this.list = []
-						data.data.data.status.forEach(item => {
-							this.list.push({
-								pagePath: item.url.url,
-								iconPath: this.$imgPath + item.fimage,
-								selectedIconPath: this.$imgPath + item.image,
-								text: item.title
-							})
-						})
-						setTimeout(() => {
-							this.gaodu();
-						}, 500)
-					}
-				})
-			} else {
-				let aa = setInterval(() => {
-					this.$api.indexbar().then(data => {
-						if (data.data.code == 1) {
-							this.list = []
-							data.data.data.status.forEach(item => {
-								this.list.push({
-									pagePath: item.url.url,
-									iconPath: this.$imgPath + item.fimage,
-									selectedIconPath: this.$imgPath + item.image,
-									text: item.title
-								})
-							})
-							setTimeout(() => {
-								this.gaodu();
-								clearInterval(aa)
-							}, 500)
-
-						}
-					}).catch(data => {
-						this.num += 1
-						if (this.num == 19) {
-							clearInterval(aa)
-						}
-					})
-				}, 1000)
-			}
-
+			// if (this.zairu) {
+			// 	this.zairu = false
+			// this.$api.indexbar().then(data => {
+			// 	if (data.data.code == 1) {
+			// 		this.list = []
+			// 		data.data.data.status.forEach(item => {
+			// 			this.list.push({
+			// 				pagePath: item.url.url,
+			// 				iconPath: this.$imgPath + item.fimage,
+			// 				selectedIconPath: this.$imgPath + item.image,
+			// 				text: item.title
+			// 			})
+			// 		})
+			// 		setTimeout(() => {
+			// 			this.gaodu();
+			// 		}, 500)
+			// 	}
+			// })
+			// } else {
+			// 	this.list = [...uni.getStorageSync("tabber")]
+			// let aa = setInterval(() => {
+			// 	this.$api.indexbar().then(data => {
+			// 		if (data.data.code == 1) {
+			// 			this.list = []
+			// 			data.data.data.status.forEach(item => {
+			// 				this.list.push({
+			// 					pagePath: item.url.url,
+			// 					iconPath: this.$imgPath + item.fimage,
+			// 					selectedIconPath: this.$imgPath + item.image,
+			// 					text: item.title
+			// 				})
+			// 			})
+			// 			setTimeout(() => {
+			// 				this.gaodu();
+			// 				clearInterval(aa)
+			// 			}, 500)
+			// 		}
+			// 	}).catch(data => {
+			// 		this.num += 1
+			// 		if (this.num == 19) {
+			// 			clearInterval(aa)
+			// 		}
+			// 	})
+			// }, 1000)
+			// }
+			this.tabbet()
 		},
 		methods: {
+			tabbet() {
+				this.list = [...uni.getStorageSync("tabber")]
+				if (this.list.length == 0) {
+					setTimeout(() => {
+						this.tabbet()
+					}, 500)
+					return
+				}
+				setTimeout(() => {
+					this.gaodu();
+				}, 500)
+			},
 			gaodu(ev) {
 				if (this.list.length != 0) {
 					const query = uni.createSelectorQuery().in(this);

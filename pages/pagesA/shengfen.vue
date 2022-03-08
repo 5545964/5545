@@ -296,7 +296,8 @@
 				if (this.pgone != "") {
 					if (this.timea == 0) {
 						this.$api.emsphone({
-							phone: this.pgone
+							phone: this.pgone,
+							user_id: uni.getStorageSync("user_info").id
 						}).then(data => {
 							if (data.data.code == 1) {
 								this.code = ""

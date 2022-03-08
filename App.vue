@@ -18,6 +18,20 @@
 			// 		url: "pages/pagesD/start"
 			// 	})
 			// }
+			this.$api.indexbar().then(data => {
+				if (data.data.code == 1) {
+					let aa = []
+					data.data.data.status.forEach(item => {
+						aa.push({
+							pagePath: item.url.url,
+							iconPath: this.$imgPath + item.fimage,
+							selectedIconPath: this.$imgPath + item.image,
+							text: item.title
+						})
+					})
+					uni.setStorageSync("tabber", aa)
+				}
+			})
 		}
 	}
 </script>

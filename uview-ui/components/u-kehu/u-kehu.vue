@@ -1,6 +1,6 @@
 <template>
 	<view class="">
-		<view class="">
+		<view class="" v-if="kehu">
 			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
 				:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
 				<view style="width: 100%;" @click="click">
@@ -13,7 +13,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="" v-if="false">
+		<view class="" v-if="edits">
 			<view class="djsa cet" id="yuan" @touchend="ends" @touchmove.stop="moves"
 				:style="'top: '+bianheigths+'rpx;left: '+bianrights+'rpx;'">
 				<view class="" @click="xianshiqianggou">
@@ -89,7 +89,28 @@
 				default: "../pagesC/promotion"
 			},
 		},
+		data() {
+			return {
+				px: 0,
+				widthwidth: 0,
+				navbarheigth: 0,
+				tabberheigth: 0,
+				system: {},
+				show: false,
+				bianheigth: 0,
+				bianright: 0,
+				bianliang: 0,
+				bianheigths: 0,
+				bianrights: 0,
+				bianliangs: 0,
+				edits: false,
+				kehu: false
+			}
+		},
 		mounted() {
+			this.edits = uni.getStorageSync("edits")
+			this.kehu = uni.getStorageSync("kehu")
+			console.log(this.edits,this.kehu );
 			this.show = this.showsss;
 			this.system = uni.getSystemInfoSync(); //系统参数
 			let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
@@ -110,22 +131,6 @@
 			this.bianheigths = this.tabberheigth - 400;
 			// this.bianrights = this.widthwidth;
 			// this.bianright = this.widthwidth;
-		},
-		data() {
-			return {
-				px: 0,
-				widthwidth: 0,
-				navbarheigth: 0,
-				tabberheigth: 0,
-				system: {},
-				show: false,
-				bianheigth: 0,
-				bianright: 0,
-				bianliang: 0,
-				bianheigths: 0,
-				bianrights: 0,
-				bianliangs: 0
-			}
 		},
 		methods: {
 			ends() {

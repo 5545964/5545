@@ -2,7 +2,6 @@
 	<view>
 		<view class="tabber">
 			<u-navbar id="navbar" :is-back="false">
-				<!-- <view>				</view> -->
 				<image class="sssss" src="../../static/icon_home_logo.png" mode="widthFix"></image>
 			</u-navbar>
 			<view class="navlist cet" style="justify-content: space-between;">
@@ -117,6 +116,7 @@
 				this.budenglugengxin()
 			},
 			budenglu() {
+				console.log();
 				// this.showssss = false
 			},
 			ended(ev) {
@@ -145,7 +145,6 @@
 				});
 			},
 			lunbochang() {
-
 				let aa = this.lun_list[this.current]
 				this.gosss(aa)
 			},
@@ -247,6 +246,7 @@
 						this.data_list = []
 					}
 				})
+				// icon
 				this.$api.shopicon().then(data => {
 					if (data.data.code == 1) {
 						let aa = {
@@ -272,7 +272,6 @@
 								uni.setStorageSync("ggug", item.id)
 							}
 						})
-						console.log(bb, aa.wanghong.length);
 						if (bb == 0) {
 							uni.setStorageSync("ggug", 0)
 						}
@@ -299,9 +298,30 @@
 						this.lun_list = []
 					}
 				})
+				// this.tabber()
+			},
+			tabber() {
+				this.$api.indexbar().then(data => {
+					if (data.data.code == 1) {
+						let aa = []
+						data.data.data.status.forEach(item => {
+							aa.push({
+								pagePath: item.url.url,
+								iconPath: this.$imgPath + item.fimage,
+								selectedIconPath: this.$imgPath + item.image,
+								text: item.title
+							})
+						})
+						uni.setStorageSync("tabber", aa)
+					}
+				}).catch(data => {
+					this.tabber()
+				})
 			},
 			islogin(data) {
 				uni.setStorageSync("showssss", data.data.data.edit)
+				uni.setStorageSync("edits", data.data.data.edits)
+				uni.setStorageSync("kehu", data.data.data.kefu)
 				this.showssss = data.data.data.edit
 				if (uni.getStorageSync("user_info")) {
 					this.showssss = false
