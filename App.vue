@@ -1,23 +1,6 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			// if (ev.query.uid) {
-			// 	uni.setStorageSync("yaoqinguid", ev.query.uid)
-			// }
-			// if (ev.query.level) {
-			// 	if (ev.query.level === "undefined") {
-			// 		console.log('is undefined');
-			// 		ev.query.level = 0
-			// 	} else {
-			// 		console.log('no undefined');
-			// 	}
-			// 	uni.setStorageSync("yaoqinglevel", ev.query.level)
-			// }
-			// if (ev.path == "pages/Home/Home") {
-			// 	uni.navigateTo({
-			// 		url: "pages/pagesD/start"
-			// 	})
-			// }
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					let aa = []
@@ -30,8 +13,30 @@
 						})
 					})
 					uni.setStorageSync("tabber", aa)
+					uni.setStorageSync("edits", data.data.data.edits)
+					uni.setStorageSync("kehu", data.data.data.kefu)
+					if (uni.getStorageSync("user_info")) {
+						uni.setStorageSync("showssss", false)
+						return
+					}
+					uni.setStorageSync("showssss", data.data.data.edit)
 				}
 			})
+			if (ev.query.uid) {
+				uni.setStorageSync("yaoqinguid", ev.query.uid)
+			}
+			if (ev.query.level) {
+				if (ev.query.level === "undefined") {
+					ev.query.level = 0
+				}
+				uni.setStorageSync("yaoqinglevel", ev.query.level)
+			}
+			if (ev.path == "pages/Home/Home") {
+				uni.navigateTo({
+					url: "pages/pagesD/start"
+				})
+			}
+
 		}
 	}
 </script>

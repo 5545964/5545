@@ -94,8 +94,12 @@
 							优惠券
 						</view>
 						<view class="cet">
-							<view class="red">
-								<text v-if="youhuijuan_num != 0">-￥{{youhuijuan_num}}</text><text v-else>暂无可用优惠卷</text>
+							<view class="red" v-if="youhuijuan_num != 0">
+								<text>-￥{{youhuijuanjine}}</text>
+							</view>
+							<view class="red" v-else>
+								<text @click="goyouhuijuan" v-if="nengyong != 0">{{nengyongtext}}</text><text
+									v-else>{{youhuijuantext}}</text>
 							</view>
 							<image style="width: 8rpx;height: 14rpx;margin-left: 10rpx;"
 								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
@@ -297,6 +301,7 @@
 	export default {
 		data() {
 			return {
+				cuponsid: 0,
 				yuyuesss: false,
 				swjorderid: 0,
 				swj: 0,
@@ -309,7 +314,11 @@
 				shoujiyanzheng: false,
 				xieyi: [],
 				yuedu: false,
+				nengyong: 0,
+				youhuijuanjine: 0,
 				youhuijuan_num: 0,
+				youhuijuantext: "暂无可用优惠卷",
+				nengyongtext: "选择优惠券",
 				tijiaozjia: 0,
 				yf: 0,
 				zjia: 0,
@@ -346,9 +355,6 @@
 				that.address_name = data.username
 				that.address_phone = data.phone
 			})
-			uni.$on('youhuijuan', function(data) {
-				that.youhuijuan_num = data.id
-			})
 			if (ev.yf) {
 				that.yf = ev.yf;
 			}
@@ -357,7 +363,6 @@
 			}
 			if (ev.goodsdata) {
 				let aa = JSON.parse(ev.goodsdata)
-
 				let arr = []
 				that.goodsdata = [...aa];
 				that.goodsdata.forEach(item => {
@@ -369,7 +374,6 @@
 				that.cartid = arr.join(",")
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
 				if (that.goodsdata[0].swj == 1) {
-
 					that.swj = 1;
 					that.swjorderid = that.goodsdata[0].orderid;
 					that.$api.dingj({
@@ -383,7 +387,6 @@
 						}
 					})
 				}
-
 			}
 			if (ev.title) {
 				that.title = ev.title;
@@ -400,8 +403,35 @@
 			} else {
 				that.buyanzheng = false
 			}
+			uni.$on('youhuijuan', function(data) {
+				that.youhuijuan_num = 1
+				that.youhuijuanjine = data.cupons.yh_price
+				that.cuponsid = data.coupons_id
+				that.tijiaozjia = Number(that.tijiaozjia) - Number(data.cupons.yh_price)
+			})
+			let time = new Date().getTime()
+			let yy = that.zjia - that.dinjing
+			that.$api.mycupon({
+				user_id: uni.getStorageSync("user_info").id
+			}).then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						if (item.usetime == null && time < item.cupons.endtime * 1000 && item.state ==
+							0) {
+							if (Number(item.cupons.cb_price) < yy) {
+								that.nengyong = 1
+							}
+						}
+					})
+				}
+			})
 		},
 		methods: {
+			goyouhuijuan() {
+				uni.navigateTo({
+					url: "../pagesA/gongju4?xuanzhe=1&jiage=" + (this.zjia - this.dinjing)
+				})
+			},
 			// 同意协议
 			bjnm() {
 				// if (this.buyanzheng) {
@@ -446,7 +476,7 @@
 				if (_this.time == 0) {
 					_this.$api.emsphone({
 						phone: _this.shoujihao,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							_this.time = 60
@@ -599,6 +629,7 @@
 				}
 				if (this.address != '') {
 					this.$api.cartpay({
+						cuponsid: this.cuponsid,
 						swj: this.swj,
 						orderid: this.swjorderid,
 						content: this.value,
@@ -610,7 +641,7 @@
 						type: 0,
 						specidsize: specidsizes,
 						specid: specids,
-						price: this.tijiaozjia,
+						price: this.zjia - this.dinjing,
 						dzg: this.dzg
 					}).then(res => {
 						if (res.data.code == 200) {

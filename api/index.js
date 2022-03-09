@@ -1,7 +1,18 @@
 import request from "./request.js"
 
 export default {
-	
+	// /api/bydshop/paycupons
+	paycupons(params = {}) {
+		return request.post("/api/bydshop/paycupons", params);
+	},
+	// /api/bydshop/cupons
+	cupons(params = {}) {
+		return request.post("/api/bydshop/cupons", params);
+	},
+	// /api/bydshop/mycupons
+	mycupon(params = {}) {
+		return request.post("/api/bydshop/mycupons", params);
+	},
 	// /api/bydshop/pf
 	desljpf(params = {}) {
 		return request.post("/api/bydshop/desljpf", params);
@@ -457,10 +468,6 @@ export default {
 	// 电子名片  /api/byd_user/business
 	business(params = {}) {
 		return request.post("/api/byd_user/business", params);
-	},
-	// 我的优惠卷  mycupon
-	mycupon(params = {}) {
-		return request.post("/api/bydshop/mycupon", params);
 	},
 	// 取消订单  orderdzf 
 	orderdzf(params = {}) {

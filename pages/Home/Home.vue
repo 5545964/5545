@@ -30,7 +30,7 @@
 			</view>
 			<u-adata :list="data_list" @click="go_shop"></u-adata>
 			<u-kehu :showsss='show'></u-kehu>
-			<tab-bar @tabbers="dsad"></tab-bar>
+			<tab-bar></tab-bar>
 		</view>
 		<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 		<u-back-top :scroll-top="scrollTop"></u-back-top>
@@ -66,11 +66,27 @@
 				imgurl: this.$imgPath
 			};
 		},
+		onLoad() {
+			uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
+				uni.setStorageSync("navbarheigth", data.height)
+			}).exec(); //顶部自定义navber高
+			uni.setStorageSync("shouzhi", 0)
+			const res = uni.getSystemInfoSync()
+			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
+			this.videoContext = uni.createVideoContext('video')
+		},
+		onShow() {
+			this.budenglugengxin()
+		},
+		onPullDownRefresh() {
+			this.budenglugengxin()
+		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
 			budenglugengxin() {
+				this.showssss = uni.getStorageSync("showssss")
 				this.alls()
 				//购物车数量
 				this.$api.shopcart({
@@ -116,7 +132,7 @@
 				this.budenglugengxin()
 			},
 			budenglu() {
-				console.log();
+				// console.log();
 				// this.showssss = false
 			},
 			ended(ev) {
@@ -135,9 +151,6 @@
 				} else {
 					this.videoContext.pause()
 				}
-			},
-			dsad() {
-				this.show = false
 			},
 			linkOthers(ev) {
 				uni.navigateTo({
@@ -283,7 +296,7 @@
 				//轮播图
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
-						this.islogin(data)
+						// this.islogin(data)
 						this.lun_list = [];
 						let aa = []
 						data.data.data.status.forEach(item => {
@@ -297,25 +310,6 @@
 					} else {
 						this.lun_list = []
 					}
-				})
-				// this.tabber()
-			},
-			tabber() {
-				this.$api.indexbar().then(data => {
-					if (data.data.code == 1) {
-						let aa = []
-						data.data.data.status.forEach(item => {
-							aa.push({
-								pagePath: item.url.url,
-								iconPath: this.$imgPath + item.fimage,
-								selectedIconPath: this.$imgPath + item.image,
-								text: item.title
-							})
-						})
-						uni.setStorageSync("tabber", aa)
-					}
-				}).catch(data => {
-					this.tabber()
 				})
 			},
 			islogin(data) {
@@ -344,21 +338,7 @@
 
 			},
 		},
-		onLoad() {
-			uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
-				uni.setStorageSync("navbarheigth", data.height)
-			}).exec(); //顶部自定义navber高
-			uni.setStorageSync("shouzhi", 0)
-			const res = uni.getSystemInfoSync()
-			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
-			this.videoContext = uni.createVideoContext('video')
-		},
-		onShow() {
-			this.budenglugengxin()
-		},
-		onPullDownRefresh() {
-			this.alls()
-		}
+
 
 	};
 </script>

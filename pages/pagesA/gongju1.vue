@@ -17,7 +17,6 @@
 		<view class="home" v-show="current == 0">
 			<u-cart :list="list" @click="del" @kan="go"></u-cart>
 		</view>
-
 		<view class="homes" v-show="current == 1">
 			<u-video :vlist="video" @collection="collection" @pinglun="pinglun" @dianzhan="dianzhan" @del="del">
 			</u-video>
@@ -60,7 +59,6 @@
 		},
 		methods: {
 			go(ev){
-
 				uni.navigateTo({
 					url:"../pagesC/Shopping?shopid="+ev.shop_id
 				})
@@ -130,11 +128,9 @@
 			},
 			del(ev) {
 				let aa = this.list;
-
 				this.$api.delfollow({
 					id: ev.id
 				}).then(data => {
-					//Todo 判断是否成功
 					this.getProduct()
 				})
 			},

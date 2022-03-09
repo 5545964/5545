@@ -492,6 +492,15 @@
 					"navigationBarTextStyle": "black"
 				}
 
+			}, {
+				"path": "youhuijuan",
+				"style": {
+					"navigationBarTitleText": "优惠券",
+					"enablePullDownRefresh": false,
+					"navigationStyle": "custom",
+					"navigationBarTextStyle": "black"
+				}
+
 			}
 		]
 	}, {

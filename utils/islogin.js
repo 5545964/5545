@@ -10,7 +10,7 @@ function log() {
 		if (uni.getStorageSync("yaoqinguid")) {
 			pid = uni.getStorageSync("yaoqinguid")
 		}
-		if (uni.getStorageSync("token") == "") {
+		if (!uni.getStorageSync("user_info")) {
 			uni.getUserProfile({
 				desc: 'Wexin',
 				success: data => {
@@ -27,6 +27,7 @@ function log() {
 								if (data.data.code == 1) {
 									uni.setStorageSync("token", data.data.data);
 									uni.setStorageSync("key", data.data.data.status.key);
+									uni.setStorageSync("showssss", false)
 									api.myuser({
 										user_id: data.data.data.status.id
 									}).then(data => {

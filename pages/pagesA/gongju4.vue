@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="height: 100%;">
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -14,10 +14,10 @@
 			</u-navbar>
 		</view>
 		<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
-		<view class="home">
-			<view v-show="current == 0">
-				<view  v-for="(item,index) in coupon_list" :key="index">
-					<view class="coupon" v-if="item.state==current">
+		<view class="home" style="height: 100%;">
+			<view style="height: 100%;" v-show="current == 0">
+				<view v-for="(item,index) in coupon_list0" :key="index" @click="xuanzhewo(item)">
+					<view class="coupon">
 						<view class="left">
 							<view class="text">
 								{{item.cupons.name}}
@@ -39,10 +39,11 @@
 						</view>
 					</view>
 				</view>
+				<u-empty mode="coupon" v-if="coupon_list0.length == 0"></u-empty>
 			</view>
-			<view v-show="current == 1">
-				<view  v-for="(item,index) in coupon_list" :key="index">
-					<view class="coupons" v-if="item.state==current">
+			<view style="height: 100%;" v-show="current == 1">
+				<view v-for="(item,index) in coupon_list1" :key="index">
+					<view class="coupons">
 						<view class="left">
 							<view class="text">
 								{{item.cupons.name}}
@@ -67,10 +68,11 @@
 						</view>
 					</view>
 				</view>
+				<u-empty mode="coupon" v-if="coupon_list1.length == 0"></u-empty>
 			</view>
-			<view v-show="current == 2">
-				<view  v-for="(item,index) in coupon_list" :key="index">
-					<view class="coupons" v-if="item.state==current">
+			<view style="height: 100%;" v-show="current == 2">
+				<view v-for="(item,index) in coupon_list2" :key="index">
+					<view class="coupons">
 						<view class="left">
 							<view class="text">
 								{{item.cupons.name}}
@@ -95,6 +97,7 @@
 						</view>
 					</view>
 				</view>
+				<u-empty mode="coupon" v-if="coupon_list2.length == 0"></u-empty>
 			</view>
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
@@ -105,57 +108,6 @@
 	export default {
 		data() {
 			return {
-				coupon_list: [
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// },
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// },
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// },
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// },
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// },
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// },
-					// {
-					// 	title: "优惠券",
-					// 	time: "2021/12/31",
-					// 	max_mony: 1000,
-					// 	min_mony: 500,
-					// 	mony: 1000,
-					// }
-				],
 				title: "优惠券",
 				list: [{
 					name: '待使用',
@@ -164,29 +116,61 @@
 				}, {
 					name: '已失效'
 				}],
-				current: 0
+				current: 0,
+				coupon_list0: [],
+				coupon_list1: [],
+				coupon_list2: [],
+				xuanzhe: 0,
+				jiage: 0
 			};
 		},
 		onLoad(ev) {
+			console.log(ev);
 			if (ev.title) {
 				this.title = ev.title;
+			}
+			if (ev.xuanzhe) {
+				this.xuanzhe = ev.xuanzhe;
+				this.jiage = ev.jiage;
 			}
 			this.getdata()
 		},
 		methods: {
-			// 获取优惠卷信息
-			getdata(){
+			xuanzhewo(ev) {
+				uni.$emit('youhuijuan', ev)
+				uni.navigateBack(-1)
+			},
+			getdata() {
+				let time = new Date().getTime()
 				this.$api.mycupon({
-					user_id:uni.getStorageSync("user_info").id
-				}).then(data=>{
-
-					if(data.data.code==1){
-						data.data.data.status.forEach(item=>{
-							item.cupons.endtime_text=item.cupons.endtime_text.split(" ")[0]
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							if (item.usetime == null && time < item.cupons.endtime * 1000 && item.state ==
+								0) {
+								this.coupon_list0.push(item)
+							}
+							if (item.state == 1 || item.usetime != null && time < item.cupons.endtime *
+								1000) {
+								this.coupon_list1.push(item)
+							}
+							if (time > item.cupons.endtime * 1000) {
+								this.coupon_list2.push(item)
+							}
 						})
-						this.coupon_list=data.data.data.status
+						if (this.jiage != 0) {
+							let aav = []
+							this.coupon_list0.forEach(item => {
+								if (this.jiage > item.cupons.cb_price) {
+									aav.push(item)
+								}
+							})
+							this.coupon_list0 = [...aav]
+						}
 					}
 				})
+
 			},
 			change(index) {
 				this.current = index;
@@ -194,10 +178,17 @@
 			back(ev) {
 				switch (ev) {
 					case 0:
-						uni.navigateBack(-1)
+						if (this.xuanzhe == 0) {
+							uni.switchTab({
+								url: "/pages/Home/User"
+							})
+						} else {
+							uni.navigateBack(-1)
+						}
+
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;
@@ -232,6 +223,7 @@
 				display: flex;
 				align-items: center;
 				flex-direction: column;
+
 				.img {
 					margin: 0 auto;
 					width: 134rpx;
@@ -292,6 +284,7 @@
 				display: flex;
 				align-items: center;
 				flex-direction: column;
+
 				.dsjhbd {
 					font-size: 22rpx;
 					font-weight: 400;

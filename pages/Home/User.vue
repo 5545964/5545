@@ -1,8 +1,9 @@
 <template>
 	<view>
 		<view class="heard">
-			<view class="czxcxz" @click="login">
-				<image class="img" v-if="user_info != ''" :src="user_info.avatar" mode=""></image>
+			<view class="czxcxz" @click="kkkk()">
+				<image @click="kan(user_info.avatar)" class="img" v-if="user_info != ''" :src="user_info.avatar"
+					mode=""></image>
 				<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
 				<view class="center">
 					<view class="text">
@@ -22,7 +23,6 @@
 				</view>
 			</view>
 		</view>
-
 		<view class="hahaha">
 			<view class="cet" @click="gos(0)" v-if="des_user.bbs !=null">
 				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
@@ -38,7 +38,6 @@
 				</view>
 			</view>
 		</view>
-
 		<view class="top">
 			<view class="top_a" @click="shengfenzhuanqu">
 				<image class="imgs" src="../../static/me_vip_bg.png" mode="aspectFit"></image>
@@ -282,21 +281,35 @@
 				des_user: "",
 			};
 		},
-		onShow() {
+		onLoad() {
 			this.showssss = uni.getStorageSync("showssss")
+		},
+		onShow() {
 			this.alls()
 		},
 		methods: {
-			alls() {
-				if (uni.getStorageSync("user_info")) {
-					this.showssss = false
-					this.user_info = uni.getStorageSync("user_info")
-					this.shuliang(this.user_info.id)
+			kan(ev) {
+				uni.previewImage({
+					urls: [ev],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {},
+						fail: function(err) {}
+					}
+				});
+			},
+			kkkk() {
+				if (!uni.getStorageSync("user_info")) {
+					this.showssss = true
 				} else {
-					// this.showssss = true
+					this.showssss = false
 				}
+			},
+			alls() {
+				this.user_info = uni.getStorageSync("user_info")
+				this.shuliang(this.user_info.id)
 				this.$api.desmyuser({
-					user_id: uni.getStorageSync("user_info").id
+					user_id: this.user_info
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.setStorageSync("des_info", data.data.data.myuser)
@@ -304,11 +317,18 @@
 					}
 				})
 			},
+			async login() {
+				if (await this.$login()) {
+					this.user_info = uni.getStorageSync("user_info")
+					this.shuliang(this.user_info.id)
+				}
+			},
 			denglu() {
 				this.alls()
+				this.showssss = false
 			},
 			budenglu() {
-				// this.showssss = false
+				this.showssss = false
 			},
 			quxiao(ev) {
 				let aa = this.num_list;
@@ -362,7 +382,7 @@
 				})
 				// 用户信息
 				this.$api.myuser({
-					user_id: ev
+					user_id: ev || 0
 				}).then(data => {
 					if (data.data.code == 1) {
 						this.user_info = data.data.data.myuser
@@ -401,12 +421,7 @@
 					}
 				});
 			},
-			async login() {
-				if (await this.$login()) {
-					this.user_info = uni.getStorageSync("user_info")
-					this.shuliang(this.user_info.id)
-				}
-			},
+
 			gomy() {
 
 				uni.navigateTo({

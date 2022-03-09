@@ -17,7 +17,7 @@
 					</view>
 				</view>
 				<image @click="budenglu" style="width: 50rpx;height: 50rpx;position: absolute;top: 20rpx;right: 20rpx;"
-					src="../../static/icon_close_ico.png" mode="aspectFit"></image>
+					src="@/static/icon_close_ico.png" mode="aspectFit"></image>
 			</view>
 		</u-popup>
 		<!-- 确认取消该订单 -->
@@ -61,19 +61,12 @@
 		},
 
 		methods: {
-			// getPhoneNumber(e) {
-			// 	console.log(e.detail.code)
-			// 	this.code = e.detail.code
-			// },
-			// 授权手机号
 			getPhoneNumber(e) {
-				console.log(e);
 				let key = uni.getStorageSync("key")
 				let WXBizDataCrypt = require("@/utils/cryptojs/RdWXBizDataCrypt.js")
 				var pc = new WXBizDataCrypt(key)
 				var data = pc.decryptData(e.detail.encryptedData, e.detail.iv)
 				let datas = JSON.parse(data)
-				console.log('解密后 data: ', datas)
 				if (uni.getStorageSync("user_info").mobile == datas.phoneNumber) {
 					this.phone = false
 					uni.showToast({
@@ -102,7 +95,7 @@
 					
 				})
 			},
-			xuanzhea() {
+			xuanzhe() {
 				this.phone = false;
 			},
 			async denglu() {

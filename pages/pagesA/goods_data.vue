@@ -104,18 +104,18 @@
 								v-else>包邮</text>
 						</view>
 					</view>
-					<!-- <view class="text kfhkjsdh" @click="youhuijuan">
+					<view class="text kfhkjsdh" v-if="data_list.yh_price != 0">
 						<view class="">
 							优惠券
 						</view>
 						<view class="cet">
 							<view class="red">
-								<text v-if="youhuijuan_num != 0">-￥{{youhuijuan_num}}</text><text v-else>暂无优惠卷</text>
+								<text>-￥{{data_list.yh_price}}</text>
 							</view>
 							<image style="width: 8rpx;height: 14rpx;margin-left: 10rpx;"
 								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 						</view>
-					</view> -->
+					</view>
 				</view>
 				<view style="height: 2rpx;background: #F6F6F6;">
 
@@ -1000,7 +1000,8 @@
 						break;
 					case 3:
 						uni.navigateTo({
-							url: "../pagesC/wuliu?id=" + this.data_list.id + "&express=" + this.data_list.express + "&expressorder=" + this.data_list
+							url: "../pagesC/wuliu?id=" + this.data_list.id + "&express=" + this.data_list.express +
+								"&expressorder=" + this.data_list
 								.expressorder,
 						});
 						break;
@@ -1111,7 +1112,7 @@
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

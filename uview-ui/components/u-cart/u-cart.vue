@@ -1,9 +1,8 @@
 <template>
 	<view class="main">
 		<view v-for="(item, index) in csListArrl" :key="index" :data-index="index" class="order-item"
-			@click="kanshangping(item)" @touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd"
-			:style="'right:'+item.right+'px'">
-			<view class="content">
+			@touchstart="drawStart" @touchmove="drawMove" @touchend="drawEnd" :style="'right:'+item.right+'px'">
+			<view class="content" @click="kanshangping(item)">
 				<image class="img" :src="item.img" mode=""></image>
 				<view class="dasdas">
 					<view class="text">
@@ -110,10 +109,11 @@
 		border-radius: 10rpx;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		padding: 0 30rpx;
 
 		.dasdas {
-			margin-left: 30rpx;
+			width: 70%;
 		}
 
 		.texts {
@@ -127,6 +127,11 @@
 			font-size: 24rpx;
 			font-weight: 400;
 			color: #333333;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
 		}
 
 		.img {

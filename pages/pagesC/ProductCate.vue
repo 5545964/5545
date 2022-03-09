@@ -73,8 +73,29 @@
 					</u-collapse>
 				</view>
 			</scroll-view>
-			<scroll-view v-else style="width: 76%;height: 100%;" scroll-y class="right-box">
+			<scroll-view v-if="mmok == 1" style="width: 76%;height: 100%;" scroll-y class="right-box">
 				<u-bdata :list="destaoxi" @click="go_shop"></u-bdata>
+			</scroll-view>
+			<scroll-view v-if="mmok == 2" style="width: 76%;height: 100%;" scroll-y class="right-box">
+				<view class="item-container" v-for="item3 in destaoxi" :key='item3.id' @click="go_youhuijuan(item3)">
+					<view class="right_view">
+						<view class="">
+							<image :src="imgtilte+item3.simage"
+								style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
+							</image>
+						</view>
+						<view class="img_right">
+							<view class="top_text">
+								{{item3.name}}
+							</view>
+							<view class="right_bottom">
+								<view class="" style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
+									￥{{item3.price||0}}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
 			</scroll-view>
 		</view>
 		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
@@ -140,16 +161,20 @@
 		computed: {
 			shopListALL() {
 				let all = this.shopList
-
 				return all
 			}
 		},
 		methods: {
-			go_shop(ev) {
-				// uni.setStorageSync("go_shop",ev)
+			go_youhuijuan(ev) {
+				console.log(ev);
+				uni.setStorageSync("youhuijuan",ev)
 				uni.navigateTo({
-					// url: "./fenlei"
-					url:"./FlagshipDetail?id="+ev.id
+					url:"./youhuijuan"
+				})
+			},
+			go_shop(ev) {
+				uni.navigateTo({
+					url: "./FlagshipDetail?id=" + ev.id
 				})
 			},
 			goshop(ev) {
@@ -182,9 +207,6 @@
 					if (data.data.code == 1) {
 						this.cateList = data.data.data.status
 						this.swichMenu(0)
-						// if (this.cateList[0].id != 31 || this.cateList[0].id != 32 || this.cateList[0].id != 33) {
-						// 	this.mmok = 1
-						// }
 					}
 				})
 			},
@@ -193,29 +215,15 @@
 				let that = this
 				that.shopList = []
 				setTimeout(async () => {
-					// await this.getShop(this.cateList[this.current].child[index])
 					let data = await that.$api.categoryshop({
 						id: index
 					})
 					that.shopList = data.data.data.status.data
-
 					that.$nextTick(() => {
 						that.$refs.collapseall[0].init()
-						// that.$refs.collapseall[this.current].init()
 					})
 				}, 100)
 			},
-			// getShop(item) {
-			// 	this.$api.categoryshop({
-			// 		id: item.id
-			// 	}).then(data => {
-
-			// 		if (data.data.code == 1) {
-			// 			this.shopList = data.data.data.status.data
-
-			// 		}
-			// 	})
-			// },
 			getImg() {
 				return Math.floor(Math.random() * 35);
 			},
@@ -230,7 +238,7 @@
 					}).then(data => {
 						this.destaoxi = data.data.data.status
 					})
-				} else {
+				} else if (this.cateList[index].id != 82) {
 					this.mmok = 0
 					this.kklkl = this.cateList[index].child
 					let aa = this.cateList[index].child
@@ -247,7 +255,17 @@
 					this.$nextTick(() => {
 						this.$refs.collapse.init()
 					})
+				} else {
+					this.mmok = 2
+					this.destaoxi = []
+					this.$api.cupons().then(data => {
+						this.destaoxi = []
+						if (data.data.code == 1) {
+							this.destaoxi = data.data.data.status
+						}
+					})
 				}
+
 			},
 			// 获取一个目标元素的高度
 			getElRect(elClass, dataVal) {

@@ -2,6 +2,7 @@
 	<view style="height: 100%;">
 		<u-tabs :list="lisst" :weizhi="false" :show-bar="false" :isScroll="true" :current="currents" @change="changes">
 		</u-tabs>
+		<u-kehu :showsss='showsssssssss'></u-kehu>
 		<view style="height: 100%;" v-show="currents == 0">
 			<!-- 切换 -->
 			<view class="">
@@ -237,7 +238,6 @@
 				</view>
 			</view>
 		</u-popup>
-		<!-- <u-kehu :showsss='showsssssssss'></u-kehu> -->
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -567,6 +567,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach((item, index) => {
+								console.log(item.createtime,this.$u.timeFormat(item.createtime, 'yyyy-mm-dd'));
 								item.createtime = item.createtime * 1000
 								item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
 								item.label = item.label ? item.label.split(",") : ""

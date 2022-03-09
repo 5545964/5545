@@ -230,14 +230,17 @@
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.forEach((items, index) => {
-									item.data_list.push({
-										id: items.id,
-										isgo: false,
-										price: items.xc_price,
-										title: items.name,
-										image: items.simage,
-										alls: items
-									})
+									if(index <= 5){
+										item.data_list.push({
+											id: items.id,
+											isgo: false,
+											price: items.xc_price,
+											title: items.name,
+											image: items.simage,
+											alls: items
+										})
+									}
+									
 								})
 							}
 						})
@@ -249,14 +252,17 @@
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.data.forEach((items, index) => {
-									item.data_list.push({
-										id: items.id,
-										isgo: false,
-										price: items.xc_price,
-										title: items.name,
-										image: items.simage,
-										alls: items
-									})
+									if(index <= 7){
+										item.data_list.push({
+											id: items.id,
+											isgo: false,
+											price: items.xc_price,
+											title: items.name,
+											image: items.simage,
+											alls: items
+										})
+									}
+									
 								})
 							}
 						})
@@ -269,14 +275,17 @@
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.data.forEach((items, index) => {
-									item.data_list.push({
-										id: items.id,
-										isgo: false,
-										price: 0,
-										title: items.name,
-										image: items.simage,
-										alls: items
-									})
+									if(index <= 7){
+										item.data_list.push({
+											id: items.id,
+											isgo: false,
+											price: 0,
+											title: items.name,
+											image: items.simage,
+											alls: items
+										})
+									}
+									
 								})
 							}
 						})

@@ -9,18 +9,11 @@ const instance = ajax.create({
 		}
 	}
 })
-const token = uni.getStorageSync("token");
+const token = uni.getStorageSync("token").token;
 const user = uni.getStorageSync("user_info");
 // 添加请求拦截器
 instance.interceptors.request.use(
 	config => {
-		if (config.data.show != '') {
-			uni.showLoading({
-				title: config.data.show,
-				mask: true
-			})
-			delete config.data.show;
-		}
 		if (token != "") {
 			config.header["token"] = token
 			// config.data["user_id"] = user.id
@@ -29,7 +22,6 @@ instance.interceptors.request.use(
 		return config
 	},
 	error => {
-
 		// 对请求错误做些什么
 		uni.showToast({
 			title: "网络错误",
@@ -42,12 +34,18 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
 	response => {
-		uni.hideLoading();
 		//response请求接受数据
 		return response
 	},
 	error => {
-		uni.hideLoading();
+		uni.showToast({
+			title: "数据出错，请联系客服",
+			duration: 1000,
+			icon: "none"
+		})
+		setTimeout(() => {
+			uni.navigateBack(-1)
+		}, 800)
 		// 对响应错误做些什么
 		return Promise.reject(error)
 	}

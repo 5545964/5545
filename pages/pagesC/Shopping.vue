@@ -21,7 +21,7 @@
 		<view class="datas">
 			<view class="">
 				<view class="cet" style="justify-content: space-between;">
-					<view class="">
+					<view style="width: 90%;">
 						<view class="title">
 							{{alls.name}}
 						</view>
@@ -410,7 +410,6 @@
 			};
 		},
 		onLoad(ev) {
-			console.log(ev);
 			// 商品id
 			this.shopid = ev.shopid;
 			// 商品id

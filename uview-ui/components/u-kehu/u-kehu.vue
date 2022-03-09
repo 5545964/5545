@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view class="" style="position: absolute;z-index: 3;">
 		<view class="" v-if="kehu">
 			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
 				:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
@@ -108,9 +108,7 @@
 			}
 		},
 		mounted() {
-			this.edits = uni.getStorageSync("edits")
-			this.kehu = uni.getStorageSync("kehu")
-			console.log(this.edits,this.kehu );
+
 			this.show = this.showsss;
 			this.system = uni.getSystemInfoSync(); //系统参数
 			let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
@@ -131,8 +129,15 @@
 			this.bianheigths = this.tabberheigth - 400;
 			// this.bianrights = this.widthwidth;
 			// this.bianright = this.widthwidth;
+			this.gengxin()
 		},
 		methods: {
+			gengxin() {
+				setInterval(() => {
+					this.edits = uni.getStorageSync("edits")
+					this.kehu = uni.getStorageSync("kehu")
+				}, 1000)
+			},
 			ends() {
 				if (this.bianliangs < this.system.screenWidth / 2) {
 					var bbs = setInterval(() => {
