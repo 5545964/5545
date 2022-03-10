@@ -1,6 +1,20 @@
 <script>
 	export default {
 		onLaunch(ev) {
+			if (ev.query.uid) {
+				uni.setStorageSync("yaoqinguid", ev.query.uid)
+			}
+			if (ev.query.level) {
+				if (ev.query.level === "undefined") {
+					ev.query.level = 0
+				}
+				uni.setStorageSync("yaoqinglevel", ev.query.level)
+			}
+			if (ev.path == "pages/Home/Home") {
+				uni.navigateTo({
+					url: "./pages/Home/start"
+				})
+			}
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					let aa = []
@@ -22,21 +36,6 @@
 					uni.setStorageSync("showssss", data.data.data.edit)
 				}
 			})
-			if (ev.query.uid) {
-				uni.setStorageSync("yaoqinguid", ev.query.uid)
-			}
-			if (ev.query.level) {
-				if (ev.query.level === "undefined") {
-					ev.query.level = 0
-				}
-				uni.setStorageSync("yaoqinglevel", ev.query.level)
-			}
-			if (ev.path == "pages/Home/Home") {
-				uni.navigateTo({
-					url: "pages/pagesD/start"
-				})
-			}
-
 		}
 	}
 </script>
@@ -50,7 +49,7 @@
 		width: 100%;
 		height: 100%;
 		background-color: #f6f6f6;
-		// background-color: #ff0000;
+		
 		position: relative;
 	}
 

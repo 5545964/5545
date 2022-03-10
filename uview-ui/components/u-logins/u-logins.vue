@@ -1,6 +1,6 @@
 <template>
 	<view style="width: 100%;height: 100%;">
-		<u-popup v-model="show" mode="center" border-radius="20">
+		<u-popup v-model="show" mode="center" :maskCloseAble="false" border-radius="20">
 			<view class="popimgsss cet">
 				<view class="">
 					<view class="tetx-cet cde">
@@ -20,8 +20,7 @@
 					src="@/static/icon_close_ico.png" mode="aspectFit"></image>
 			</view>
 		</u-popup>
-		<!-- 确认取消该订单 -->
-		<u-popup width="640" :closeable="true" border-radius="20" v-model="phone" mode="center">
+		<u-popup :maskCloseAble="false" width="640" border-radius="20" v-model="phone" mode="center">
 			<view class="popup">
 				<view class="top"> 提示 </view>
 				<view class="cets"> 确认获取手机号</view>

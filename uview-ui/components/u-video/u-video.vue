@@ -2,7 +2,8 @@
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
 			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;">
-				<video :id="'video' + item.id" class="vide" @play="playing" :src="item.video" @error="videoErrorCallback"
+				<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software" :play-strategy="1" :title="item.title" :id="'video' + item.id" class="vide" @play="playing" 
+				:src="item.video" @error="videoErrorCallback"
 					controls></video>
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">

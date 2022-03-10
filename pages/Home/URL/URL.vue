@@ -21,7 +21,7 @@
 			}else{
 				this.url = val.url
 			}
-			// 设置当前的title 如果外链中有的话将被覆盖
+			
 			if(this.isNotEmpty(val.title)){
 				this.setTitle(val.title);
 			}
@@ -34,7 +34,7 @@
 					return true;
 				}
 			},
-			// 设置title
+			
 			setTitle(title) {
 				uni.setNavigationBarTitle({
 					title: title

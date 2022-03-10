@@ -19,8 +19,8 @@
 				<u-search @click='seach_go' :disabled="true" v-model="keyword"></u-search>
 			</view>
 			<view class="wrap">
-				<swiper @change="gaizhi" style="height: 300rpx;width: 100%;" :current="current" :indicator-dots="true"
-					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
+				<swiper @change="gaizhi" style="height: 300rpx;width: 100%;" :indicator-dots="true" :circular="true"
+					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<video id="video" @play="bofang" @pause="pause" @ended="ended"
 							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
@@ -41,9 +41,9 @@
 		data() {
 			return {
 				scrollTop: 0,
-				//
-				//
-				//
+
+
+
 				zhongjian: 0,
 				system: 0,
 				px: 0,
@@ -51,9 +51,9 @@
 				tabberheigth: 0,
 				navbarheigth: 0,
 				navbar: 0,
-				//
-				//
-				//
+
+
+
 				videoContext: "",
 				autoplay: true,
 				showssss: false,
@@ -69,7 +69,7 @@
 		onLoad() {
 			uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
 				uni.setStorageSync("navbarheigth", data.height)
-			}).exec(); //顶部自定义navber高
+			}).exec();
 			uni.setStorageSync("shouzhi", 0)
 			const res = uni.getSystemInfoSync()
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
@@ -77,6 +77,17 @@
 		},
 		onShow() {
 			this.budenglugengxin()
+
+
+
+
+
+
+
+
+
+
+
 		},
 		onPullDownRefresh() {
 			this.budenglugengxin()
@@ -85,10 +96,20 @@
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
+			getMoble() {
+				var prefixArray = new Array("130", "131", "183", "132", "133", "135", "137", "138", "170", "187", "189",
+					"176", "182");
+				var i = parseInt(10 * Math.random());
+				var prefix = prefixArray[i];
+				for (var j = 0; j < 8; j++) {
+					prefix = prefix + Math.floor(Math.random() * 10);
+				}
+				return prefix;
+			},
 			budenglugengxin() {
 				this.showssss = uni.getStorageSync("showssss")
 				this.alls()
-				//购物车数量
+
 				this.$api.shopcart({
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
@@ -103,7 +124,7 @@
 					}
 					uni.setStorageSync("cart_num", aa)
 				})
-				// 默认地址
+
 				this.$api.addressshow({
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
@@ -132,8 +153,8 @@
 				this.budenglugengxin()
 			},
 			budenglu() {
-				// console.log();
-				// this.showssss = false
+
+
 			},
 			ended(ev) {
 				this.autoplay = true
@@ -147,7 +168,7 @@
 			gaizhi(ev) {
 				this.current = ev.detail.current
 				if (ev.detail.current == this.lun_list.length - 1) {
-					// this.videoContext.play()
+
 				} else {
 					this.videoContext.pause()
 				}
@@ -162,25 +183,33 @@
 				this.gosss(aa)
 			},
 			gosss(ev) {
+				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
-						// 网页跳转
-						this.linkOthers(ev.head)
+						if (ev.head != "") {
+							this.linkOthers(ev.head)
+						} else {
+							uni.previewImage({
+								urls: [ev.image],
+								longPressActions: {
+									itemList: ['发送给朋友', '保存图片', '收藏'],
+									success: function(data) {},
+									fail: function(err) {}
+								}
+							});
+						}
 						break;
 					case 1:
-						// 产品pages/pagesC/Shopping
 						uni.navigateTo({
 							url: "../pagesC/Shopping?shopid=" + ev.shopid
 						})
 						break;
 					case 2:
-						// 套餐
 						uni.navigateTo({
 							url: "../pagesC/FlagshipDetail?id=" + ev.tc
 						})
 						break;
 					case 3:
-						// 关于宝芸邸
 						uni.switchTab({
 							url: "/pages/Home/About"
 						})
@@ -189,16 +218,27 @@
 				}
 			},
 			go_shop(ev) {
+				console.log(ev);
 				if (ev.alls.video != "" && ev.alls.video != null) {
 					return true;
 				}
 				switch (Number(ev.alls.link)) {
 					case 0:
-						// 网页跳转
-						this.linkOthers(ev.alls.head)
+						if (ev.alls.head != "") {
+							this.linkOthers(ev.alls.head)
+						} else {
+							uni.previewImage({
+								urls: [this.$imgPath + ev.image],
+								longPressActions: {
+									itemList: ['发送给朋友', '保存图片', '收藏'],
+									success: function(data) {},
+									fail: function(err) {}
+								}
+							});
+						}
 						break;
 					case 1:
-						// 产品pages/pagesC/Shopping
+
 						uni.navigateTo({
 							url: "../pagesC/Shopping?shopid=" + ev.alls.shopid
 						})
@@ -207,10 +247,10 @@
 						uni.navigateTo({
 							url: "../pagesC/FlagshipDetail?id=" + ev.alls.tc
 						})
-						// 套餐
+
 						break;
 					case 3:
-						// 关于宝芸邸
+
 						uni.switchTab({
 							url: "/pages/Home/About"
 						})
@@ -218,7 +258,7 @@
 					default:
 				}
 			},
-			// 搜索
+
 			seach_go() {
 				uni.navigateTo({
 					url: "./search/search"
@@ -230,7 +270,7 @@
 				})
 			},
 			alls() {
-				// 推荐商品
+
 				this.$api.indexcontent().then(data => {
 					if (data.data.code == 1) {
 						this.data_list = [];
@@ -259,7 +299,7 @@
 						this.data_list = []
 					}
 				})
-				// icon
+
 				this.$api.shopicon().then(data => {
 					if (data.data.code == 1) {
 						let aa = {
@@ -293,10 +333,9 @@
 
 					}
 				})
-				//轮播图
+
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
-						// this.islogin(data)
 						this.lun_list = [];
 						let aa = []
 						data.data.data.status.forEach(item => {
@@ -324,17 +363,17 @@
 			yidong() {
 				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
 					uni.setStorageSync("navbarheigth", data.height)
-				}).exec(); //顶部自定义navber高
-				this.system = uni.getSystemInfoSync(); //系统参数
+				}).exec();
+				this.system = uni.getSystemInfoSync();
 				this.zhongjian = parseInt(this.system.screenWidth / 2)
-				let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
+				let windows = parseInt(this.system.screenHeight / (uni.upx2px(100) / 100));
 				let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(
-					100) / 100)); //获取底部tabber和系统留白的高rpx
+					100) / 100));
 				this.px = parseInt(uni.upx2px(90));
-				this.px = parseInt(this.px / (uni.upx2px(100) / 100)); //移动物体高rpx
-				this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px; //最宽边距
-				this.tabberheigth = windows - nn - this.px; //最大下边距
-				this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100)); //最大上边距
+				this.px = parseInt(this.px / (uni.upx2px(100) / 100));
+				this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px;
+				this.tabberheigth = windows - nn - this.px;
+				this.navbarheigth = parseInt(uni.getStorageSync("navbarheigth") / (uni.upx2px(100) / 100));
 
 			},
 		},

@@ -43,11 +43,11 @@
 
 				switch (Number(ev.link)) {
 					case 0:
-						// 网页跳转
+						
 						this.linkOthers(ev.head)
 						break;
 					case 1:
-						// 产品pages/pagesC/Shopping
+						
 						uni.navigateTo({
 							url: "../../pagesC/Shopping?shopid=" + ev.shopid
 						})
@@ -56,10 +56,10 @@
 					uni.navigateTo({
 						url: "../../pagesC/FlagshipDetail?id=" + ev.tc
 					})
-						// 套餐
+						
 						break;
 					case 3:
-						// 关于宝芸邸
+						
 						uni.switchTab({
 							url: "/pages/Home/About"
 						})
@@ -67,7 +67,7 @@
 					default:
 				}
 			},
-			// 搜索
+			
 			seach_go(ev) {
 				this.$api.indexlike({
 					name: this.keyword

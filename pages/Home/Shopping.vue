@@ -3,7 +3,7 @@
 		<view class="shop_main">
 			<!-- 轮播 -->
 			<view class="wrap">
-				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :current="current" :indicator-dots="true"
+				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :indicator-dots="true"
 					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<video id="video" @play="bofang" @pause="pause" @ended="ended"
@@ -85,9 +85,9 @@
 				],
 				lun_list: [],
 				clsList: [],
-				//
-				//移动
-				//
+				
+				
+				
 				system: {},
 				px: 0,
 				widthwidth: 0,
@@ -102,18 +102,18 @@
 			this.videoContext = uni.createVideoContext('video')
 			this.cart_num = uni.getStorageSync("cart_num")
 			this.alls()
-			// 
-			// 移动
-			// 
-			this.system = uni.getSystemInfoSync() //系统参数
-			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100)); //屏幕高转rpx
-			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
-				100)); //获取底部tabber和系统留白的高rpx
-			this.px = parseInt(uni.upx2px(100))
-			this.px = parseInt(this.px / (uni.upx2px(100) / 100)) //移动物体高rpx
-			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px //最宽边距
 			
-			this.tabberheigth = windows - nn - this.px; //最大下边距
+			
+			
+			this.system = uni.getSystemInfoSync() 
+			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100)); 
+			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
+				100)); 
+			this.px = parseInt(uni.upx2px(100))
+			this.px = parseInt(this.px / (uni.upx2px(100) / 100)) 
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px 
+			
+			this.tabberheigth = windows - nn - this.px; 
 		},
 		methods: {
 			end() {
@@ -159,23 +159,23 @@
 			gosss(ev) {
 				switch (Number(ev.link)) {
 					case 0:
-						// 网页跳转
+						
 						this.linkOthers(ev.head)
 						break;
 					case 1:
-						// 产品pages/pagesC/Shopping
+						
 						uni.navigateTo({
 							url: "../pagesC/Shopping?shopid=" + ev.shopid
 						})
 						break;
 					case 2:
-						// 套餐
+						
 						uni.navigateTo({
 							url: "../pagesC/FlagshipDetail?id=" + ev.tc
 						})
 						break;
 					case 3:
-						// 关于宝芸邸
+						
 						uni.switchTab({
 							url: "/pages/Home/About"
 						})
@@ -190,7 +190,7 @@
 			gaizhi(ev) {
 				this.current = ev.detail.current
 				if (ev.detail.current == this.lun_list.length - 1) {
-					// this.videoContext.play()
+					
 				} else {
 					this.videoContext.pause()
 				}
@@ -206,9 +206,9 @@
 				});
 			},
 			alls() {
-				//shopicon五个小图标
+				
 				this.clsList = uni.getStorageSync("icon").shop
-				//lunbotu
+				
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
 						let aa = [];
@@ -223,7 +223,7 @@
 						this.lun_list = [];
 					}
 				})
-				// 推荐商品
+				
 				this.list.forEach(item => {
 					if (item.id == 0) {
 						this.$api.shopindex().then(data => {
@@ -291,7 +291,7 @@
 						})
 					}
 				})
-				// 推荐商品
+				
 			},
 			toproduct(ev, index) {
 				if (index == 0) {
@@ -310,7 +310,7 @@
 				}
 
 			},
-			// 购物车
+			
 			async tocar() {
 				if (await this.$login()) {
 					uni.navigateTo({
@@ -322,36 +322,36 @@
 				uni.navigateTo({
 					url: item.page
 				})
-				// // 限时抢购
-				// if (item.id == 0) {
-				// 	uni.navigateTo({
-				// 		url: "../pagesC/promotion"
-				// 	})
-				// }
-				// // 产品设计
-				// if (item.id == 1) {
-				// 	uni.navigateTo({
-				// 		url: "../pagesC/ProductCate"
-				// 	})
-				// }
-				// // 楼盘设计
-				// if (item.id == 2) {
-				// 	uni.navigateTo({
-				// 		url: "../pagesC/HouseDesign"
-				// 	})
-				// }
-				// // 旗舰套系
-				// if (item.id == 3) {
-				// 	uni.navigateTo({
-				// 		url: "../pagesC/FlagshipSet"
-				// 	})
-				// }
-				// // 我的直播
-				// if (item.id == 4) {
-				// 	uni.navigateTo({
-				// 		url: "../pagesC/zhibo?title=的咔叽顺口溜"
-				// 	})
-				// }
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 		}
 	}
@@ -359,8 +359,8 @@
 
 <style lang="scss" scoped>
 	.wrap {
-		// padding: 0 40rpx;
-		// margin-top: 20rpx;
+		
+		
 	}
 
 	.cart-num {
@@ -414,7 +414,7 @@
 		}
 	}
 
-	// 商品列表 
+	
 	.shop_list {
 		box-sizing: border-box;
 

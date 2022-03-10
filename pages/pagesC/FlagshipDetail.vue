@@ -34,11 +34,16 @@
 					</view>
 				</swiper-item>
 				<swiper-item v-if="video != ''">
-					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
+					<video id="video" :http-cache="false" codec="software" :play-strategy="1" :title="title"
+						@play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
 						:src="video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
+
+
+
+
 		<view class="u-menu-wrap">
 			<scroll-view style="height: 520px;" scroll-y scroll-with-animation class="u-tab-view menu-scroll-view"
 				:scroll-top="scrollTop">
@@ -48,11 +53,12 @@
 					{{item.name}}
 				</view>
 			</scroll-view>
+
 			<scroll-view style="height: 520px;" :scroll-top="scrollRightTop" scroll-y scroll-with-animation
 				class="right-box" @scroll="rightScroll" :scroll-into-view="itemId">
 				<view class="class-item" :id="'item' + index" v-for="(item,index) in tabbar" :key="index">
 					<view :class="index%2==0? 'mian_left_items':'mian_left_item1s'"
-						style="text-align:center;height:50rpx;line-height:50rpx;color: #fff;">
+						style="text-align:center;height:50rpx;line-height:50rpx;color: #fff;font-size:28rpx;">
 						{{item.name}}
 					</view>
 					<view v-if="item.desdesdesdesde == 1">
@@ -80,7 +86,11 @@
 									v-if="items.fzb != null && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit">
 								</image>
-								<image :src="img+items.shop.photo" style="width: 640rpx;" mode="widthFix"></image>
+								<image :src="img+items.shop.photo" mode="widthFix"></image>
+								<!-- 测试 -->
+								<!-- <image
+									src="https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/98a44083ef6cb32e2b60fa83d0309f900ba6843f.jpg"
+									mode="widthFix"></image> -->
 							</view>
 						</view>
 					</view>
@@ -103,7 +113,7 @@
 	export default {
 		data() {
 			return {
-				autoplay: true,
+				autoplay: false,
 				videoContext: "",
 				desdesdesdesde: 0,
 				shouzhi: uni.getStorageSync("shouzhi"),
@@ -121,21 +131,21 @@
 				shenme_id: "",
 				heigths: 520,
 				currents: 0,
-				//
-				//
-				//
-				//
-				scrollTop: 0, //tab标题的滚动条位置
+
+
+
+
+				scrollTop: 0,
 				oldScrollTop: 0,
-				current: 0, // 预设当前项的值
-				menuHeight: 0, // 左边菜单的高度
-				menuItemHeight: 0, // 左边菜单item的高度
-				itemId: '', // 栏目右边scroll-view用于滚动的id
+				current: 0,
+				menuHeight: 0,
+				menuItemHeight: 0,
+				itemId: '',
 				tabbar: [],
 				menuItemPos: [],
 				arr: [],
-				scrollRightTop: 0, // 右边栏目scroll-view的滚动条高度
-				timer: null, // 定时器
+				scrollRightTop: 0,
+				timer: null,
 
 			}
 		},
@@ -143,9 +153,13 @@
 			this.shenme_id = ev.id
 			this.allss(this.shenme_id)
 			this.videoContext = uni.createVideoContext('video')
+
 		},
 		onShow() {
 			this.getMenuItemTop()
+			setTimeout(() => {
+				this.autoplay = true
+			}, 5000)
 		},
 		methods: {
 			gaizhi(ev) {
@@ -168,7 +182,7 @@
 			bofang(ev) {
 				this.autoplay = false
 			},
-			// 手指显示
+
 			dianjishouzhi(ev) {
 				this.shouzhi = 1
 				uni.navigateTo({
@@ -186,7 +200,6 @@
 				})
 			},
 			kaniamgss(ev) {
-				console.log(ev);
 				if (ev.jump == 0) {
 					let aa = [this.img + ev.image]
 					uni.previewImage({
@@ -213,7 +226,7 @@
 					}
 				});
 			},
-			// pinglun
+
 			async pinglun(ev) {
 				if (await this.$login()) {
 					uni.navigateTo({
@@ -221,7 +234,7 @@
 					})
 				}
 			},
-			// 选星星
+
 			async xuanxinxin(ev) {
 				if (await this.$login()) {
 					this.$api.star({
@@ -237,7 +250,7 @@
 					})
 				}
 			},
-			//点赞
+
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					let aa = ""
@@ -253,7 +266,7 @@
 						state: 1
 					}).then(data => {
 						if (data.data.code == 1) {
-							// this.allss(this.shenme_id)
+
 							if (aa == 0) {
 								this.desInfo.zan = this.desInfo.zan + 1
 								this.desInfo.zans = {
@@ -267,7 +280,7 @@
 					})
 				}
 			},
-			//关注
+
 			async guanzhu(ev) {
 				if (await this.$login()) {
 					this.$api.desfollow({
@@ -280,7 +293,7 @@
 							icon: "none"
 						})
 						if (data.data.code == 1) {
-							// this.allss(this.shenme_id)
+
 							if (this.desInfo.follows != 0) {
 								this.desInfo.follows = 0
 							} else {
@@ -290,7 +303,7 @@
 					})
 				}
 			},
-			// 设计师详情
+
 			desDetails(ev) {
 				this.$api.desxq({
 					id: ev,
@@ -323,7 +336,7 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						this.title = data.data.data.status.name;
-						// 地位坐标
+
 						data.data.data.status.xq.forEach(item => {
 							if (item.fzb != null) {
 								item.fzb = item.fzb.split(",")
@@ -365,10 +378,10 @@
 								}
 							}
 						}
-						// 左边赋值
+
 						this.tabbar = [...mm];
 						this.xq = data.data.data.status.xq;
-						// 轮播
+
 						let img = this.alls.image.split(",")
 						let aa = []
 						img.forEach(item => {
@@ -376,7 +389,7 @@
 						})
 						this.list = []
 						this.list.push(...aa)
-						// 视频,VR
+
 						if (data.data.data.status.vrimage != '' && data.data.data.status.vrimage != null) {
 							this.vr_image = this.$imgPath + data.data.data.status.vrimage
 						}
@@ -408,11 +421,11 @@
 					default:
 				}
 			},
-			//
-			//
-			//
-			//
-			// 点击左边的栏目切换
+
+
+
+
+
 			async swichMenu(index) {
 				if (this.arr.length == 0) {
 					await this.getMenuItemTop();
@@ -425,15 +438,14 @@
 					this.leftMenuStatus(index);
 				})
 			},
-			// 获取一个目标元素的高度
+
 			getElRect(elClass, dataVal) {
 				new Promise((resolve, reject) => {
 					const query = uni.createSelectorQuery().in(this);
 					query.select('.' + elClass).fields({
 						size: true
 					}, res => {
-						console.log(res, elClass);
-						// 如果节点尚未生成，res值为null，循环调用执行
+
 						if (!res) {
 							setTimeout(() => {
 								this.getElRect(elClass);
@@ -446,12 +458,12 @@
 					}).exec();
 				})
 			},
-			// 观测元素相交状态
+
 			async observer() {
 				this.tabbar.map((val, index) => {
 					let observer = uni.createIntersectionObserver(this);
-					// 检测右边scroll-view的id为itemxx的元素与right-box的相交状态
-					// 如果跟.right-box底部相交，就动态设置左边栏目的活动状态
+
+
 					observer.relativeTo('.right-box', {
 						top: 0
 					}).observe('#item' + index, res => {
@@ -462,25 +474,24 @@
 					})
 				})
 			},
-			// 设置左边菜单的滚动状态
+
 			async leftMenuStatus(index) {
 				this.current = index;
-				// 如果为0，意味着尚未初始化
-				console.log(this.menuHeight, this.menuItemHeight, "this.menuHeight,this.menuItemHeight");
+
 				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
 					await this.getElRect('menu-scroll-view', 'menuHeight');
 					await this.getElRect('u-tab-item', 'menuItemHeight');
 				}
-				// 将菜单活动item垂直居中
+
 				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
 			},
-			// 获取右边菜单每个item到顶部的距离
+
 			getMenuItemTop() {
 				new Promise(resolve => {
 					let selectorQuery = uni.createSelectorQuery();
 					selectorQuery.selectAll('.class-item').boundingClientRect((rects) => {
 						console.log(rects, "rects");
-						// 如果节点尚未生成，rects值为[](因为用selectAll，所以返回的是数组)，循环调用执行
+
 						if (!rects.length) {
 							setTimeout(() => {
 								this.getMenuItemTop();
@@ -488,14 +499,14 @@
 							return;
 						}
 						rects.forEach((rect) => {
-							// 这里减去rects[0].top，是因为第一项顶部可能不是贴到导航栏(比如有个搜索框的情况)
+
 							this.arr.push(rect.top.toFixed(2) - rects[0].top.toFixed(2));
 							resolve();
 						})
 					}).exec()
 				})
 			},
-			// 右边菜单滚动
+
 			async rightScroll(e) {
 				this.oldScrollTop = e.detail.scrollTop;
 				if (this.arr.length == 0) {
@@ -505,14 +516,14 @@
 				if (!this.menuHeight) {
 					await this.getElRect('menu-scroll-view', 'menuHeight');
 				}
-				setTimeout(() => { // 节流
+				setTimeout(() => {
 					this.timer = null;
-					// scrollHeight为右边菜单垂直中点位置
+
 					let scrollHeight = e.detail.scrollTop + this.menuHeight / 2;
 					for (let i = 0; i < this.arr.length; i++) {
 						let height1 = this.arr[i];
 						let height2 = this.arr[i + 1];
-						// 如果不存在height2，意味着数据循环已经到了最后一个，设置左边菜单为最后一项即可
+
 						if (!height2 || scrollHeight >= height1 && scrollHeight < height2) {
 							this.leftMenuStatus(i);
 							return;
@@ -526,9 +537,12 @@
 
 <style lang="scss" scoped>
 	.u-wrap {
-
 		display: flex;
 		flex-direction: column;
+
+		image {
+			height: auto;
+		}
 	}
 
 	.u-menu-wrap {
@@ -606,6 +620,7 @@
 	}
 
 	.class-item {
+		font-size: 0;
 		margin-bottom: 30rpx;
 	}
 
@@ -657,7 +672,7 @@
 		}
 	}
 
-	// 导航
+
 	.navbar {
 		.sssss {
 			border: 1px solid #e5e5e5;

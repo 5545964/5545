@@ -3,6 +3,15 @@
 		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [{
+			"path": "pages/Home/start",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
 			"path": "pages/Home/Home",
 			"style": {
 				"navigationBarTitleText": "首页",
@@ -529,14 +538,6 @@
 
 		}, {
 			"path": "regSuccess",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
-			}
-
-		}, {
-			"path": "start",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false,

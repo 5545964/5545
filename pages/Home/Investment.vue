@@ -118,7 +118,7 @@
 						</scroll-view>
 					</view>
 					<view style="width: 86%;overflow: hidden;">
-						<scroll-view scroll-y="true" style="height: 100%;">
+						<scroll-view scroll-y="true" style="height:100%;font-size: 0;">
 							<u-parse :html="parsesssss"></u-parse>
 						</scroll-view>
 					</view>
@@ -268,7 +268,7 @@
 					}
 				],
 				tupianwo: "",
-				// 验证弹窗
+				
 				yanzhengtanchaung: true,
 				yuedu: false,
 				xieyi: [],
@@ -277,7 +277,7 @@
 				shoujihao: uni.getStorageSync("user_info").mobile,
 				code: "",
 				huoqu: "获取验证码",
-				// 验证弹窗
+				
 				diandedijige: 0,
 				modeList: [],
 				mobanid: [
@@ -297,37 +297,12 @@
 				dianzhansssss: false,
 				active: 0,
 				desinfo: {},
-				state: -1, //  0未审核  1审核通过   2已驳回
+				state: -1, 
 				showContract: false,
 				pay: "",
 				value1: "",
 				show: false,
-				list: [
-					// {
-					// 	name: '网红佳作',
-					// 	id: 0
-					// },
-					// {
-					// 	name: '设计大咖',
-					// 	id: 1
-					// },
-					// {
-					// 	name: '整装设计师',
-					// 	id: 2
-					// },
-					// {
-					// 	name: '定制家具设计师',
-					// 	id: 3
-					// },
-					// {
-					// 	name: '成为设计师',
-					// 	id: 4
-					// },
-					// {
-					// 	name: '招募令',
-					// 	id: 5
-					// }
-				],
+				list: [],
 				current: 0,
 				designerList: [],
 				options1: [{
@@ -369,7 +344,7 @@
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
 			this.change(uni.getStorageSync("ggug"))
-			//验证弹窗
+			
 			let aa = uni.getStorageSync("xieyi")
 			this.xieyi = []
 			aa.forEach(item => {
@@ -382,7 +357,7 @@
 			} else {
 				this.yanzhengtanchaung = false;
 			}
-			// 验证弹窗
+			
 			this.getstate();
 			this.enjoy()
 			this.enjoys()
@@ -408,8 +383,8 @@
 			rre(ev) {
 
 			},
-			// 验证弹窗
-			// 协议同意按钮
+			
+			
 			xieyitongyi(ev) {
 				if (ev == 1) {
 					let mm = 0
@@ -439,23 +414,23 @@
 				}
 
 			},
-			// 看协议内容
+			
 			fuwenben(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.name
 				})
 			},
-			// 同意协议
+			
 			hahaha(item) {
 				item.check = !item.check
 			},
-			// 同意后选择协议state
-			// 0销售员注册
-			// 1设计师注册
-			// 2已收货
-			// 3已安装
-			// 4支付前
+			
+			
+			
+			
+			
+			
 			tongyixieyi(ev) {
 				if (this.xieyi.length > 0) {
 					this.yuedu = true;
@@ -464,16 +439,16 @@
 					this.yuedu = false;
 				}
 			},
-			// 手机验证按钮取消0同意1
+			
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						// 验证验证码
+						
 						this.$api.emsyzphone({
 							phone: this.shoujihao,
 							yzm: this.code
 						}).then(data => {
-							// if (data.data.code == 1) {
+							
 								if (true) {
 								this.shoujiyanzheng = false
 								this.getcontein(this.diandedijige)
@@ -496,7 +471,7 @@
 					this.shoujiyanzheng = false;
 				}
 			},
-			// 获取验证码倒计时
+			
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
@@ -528,7 +503,7 @@
 					})
 				}
 			},
-			// 判断手机号
+			
 			hahahaa(ev) {
 				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
@@ -538,7 +513,7 @@
 					})
 				}
 			},
-			// 验证弹窗
+			
 			ananana(ev) {
 
 				this.diandedijige = ev
@@ -596,7 +571,7 @@
 				let aa = ev - 1
 				this.tit = this.options1[aa].label
 				this.dessel(aa)
-				// 0为智能排序1星级排序2为设计师单量排序3为好评排序4为点赞两排序5为关注量排序
+				
 			},
 			getdesproMoenys() {
 				this.$api.desproMoenys({
@@ -605,7 +580,7 @@
 					if (data.data.code == 1) {
 						if (data.data.data) {
 							this.allssssss = data.data.data.status
-							// this.pay = '支付￥' + data.data.data.status.money
+							
 						}
 					}
 				})
@@ -673,7 +648,7 @@
 					this.dianzhansssss = false
 				}
 			},
-			// 跳转设计师详情
+			
 			navgepage(item) {
 
 				uni.navigateTo({
@@ -689,7 +664,7 @@
 			pinglun() {
 				this.showComment = true;
 			},
-			// 点赞
+			
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					let type = ev.zans ? 1 : 0;
@@ -701,12 +676,12 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							ev.iszan = !ev.iszan
-							// this.enjoy()
+							
 						}
 					})
 				}
 			},
-			// 收藏
+			
 			async collection(ev) {
 				if (await this.$login()) {
 					let state = ev.isfollow ? 1 : 0;
@@ -723,7 +698,7 @@
 					})
 				}
 			},
-			// 跳转填写资料
+			
 			toReg() {
 				this.showContract = false;
 				let aa = 0
@@ -733,7 +708,7 @@
 					aa = 3
 				}
 				uni.navigateTo({
-					// url: "../pagesD/regDesigner/regDesigner?nageid=" + this.allssssss[this.diandedijige].id
+					
 					url: "../pagesD/regDesigner/regDesigner?nageid=" + aa
 
 				})
@@ -743,7 +718,7 @@
 				this.parsesssss = item.content
 
 			},
-			// 查看合同模板
+			
 			async getcontein(ev) {
 
 				if (await this.$login()) {
@@ -752,29 +727,29 @@
 						provider: 'weixin',
 						tmplIds: that.mobanid,
 						complete: function(res) {
-							// 选的哪一个
+							
 							that.diandedijige = ev;
 
-							// 看合同
-							// that.looks(that.allssssss[ev].doc_url)
-							// 查看价格是否大于0
+							
+							
+							
 							if (Number(that.allssssss[ev].money) > 0) {
-								// 查看是否支付
+								
 								that.$api.ispay({
 									id: that.allssssss[ev].id,
 									user_id: uni.getStorageSync("user_info").id
 								}).then(data => {
-									// that.pay = '去填写资料'
-									// 不支付，支付取消注释
+									
+									
 									if (data.data.code == 1) {
-										// that.pay = '去填写资料'
+										
 										that.toReg()
 									} else {
-										// that.pay = '支付￥' + that.allssssss[ev].money
+										
 										that.pays()
 									}
-									// 协议弹窗
-									// that.showContract = true
+									
+									
 								})
 							} else {
 								that.toReg()
@@ -785,13 +760,13 @@
 
 				}
 			},
-			// 查看模板
+			
 			looks(url) {
 				if (url.indexOf("http") == -1) {
 					url = this.$imgPath + url
 				}
 				uni.downloadFile({
-					// e.target.dataset.name 是文件的地址
+					
 					url: url,
 					success(res) {
 						const filePath = res.tempFilePath;
@@ -802,7 +777,7 @@
 					}
 				})
 			},
-			// 支付填写资料
+			
 			pays() {
 				let that = this
 				let aa = 0
@@ -812,21 +787,21 @@
 					aa = 3
 				}
 				that.$api.buylevel({
-					// id: that.allssssss[that.fenleideid].id,
+					
 					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
 					if (res.data.code == 400) {
 						that.toReg()
 					}
-					// 支付
+					
 					if (res.data.code == 200) {
 						uni.requestPayment({
-							timeStamp: res.data.data.timeStamp, //当前的时间
-							nonceStr: res.data.data.nonceStr, //随机字符串
-							package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-							signType: res.data.data.signType, //签名算法，暂支持 MD5。
-							paySign: res.data.data.paySign, //签名
+							timeStamp: res.data.data.timeStamp, 
+							nonceStr: res.data.data.nonceStr, 
+							package: res.data.data.package, 
+							signType: res.data.data.signType, 
+							paySign: res.data.data.paySign, 
 							success: function(res) {
 								uni.showToast({
 									title: "支付成功",
@@ -843,9 +818,9 @@
 						})
 					}
 				})
-				// }
+				
 			},
-			// 热门栏目
+			
 			enjoys() {
 				this.$api.recruit().then(data => {
 					if (data.data.code == 1) {
@@ -891,7 +866,7 @@
 				})
 
 			},
-			// 设计师列表
+			
 			dessel(ev) {
 				this.$api.dessel({
 					order: ev
@@ -921,7 +896,7 @@
 					this.getstate()
 				}
 			},
-			// 成为设计师状态
+			
 			getstate() {
 				this.$api.despro({
 					user_id: uni.getStorageSync("user_info").id
@@ -934,7 +909,7 @@
 					}
 				})
 			},
-			// 查看合同
+			
 			lookcont() {
 				this.$api.desmyuser({
 					user_id: uni.getStorageSync("user_info").id,
@@ -953,7 +928,7 @@
 </script>
 
 <style lang="scss" scoped>
-	// 排序
+	
 	.paixu {
 		background: #FFFFFF;
 		display: flex;
@@ -978,7 +953,7 @@
 		}
 	}
 
-	// 筛选
+	
 	.klks {
 		text-align: center;
 		line-height: 100rpx;
@@ -1069,15 +1044,15 @@
 		padding-bottom: 20rpx;
 	}
 
-	// 成为设计师
+	
 	.be_designer {
-		// background-image: url(../../static/ad9537b694af6b87cc7f8e51cbca1cf.jpg);
-		// background-size: 100% 100%;
-		// width: 100%;
-		// height: 100%;
-		// position: fixed;
-		// top: 0;
-		// z-index: -1;
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	.be_foot {
@@ -1087,21 +1062,21 @@
 		background-color: #FFFFFF;
 		width: 100%;
 		height: 110rpx;
-		// position: fixed;
-		// bottom: 0;
+		
+		
 	}
 
 	.pay {
-		// width: 600rpx;
-		// height: 70rpx;
-		// background: #007399;
-		// border-radius: 35rpx;
-		// font-size: 26rpx;
-		// color: #FFFFFF;
-		// text-align: center;
-		// position: relative;
-		// z-index: 100;
-		// line-height: 70rpx;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		padding: 20rpx 40rpx;
 		background: #007399;
 		border-radius: 35rpx;
@@ -1154,7 +1129,7 @@
 		}
 	}
 
-	// 合同弹窗
+	
 	.contract_main {
 		display: flex;
 		flex-direction: column;
@@ -1179,7 +1154,7 @@
 		}
 	}
 
-	// 招募令
+	
 	.tokens {
 		.mian {
 			display: flex;
@@ -1189,7 +1164,7 @@
 
 			.mian_left {
 				width: 100rpx;
-				// background: #305166;
+				
 				max-height: 1900rpx;
 				overflow: hidden;
 			}
@@ -1423,7 +1398,7 @@
 		color: #FFFFFF;
 	}
 
-	// 验证弹窗
+	
 	.yueduwo {
 		background-color: #FFFFFF;
 
@@ -1496,5 +1471,5 @@
 		}
 	}
 
-	// 验证弹窗
+	
 </style>

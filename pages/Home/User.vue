@@ -24,13 +24,13 @@
 			</view>
 		</view>
 		<view class="hahaha">
-			<view class="cet" @click="gos(0)" v-if="des_user.bbs !=null">
+			<view class="cet" @click="gos(0)" v-if="user_info.bbs.id">
 				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
 				<view class="text">
 					电子名片
 				</view>
 			</view>
-			<view class="xian" v-if="des_user.bbs !=null"></view>
+			<view class="xian" v-if="user_info.bbs.id"></view>
 			<view class="cet" @click="gos(1)" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
 				<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
 				<view class="text">

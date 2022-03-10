@@ -56,7 +56,6 @@
 			font-size: 26rpx;
 			color: #FFFFFF;
 			background-color: rgba(0, 0, 0, 0.3);
-			// border: 2rpx solid #8e5656;
 			position: absolute;
 			left: 30rpx;
 			top: 100rpx;

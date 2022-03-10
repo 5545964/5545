@@ -36,15 +36,21 @@
 				<view class="page-view">
 					<!-- 筛选 -->
 					<view class="cate_choose">
-						<view class="cate_items" v-for="item2 in chooseList" @click="show=true" :key="item2.id">
-							{{item2.name}}
-							<template>
-								<image v-if="item2.id<2" src="../../static/icon_home_sanjiao.png"
-									style="width: 16rpx;height: 10rpx;margin-left: 10rpx;" mode="aspectFit"></image>
-								<image v-else src="../../static/icon_about_shaixuan.png"
-									style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
-							</template>
+						<view class="cate_items" @click="zhonghe">
+							价格
+							<u-icon width="20" height="20" :name="zhong" v-if="zhongnum!=0" color="#007399"></u-icon>
+							<view style="width: 20rpx;height: 20rpx;" v-if="zhongnum==0" />
 						</view>
+						<view class="cate_items" @click="xiaoliang">
+							库存
+							<u-icon width="20" height="20" :name="xiao" v-if="xiaonum!=0" color="#007399"></u-icon>
+							<view style="width: 20rpx;height: 20rpx;" v-if="xiaonum==0" />
+						</view>
+						<!-- <view class="cate_items" @click="show=true">
+							筛选
+							<image src="../../static/icon_about_shaixuan.png"
+								style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
+						</view> -->
 					</view>
 					<u-collapse ref="collapse">
 						<u-collapse-item ref="collapseItem" :name="item1.id" :title="item1.title" :isDot="true"
@@ -129,6 +135,10 @@
 		},
 		data() {
 			return {
+				zhongnum: 1,
+				zhong: "arrow-up-fill",
+				xiaonum: 0,
+				xiao: "arrow-down-fill",
 				destaoxi: [],
 				cc: [],
 				kklkl: [],
@@ -143,19 +153,6 @@
 				menuItemHeight: 0, // 左边菜单item的高度
 				cateList: [],
 				shopList: [],
-				chooseList: [{
-						id: 0,
-						name: "综合"
-					},
-					{
-						id: 1,
-						name: "销量"
-					},
-					{
-						id: 2,
-						name: "筛选"
-					}
-				]
 			}
 		},
 		computed: {
@@ -165,11 +162,64 @@
 			}
 		},
 		methods: {
+			zhonghe() {
+				this.zhongnum = 1
+				this.xiaonum = 0
+				if (this.zhong == "arrow-up-fill") {
+					let aa = this.kklkl
+					for (let i in aa) {
+						aa[i].neirong = aa[i].neirong.sort(function(a, b) {
+							return b.xc_price - a.xc_price
+						})
+					}
+					this.kklkl = [...aa]
+					this.zhong = "arrow-down-fill"
+				} else {
+					let aa = this.kklkl
+					for (let i in aa) {
+						aa[i].neirong = aa[i].neirong.sort(function(a, b) {
+							return a.xc_price - b.xc_price
+						})
+					}
+					this.kklkl = [...aa]
+					this.zhong = "arrow-up-fill"
+				}
+
+			},
+			xiaoliang() {
+				this.xiaonum = 1
+				this.zhongnum = 0
+				if (this.xiao == "arrow-up-fill") {
+					let aa = this.kklkl
+					for (let i in aa) {
+						aa[i].neirong = aa[i].neirong.sort(function(a, b) {
+							return b.kucun - a.kucun
+						})
+					}
+					this.kklkl = [...aa]
+					this.xiao = "arrow-down-fill"
+				} else {
+					let aa = this.kklkl
+					for (let i in aa) {
+						aa[i].neirong = aa[i].neirong.sort(function(a, b) {
+							return a.kucun - b.kucun
+						})
+					}
+					this.kklkl = [...aa]
+					this.xiao = "arrow-up-fill"
+				}
+			},
+			sortBy(field1, field2) {
+				return function(a, b) {
+					if (a.field1 == b.field1) return a.field2 - b.field2;
+					return a.field1 - b.field1;
+				}
+			},
 			go_youhuijuan(ev) {
 				console.log(ev);
-				uni.setStorageSync("youhuijuan",ev)
+				uni.setStorageSync("youhuijuan", ev)
 				uni.navigateTo({
-					url:"./youhuijuan"
+					url: "./youhuijuan"
 				})
 			},
 			go_shop(ev) {
@@ -252,6 +302,13 @@
 					}
 					this.kklkl = []
 					this.kklkl = this.cateList[index].child
+					let aad = this.kklkl
+					for (let i in aad) {
+						aad[i].neirong = aad[i].neirong.sort(function(a, b) {
+							return b.xc_price - a.xc_price
+						})
+					}
+					this.kklkl = [...aad]
 					this.$nextTick(() => {
 						this.$refs.collapse.init()
 					})

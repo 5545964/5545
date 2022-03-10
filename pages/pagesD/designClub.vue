@@ -129,7 +129,7 @@
 					</scroll-view>
 				</view>
 				<view style="width: 86%;overflow: hidden;">
-					<scroll-view scroll-y="true" style="height: 100%;">
+					<scroll-view scroll-y="true" style="height:100%;font-size: 0;">
 						<u-parse :html="parsesssss"></u-parse>
 					</scroll-view>
 				</view>

@@ -319,20 +319,20 @@
 				shijianshow: false,
 				state: 1,
 				fans: {},
-				mony: "9980.00", //预约价格
-				isyuyue: 0, //判断预约0还是显示预约1
-				//弹出层选项数据
+				mony: "9980.00", 
+				isyuyue: 0, 
+				
 				poplist: [],
-				sel_list: "", //弹出层单选传递
-				popshow: "", //弹出层开关
-				name: "image", //上传
-				formData: {}, //上传
+				sel_list: "", 
+				popshow: "", 
+				name: "image", 
+				formData: {}, 
 				header: {
 					"token": uni.getStorageSync("token")
-				}, //上传
-				action: this.$shangchuan + "/api/byd_user/addpostspic", //图片上传接口
-				isadd: true, //添加成员
-				//成员结构
+				}, 
+				action: this.$shangchuan + "/api/byd_user/addpostspic", 
+				isadd: true, 
+				
 				man_data: [{
 						id: 0,
 						age: "",
@@ -347,7 +347,7 @@
 						del: true
 					},
 				],
-				//性别选项
+				
 				man_list: [{
 						id: 0,
 						text: "先生"
@@ -365,11 +365,11 @@
 						text: "女孩"
 					}
 				],
-				numbers: 1000, //单选判断
-				title: "预约设计", //navbar
-				data_list: {}, //提交的数组
-				chuanzhi: {}, //用于数据传递
-				//list为数组结构
+				numbers: 1000, 
+				title: "预约设计", 
+				data_list: {}, 
+				chuanzhi: {}, 
+				
 				list: [{
 						title: '基本信息',
 						list: [{
@@ -402,7 +402,7 @@
 								name: '所在地区',
 								obj: "city",
 								text: "请填写所在地区",
-								// type: "Picker",
+								
 								type: "address",
 								show: false
 							},
@@ -649,11 +649,11 @@
 				}).then(res => {
 					if (res.data.code == 200) {
 						uni.requestPayment({
-							timeStamp: res.data.data.timeStamp, //当前的时间
-							nonceStr: res.data.data.nonceStr, //随机字符串
-							package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-							signType: res.data.data.signType, //签名算法，暂支持 MD5。
-							paySign: res.data.data.paySign, //签名
+							timeStamp: res.data.data.timeStamp, 
+							nonceStr: res.data.data.nonceStr, 
+							package: res.data.data.package, 
+							signType: res.data.data.signType, 
+							paySign: res.data.data.paySign, 
 							success: function(res) {
 								uni.showToast({
 									title: "支付成功",
@@ -844,7 +844,7 @@
 				})
 				this.data_list[oo.obj] = bb
 			},
-			//弹出层单选
+			
 			xunhuan(ev) {
 				this.poplist.forEach((item, index) => {
 					if (index == ev) {
@@ -855,23 +855,23 @@
 					}
 				})
 			},
-			//弹出层选中之后赋值
+			
 			change() {
 				this.data_list[this.chuanzhi.obj] = this.sel_list;
 				this.baochun()
 				this.popshow = false;
 			},
-			//弹出层选项还原默认
+			
 			re() {
 				this.poplist.forEach(item => {
 					item.check = false
 				})
 			},
-			//提交按钮
+			
 			async tijiao() {
 				if (await this.$login()) {
 					if (this.code != "") {
-						// 验证验证码
+						
 						this.$api.emsyzphone({
 							phone: this.data_list.phone,
 							yzm: this.code
@@ -906,7 +906,7 @@
 												icon: "none"
 											})
 										}
-										// that.data_list.yzm = that.code
+										
 										that.data_list.people = bb
 										let dd = Object.keys(that.data_list).length;
 										if (dd != 15) {
@@ -954,12 +954,12 @@
 
 				}
 			},
-			//弹出层关闭
+			
 			guan() {
 				this.popshow = false;
 				this.shijianshow = false;
 			},
-			// 增加成员
+			
 			add() {
 				let aa = this.man_data.length
 				if (aa <= 10) {
@@ -976,7 +976,7 @@
 					}
 				}
 			},
-			// 选择成员
+			
 			danxuans(ev, id, index, oo) {
 				let aa = this.man_data;
 				aa[index].select = ev;
@@ -984,12 +984,12 @@
 				this.man_data.push(...aa)
 				this.data_list[oo.obj] = this.man_data;
 			},
-			// 单选框
+			
 			danxuan(ev, id, oo) {
 				this.numbers = ev
 				this.data_list[oo.obj] = ev
 			},
-			// 打开弹出层
+			
 			open(ev) {
 				if (ev.obj == "style") {
 					this.poplist = [];
@@ -1096,8 +1096,8 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					// padding-top: 30rpx;
-					// padding-bottom: 40rpx;
+					
+					
 					border-bottom: 1px solid #DEDEDE;
 					position: relative;
 				}
@@ -1317,8 +1317,8 @@
 
 		.type_item {
 			padding: 0 25rpx;
-			// width: 210rpx;
-			// height: 70rpx;
+			
+			
 			background: #F6F6F6;
 			border-radius: 35rpx;
 			font-size: 26rpx;
@@ -1333,8 +1333,8 @@
 		.active {
 			background: #007399;
 			padding: 0 25rpx;
-			// width: 210rpx;
-			// height: 70rpx;
+			
+			
 			border-radius: 35rpx;
 			font-size: 26rpx;
 			color: #FFFFFF;

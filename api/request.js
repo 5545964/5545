@@ -1,5 +1,4 @@
 import ajax from "./u-ajax/js_sdk/"
-// 创建实例
 const instance = ajax.create({
 	baseURL: "https://bao.scwushen.com/index.php",
 	timeout: 60000,
@@ -11,18 +10,14 @@ const instance = ajax.create({
 })
 const token = uni.getStorageSync("token").token;
 const user = uni.getStorageSync("user_info");
-// 添加请求拦截器
 instance.interceptors.request.use(
 	config => {
 		if (token != "") {
 			config.header["token"] = token
-			// config.data["user_id"] = user.id
 		}
-		//config请求前数据，发送前做些什么
 		return config
 	},
 	error => {
-		// 对请求错误做些什么
 		uni.showToast({
 			title: "网络错误",
 			duration: 1000,
@@ -31,10 +26,8 @@ instance.interceptors.request.use(
 		return Promise.reject(error)
 	}
 )
-// 添加响应拦截器
 instance.interceptors.response.use(
 	response => {
-		//response请求接受数据
 		return response
 	},
 	error => {
@@ -46,7 +39,6 @@ instance.interceptors.response.use(
 		setTimeout(() => {
 			uni.navigateBack(-1)
 		}, 800)
-		// 对响应错误做些什么
 		return Promise.reject(error)
 	}
 )

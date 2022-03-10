@@ -271,7 +271,7 @@
 			pinglun() {
 				this.showComment = true;
 			},
-			// 点赞
+			
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					this.dianzhansssss = false
@@ -289,7 +289,7 @@
 					})
 				}
 			},
-			// 收藏
+			
 			async collection(ev) {
 				if (await this.$login()) {
 					let state = ev.isfollow ? 1 : 0;
@@ -328,8 +328,8 @@
 	.active {
 		background: #007399;
 		padding: 0 40rpx;
-		// width: 210rpx;
-		// height: 70rpx;
+		
+		
 		border-radius: 35rpx;
 		font-size: 26rpx;
 		color: #FFFFFF;

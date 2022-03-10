@@ -4,7 +4,7 @@
 			<view class="dsaada" v-if="index%2==0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
 					<image v-if="item.image != ''" :src="imgPath+item.image" mode="aspectFit"></image>
-					<video :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
+					<video :title="item.title" :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
 				</view>
 				<view class="ssj gghGG">
 					<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
@@ -16,7 +16,7 @@
 			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
 					<image v-if="item.image != ''" :src="imgPath+item.image" mode="aspectFit"></image>
-					<video :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
+					<video :title="item.title" :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
 				</view>
 				<view class="ssj gghGG">
 					<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>

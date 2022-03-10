@@ -19,7 +19,7 @@
 		<!-- 轮播 -->
 		<view class="lun_main">
 			<view class="">
-				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :current="current" :indicator-dots="true"
+				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :indicator-dots="true"
 					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<video  id="video" @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
