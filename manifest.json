@@ -1,7 +1,7 @@
 {
-    "name" : "宝芸邸", 
-    "appid" : "__UNI__E06E380", 
-    "description" : "宝芸邸", 
+    "name" : "宝芸邸",
+    "appid" : "__UNI__E06E380",
+    "description" : "宝芸邸",
     "versionName" : "1.0.0", //版本名称，例如：1.0.0
     "versionCode" : "1", //版本号，例如：36
     "transformPx" : false, //是否转换项目的px，为true时将px转换为rpx，为false时，px为传统的实际像素

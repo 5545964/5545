@@ -131,10 +131,6 @@
 				shenme_id: "",
 				heigths: 520,
 				currents: 0,
-
-
-
-
 				scrollTop: 0,
 				oldScrollTop: 0,
 				current: 0,
@@ -146,7 +142,6 @@
 				arr: [],
 				scrollRightTop: 0,
 				timer: null,
-
 			}
 		},
 		onLoad(ev) {
@@ -336,7 +331,6 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						this.title = data.data.data.status.name;
-
 						data.data.data.status.xq.forEach(item => {
 							if (item.fzb != null) {
 								item.fzb = item.fzb.split(",")
@@ -356,7 +350,6 @@
 							mm[i]["desdesdesdesde"] = 0
 							if (mm[i].id == 1) {
 								if (this.alls.designer == "") {
-
 									for (var j = 0; j < kk.length; j++) {
 										if (mm[i].id == kk[j].leftid) {
 											mm[i].leftdata.push(kk[j])
@@ -389,7 +382,6 @@
 						})
 						this.list = []
 						this.list.push(...aa)
-
 						if (data.data.data.status.vrimage != '' && data.data.data.status.vrimage != null) {
 							this.vr_image = this.$imgPath + data.data.data.status.vrimage
 						}
@@ -414,18 +406,13 @@
 						uni.navigateBack(-1)
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;
 					default:
 				}
 			},
-
-
-
-
-
 			async swichMenu(index) {
 				if (this.arr.length == 0) {
 					await this.getMenuItemTop();
@@ -438,7 +425,6 @@
 					this.leftMenuStatus(index);
 				})
 			},
-
 			getElRect(elClass, dataVal) {
 				new Promise((resolve, reject) => {
 					const query = uni.createSelectorQuery().in(this);
@@ -458,12 +444,9 @@
 					}).exec();
 				})
 			},
-
 			async observer() {
 				this.tabbar.map((val, index) => {
 					let observer = uni.createIntersectionObserver(this);
-
-
 					observer.relativeTo('.right-box', {
 						top: 0
 					}).observe('#item' + index, res => {
@@ -474,24 +457,19 @@
 					})
 				})
 			},
-
 			async leftMenuStatus(index) {
 				this.current = index;
-
 				if (this.menuHeight == 0 || this.menuItemHeight == 0) {
 					await this.getElRect('menu-scroll-view', 'menuHeight');
 					await this.getElRect('u-tab-item', 'menuItemHeight');
 				}
-
 				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
 			},
-
 			getMenuItemTop() {
 				new Promise(resolve => {
 					let selectorQuery = uni.createSelectorQuery();
 					selectorQuery.selectAll('.class-item').boundingClientRect((rects) => {
 						console.log(rects, "rects");
-
 						if (!rects.length) {
 							setTimeout(() => {
 								this.getMenuItemTop();
@@ -499,14 +477,12 @@
 							return;
 						}
 						rects.forEach((rect) => {
-
 							this.arr.push(rect.top.toFixed(2) - rects[0].top.toFixed(2));
 							resolve();
 						})
 					}).exec()
 				})
 			},
-
 			async rightScroll(e) {
 				this.oldScrollTop = e.detail.scrollTop;
 				if (this.arr.length == 0) {
@@ -518,12 +494,10 @@
 				}
 				setTimeout(() => {
 					this.timer = null;
-
 					let scrollHeight = e.detail.scrollTop + this.menuHeight / 2;
 					for (let i = 0; i < this.arr.length; i++) {
 						let height1 = this.arr[i];
 						let height2 = this.arr[i + 1];
-
 						if (!height2 || scrollHeight >= height1 && scrollHeight < height2) {
 							this.leftMenuStatus(i);
 							return;

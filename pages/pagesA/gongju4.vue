@@ -125,7 +125,6 @@
 			};
 		},
 		onLoad(ev) {
-			console.log(ev);
 			if (ev.title) {
 				this.title = ev.title;
 			}
@@ -179,7 +178,7 @@
 				switch (ev) {
 					case 0:
 						if (this.xuanzhe == 0) {
-							uni.switchTab({
+							uni.reLaunch({
 								url: "/pages/Home/User"
 							})
 						} else {

@@ -22,7 +22,8 @@
 				<swiper @change="gaizhi" style="height: 300rpx;width: 100%;" :indicator-dots="true" :circular="true"
 					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software" :play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
+						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
+							:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
 							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
@@ -41,9 +42,6 @@
 		data() {
 			return {
 				scrollTop: 0,
-
-
-
 				zhongjian: 0,
 				system: 0,
 				px: 0,
@@ -51,9 +49,6 @@
 				tabberheigth: 0,
 				navbarheigth: 0,
 				navbar: 0,
-
-
-
 				videoContext: "",
 				autoplay: true,
 				showssss: false,
@@ -67,30 +62,16 @@
 			};
 		},
 		onLoad() {
-			uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
-				uni.setStorageSync("navbarheigth", data.height)
-			}).exec();
-			uni.setStorageSync("shouzhi", 0)
-			const res = uni.getSystemInfoSync()
-			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
-			this.videoContext = uni.createVideoContext('video')
+			this.alls()
 		},
 		onShow() {
 			this.budenglugengxin()
-
-
-
-
-
-
-
-
-
-
+			uni.setStorageSync("shouzhi", 0)
 
 		},
 		onPullDownRefresh() {
 			this.budenglugengxin()
+			this.alls()
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
@@ -108,8 +89,11 @@
 			},
 			budenglugengxin() {
 				this.showssss = uni.getStorageSync("showssss")
-				this.alls()
-
+				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
+					uni.setStorageSync("navbarheigth", data.height)
+				}).exec();
+				const res = uni.getSystemInfoSync()
+				uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 				this.$api.shopcart({
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
@@ -214,6 +198,11 @@
 							url: "/pages/Home/About"
 						})
 						break;
+					case 4:
+						uni.navigateTo({
+							url: "../pagesC/youhuijuan?id="+ev.cupons
+						})
+						break;
 					default:
 				}
 			},
@@ -255,6 +244,11 @@
 							url: "/pages/Home/About"
 						})
 						break;
+					case 4:
+						uni.navigateTo({
+							url: "../pagesC/youhuijuan?id="+ev.alls.cupons
+						})
+						break;
 					default:
 				}
 			},
@@ -270,7 +264,6 @@
 				})
 			},
 			alls() {
-
 				this.$api.indexcontent().then(data => {
 					if (data.data.code == 1) {
 						this.data_list = [];
@@ -292,14 +285,12 @@
 									alls: item
 								})
 							}
-
 						})
 						uni.stopPullDownRefresh();
 					} else {
 						this.data_list = []
 					}
 				})
-
 				this.$api.shopicon().then(data => {
 					if (data.data.code == 1) {
 						let aa = {
@@ -333,7 +324,6 @@
 
 					}
 				})
-
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
 						this.lun_list = [];
@@ -350,6 +340,7 @@
 						this.lun_list = []
 					}
 				})
+				this.videoContext = uni.createVideoContext('video')
 			},
 			islogin(data) {
 				uni.setStorageSync("showssss", data.data.data.edit)

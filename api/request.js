@@ -33,12 +33,12 @@ instance.interceptors.response.use(
 	error => {
 		uni.showToast({
 			title: "数据出错，请联系客服",
-			duration: 1000,
+			duration: 1200,
 			icon: "none"
 		})
 		setTimeout(() => {
 			uni.navigateBack(-1)
-		}, 800)
+		}, 1000)
 		return Promise.reject(error)
 	}
 )

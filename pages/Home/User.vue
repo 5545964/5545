@@ -287,6 +287,9 @@
 		onShow() {
 			this.alls()
 		},
+		onPullDownRefresh() {
+			this.alls()
+		},
 		methods: {
 			kan(ev) {
 				uni.previewImage({
@@ -314,6 +317,7 @@
 					if (data.data.code == 1) {
 						uni.setStorageSync("des_info", data.data.data.myuser)
 						this.des_user = data.data.data.myuser
+					uni.stopPullDownRefresh();
 					}
 				})
 			},
@@ -366,6 +370,7 @@
 						} else {
 							this.fkjsfjdisfjsl = false
 						}
+						uni.stopPullDownRefresh();
 					}
 				})
 				// 默认地址
@@ -376,6 +381,7 @@
 						data.data.data.status.forEach(item => {
 							if (item.auto == 1) {
 								uni.setStorageSync("address", item)
+								uni.stopPullDownRefresh();
 							}
 						})
 					}
@@ -387,6 +393,7 @@
 					if (data.data.code == 1) {
 						this.user_info = data.data.data.myuser
 						uni.setStorageSync("user_info", data.data.data.myuser)
+						uni.stopPullDownRefresh();
 					}
 				})
 				// 订单数
@@ -419,6 +426,7 @@
 					} else {
 						this.num_list = [0, 0, 0, 0, 0]
 					}
+					uni.stopPullDownRefresh();
 				});
 			},
 

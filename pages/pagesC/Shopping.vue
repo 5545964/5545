@@ -168,12 +168,13 @@
 			</view>
 			<view class="xian"></view>
 			<view class="bai"></view>
-			<!-- <view class="content">
-				<u-parse style="padding: 0 30rpx;" :html="alls.content"></u-parse>
-			</view> -->
-			<view class="" v-for="(item,index) in alls.content" :key="index">
-				<image style="height: 600rpx;" :src="img+item" mode="widthFix"></image>
+			<view class="content">
+				<view class="" v-for="(item,index) in alls.content" :key="index">
+					<image style="height: 600rpx;" :src="img+item" mode="widthFix"></image>
+				</view>
 			</view>
+
+
 		</view>
 		<view style="height: 110rpx;margin-top: 20rpx;"></view>
 		<view class="kjshfjsdk">
@@ -727,7 +728,7 @@
 						uni.navigateBack(-1)
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;

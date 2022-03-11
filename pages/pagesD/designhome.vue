@@ -244,7 +244,7 @@
 				})
 			},
 			changeDesign() {
-				uni.switchTab({
+				uni.reLaunch({
 					url: "/pages/Home/Home"
 				})
 			},

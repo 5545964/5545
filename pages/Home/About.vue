@@ -6,7 +6,7 @@
 		<swiper :style="'height: '+heigth+'px;'" :circular="true" :duration="300" @change="lun_change"
 			:current="current">
 			<swiper-item v-for="(item,index) in lists" :key="index">
-				<scroll-view :style="'height: '+heigth+'px;'" scroll-y="true">
+				<scroll-view style="height: 100%;" scroll-y="true">
 					<view class="swiper-item">
 						<view class="top">
 							<view class="text">
@@ -40,7 +40,8 @@
 										<scroll-view scroll-y="true" style="height: 100%;">
 											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist" :key="index"
 												@click="changeTokens(index,item)">
-												<view :class="active==index?'mian_left_item':'mian_left_item1'" class="cet">
+												<view :class="active==index?'mian_left_item':'mian_left_item1'"
+													class="cet">
 													<view style="width:100rpx;text-align: left;line-height:35rpx;">
 														{{item.title}}
 													</view>
@@ -52,7 +53,8 @@
 										<scroll-view scroll-y="true" style="height: 100%;">
 											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist0"
 												:key="index" @click="changeTokens0(index,item)">
-												<view :class="active0==index?'mian_left_item':'mian_left_item1'" class="cet">
+												<view :class="active0==index?'mian_left_item':'mian_left_item1'"
+													class="cet">
 													<view style="width:100rpx;text-align: left;line-height:35rpx;">
 														{{item.title}}
 													</view>
@@ -64,7 +66,8 @@
 										<scroll-view scroll-y="true" style="height: 100%;">
 											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist1"
 												:key="index" @click="changeTokens1(index,item)">
-												<view :class="active1==index?'mian_left_item':'mian_left_item1'" class="cet">
+												<view :class="active1==index?'mian_left_item':'mian_left_item1'"
+													class="cet">
 													<view style="width:100rpx;text-align: left;line-height:35rpx;">
 														{{item.title}}
 													</view>
@@ -76,7 +79,8 @@
 										<scroll-view scroll-y="true" style="height: 100%;">
 											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist2"
 												:key="index" @click="changeTokens2(index,item)">
-												<view :class="active2==index?'mian_left_item':'mian_left_item1'" class="cet">
+												<view :class="active2==index?'mian_left_item':'mian_left_item1'"
+													class="cet">
 													<view style="width:100rpx;text-align: left;line-height:35rpx;">
 														{{item.title}}
 													</view>
@@ -118,9 +122,46 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<!-- 服务协议和隐私政策 -->
+		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					服务协议和隐私政策
+				</view>
+				<view class="textss">
+					感谢您使用宝芸邸，我们会严格
+					按照法律规定存储和使用您的个人
+					信息。您可以阅读以下几项条款了
+					解详细信息。如您同意，请勾选以
+					下几项条款并点击”同意”开始接受
+					我们的服务。
+				</view>
+				<view style="padding:20rpx 0;">
+					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+						:key="index">
+						<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view class="yuan" @click="hahaha(item)">
+								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
+						</view>
+						<view class="mingcheng" @click="fuwenben(item)">
+							《{{item.name}}》
+						</view>
+					</view>
+				</view>
+				<view class="anniusss">
+					<view class="hkhnij" @click="yuedu = false">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="tongyixieyi()">
+						同意
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<u-kehu url="./booking/AppointmentDesign" heigth="1000"></u-kehu>
 		<u-back-top :scroll-top="0"></u-back-top>
-		<tab-bar></tab-bar>
+		<tab-bar v-if="!yuedu"></tab-bar>
 	</view>
 </template>
 
@@ -129,7 +170,8 @@
 	export default {
 		data() {
 			return {
-
+				yuedu: false,
+				xieyi: [],
 				keyword: "",
 				heigth: 0,
 				list: [{
@@ -172,7 +214,7 @@
 						content: ""
 					}
 				],
-				current: 0,
+				current: 3,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -186,73 +228,111 @@
 				datalist2: []
 			};
 		},
-		onReachBottom(ev) {},
+		onLoad() {
+			this.alls()
+		},
 		onShow() {
 			this.active = 0
-			this.datalist = []
 			this.active0 = 0
-			this.datalist0 = []
 			this.active1 = 0
-			this.datalist1 = []
 			this.active2 = 0
-			this.datalist2 = []
-			this.lists.forEach(item => {
-				this.$api.bydadout({
-					state: item.id
-				}).then(data => {
-					if (data.data.code == 1) {
-						item.content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
-							.imgsss);
-					}
-				})
-			})
-			this.$api.map().then(data => {
-				if (data.data.code == 1) {
-					this.datalist = [...data.data.data.status]
-					if (this.datalist.child) {
-						this.datalist0 = [...this.datalist.child]
-						if (this.datalist0.child) {
-							this.datalist1 = [...this.datalist0.child]
-							if (this.datalist1.child) {
-								this.datalist2 = [...this.datalist1.child]
-							}
-						}
-					}
-				}
-			})
-			this.$api.pots({
-				limit: 1000
-			}).then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.data.forEach(item => {
-						item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
-					})
-					this.xinxi = data.data.data.status.data
-				}
-			})
 			const res = uni.getSystemInfoSync();
 			this.heigth = res.windowHeight;
-
+			let aa = uni.getStorageSync("xieyi")
+			if (aa) {
+				this.xieyi = [];
+				aa.forEach(item => {
+					if (item.state == 2) {
+						this.xieyi.push(item)
+					}
+				})
+			}
+		},
+		onPullDownRefresh() {
+			this.alls()
 		},
 		methods: {
+			// 康复文本
+			fuwenben(ev) {
+				uni.setStorageSync("fuwenbeng", ev.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.name
+				})
+			},
+			// 同意协议
+			hahaha(item) {
+				item.check = !item.check
+			},
+			// 同意协议
+			tongyixieyi() {
+
+			},
+			lp(ev) {
+				console.log(ev);
+				this.$api.lpmap({
+					id: ev
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.datalist2 = data.data.data.status
+					} else {
+						this.datalist2 = []
+					}
+				})
+			},
+			alls() {
+				this.$api.map().then(data => {
+					if (data.data.code == 1) {
+						this.datalist = [...data.data.data.status]
+						if (this.datalist.child) {
+							this.datalist0 = [...this.datalist.child]
+							if (this.datalist0.child) {
+								this.datalist1 = [...this.datalist0.child]
+								this.lp(this.datalist1[0].id)
+							}
+						}
+						uni.stopPullDownRefresh();
+					}
+				})
+				this.$api.pots({
+					limit: 1000
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.data.forEach(item => {
+							item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
+						})
+						this.xinxi = data.data.data.status.data
+						uni.stopPullDownRefresh();
+					}
+				})
+				this.lists.forEach(item => {
+					this.$api.bydadout({
+						state: item.id
+					}).then(data => {
+						if (data.data.code == 1) {
+							item.content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
+								.imgsss);
+						}
+					})
+				})
+
+			},
 			changeTokens2(index, item) {
+				console.log(index, item);
+				if (this.xieyi.length > 0) {
+					this.yuedu = true;
+				}
 				this.active2 = index
 			},
 			changeTokens1(index, item) {
-				if (item.child) {
-					this.datalist2 = [...item.child]
-				} else {
-					this.datalist2 = []
-				}
+				this.lp(item.id)
+
 				this.active1 = index
 			},
 			changeTokens0(index, item) {
 				console.log(index, item);
 				if (item.child) {
 					this.datalist1 = [...item.child]
-					if (this.datalist1[0].child) {
-						this.datalist2 = [...this.datalist1.child]
-					}
+					this.lp(this.datalist1[0].id)
 				} else {
 					this.datalist1 = []
 					this.datalist2 = []
@@ -268,9 +348,7 @@
 					this.datalist0 = [...item.child]
 					if (this.datalist0[0].child) {
 						this.datalist1 = [...this.datalist0[0].child]
-						if (this.datalist1[0].child) {
-							this.datalist2 = [...this.datalist1[0].child]
-						}
+						this.lp(this.datalist1[0].id)
 					}
 				} else {
 					this.datalist0 = []
@@ -296,6 +374,59 @@
 </script>
 
 <style lang="scss" scoped>
+	.yueduwo {
+		background-color: #FFFFFF;
+
+		.jjhgj {
+			color: #2979ff;
+			font-size: 30rpx;
+			font-weight: bold;
+			border-left: 1px solid #b9b9b9;
+		}
+
+		.hkhnij {
+			width: 100%;
+			height: 100%;
+			padding: 26rpx 0;
+			text-align: center;
+
+		}
+
+		.anniusss {
+			display: flex;
+			border-top: 1px solid #b9b9b9;
+		}
+
+		.mingcheng {
+			color: #2979ff;
+		}
+
+		.yuan {
+			width: 30rpx;
+			height: 30rpx;
+			border: 1px solid #000000;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			overflow: hidden;
+		}
+
+		.textss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+
+		.text {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 30rpx;
+		}
+	}
+
 	.papapa {
 		display: flex;
 		align-items: center;

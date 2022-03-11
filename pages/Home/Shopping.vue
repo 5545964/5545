@@ -3,10 +3,11 @@
 		<view class="shop_main">
 			<!-- 轮播 -->
 			<view class="wrap">
-				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :indicator-dots="true"
-					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
+				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :indicator-dots="true" :circular="true"
+					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software" :play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
+						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
+							:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
 							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
@@ -14,7 +15,8 @@
 			</view>
 			<!-- 分类 -->
 			<view class="shop_cls">
-				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)" v-if="item.switch == 1">
+				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)"
+					v-if="item.switch == 1">
 					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;"
 						mode="aspectFit">
 					</image>
@@ -85,35 +87,37 @@
 				],
 				lun_list: [],
 				clsList: [],
-				
-				
-				
+
+
+
 				system: {},
 				px: 0,
 				widthwidth: 0,
 				tabberheigth: 0,
 				navbarheigth: 0,
 				bianright: 0,
-				bianliang:0,
+				bianliang: 0,
 				bianheigth: 600,
 			};
+		},
+		onLoad() {
+			this.alls()
+		},
+		onPullDownRefresh() {
+			this.alls()
 		},
 		onShow() {
 			this.videoContext = uni.createVideoContext('video')
 			this.cart_num = uni.getStorageSync("cart_num")
-			this.alls()
-			
-			
-			
-			this.system = uni.getSystemInfoSync() 
-			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100)); 
+			this.system = uni.getSystemInfoSync()
+			let windows = parseInt(this.system.windowHeight / (uni.upx2px(100) / 100));
 			let nn = parseInt((uni.getStorageSync("bottomheigth") + uni.getStorageSync("setheigth")) / (uni.upx2px(100) /
-				100)); 
+				100));
 			this.px = parseInt(uni.upx2px(100))
-			this.px = parseInt(this.px / (uni.upx2px(100) / 100)) 
-			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px 
-			
-			this.tabberheigth = windows - nn - this.px; 
+			this.px = parseInt(this.px / (uni.upx2px(100) / 100))
+			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px
+
+			this.tabberheigth = windows - nn - this.px;
 		},
 		methods: {
 			end() {
@@ -128,8 +132,8 @@
 				} else {
 					var bb = setInterval(() => {
 						this.bianright = this.bianright + 10;
-						if (this.bianright >= this.widthwidth-20) {
-							this.bianright = this.widthwidth-20
+						if (this.bianright >= this.widthwidth - 20) {
+							this.bianright = this.widthwidth - 20
 							clearInterval(bb);
 						}
 					}, 10)
@@ -157,27 +161,34 @@
 				this.autoplay = false
 			},
 			gosss(ev) {
+				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
-						
+
 						this.linkOthers(ev.head)
 						break;
 					case 1:
-						
+
 						uni.navigateTo({
 							url: "../pagesC/Shopping?shopid=" + ev.shopid
 						})
 						break;
 					case 2:
-						
+
 						uni.navigateTo({
 							url: "../pagesC/FlagshipDetail?id=" + ev.tc
 						})
 						break;
 					case 3:
-						
+
 						uni.switchTab({
 							url: "/pages/Home/About"
+						})
+						break;
+					case 4:
+						uni.setStorageSync("youhuijuan", ev)
+						uni.navigateTo({
+							url: "../pagesC/youhuijuan"
 						})
 						break;
 					default:
@@ -190,7 +201,7 @@
 			gaizhi(ev) {
 				this.current = ev.detail.current
 				if (ev.detail.current == this.lun_list.length - 1) {
-					
+
 				} else {
 					this.videoContext.pause()
 				}
@@ -206,9 +217,7 @@
 				});
 			},
 			alls() {
-				
 				this.clsList = uni.getStorageSync("icon").shop
-				
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
 						let aa = [];
@@ -219,18 +228,18 @@
 							}
 						})
 						this.lun_list = aa;
-					}else{
+						uni.stopPullDownRefresh();
+					} else {
 						this.lun_list = [];
 					}
 				})
-				
 				this.list.forEach(item => {
 					if (item.id == 0) {
 						this.$api.shopindex().then(data => {
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.forEach((items, index) => {
-									if(index <= 5){
+									if (index <= 5) {
 										item.data_list.push({
 											id: items.id,
 											isgo: false,
@@ -240,19 +249,20 @@
 											alls: items
 										})
 									}
-									
+
 								})
+								uni.stopPullDownRefresh();
 							}
 						})
 					} else if (item.id == 1) {
 						this.$api.loupanden({
-							pages:1,
-							limit:4
+							pages: 1,
+							limit: 4
 						}).then(data => {
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.data.forEach((items, index) => {
-									if(index <= 7){
+									if (index <= 7) {
 										item.data_list.push({
 											id: items.id,
 											isgo: false,
@@ -262,20 +272,21 @@
 											alls: items
 										})
 									}
-									
+
 								})
+								uni.stopPullDownRefresh();
 							}
 						})
 					} else if (item.id == 2) {
 						this.$api.qjset({
-							pages:1,
-							limit:4,
-							setid:13
+							pages: 1,
+							limit: 4,
+							setid: 13
 						}).then(data => {
 							if (data.data.code == 1) {
 								item.data_list = []
 								data.data.data.status.data.forEach((items, index) => {
-									if(index <= 7){
+									if (index <= 7) {
 										item.data_list.push({
 											id: items.id,
 											isgo: false,
@@ -285,13 +296,14 @@
 											alls: items
 										})
 									}
-									
+
 								})
+								uni.stopPullDownRefresh();
 							}
 						})
 					}
 				})
-				
+
 			},
 			toproduct(ev, index) {
 				if (index == 0) {
@@ -299,7 +311,7 @@
 						url: "../pagesC/Shopping?shopid=" + ev.id
 					})
 				} else if (index == 1) {
-					uni.setStorageSync("fdklfjdsfjsfhks",ev.alls)
+					uni.setStorageSync("fdklfjdsfjsfhks", ev.alls)
 					uni.navigateTo({
 						url: "../pagesC/DesignDetail"
 					})
@@ -310,7 +322,7 @@
 				}
 
 			},
-			
+
 			async tocar() {
 				if (await this.$login()) {
 					uni.navigateTo({
@@ -322,46 +334,13 @@
 				uni.navigateTo({
 					url: item.page
 				})
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.wrap {
-		
-		
-	}
+	.wrap {}
 
 	.cart-num {
 		width: 50rpx;
@@ -414,7 +393,7 @@
 		}
 	}
 
-	
+
 	.shop_list {
 		box-sizing: border-box;
 

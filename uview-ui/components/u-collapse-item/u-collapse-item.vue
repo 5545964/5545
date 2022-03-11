@@ -1,9 +1,10 @@
 <template>
 	<view class="u-collapse-item" :style="[itemStyle]">
-		<view :hover-stay-time="200" class="u-collapse-head" @tap.stop="headClick" :hover-class="hoverClass" :style="[headStyle]">
+		<view :hover-stay-time="200" class="u-collapse-head" @tap.stop="headClick" :hover-class="hoverClass"
+			:style="[headStyle]">
 			<block v-if="!$slots['title-all']">
 				<view v-if="isDot" class="dot">
-					
+
 				</view>
 				<view v-if="!$slots['title']" class="u-collapse-title u-line-1" :style="[{ textAlign: align ? align : 'left' },
 					isShow && activeStyle && !arrow ? activeStyle : '']">
@@ -12,7 +13,7 @@
 				<slot v-else name="title" />
 				<view class="u-icon-wrap">
 					<u-icon v-if="arrow" :color="arrowColor" :class="{ 'u-arrow-down-icon-active': isShow }"
-					 class="u-arrow-down-icon" name="arrow-down"></u-icon>
+						class="u-arrow-down-icon" name="arrow-down"></u-icon>
 				</view>
 			</block>
 			<slot v-else name="title-all" />
@@ -46,9 +47,9 @@
 		name: "u-collapse-item",
 		props: {
 			// 是否有点
-			isDot:{
-				type:Boolean,
-				default:false
+			isDot: {
+				type: Boolean,
+				default: false
 			},
 			// 标题
 			title: {
@@ -99,7 +100,7 @@
 				arrowColor: '', // 箭头的颜色
 				hoverClass: '', // 头部按下时的效果样式类
 				arrow: true, // 是否显示右侧箭头
-				
+
 			};
 		},
 		watch: {
@@ -116,7 +117,7 @@
 			// 异步获取内容，或者动态修改了内容时，需要重新初始化
 			init() {
 				this.parent = this.$u.$parent.call(this, 'u-collapse');
-				if(this.parent) {
+				if (this.parent) {
 					this.nameSync = this.name ? this.name : this.parent.childrens.length;
 					// 不存在时才添加本实例
 					!this.parent.childrens.includes(this) && this.parent.childrens.push(this);
@@ -170,7 +171,8 @@
 
 <style lang="scss" scoped>
 	@import "../../libs/css/style.components.scss";
-	.dot{
+
+	.dot {
 		width: 16rpx;
 		height: 16rpx;
 		background: #007399;
@@ -178,7 +180,7 @@
 		margin-left: 20rpx;
 		margin-right: 10rpx;
 	}
-	
+
 	.u-collapse-head {
 		position: relative;
 		@include vue-flex;

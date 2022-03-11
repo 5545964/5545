@@ -53,8 +53,9 @@
 						</view> -->
 					</view>
 					<u-collapse ref="collapse">
-						<u-collapse-item ref="collapseItem" :name="item1.id" :title="item1.title" :isDot="true"
-							v-for="(item1, index1) in kklkl" :key="index1">
+						<u-collapse-item @change="zhankai" ref="collapseItem" :name="item1.id" :title="item1.title"
+							:isDot="true" v-for="(item1, index1) in kklkl" :key="index1" :index="index1"
+							:open="item1.check">
 							<view class="item-container" v-for="item3 in item1.neirong" :key='item3.id'
 								@click="goshop(item3)">
 								<view class="right_view">
@@ -130,9 +131,6 @@
 
 <script>
 	export default {
-		onShow() {
-			this.getCate()
-		},
 		data() {
 			return {
 				zhongnum: 1,
@@ -155,6 +153,15 @@
 				shopList: [],
 			}
 		},
+		onLoad() {
+			console.log("jjjj");
+			uni.removeStorageSync('canpingindex');
+			uni.removeStorageSync('zhankai');
+		},
+		onShow() {
+			this.current = uni.getStorageSync("canpingindex") || 0;
+			this.getCate()
+		},
 		computed: {
 			shopListALL() {
 				let all = this.shopList
@@ -162,6 +169,10 @@
 			}
 		},
 		methods: {
+			zhankai(ev) {
+				console.log(ev);
+				uni.setStorageSync("zhankai", ev.index)
+			},
 			zhonghe() {
 				this.zhongnum = 1
 				this.xiaonum = 0
@@ -216,10 +227,8 @@
 				}
 			},
 			go_youhuijuan(ev) {
-				console.log(ev);
-				uni.setStorageSync("youhuijuan", ev)
 				uni.navigateTo({
-					url: "./youhuijuan"
+					url: "./youhuijuan?id="+ev.id
 				})
 			},
 			go_shop(ev) {
@@ -244,7 +253,7 @@
 						uni.navigateBack(-1)
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;
@@ -256,7 +265,7 @@
 				this.$api.seemore().then(data => {
 					if (data.data.code == 1) {
 						this.cateList = data.data.data.status
-						this.swichMenu(0)
+						this.swichMenu(this.current)
 					}
 				})
 			},
@@ -280,6 +289,7 @@
 			// 点击左边的栏目切换
 			async swichMenu(index) {
 				this.current = index;
+				uni.setStorageSync("canpingindex", index)
 				if (this.cateList[index].id == 31 || this.cateList[index].id == 32 || this.cateList[index].id == 33) {
 					this.mmok = 1
 					this.kklkl = []
@@ -300,6 +310,9 @@
 							aa[i]["neirong"] = data.data.data.status.data
 						}
 					}
+					this.cateList[index].child.forEach((item, index) => {
+						item["check"] = false
+					})
 					this.kklkl = []
 					this.kklkl = this.cateList[index].child
 					let aad = this.kklkl
@@ -312,10 +325,14 @@
 					this.$nextTick(() => {
 						this.$refs.collapse.init()
 					})
+					let asa = uni.getStorageSync("zhankai") || 0;
+					this.kklkl[asa].check = true
 				} else {
 					this.mmok = 2
 					this.destaoxi = []
-					this.$api.cupons().then(data => {
+					this.$api.cupons({
+						id:0
+					}).then(data => {
 						this.destaoxi = []
 						if (data.data.code == 1) {
 							this.destaoxi = data.data.data.status

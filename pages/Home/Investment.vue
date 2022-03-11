@@ -334,6 +334,19 @@
 				pages: 1,
 			}
 		},
+		onLoad(ev) {
+			if (ev.is_re == 1) {
+				setTimeout(()=>{
+					this.current = 16
+				},1000)
+			}
+		},
+		onPullDownRefresh() {
+			this.getstate();
+			this.enjoy()
+			this.enjoys()
+			this.getdesproMoenys()
+		},
 		onShow() {
 			this.list = uni.getStorageSync('icon').wanghong
 			this.list.forEach(item => {
@@ -344,7 +357,6 @@
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
 			this.change(uni.getStorageSync("ggug"))
-			
 			let aa = uni.getStorageSync("xieyi")
 			this.xieyi = []
 			aa.forEach(item => {
@@ -362,13 +374,6 @@
 			this.enjoy()
 			this.enjoys()
 			this.getdesproMoenys()
-		},
-		onLoad(ev) {
-			if (ev.is_re == 1) {
-				setTimeout(()=>{
-					this.current = 16
-				},1000)
-			}
 		},
 		onReachBottom(ev) {
 			if (this.current == 12) {
@@ -580,7 +585,7 @@
 					if (data.data.code == 1) {
 						if (data.data.data) {
 							this.allssssss = data.data.data.status
-							
+							uni.stopPullDownRefresh();
 						}
 					}
 				})
@@ -826,6 +831,7 @@
 					if (data.data.code == 1) {
 						this.recruit_all = data.data.data.status
 						this.parsesssss = this.recruit_all[0].content
+						uni.stopPullDownRefresh();
 					}
 				})
 				this.$api.desmode().then(data => {
@@ -834,6 +840,7 @@
 							item["check"] = false
 						})
 						this.modeList = data.data.data.status
+						uni.stopPullDownRefresh();
 					}
 				})
 			},
@@ -863,6 +870,7 @@
 						})
 						this.video = aa
 					}
+					uni.stopPullDownRefresh();
 				})
 
 			},

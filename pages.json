@@ -24,28 +24,32 @@
 			"path": "pages/Home/Shopping",
 			"style": {
 				"navigationBarTitleText": "商城",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true,
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{
 			"path": "pages/Home/About",
 			"style": {
 				"navigationBarTitleText": "关于宝芸邸",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true,
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{
 			"path": "pages/Home/Investment",
 			"style": {
 				"navigationBarTitleText": "招商加盟",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true,
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{
 			"path": "pages/Home/User",
 			"style": {
 				"navigationBarTitleText": "个人中心",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true,
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{

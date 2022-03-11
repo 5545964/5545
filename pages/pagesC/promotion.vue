@@ -19,10 +19,11 @@
 		<!-- 轮播 -->
 		<view class="lun_main">
 			<view class="">
-				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :indicator-dots="true"
-					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
+				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :indicator-dots="true" :circular="true"
+					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+						<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
+							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
@@ -67,16 +68,21 @@
 			this.$api.timeshop().then(data => {
 				if (data.data.code == 1) {
 					data.data.data.data.forEach((item, index) => {
-						// if (index <= 1) {
 						item["isgo"] = true;
-						// } else {
-						// item["isgo"] = false;
-						// }
+						item["cupons"] = false;
 						let aa = item.simage
 						item.simage = item.image
 						item.image = aa
 					})
-					this.data_list = [...data.data.data.data]
+					data.data.data.cupons.forEach((item, index) => {
+						item["isgo"] = true;
+						item["cupons"] = true;
+						item["xc_price"] = item.price
+						let aa = item.simage
+						item.simage = item.image
+						item.image = aa
+					})
+					this.data_list = [...data.data.data.data, ...data.data.data.cupons]
 				}
 			})
 			this.videoContext = uni.createVideoContext('video')
@@ -84,7 +90,7 @@
 		data() {
 			return {
 				videoContext: "",
-				autoplay:true,
+				autoplay: true,
 				imgurl: this.$imgPath,
 				current: 0,
 				title: "限时抢购",
@@ -92,7 +98,7 @@
 				data_list: [],
 			};
 		},
-		onUnload(){
+		onUnload() {
 
 		},
 		methods: {
@@ -106,9 +112,17 @@
 				this.autoplay = false
 			},
 			goshop(ev) {
-				uni.navigateTo({
-					url: "./Shopping?shopid=" + ev.id
-				})
+				if (ev.cupons) {
+					uni.navigateTo({
+						url: "./youhuijuan?id=" + ev.id
+					})
+				} else {
+					uni.navigateTo({
+						url: "./Shopping?shopid=" + ev.id
+					})
+				}
+
+
 			},
 			linkOthers(ev) {
 				uni.navigateTo({
@@ -116,7 +130,6 @@
 				});
 			},
 			gosss(ev) {
-
 				switch (Number(ev.link)) {
 					case 0:
 						// 网页跳转
@@ -136,8 +149,13 @@
 						break;
 					case 3:
 						// 关于宝芸邸
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/About"
+						})
+						break;
+					case 4:
+						uni.navigateTo({
+							url: "./youhuijuan?id=" + ev.cupons
 						})
 						break;
 					default:
@@ -163,7 +181,7 @@
 						uni.navigateBack(-1)
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;

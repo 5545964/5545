@@ -69,14 +69,23 @@
 		data() {
 			return {
 				youhuijuan: {},
-				list: []
+				list: [],
+				title:""
 			};
 		},
-		onLoad() {
-			this.youhuijuan = uni.getStorageSync("youhuijuan")
-			this.youhuijuan.image = this.youhuijuan.image.split(",");
-			this.youhuijuan.image.forEach(item => {
-				this.list.push(this.$imgPath + item)
+		onLoad(ev) {
+			this.$api.cupons({
+				id:ev.id
+			}).then(data => {
+				this.destaoxi = []
+				if (data.data.code == 1) {
+					this.youhuijuan = data.data.data.status[0]
+					this.youhuijuan.image = this.youhuijuan.image.split(",");
+					this.youhuijuan.image.forEach(item => {
+						this.list.push(this.$imgPath + item)
+					})
+					this.title = this.youhuijuan.name
+				}
 			})
 		},
 		methods: {
@@ -137,7 +146,7 @@
 						uni.navigateBack(-1)
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;

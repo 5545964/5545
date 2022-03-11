@@ -3,23 +3,46 @@
 		<view class="datas">
 			<view class="dsaada" v-if="index%2==0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image v-if="item.image != ''" :src="imgPath+item.image" mode="aspectFit"></image>
-					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
+					<image v-if="item.image != ''" :src="imgPath+item.image" mode="widthFix"></image>
+					<video style="height: 350rpx;" :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
+						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
+						@play="playing" :src="imgPath+item.video" controls></video>
 				</view>
-				<view class="ssj gghGG">
-					<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
+				<view class="cet">
+					<view class="ssj gghGG">
+						<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
+					</view>
 				</view>
-
+				<view style="padding: 20rpx 30rpx;" v-if="item.isgo">
+					<view class="fgfg">
+						￥{{item.xc_price}}
+					</view>
+					<view class="cxzcxz">
+						秒杀
+					</view>
+				</view>
 			</view>
 		</view>
 		<view class="datas">
 			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image v-if="item.image != ''" :src="imgPath+item.image" mode="aspectFit"></image>
-					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else  @play="playing" :src="imgPath+item.video" controls></video>
+					<image v-if="item.image != ''" :src="imgPath+item.image" mode="widthFix"></image>
+					<video style="height: 350rpx;" :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
+						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
+						@play="playing" :src="imgPath+item.video" controls></video>
 				</view>
-				<view class="ssj gghGG">
-					<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
+				<view class="cet">
+					<view class="ssj gghGG">
+						<text v-if="item.title">{{item.title}}</text><text v-else>{{item.name}}</text>
+					</view>
+				</view>
+				<view style="padding: 20rpx 30rpx;" v-if="item.isgo">
+					<view class="fgfg">
+						￥{{item.xc_price}}
+					</view>
+					<view class="cxzcxz">
+						秒杀
+					</view>
 				</view>
 			</view>
 		</view>
@@ -57,18 +80,35 @@
 					if (item.video != null && item.video != "") {
 						let temp = 'video' + item.id;
 						if (temp != currentId) {
-							uni.createVideoContext(temp,that).pause(); //暂停视频播放事件
+							uni.createVideoContext(temp, that).pause(); //暂停视频播放事件
 						}
 					}
-			
+
 				})
-			
+
 			},
 		}
 	};
 </script>
 
 <style lang="scss" scoped>
+	.cxzcxz {
+		margin: 20rpx 0;
+		width: fit-content;
+		padding: 8rpx 14rpx;
+		background: #FF716D;
+		border-radius: 6rpx;
+		font-size: 24rpx;
+		font-weight: 400;
+		color: #FFFFFF;
+	}
+
+	.fgfg {
+		font-size: 30rpx;
+		font-weight: 400;
+		color: #E11915;
+	}
+
 	.xccxcc {
 		font-size: 18rpx;
 		font-weight: 400;
@@ -127,10 +167,11 @@
 	.ssj {
 		text-align: center;
 		margin: 20rpx 0;
-		width: 293rpx;
+		width: 270rpx;
 		font-size: 24rpx;
 		font-weight: 400;
 		color: #000000;
+		overflow: hidden;
 	}
 
 	.datas {
@@ -142,7 +183,7 @@
 
 	.img {
 		width: 335rpx;
-		height: 350rpx;
+		// height: 350rpx;
 	}
 
 	.are {

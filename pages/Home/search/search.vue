@@ -59,8 +59,7 @@
 						
 						break;
 					case 3:
-						
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/About"
 						})
 						break;
@@ -92,7 +91,7 @@
 						uni.navigateBack(-1)
 						break;
 					case 1:
-						uni.switchTab({
+						uni.reLaunch({
 							url: "/pages/Home/Home"
 						})
 						break;

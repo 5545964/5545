@@ -16,9 +16,9 @@
 				this.path = ev.url
 			}
 			this.videoContext = uni.createVideoContext('video_play')
-			// setTimeout(()=>{
-			// 	this.ended()
-			// },1000)
+			setTimeout(()=>{
+				this.ended()
+			},1000)
 		},
 		data() {
 			return {
