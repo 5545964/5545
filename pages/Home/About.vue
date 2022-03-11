@@ -33,45 +33,53 @@
 							<view style="padding: 0 30rpx;">
 								<u-search bgColor="#f6f6f6" placeholder="输入关键字搜索" v-model="keyword"></u-search>
 							</view>
-							<view style="height: 30rpx;width: 100%;"/>
+							<view style="height: 30rpx;width: 100%;" />
 							<view style="height: 100%;">
 								<view class="papapa" style="height: 100%;">
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 20rpx 0;" v-for="(item,index) in datalist" :key="index"
+											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist" :key="index"
 												@click="changeTokens(index,item)">
-												<view :class="active==index?'mian_left_item':'mian_left_item1'">
-													{{item.title}}
+												<view :class="active==index?'mian_left_item':'mian_left_item1'" class="cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{item.title}}
+													</view>
 												</view>
 											</view>
 										</scroll-view>
 									</view>
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 20rpx 0;" v-for="(item,index) in datalist0"
+											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist0"
 												:key="index" @click="changeTokens0(index,item)">
-												<view :class="active0==index?'mian_left_item':'mian_left_item1'">
-													{{item.title}}
+												<view :class="active0==index?'mian_left_item':'mian_left_item1'" class="cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{item.title}}
+													</view>
 												</view>
 											</view>
 										</scroll-view>
 									</view>
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 20rpx 0;" v-for="(item,index) in datalist1"
+											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist1"
 												:key="index" @click="changeTokens1(index,item)">
-												<view :class="active1==index?'mian_left_item':'mian_left_item1'">
-													{{item.title}}
+												<view :class="active1==index?'mian_left_item':'mian_left_item1'" class="cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{item.title}}
+													</view>
 												</view>
 											</view>
 										</scroll-view>
 									</view>
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 20rpx 0;" v-for="(item,index) in datalist2"
+											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist2"
 												:key="index" @click="changeTokens2(index,item)">
-												<view :class="active2==index?'mian_left_item':'mian_left_item1'">
-													{{item.title}}
+												<view :class="active2==index?'mian_left_item':'mian_left_item1'" class="cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{item.title}}
+													</view>
 												</view>
 											</view>
 										</scroll-view>
@@ -164,7 +172,7 @@
 						content: ""
 					}
 				],
-				current: 3,
+				current: 0,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -253,6 +261,9 @@
 
 			},
 			changeTokens(index, item) {
+				this.active0 = 0
+				this.active1 = 0
+				this.active2 = 0
 				if (item.child) {
 					this.datalist0 = [...item.child]
 					if (this.datalist0[0].child) {

@@ -114,7 +114,7 @@
 				<image v-if="videoList !=''" src="../../static/icon_close_ico.png" @click="sanchuvideo()"
 					class="closeImg" mode="aspectFit">
 				</image>
-				<video style="width: 100%;margin: 30rpx 0;height: 400rpx;" v-if="videoList !=''"
+				<video :page-gesture="true" style="width: 100%;margin: 30rpx 0;height: 400rpx;" v-if="videoList !=''"
 					:src="vider+videoList"></video>
 				<image v-else src="../../static/icon_up_ico.png" @click="shanghcuanvideo" class="imgs" mode="aspectFit">
 				</image>

@@ -22,7 +22,7 @@
 				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :indicator-dots="true"
 					:circular="true" :autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video  id="video" @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+						<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended" v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>

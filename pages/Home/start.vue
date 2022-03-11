@@ -1,6 +1,6 @@
 <template>
 	<view class="start_page">
-		<video @ended="ended" id="video_play" :src="videosrc" :vslide-gesture-in-fullscreen="false" :loop="false"
+		<video :enable-play-gesture="true" :http-cache="false" codec="software" :play-strategy="1" @ended="ended" id="video_play" :src="videosrc" :vslide-gesture-in-fullscreen="false" :loop="false"
 			:autoplay="true" object-fit="cover" :page-gesture="false" :controls="false"
 			style="height: 100%;width: 100%"></video>
 		<view class="skip" @click="ended">

@@ -33,7 +33,7 @@
 					</image>
 				</swiper-item>
 				<swiper-item v-if="video">
-					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
+					<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
 						:src="imgPath+video"></video>
 				</swiper-item>
 			</swiper>

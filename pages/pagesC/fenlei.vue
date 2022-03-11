@@ -33,7 +33,7 @@
 					</view>
 				</swiper-item>
 				<swiper-item v-if="list.video != ''">
-					<video id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
+					<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
 						:src="img+list.video"></video>
 				</swiper-item>
 			</swiper>
