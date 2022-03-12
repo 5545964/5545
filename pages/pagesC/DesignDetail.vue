@@ -33,8 +33,8 @@
 					</image>
 				</swiper-item>
 				<swiper-item v-if="video">
-					<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
-						:src="imgPath+video"></video>
+					<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
+						style="width: 100%;height: 450rpx;" :src="imgPath+video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -47,7 +47,7 @@
 					</view>
 				</view>
 				<view class="question">
-				
+
 				</view>
 			</view>
 			<view class="question">
@@ -93,7 +93,7 @@
 	export default {
 		data() {
 			return {
-				imgPath:this.$imgPath,
+				imgPath: this.$imgPath,
 				disabled: false,
 				autoplay: true,
 				budakai: false,
@@ -202,7 +202,7 @@
 			allss() {
 				this.$api.loupanxq({
 					id: this.deta.id,
-					user_id: uni.getStorageSync("user_info").id
+					user_id: uni.getStorageSync("user_info").id||0
 				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = data.data.data.status
@@ -215,7 +215,7 @@
 						this.video = data.data.data.status.video
 						this.$api.desxq({
 							id: aa.des.id,
-							user_id: uni.getStorageSync("user_info").id
+							user_id: uni.getStorageSync("user_info").id||0
 						}).then(data => {
 							if (data.data.code == 1) {
 								this.des = {};
@@ -251,80 +251,90 @@
 					}, 500)
 				})
 				this.$api.loupanden({
-					limit: 4
+					limit: 30
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.tuijian = [...data.data.data.status];
+						data.data.data.status.data = data.data.data.status.data.sort(function() {
+							return (0.5 - Math.random());
+						});
+						this.tuijian = [...data.data.data.status.data];
 					}
 				})
 			},
 			// 选星星
-			xuanxinxin(ev) {
-
-				this.$api.star({
-					user_id: uni.getStorageSync("user_info").id,
-					des_id: ev.id,
-					star: ev.star
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
+			async xuanxinxin(ev) {
+				console.log(ev);
+				if (await this.$login()) {
+					this.$api.star({
+						user_id: uni.getStorageSync("user_info").id,
+						des_id: ev.id,
+						star: ev.star
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none"
+						})
 					})
-				})
+				}
 			},
 			//点赞
-			dianzhan(ev) {
-
-				this.budakai = false;
-				let aa = ""
-				if (ev.zans != null && ev.zans != '') {
-					aa = 1
-				} else {
-					aa = 0
-				}
-				this.$api.zan({
-					type: aa,
-					user_id: uni.getStorageSync("user_info").id,
-					video_id: ev.id,
-					state: 1
-				}).then(data => {
-					if (data.data.code == 1) {
-						// this.allss()
-
-						if (aa == 0) {
-							this.des.zan = this.des.zan + 1
-							this.des.zans = {
-								name: 'kkkkkkk'
-							}
-						} else {
-							this.des.zan = this.des.zan - 1
-							this.des.zans = null
-						}
+			async dianzhan(ev) {
+				console.log(ev);
+				if (await this.$login()) {
+					this.budakai = false;
+					let aa = ""
+					if (ev.zans != null && ev.zans != '') {
+						aa = 1
+					} else {
+						aa = 0
 					}
-				})
+					this.$api.zan({
+						type: aa,
+						user_id: uni.getStorageSync("user_info").id,
+						video_id: ev.id,
+						state: 1
+					}).then(data => {
+						if (data.data.code == 1) {
+							// this.allss()
+
+							if (aa == 0) {
+								this.des.zan = this.des.zan + 1
+								this.des.zans = {
+									name: 'kkkkkkk'
+								}
+							} else {
+								this.des.zan = this.des.zan - 1
+								this.des.zans = null
+							}
+						}
+					})
+				}
 			},
 			//关注
-			guanzhu(ev) {
-				this.$api.desfollow({
-					user_id: uni.getStorageSync("user_info").id,
-					tes_id: ev.id
-				}).then(data => {
-					uni.showToast({
-						title: data.data.msg,
-						duration: 1000,
-						icon: "none"
-					})
-					this.budakai = false;
-					if (data.data.code == 1) {
-						// this.allss()
-						if (this.des.follows != 0) {
-							this.des.follows = 0
-						} else {
-							this.des.follows = 1
+			async guanzhu(ev) {
+				console.log(ev);
+				if (await this.$login()) {
+					this.$api.desfollow({
+						user_id: uni.getStorageSync("user_info").id,
+						tes_id: ev.id
+					}).then(data => {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none"
+						})
+						this.budakai = false;
+						if (data.data.code == 1) {
+							// this.allss()
+							if (this.des.follows != 0) {
+								this.des.follows = 0
+							} else {
+								this.des.follows = 1
+							}
 						}
-					}
-				})
+					})
+				}
 			},
 			govr() {
 				// pages/Home/URL/URL
@@ -339,7 +349,6 @@
 			},
 			pinglun(ev) {
 				let aa = ev
-
 				this.pinglun_list = ev.pl;
 				this.itemsss = aa;
 				if (this.budakai) {

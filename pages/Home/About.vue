@@ -137,15 +137,14 @@
 					我们的服务。
 				</view>
 				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
-						:key="index">
+					<view class="cet" style="margin:10rpx 0;justify-content: end;">
 						<view style="width:30%;display:flex;justify-content: flex-end;">
-							<view class="yuan" @click="hahaha(item)">
-								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							<view class="yuan" @click="hahaha(tanchaung)">
+								<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 							</view>
 						</view>
-						<view class="mingcheng" @click="fuwenben(item)">
-							《{{item.name}}》
+						<view class="mingcheng" @click="shouURl(tanchaung)">
+							《{{tanchaung.name}}》
 						</view>
 					</view>
 				</view>
@@ -153,9 +152,25 @@
 					<view class="hkhnij" @click="yuedu = false">
 						取消
 					</view>
-					<view class="hkhnij jjhgj" @click="tongyixieyi()">
+					<view class="hkhnij jjhgj" @click="tongyixieyi(tanchaung)">
 						同意
 					</view>
+				</view>
+			</view>
+		</u-popup>
+		<u-popup width="500" border-radius="30" v-model="yuedus" mode="center">
+			<view class="yueduwo">
+				<view class="texts">
+					{{qianyue}}
+				</view>
+				<view class="textsss">
+					{{huxing}}
+				</view>
+				<view class="llll" @click="llll">
+					楼盘设计
+				</view>
+				<view class="kkkk" @click="kkkk">
+					户型攻略
 				</view>
 			</view>
 		</u-popup>
@@ -170,6 +185,11 @@
 	export default {
 		data() {
 			return {
+				idid: "",
+				loupanid: "",
+				qianyue: "",
+				huxing: "",
+				yuedus: false,
 				yuedu: false,
 				xieyi: [],
 				keyword: "",
@@ -214,7 +234,7 @@
 						content: ""
 					}
 				],
-				current: 3,
+				current: 0,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -225,7 +245,8 @@
 				active1: 0,
 				datalist1: [],
 				active2: 0,
-				datalist2: []
+				datalist2: [],
+				tanchaung: {}
 			};
 		},
 		onLoad() {
@@ -238,20 +259,21 @@
 			this.active2 = 0
 			const res = uni.getSystemInfoSync();
 			this.heigth = res.windowHeight;
-			let aa = uni.getStorageSync("xieyi")
-			if (aa) {
-				this.xieyi = [];
-				aa.forEach(item => {
-					if (item.state == 2) {
-						this.xieyi.push(item)
-					}
-				})
-			}
 		},
 		onPullDownRefresh() {
 			this.alls()
 		},
 		methods: {
+			kkkk() {
+				uni.navigateTo({
+					url: "../pagesC/HouseDesign?current=2"
+				})
+			},
+			llll() {
+				uni.navigateTo({
+					url: "../pagesC/HouseDesign"
+				})
+			},
 			// 康复文本
 			fuwenben(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
@@ -264,7 +286,23 @@
 				item.check = !item.check
 			},
 			// 同意协议
-			tongyixieyi() {
+			tongyixieyi(ev) {
+				if (ev.check) {
+					this.$api.tjsq({
+						user_id: uni.getStorageSync("user_info").id,
+						bid: this.loupanid,
+						sole_type: this.idid
+					}).then(data => {
+						if (data.data.code == 1) {
+
+						}
+					})
+				} else {
+					uni.showToast({
+						title: "请阅读并同意协议",
+						icon: "none"
+					})
+				}
 
 			},
 			lp(ev) {
@@ -273,6 +311,10 @@
 					id: ev
 				}).then(data => {
 					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
+							item["name"] = item.title + "的相关协议"
+						})
 						this.datalist2 = data.data.data.status
 					} else {
 						this.datalist2 = []
@@ -283,10 +325,10 @@
 				this.$api.map().then(data => {
 					if (data.data.code == 1) {
 						this.datalist = [...data.data.data.status]
-						if (this.datalist.child) {
-							this.datalist0 = [...this.datalist.child]
-							if (this.datalist0.child) {
-								this.datalist1 = [...this.datalist0.child]
+						if (this.datalist[0].child) {
+							this.datalist0 = [...this.datalist[0].child]
+							if (this.datalist0[0].child) {
+								this.datalist1 = [...this.datalist0[0].child]
 								this.lp(this.datalist1[0].id)
 							}
 						}
@@ -317,9 +359,34 @@
 
 			},
 			changeTokens2(index, item) {
-				console.log(index, item);
-				if (this.xieyi.length > 0) {
-					this.yuedu = true;
+				this.loupanid = item.id
+				let aa = uni.getStorageSync("user_info")
+				item.check = false
+				this.tanchaung = item
+				if (aa) {
+					if (item.sign_did == 0) {
+						if (aa.des != 0) {
+							this.yuedu = true
+							this.idid = 1
+						}
+						return
+					}
+					if (item.sign_bid == 0) {
+						if (aa.bbs.id != 0) {
+							this.yuedu = true
+							this.idid = 0
+						}
+						return
+					}
+					if (item.sign_bid == aa.id || item.sign_did == aa.id) {
+						this.qianyue = "您的申请已通过"
+						this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
+						this.yuedus = true;
+						return
+					}
+					this.qianyue = "该楼盘已被签约"
+					this.huxing = "该楼盘已被其他设计师签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+					this.yuedus = true;
 				}
 				this.active2 = index
 			},
@@ -346,7 +413,7 @@
 				this.active2 = 0
 				if (item.child) {
 					this.datalist0 = [...item.child]
-					if (this.datalist0[0].child) {
+					if (this.datalist0[0].child.length != 0) {
 						this.datalist1 = [...this.datalist0[0].child]
 						this.lp(this.datalist1[0].id)
 					}
@@ -376,6 +443,31 @@
 <style lang="scss" scoped>
 	.yueduwo {
 		background-color: #FFFFFF;
+
+		.kkkk {
+			margin: 30rpx;
+			height: 70rpx;
+			line-height: 70rpx;
+			background: #E6F1F5;
+			border: 2rpx solid #007399;
+			border-radius: 35rpx;
+			font-size: 26rpx;
+			font-weight: 400;
+			color: #007399;
+			text-align: center;
+		}
+
+		.llll {
+			margin: 30rpx;
+			height: 70rpx;
+			line-height: 70rpx;
+			background: #007399;
+			border-radius: 35rpx;
+			text-align: center;
+			font-size: 26rpx;
+			font-weight: 400;
+			color: #FFFFFF;
+		}
 
 		.jjhgj {
 			color: #2979ff;
@@ -419,11 +511,26 @@
 			font-size: 30rpx;
 		}
 
+		.textsss {
+			padding: 0 26rpx;
+			text-align: center;
+			font-size: 28rpx;
+			font-weight: 400;
+			color: #333333;
+		}
+
 		.text {
 			text-align: center;
 			line-height: 100rpx;
 			font-weight: bold;
 			font-size: 30rpx;
+		}
+
+		.texts {
+			text-align: center;
+			line-height: 100rpx;
+			font-weight: bold;
+			font-size: 36rpx;
 		}
 	}
 

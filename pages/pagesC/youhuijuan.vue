@@ -70,12 +70,12 @@
 			return {
 				youhuijuan: {},
 				list: [],
-				title:""
+				title: ""
 			};
 		},
 		onLoad(ev) {
 			this.$api.cupons({
-				id:ev.id
+				id: ev.id
 			}).then(data => {
 				this.destaoxi = []
 				if (data.data.code == 1) {
@@ -89,45 +89,48 @@
 			})
 		},
 		methods: {
-			goumai() {
-				this.$api.paycupons({
-					user_id: uni.getStorageSync("user_info").id,
-					coupons_id: this.youhuijuan.id
-				}).then(res => {
-					if (res.data.code == 200) {
-						let that = this;
-						uni.requestPayment({
-							timeStamp: res.data.data.timeStamp,
-							nonceStr: res.data.data.nonceStr,
-							package: res.data.data.package,
-							signType: res.data.data.signType,
-							paySign: res.data.data.paySign,
-							success: function(res) {
-								uni.showToast({
-									title: "支付成功",
-									icon: "none",
-								});
-								setTimeout(() => {
-									uni.reLaunch({
-										url: "../pagesA/gongju4"
-									})
-								}, 800)
+			async goumai() {
+				if (await this.$login()) {
 
-							},
-							fail: function(err) {
-								uni.showToast({
-									title: "支付失败",
-									icon: "none",
-								});
-							},
-						});
-					} else {
-						uni.showToast({
-							title: res.data.msg,
-							icon: "none",
-						});
-					}
-				})
+					this.$api.paycupons({
+						user_id: uni.getStorageSync("user_info").id,
+						coupons_id: this.youhuijuan.id
+					}).then(res => {
+						if (res.data.code == 200) {
+							let that = this;
+							uni.requestPayment({
+								timeStamp: res.data.data.timeStamp,
+								nonceStr: res.data.data.nonceStr,
+								package: res.data.data.package,
+								signType: res.data.data.signType,
+								paySign: res.data.data.paySign,
+								success: function(res) {
+									uni.showToast({
+										title: "支付成功",
+										icon: "none",
+									});
+									setTimeout(() => {
+										uni.reLaunch({
+											url: "../pagesA/gongju4"
+										})
+									}, 800)
+
+								},
+								fail: function(err) {
+									uni.showToast({
+										title: "支付失败",
+										icon: "none",
+									});
+								},
+							});
+						} else {
+							uni.showToast({
+								title: res.data.msg,
+								icon: "none",
+							});
+						}
+					})
+				}
 			},
 			kansss(ev) {
 				let that = this;

@@ -4,7 +4,7 @@
 			<view class="dsaada" v-if="index%2==0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
 					<image v-if="item.image != ''" :src="imgPath+item.image" mode="widthFix"></image>
-					<video style="height: 350rpx;" :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
+					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
 						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
 						@play="playing" :src="imgPath+item.video" controls></video>
 				</view>
@@ -27,7 +27,7 @@
 			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
 					<image v-if="item.image != ''" :src="imgPath+item.image" mode="widthFix"></image>
-					<video style="height: 350rpx;" :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
+					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
 						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
 						@play="playing" :src="imgPath+item.video" controls></video>
 				</view>
@@ -183,7 +183,7 @@
 
 	.img {
 		width: 335rpx;
-		// height: 350rpx;
+		height: 350rpx;
 	}
 
 	.are {

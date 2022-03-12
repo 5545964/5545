@@ -59,7 +59,7 @@
 			<view class="be_main" style="height: 100%;" v-if="state<0">
 				<view class="be_designer">
 				</view>
-				<image style="width: 100%;" :src="dasdsdas+mmmmmm" mode="widthFix">
+				<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix">
 				</image>
 				<view class="be_foot" v-if="yanzhengtanchaung">
 					<view class="pay" @click="ananana(0)">
@@ -378,8 +378,20 @@
 			}
 		},
 		methods: {
-			rre(ev) {
-
+			kan(ev) {
+				let aa = this.dasdsdas + this.mmmmmm
+				uni.previewImage({
+					urls: [aa],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {
+							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
+						}
+					}
+				});
 			},
 			// 验证弹窗
 			// 协议同意按钮
@@ -474,7 +486,7 @@
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

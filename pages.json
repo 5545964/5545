@@ -346,6 +346,14 @@
 						"enablePullDownRefresh": false,
 						"navigationStyle": "custom"
 					}
+				}, {
+					"path": "redsuccess",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+					}
+
 				}
 			]
 		},

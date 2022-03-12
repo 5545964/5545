@@ -14,7 +14,7 @@
 				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 					@dianzhan="dianzhan">
 				</u-video>
-				<u-empty  text="数据更新中，敬请期待！" v-else></u-empty>
+				<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 			</view>
 			<!-- 设计大咖 -->
 			<view class="" style="height: 100%;" v-if="current==13">
@@ -49,7 +49,7 @@
 				<view class="be_main" style="height: 100%;" v-if="state<0">
 					<view class="be_designer">
 					</view>
-					<image style="width: 100%;" :src="dasdsdas+mmmmmm" mode="widthFix">
+					<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix">
 					</image>
 					<view class="be_foot" v-if="yanzhengtanchaung">
 						<view class="pay" @click="ananana(0)">
@@ -67,7 +67,7 @@
 							成为2级设计师会员
 						</view>
 					</view>
-					<view style="height: 110rpx;" class=""/>
+					<view style="height: 110rpx;" class="" />
 				</view>
 				<!-- 驳回 -->
 				<view class="reject" v-if="state==2">
@@ -268,7 +268,7 @@
 					}
 				],
 				tupianwo: "",
-				
+
 				yanzhengtanchaung: true,
 				yuedu: false,
 				xieyi: [],
@@ -277,7 +277,7 @@
 				shoujihao: uni.getStorageSync("user_info").mobile,
 				code: "",
 				huoqu: "获取验证码",
-				
+
 				diandedijige: 0,
 				modeList: [],
 				mobanid: [
@@ -297,7 +297,7 @@
 				dianzhansssss: false,
 				active: 0,
 				desinfo: {},
-				state: -1, 
+				state: -1,
 				showContract: false,
 				pay: "",
 				value1: "",
@@ -336,9 +336,9 @@
 		},
 		onLoad(ev) {
 			if (ev.is_re == 1) {
-				setTimeout(()=>{
+				setTimeout(() => {
 					this.current = 16
-				},1000)
+				}, 1000)
 			}
 		},
 		onPullDownRefresh() {
@@ -369,7 +369,7 @@
 			} else {
 				this.yanzhengtanchaung = false;
 			}
-			
+
 			this.getstate();
 			this.enjoy()
 			this.enjoys()
@@ -385,11 +385,21 @@
 			changes(index) {
 				this.currents = index
 			},
-			rre(ev) {
-
+			kan(ev) {
+				let aa = this.dasdsdas + this.mmmmmm
+				uni.previewImage({
+					urls: [aa],
+					longPressActions: {
+						itemList: ['发送给朋友', '保存图片', '收藏'],
+						success: function(data) {
+							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						},
+						fail: function(err) {
+							console.log(err.errMsg);
+						}
+					}
+				});
 			},
-			
-			
 			xieyitongyi(ev) {
 				if (ev == 1) {
 					let mm = 0
@@ -419,23 +429,23 @@
 				}
 
 			},
-			
+
 			fuwenben(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.name
 				})
 			},
-			
+
 			hahaha(item) {
 				item.check = !item.check
 			},
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
 			tongyixieyi(ev) {
 				if (this.xieyi.length > 0) {
 					this.yuedu = true;
@@ -444,17 +454,17 @@
 					this.yuedu = false;
 				}
 			},
-			
+
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-						
+
 						this.$api.emsyzphone({
 							phone: this.shoujihao,
 							yzm: this.code
 						}).then(data => {
-							
-								if (true) {
+
+							if (true) {
 								this.shoujiyanzheng = false
 								this.getcontein(this.diandedijige)
 							} else {
@@ -476,12 +486,12 @@
 					this.shoujiyanzheng = false;
 				}
 			},
-			
+
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({
@@ -508,7 +518,7 @@
 					})
 				}
 			},
-			
+
 			hahahaa(ev) {
 				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
@@ -518,7 +528,7 @@
 					})
 				}
 			},
-			
+
 			ananana(ev) {
 
 				this.diandedijige = ev
@@ -547,7 +557,8 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach((item, index) => {
-								console.log(item.createtime,this.$u.timeFormat(item.createtime, 'yyyy-mm-dd'));
+								console.log(item.createtime, this.$u.timeFormat(item.createtime,
+									'yyyy-mm-dd'));
 								item.createtime = item.createtime * 1000
 								item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
 								item.label = item.label ? item.label.split(",") : ""
@@ -576,7 +587,7 @@
 				let aa = ev - 1
 				this.tit = this.options1[aa].label
 				this.dessel(aa)
-				
+
 			},
 			getdesproMoenys() {
 				this.$api.desproMoenys({
@@ -653,7 +664,7 @@
 					this.dianzhansssss = false
 				}
 			},
-			
+
 			navgepage(item) {
 
 				uni.navigateTo({
@@ -669,7 +680,7 @@
 			pinglun() {
 				this.showComment = true;
 			},
-			
+
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					let type = ev.zans ? 1 : 0;
@@ -681,12 +692,12 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							ev.iszan = !ev.iszan
-							
+
 						}
 					})
 				}
 			},
-			
+
 			async collection(ev) {
 				if (await this.$login()) {
 					let state = ev.isfollow ? 1 : 0;
@@ -703,7 +714,7 @@
 					})
 				}
 			},
-			
+
 			toReg() {
 				this.showContract = false;
 				let aa = 0
@@ -713,7 +724,7 @@
 					aa = 3
 				}
 				uni.navigateTo({
-					
+
 					url: "../pagesD/regDesigner/regDesigner?nageid=" + aa
 
 				})
@@ -723,7 +734,7 @@
 				this.parsesssss = item.content
 
 			},
-			
+
 			async getcontein(ev) {
 
 				if (await this.$login()) {
@@ -732,29 +743,29 @@
 						provider: 'weixin',
 						tmplIds: that.mobanid,
 						complete: function(res) {
-							
+
 							that.diandedijige = ev;
 
-							
-							
-							
+
+
+
 							if (Number(that.allssssss[ev].money) > 0) {
-								
+
 								that.$api.ispay({
 									id: that.allssssss[ev].id,
 									user_id: uni.getStorageSync("user_info").id
 								}).then(data => {
-									
-									
+
+
 									if (data.data.code == 1) {
-										
+
 										that.toReg()
 									} else {
-										
+
 										that.pays()
 									}
-									
-									
+
+
 								})
 							} else {
 								that.toReg()
@@ -765,13 +776,13 @@
 
 				}
 			},
-			
+
 			looks(url) {
 				if (url.indexOf("http") == -1) {
 					url = this.$imgPath + url
 				}
 				uni.downloadFile({
-					
+
 					url: url,
 					success(res) {
 						const filePath = res.tempFilePath;
@@ -782,7 +793,7 @@
 					}
 				})
 			},
-			
+
 			pays() {
 				let that = this
 				let aa = 0
@@ -792,21 +803,21 @@
 					aa = 3
 				}
 				that.$api.buylevel({
-					
+
 					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
 					if (res.data.code == 400) {
 						that.toReg()
 					}
-					
+
 					if (res.data.code == 200) {
 						uni.requestPayment({
-							timeStamp: res.data.data.timeStamp, 
-							nonceStr: res.data.data.nonceStr, 
-							package: res.data.data.package, 
-							signType: res.data.data.signType, 
-							paySign: res.data.data.paySign, 
+							timeStamp: res.data.data.timeStamp,
+							nonceStr: res.data.data.nonceStr,
+							package: res.data.data.package,
+							signType: res.data.data.signType,
+							paySign: res.data.data.paySign,
 							success: function(res) {
 								uni.showToast({
 									title: "支付成功",
@@ -823,9 +834,9 @@
 						})
 					}
 				})
-				
+
 			},
-			
+
 			enjoys() {
 				this.$api.recruit().then(data => {
 					if (data.data.code == 1) {
@@ -874,7 +885,7 @@
 				})
 
 			},
-			
+
 			dessel(ev) {
 				this.$api.dessel({
 					order: ev
@@ -904,7 +915,7 @@
 					this.getstate()
 				}
 			},
-			
+
 			getstate() {
 				this.$api.despro({
 					user_id: uni.getStorageSync("user_info").id
@@ -917,7 +928,7 @@
 					}
 				})
 			},
-			
+
 			lookcont() {
 				this.$api.desmyuser({
 					user_id: uni.getStorageSync("user_info").id,
@@ -936,7 +947,6 @@
 </script>
 
 <style lang="scss" scoped>
-	
 	.paixu {
 		background: #FFFFFF;
 		display: flex;
@@ -961,7 +971,7 @@
 		}
 	}
 
-	
+
 	.klks {
 		text-align: center;
 		line-height: 100rpx;
@@ -1052,16 +1062,8 @@
 		padding-bottom: 20rpx;
 	}
 
-	
-	.be_designer {
-		
-		
-		
-		
-		
-		
-		
-	}
+
+	.be_designer {}
 
 	.be_foot {
 		display: flex;
@@ -1070,21 +1072,21 @@
 		background-color: #FFFFFF;
 		width: 100%;
 		height: 110rpx;
-		
-		
+
+
 	}
 
 	.pay {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
+
+
+
+
 		padding: 20rpx 40rpx;
 		background: #007399;
 		border-radius: 35rpx;
@@ -1137,7 +1139,7 @@
 		}
 	}
 
-	
+
 	.contract_main {
 		display: flex;
 		flex-direction: column;
@@ -1162,7 +1164,7 @@
 		}
 	}
 
-	
+
 	.tokens {
 		.mian {
 			display: flex;
@@ -1172,7 +1174,7 @@
 
 			.mian_left {
 				width: 100rpx;
-				
+
 				max-height: 1900rpx;
 				overflow: hidden;
 			}
@@ -1406,7 +1408,7 @@
 		color: #FFFFFF;
 	}
 
-	
+
 	.yueduwo {
 		background-color: #FFFFFF;
 
@@ -1478,6 +1480,4 @@
 			margin: 0;
 		}
 	}
-
-	
 </style>

@@ -123,6 +123,7 @@
 				//
 				//
 				//
+				name:"",
 				mnbv: "",
 				jshdsfdfs: false,
 				shoujihao: uni.getStorageSync("user_info").mobile,
@@ -258,7 +259,7 @@
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({
@@ -335,12 +336,16 @@
 									icon: "success"
 								})
 								setTimeout(() => {
-									uni.navigateBack(-1)
+									uni.navigateTo({
+										url: "./redsuccess?level="+that.id+"&name="+that.name
+									})
 								}, 1000)
 
 							},
 							fail: function(err) {
-
+								uni.navigateTo({
+									url: "./redsuccess?level="+that.id+"&name="+that.name
+								})
 								uni.showToast({
 									title: "支付失败",
 									icon: "none"
@@ -362,6 +367,8 @@
 						this.list = [...data.data.data.status]
 						this.jiage = this.list[0].money;
 						this.id = this.list[0].id
+						this.types = this.list[0].type
+						this.name = this.list[0].type
 						setTimeout(() => {
 							this.gaodu(0)
 						}, 500)
@@ -381,7 +388,8 @@
 			lunbo(ev) {
 				this.jiage = this.list[ev.detail.current].money;
 				this.id = this.list[ev.detail.current].id;
-				this.types = this.list[ev.detail.current].type
+				this.types = this.list[ev.detail.current].type;
+				this.name = this.list[ev.detail.current].name;
 				this.gaodu(ev.detail.current)
 			},
 			back(ev) {

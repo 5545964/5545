@@ -1,6 +1,12 @@
 import request from "./request.js"
 
 export default {
+	tjsq(params = {}) {
+		return request.post("/api/bydidentity/tjsq", params);
+	},
+	sqb(params = {}) {
+		return request.post("/api/bydidentity/sqb", params);
+	},
 	lpmap(params = {}) {
 		return request.post("/api/bydshop/lpmap", params);
 	},

@@ -77,16 +77,6 @@
 			this.scrollTop = e.scrollTop;
 		},
 		methods: {
-			getMoble() {
-				var prefixArray = new Array("130", "131", "183", "132", "133", "135", "137", "138", "170", "187", "189",
-					"176", "182");
-				var i = parseInt(10 * Math.random());
-				var prefix = prefixArray[i];
-				for (var j = 0; j < 8; j++) {
-					prefix = prefix + Math.floor(Math.random() * 10);
-				}
-				return prefix;
-			},
 			budenglugengxin() {
 				this.showssss = uni.getStorageSync("showssss")
 				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {

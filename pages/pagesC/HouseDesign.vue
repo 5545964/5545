@@ -48,8 +48,12 @@
 			};
 		},
 		onLoad(ev) {
+			console.log(ev);
 			if(ev.title){
 				this.title = ev.title
+			}
+			if(ev.current){
+					this.current = ev.current
 			}
 		},
 		onReachBottom(ev) {
@@ -82,6 +86,7 @@
 			change(index) {
 				this.pages = 1
 				this.current = index
+				this.title = this.list[index].name
 			},
 			back(ev) {
 				switch (ev) {

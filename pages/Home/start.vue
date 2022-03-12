@@ -18,7 +18,7 @@
 			this.videoContext = uni.createVideoContext('video_play')
 			setTimeout(()=>{
 				this.ended()
-			},1000)
+			},9500)
 		},
 		data() {
 			return {

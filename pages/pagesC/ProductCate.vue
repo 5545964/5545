@@ -154,7 +154,6 @@
 			}
 		},
 		onLoad() {
-			console.log("jjjj");
 			uni.removeStorageSync('canpingindex');
 			uni.removeStorageSync('zhankai');
 		},
@@ -315,13 +314,11 @@
 					})
 					this.kklkl = []
 					this.kklkl = this.cateList[index].child
-					let aad = this.kklkl
-					for (let i in aad) {
-						aad[i].neirong = aad[i].neirong.sort(function(a, b) {
+					for (let i in this.kklkl) {
+						this.kklkl[i].neirong = this.kklkl[i].neirong.sort(function(a, b) {
 							return b.xc_price - a.xc_price
 						})
 					}
-					this.kklkl = [...aad]
 					this.$nextTick(() => {
 						this.$refs.collapse.init()
 					})
