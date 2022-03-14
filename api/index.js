@@ -1,6 +1,12 @@
 import request from "./request.js"
 
 export default {
+	likelp(params = {}) {
+		return request.post("/api/bydshop/likelp", params);
+	},
+	mapstation(params = {}) {
+		return request.post("/api/bydshop/mapstation", params);
+	},
 	tjsq(params = {}) {
 		return request.post("/api/bydidentity/tjsq", params);
 	},

@@ -31,15 +31,65 @@
 							<view class="xian" style="margin: 0 30rpx;"></view>
 							<view style="height: 20rpx;padding: 0 30rpx;"></view>
 							<view style="padding: 0 30rpx;">
-								<u-search bgColor="#f6f6f6" placeholder="输入关键字搜索" v-model="keyword"></u-search>
+								<u-search bgColor="#f6f6f6" placeholder="输入关键字搜索" v-model="keyword" @search="like">
+								</u-search>
 							</view>
 							<view style="height: 30rpx;width: 100%;" />
 							<view style="height: 100%;">
+								<view class="papapa" v-if="lickc.length!=0"
+									style="margin-bottom:30rpx;border-bottom: 1px solid #007399;padding-bottom:10rpx;">
+									<view class="mian_left">
+										<scroll-view scroll-y="true" style="height: 100%;">
+											<view style="margin-bottom:20rpx;">
+												<view class="mian_left_item cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{lickc[0].title}}
+													</view>
+												</view>
+											</view>
+										</scroll-view>
+									</view>
+									<view class="mian_left">
+										<scroll-view scroll-y="true" style="height: 100%;">
+											<view style="margin-bottom:20rpx;">
+												<view class="mian_left_item cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{lickc[1].title}}
+													</view>
+												</view>
+											</view>
+										</scroll-view>
+									</view>
+									<view class="mian_left">
+										<scroll-view scroll-y="true" style="height: 100%;">
+											<view style="margin-bottom:20rpx;">
+												<view class="mian_left_item cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{lickc[2].title}}
+													</view>
+												</view>
+											</view>
+										</scroll-view>
+									</view>
+									<view class="mian_left">
+										<scroll-view scroll-y="true" style="height: 100%;">
+											<view style="margin-bottom:20rpx;" v-for="(item,index) in lickc[3]"
+												:key="index" @click="lidsadsa(index,item)">
+												<view :class="active22==index?'mian_left_item':'mian_left_item1'"
+													class="cet">
+													<view style="width:100rpx;text-align: left;line-height:35rpx;">
+														{{item.title}}
+													</view>
+												</view>
+											</view>
+										</scroll-view>
+									</view>
+								</view>
 								<view class="papapa" style="height: 100%;">
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist" :key="index"
-												@click="changeTokens(index,item)">
+											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist"
+												:key="index" @click="changeTokens(index,item)">
 												<view :class="active==index?'mian_left_item':'mian_left_item1'"
 													class="cet">
 													<view style="width:100rpx;text-align: left;line-height:35rpx;">
@@ -51,7 +101,7 @@
 									</view>
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist0"
+											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist0"
 												:key="index" @click="changeTokens0(index,item)">
 												<view :class="active0==index?'mian_left_item':'mian_left_item1'"
 													class="cet">
@@ -64,7 +114,7 @@
 									</view>
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist1"
+											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist1"
 												:key="index" @click="changeTokens1(index,item)">
 												<view :class="active1==index?'mian_left_item':'mian_left_item1'"
 													class="cet">
@@ -77,7 +127,7 @@
 									</view>
 									<view class="mian_left">
 										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin: 40rpx 0;" v-for="(item,index) in datalist2"
+											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist2"
 												:key="index" @click="changeTokens2(index,item)">
 												<view :class="active2==index?'mian_left_item':'mian_left_item1'"
 													class="cet">
@@ -122,19 +172,14 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
-		<!-- 服务协议和隐私政策 -->
+
 		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
 			<view class="yueduwo">
 				<view class="text">
 					服务协议和隐私政策
 				</view>
 				<view class="textss">
-					感谢您使用宝芸邸，我们会严格
-					按照法律规定存储和使用您的个人
-					信息。您可以阅读以下几项条款了
-					解详细信息。如您同意，请勾选以
-					下几项条款并点击”同意”开始接受
-					我们的服务。
+					感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下协议了解详细信息。如您同意，请勾选协议并点击”同意”开始接受我们的服务。
 				</view>
 				<view style="padding:20rpx 0;">
 					<view class="cet" style="margin:10rpx 0;justify-content: end;">
@@ -143,7 +188,7 @@
 								<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 							</view>
 						</view>
-						<view class="mingcheng" @click="shouURl(tanchaung)">
+						<view class="mingcheng" @click="shouURls(tanchaung)">
 							《{{tanchaung.name}}》
 						</view>
 					</view>
@@ -158,6 +203,7 @@
 				</view>
 			</view>
 		</u-popup>
+
 		<u-popup width="500" border-radius="30" v-model="yuedus" mode="center">
 			<view class="yueduwo">
 				<view class="texts">
@@ -174,9 +220,23 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-popup width="500" border-radius="30" v-model="shenghe" mode="center">
+			<view class="yueduwo">
+				<view class="texts">
+					{{mnmn}}
+				</view>
+				<view class="textsss" style="margin:30px 0;">
+					{{nmnm}}
+				</view>
+				<view class="lllls" @click="shenghe = false">
+					确定
+				</view>
+			</view>
+		</u-popup>
 		<u-kehu url="./booking/AppointmentDesign" heigth="1000"></u-kehu>
+		<u-toast ref="uToast" />
 		<u-back-top :scroll-top="0"></u-back-top>
-		<tab-bar v-if="!yuedu"></tab-bar>
+		<tab-bar v-show="!yuedu"></tab-bar>
 	</view>
 </template>
 
@@ -185,7 +245,10 @@
 	export default {
 		data() {
 			return {
-				idid: "",
+				nmnm: "",
+				mnmn: "",
+				shenghe: false,
+				idid: 1,
 				loupanid: "",
 				qianyue: "",
 				huxing: "",
@@ -234,7 +297,7 @@
 						content: ""
 					}
 				],
-				current: 0,
+				current: 3,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -245,8 +308,12 @@
 				active1: 0,
 				datalist1: [],
 				active2: 0,
+				active22: 0,
 				datalist2: [],
-				tanchaung: {}
+				tanchaung: {},
+				agid: "",
+				lickc: [],
+				klklkl:0
 			};
 		},
 		onLoad() {
@@ -257,22 +324,63 @@
 			this.active0 = 0
 			this.active1 = 0
 			this.active2 = 0
+
 			const res = uni.getSystemInfoSync();
 			this.heigth = res.windowHeight;
+			this.idid = uni.getStorageSync("idid") || 1
 		},
 		onPullDownRefresh() {
 			this.alls()
 		},
 		methods: {
+			like() {
+				this.$api.likelp({
+					title: this.keyword
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							item["check"] = false
+							item["name"] = item.title + "的相关协议"
+						})
+						this.lickc = []
+						this.lickc.push({
+							title: "搜索",
+						})
+						this.lickc.push({
+							title: "搜索"
+						})
+						this.lickc.push({
+							title: "搜索"
+						})
+						this.lickc.push(data.data.data.status)
+						this.active = 999
+						this.active0 = 999
+						this.active2 = 999
+						this.active1 = 999
+					} else {
+						uni.showToast({
+							title: "暂无数据",
+							icon: "none"
+						})
+					}
+				})
+			},
 			kkkk() {
 				uni.navigateTo({
 					url: "../pagesC/HouseDesign?current=2"
 				})
 			},
 			llll() {
-				uni.navigateTo({
-					url: "../pagesC/HouseDesign"
-				})
+				if(this.klklkl = 1){
+					uni.navigateTo({
+						url: "../pagesD/uploadCase"
+					})
+				}else{
+					uni.navigateTo({
+						url: "../pagesC/HouseDesign"
+					})
+				}
+				
 			},
 			// 康复文本
 			fuwenben(ev) {
@@ -288,13 +396,22 @@
 			// 同意协议
 			tongyixieyi(ev) {
 				if (ev.check) {
+					this.$api.userag({
+						userid: uni.getStorageSync("user_info").id,
+						agid: this.agid
+					})
 					this.$api.tjsq({
 						user_id: uni.getStorageSync("user_info").id,
 						bid: this.loupanid,
 						sole_type: this.idid
 					}).then(data => {
 						if (data.data.code == 1) {
-
+							this.yuedu = false
+							this.$refs.uToast.show({
+								title: '楼盘申请成功，请留意系统消息查看审核结果。',
+								type: 'default'
+							})
+							this.alls()
 						}
 					})
 				} else {
@@ -306,7 +423,6 @@
 
 			},
 			lp(ev) {
-				console.log(ev);
 				this.$api.lpmap({
 					id: ev
 				}).then(data => {
@@ -358,45 +474,202 @@
 				})
 
 			},
-			changeTokens2(index, item) {
-				this.loupanid = item.id
-				let aa = uni.getStorageSync("user_info")
-				item.check = false
-				this.tanchaung = item
-				if (aa) {
-					if (item.sign_did == 0) {
-						if (aa.des != 0) {
-							this.yuedu = true
-							this.idid = 1
+			async changeTokens2(index, item) {
+				this.lickc = []
+				if (await this.$login()) {
+					this.active2 = index
+					this.loupanid = item.id
+					this.agid = item.ag.id
+					item.check = false
+					this.tanchaung = item
+					let aa = uni.getStorageSync("user_info")
+					if (!aa.bbs.id) {
+						return this.$refs.uToast.show({
+							title: '您还不是美居独家设计师或美居会员',
+							type: 'default',
+							duration: 3000
+						})
+					}
+					this.$api.mapstation({
+						user_id: aa.id,
+						bid: item.id,
+						type: this.idid
+					}).then(data => {
+						if (data.data.code == 0) {
+							if (aa) {
+								if (this.idid == 1) {
+									if (item.sign_did == 0) {
+										if (aa.des != 0) {
+											this.yuedu = true
+											this.idid = 1
+											uni.setStorageSync("idid", this.idid)
+										}
+										return
+									}
+								}
+								if (item.sign_bid == 0) {
+									if (aa.bbs.id != 0) {
+										this.yuedu = true
+										this.idid = 0
+										uni.setStorageSync("idid", this.idid)
+									}
+									return
+								}
+								if (item.sign_bid != 0 || item.sign_did != 0) {
+									this.qianyue = "该楼盘已被签约"
+									if (item.sign_bid == aa.id || item.sign_did == aa.id) {
+										this.huxing = "该楼盘已被您签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+									} else {
+										this.huxing = "该楼盘已被其他设计师签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+									}
+									if (this.idid == 1) {
+										this.idid = 0
+									} else {
+										this.idid = 1
+									}
+									uni.setStorageSync("idid", this.idid)
+									this.yuedus = true;
+									return
+								}
+							}
+						} else if (data.data.code == 1) {
+							if (this.idid == 1) {
+								this.qianyue = "美居独家设计权申请已通过"
+								this.klklkl = 1
+							} else {
+								this.qianyue = "美居独家经营权申请已通过"
+							}
+							this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
+							this.yuedus = true;
+							if (this.idid == 1) {
+								this.idid = 0
+							} else {
+								this.idid = 1
+							}
+							uni.setStorageSync("idid", this.idid)
+						} else if (data.data.code == 2) {
+							if (this.idid == 1) {
+								this.mnmn = "美居独家设计权申请正在审核"
+							} else {
+								this.mnmn = "美居独家经营权申请正在审核"
+							}
+							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
+							this.shenghe = true;
+						} else if (data.data.code == 3) {
+							if (this.idid == 1) {
+								this.mnmn = "美居独家设计权申请被拒绝"
+							} else {
+								this.mnmn = "美居独家经营权申请被拒绝"
+							}
+							this.nmnm = data.data.data
+							if (this.idid == 1) {
+								this.idid = 0
+							} else {
+								this.idid = 1
+							}
+							this.shenghe = true;
+							uni.setStorageSync("idid", this.idid)
 						}
-						return
-					}
-					if (item.sign_bid == 0) {
-						if (aa.bbs.id != 0) {
-							this.yuedu = true
-							this.idid = 0
-						}
-						return
-					}
-					if (item.sign_bid == aa.id || item.sign_did == aa.id) {
-						this.qianyue = "您的申请已通过"
-						this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
-						this.yuedus = true;
-						return
-					}
-					this.qianyue = "该楼盘已被签约"
-					this.huxing = "该楼盘已被其他设计师签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
-					this.yuedus = true;
+					})
 				}
-				this.active2 = index
+			},
+			async lidsadsa(index, item) {
+				if (await this.$login()) {
+					this.active22 = index
+					this.loupanid = item.id
+					this.agid = item.ag.id
+					item.check = false
+					this.tanchaung = item
+					let aa = uni.getStorageSync("user_info")
+					this.$api.mapstation({
+						user_id: aa.id,
+						bid: item.id,
+						type: this.idid
+					}).then(data => {
+						if (data.data.code == 0) {
+							if (aa) {
+								if (this.idid == 1) {
+									if (item.sign_did == 0) {
+										if (aa.des != 0) {
+											this.yuedu = true
+											this.idid = 1
+											uni.setStorageSync("idid", this.idid)
+										}
+										return
+									}
+								}
+								if (item.sign_bid == 0) {
+									if (aa.bbs.id != 0) {
+										this.yuedu = true
+										this.idid = 0
+										uni.setStorageSync("idid", this.idid)
+									}
+									return
+								}
+								if (item.sign_bid != 0 || item.sign_did != 0) {
+									this.qianyue = "该楼盘已被签约"
+									if (item.sign_bid == aa.id || item.sign_did == aa.id) {
+										this.huxing = "该楼盘已被您签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+									} else {
+										this.huxing = "该楼盘已被其他设计师签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+									}
+									if (this.idid == 1) {
+										this.idid = 0
+									} else {
+										this.idid = 1
+									}
+									uni.setStorageSync("idid", this.idid)
+									this.yuedus = true;
+									return
+								}
+							}
+						} else if (data.data.code == 1) {
+							if (this.idid == 1) {
+								this.qianyue = "美居独家设计权申请已通过"
+							} else {
+								this.qianyue = "美居独家经营权申请已通过"
+							}
+							this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
+							this.yuedus = true;
+							if (this.idid == 1) {
+								this.idid = 0
+							} else {
+								this.idid = 1
+							}
+							uni.setStorageSync("idid", this.idid)
+						} else if (data.data.code == 2) {
+							if (this.idid == 1) {
+								this.mnmn = "美居独家设计权申请正在审核"
+							} else {
+								this.mnmn = "美居独家经营权申请正在审核"
+							}
+							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
+							this.shenghe = true;
+						} else if (data.data.code == 3) {
+							if (this.idid == 1) {
+								this.mnmn = "美居独家设计权申请被拒绝"
+							} else {
+								this.mnmn = "美居独家经营权申请被拒绝"
+							}
+							this.nmnm = data.data.data
+							if (this.idid == 1) {
+								this.idid = 0
+							} else {
+								this.idid = 1
+							}
+							this.shenghe = true;
+							uni.setStorageSync("idid", this.idid)
+						}
+					})
+				}
 			},
 			changeTokens1(index, item) {
+				this.lickc = []
 				this.lp(item.id)
-
 				this.active1 = index
 			},
 			changeTokens0(index, item) {
-				console.log(index, item);
+				this.lickc = []
 				if (item.child) {
 					this.datalist1 = [...item.child]
 					this.lp(this.datalist1[0].id)
@@ -408,6 +681,7 @@
 
 			},
 			changeTokens(index, item) {
+				this.lickc = []
 				this.active0 = 0
 				this.active1 = 0
 				this.active2 = 0
@@ -426,6 +700,12 @@
 			},
 			shouURl(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
+				uni.navigateTo({
+					url: "../pagesC/fuwenben?title=" + ev.title
+				})
+			},
+			shouURls(ev) {
+				uni.setStorageSync("fuwenbeng", ev.ag.content)
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.title
 				})
@@ -455,6 +735,18 @@
 			font-weight: 400;
 			color: #007399;
 			text-align: center;
+		}
+
+		.lllls {
+			margin: 30rpx;
+			height: 60rpx;
+			line-height: 60rpx;
+			background: #007399;
+			border-radius: 10rpx;
+			text-align: center;
+			font-size: 24rpx;
+			font-weight: 400;
+			color: #FFFFFF;
 		}
 
 		.llll {

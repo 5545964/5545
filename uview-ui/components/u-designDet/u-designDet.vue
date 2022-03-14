@@ -7,7 +7,7 @@
 					<view class="name" style="text-align: center;">
 						设计师-{{alls.username||""}}
 					</view>
-					<u-rate :disabled="disabled" @change="xuanxinxin" :count="count" v-model="alls.star" active-color="#FD7904"></u-rate>
+					<u-rate :disabled="true" @change="xuanxinxin" :count="count" v-model="alls.star" active-color="#FD7904"></u-rate>
 				</view>
 				<view class="top_num">
 					<view class="top_num_item">

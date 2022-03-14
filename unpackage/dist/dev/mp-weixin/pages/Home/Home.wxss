@@ -1,0 +1,22 @@
+.wrap.data-v-2bc86734 {
+  padding: 0 40rpx;
+}
+.seath.data-v-2bc86734 {
+  margin: 30rpx;
+}
+.navlist.data-v-2bc86734 {
+  padding: 30rpx;
+  background-color: #fff;
+}
+.navlist .text.data-v-2bc86734 {
+  align-items: center;
+}
+.navlist .hhnhb.data-v-2bc86734 {
+  font-size: 28rpx;
+  font-weight: 400;
+}
+.sssss.data-v-2bc86734 {
+  width: 290rpx;
+  padding: 0 30rpx;
+}
+

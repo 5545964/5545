@@ -736,53 +736,36 @@
 			},
 
 			async getcontein(ev) {
-
 				if (await this.$login()) {
 					let that = this;
 					uni.requestSubscribeMessage({
 						provider: 'weixin',
 						tmplIds: that.mobanid,
 						complete: function(res) {
-
 							that.diandedijige = ev;
-
-
-
-
 							if (Number(that.allssssss[ev].money) > 0) {
-
 								that.$api.ispay({
 									id: that.allssssss[ev].id,
 									user_id: uni.getStorageSync("user_info").id
 								}).then(data => {
-
-
 									if (data.data.code == 1) {
-
 										that.toReg()
 									} else {
-
 										that.pays()
 									}
-
-
 								})
 							} else {
 								that.toReg()
 							}
-
 						}
 					});
-
 				}
 			},
-
 			looks(url) {
 				if (url.indexOf("http") == -1) {
 					url = this.$imgPath + url
 				}
 				uni.downloadFile({
-
 					url: url,
 					success(res) {
 						const filePath = res.tempFilePath;
@@ -793,7 +776,6 @@
 					}
 				})
 			},
-
 			pays() {
 				let that = this
 				let aa = 0
@@ -803,14 +785,12 @@
 					aa = 3
 				}
 				that.$api.buylevel({
-
 					id: aa,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
 					if (res.data.code == 400) {
 						that.toReg()
 					}
-
 					if (res.data.code == 200) {
 						uni.requestPayment({
 							timeStamp: res.data.data.timeStamp,
@@ -834,9 +814,7 @@
 						})
 					}
 				})
-
 			},
-
 			enjoys() {
 				this.$api.recruit().then(data => {
 					if (data.data.code == 1) {
@@ -883,9 +861,7 @@
 					}
 					uni.stopPullDownRefresh();
 				})
-
 			},
-
 			dessel(ev) {
 				this.$api.dessel({
 					order: ev

@@ -270,11 +270,11 @@
 						des_id: ev.id,
 						star: ev.star
 					}).then(data => {
-						uni.showToast({
-							title: data.data.msg,
-							duration: 1000,
-							icon: "none"
-						})
+						// uni.showToast({
+						// 	title: data.data.msg,
+						// 	duration: 1000,
+						// 	icon: "none"
+						// })
 					})
 				}
 			},

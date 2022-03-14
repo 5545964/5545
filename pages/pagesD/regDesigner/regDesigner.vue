@@ -50,7 +50,6 @@
 					</view>
 				</view>
 			</block>
-
 		</view>
 		<!-- 上传设计师资质 -->
 		<view class="upload_des">
@@ -64,9 +63,7 @@
 				</u-upload>
 			</view>
 		</view>
-		<view class="" style="height: 100rpx;">
-
-		</view>
+		<view class="" style="height: 100rpx;" />
 		<!-- 底部提交按钮 -->
 		<view class="foot_reg">
 			<view class="submit" @click="submit">
@@ -80,12 +77,12 @@
 <script>
 	export default {
 		onLoad(ev) {
-			if(ev.nageid){
+			if (ev.nageid) {
 				this.ididiidid = ev.nageid
-			}else{
+			} else {
 				this.ididiidid = uni.getStorageSync("level")
 			}
-
+			this.inpList[2].text = uni.getStorageSync("user_info").mobile
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
 			// 驳回后修改信息
 			let info = uni.getStorageSync("inpList");
@@ -166,7 +163,7 @@
 				],
 				imgList: [],
 				upimgs: [],
-				timea:0
+				timea: 0
 			};
 		},
 		methods: {
@@ -174,7 +171,7 @@
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.inpList[2].text,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({
@@ -224,7 +221,7 @@
 			deleteimg(index) {
 				this.upimgs.splice(index, 1)
 			},
-			submit(){
+			submit() {
 				uni.setStorageSync("level", this.ididiidid)
 				uni.setStorageSync("inpList", this.inpList)
 				uni.setStorageSync("upimgs", this.upimgs)
@@ -281,7 +278,7 @@
 							if (data.data.code == 1) {
 								let list = {
 									title: "提交成功",
-									text: "你的资料平台正在加紧审核中，请留意电话",
+									text: "你的资料平台正在加紧审核中，请留意站内信息",
 									botton: "我知道了",
 									navbar: "注册设计师"
 								}

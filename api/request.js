@@ -32,7 +32,7 @@ instance.interceptors.response.use(
 	},
 	error => {
 		uni.showToast({
-			title: "数据出错，请联系客服",
+			title: "服务器繁忙,请稍后重试",
 			duration: 1200,
 			icon: "none"
 		})

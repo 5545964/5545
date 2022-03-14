@@ -206,12 +206,11 @@
 						des_id: ev.id,
 						star: ev.star
 					}).then(data => {
-						uni.showToast({
-							title: data.data.msg,
-							duration: 1000,
-							icon: "none"
-						})
-
+						// uni.showToast({
+						// 	title: data.data.msg,
+						// 	duration: 1000,
+						// 	icon: "none"
+						// })
 					})
 				}
 			},
@@ -305,9 +304,9 @@
 						this.desInfo = {}
 						this.desInfo = data.data.data.status
 						// this.title = "设计师-" + this.desInfo.username
-						if (this.desInfo.userstar != null && this.desInfo.userstar != "") {
-							this.disabled = true;
-						}
+						// if (this.desInfo.userstar != null && this.desInfo.userstar != "") {
+						// 	this.disabled = true;
+						// }
 						data.data.data.status.pl.forEach(item => {
 							item["checked"] = false
 						})
