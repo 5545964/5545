@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -13,9 +13,7 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class="home">
-			<u-empty></u-empty>
-		</view>
+		<u-empty  text="数据更新中，敬请期待！"></u-empty>
 	</view>
 </template>
 
@@ -27,7 +25,7 @@
 			};
 		},
 		onLoad(ev) {
-			if(ev.title){
+			if (ev.title) {
 				this.title = ev.title;
 			}
 		},
@@ -50,10 +48,6 @@
 </script>
 
 <style lang="scss" scoped>
-	.home{
-		width: 100%;
-		height: 100%;
-	}
 	.navbar {
 		.navbar_top {
 			border: 1px solid #e5e5e5;

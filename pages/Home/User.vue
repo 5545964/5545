@@ -1,194 +1,198 @@
 <template>
 	<view>
-		<view class="heard">
-			<view class="czxcxz" @click="kkkk()">
-				<image @click="kan(user_info.avatar)" class="img" v-if="user_info != ''" :src="user_info.avatar"
-					mode=""></image>
-				<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
-				<view class="center">
-					<view class="text">
-						<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>
-					</view>
-					<view v-if="user_info != ''">
-						<view class="text_bottom" v-if="user_info.bbs != null && user_info.bbs.type != '' ">
-							<text>{{user_info.bbs.type}}</text>
+		<view>
+			<view class="heard">
+				<view class="czxcxz" @click="kkkk()">
+					<image @click="kan(user_info.avatar)" class="img" v-if="user_info != ''" :src="user_info.avatar"
+						mode=""></image>
+					<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
+					<view class="center">
+						<view class="text">
+							<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>
 						</view>
-					</view>
-				</view>
-			</view>
-			<view class="bottms" @click="gomy" v-if="user_info.edit">
-				<image class="imgs" src="../../static/icon_me_bianji.png" mode="aspectFit"></image>
-				<view class="kjjkk">
-					个人资料
-				</view>
-			</view>
-		</view>
-		<view class="hahaha">
-			<view class="cet" @click="gos(0)" v-if="user_info.bbs.id">
-				<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
-				<view class="text">
-					电子名片
-				</view>
-			</view>
-			<view class="xian" v-if="user_info.bbs.id"></view>
-			<view class="cet" @click="gos(1)" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
-				<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
-				<view class="text">
-					专属二维码
-				</view>
-			</view>
-		</view>
-		<view class="top">
-			<view class="top_a" @click="shengfenzhuanqu">
-				<image class="imgs" src="../../static/me_vip_bg.png" mode="aspectFit"></image>
-				<view class="left">
-					<view class="le_text">
-						身份专区
-					</view>
-					<view class="lr_text">
-						升级身份享受更多权益
-					</view>
-				</view>
-				<view class="cet aaa">
-					<view class="lr_text">
-						查看更多
-					</view>
-					<image class="img" src="../../static/icon_me_more.png" mode="aspectFit"></image>
-				</view>
-			</view>
-			<view class="top_b">
-				<view class="quanju">
-					<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
-						<view class="cart-num" @touchend="quxiao(index)" v-if="num_list[index] != 0">
-							{{num_list[index]}}
-						</view>
-						<!-- <image v-if="index == list.length-1" class="fdkgkfmkjskjfjkgdbj"
-							src="../../static/icon_me_fenge.png" mode="aspectFit"></image> -->
-						<view class="">
-							<view style="width: max-content;margin: 0 auto;">
-								<image class="img" :src="'../../static/status'+index+'.png'" mode="aspectFit"></image>
+						<view v-if="user_info != ''">
+							<view class="text_bottom" v-if="user_info.bbs != null && user_info.bbs.type != '' ">
+								<text>{{user_info.bbs.type}}</text>
 							</view>
-							<view class="text">
+						</view>
+					</view>
+				</view>
+				<view class="bottms" @click="gomy" v-if="user_info.edit">
+					<image class="imgs" src="../../static/icon_me_bianji.png" mode="aspectFit"></image>
+					<view class="kjjkk">
+						个人资料
+					</view>
+				</view>
+			</view>
+			<view class="hahaha">
+				<view class="cet" @click="gos(0)" v-if="user_info.bbs.id">
+					<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
+					<view class="text">
+						电子名片
+					</view>
+				</view>
+				<view class="xian" v-if="user_info.bbs.id"></view>
+				<view class="cet" @click="gos(1)" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
+					<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
+					<view class="text">
+						专属二维码
+					</view>
+				</view>
+			</view>
+			<view class="top">
+				<view class="top_a" @click="shengfenzhuanqu">
+					<image class="imgs" src="../../static/me_vip_bg.png" mode="aspectFit"></image>
+					<view class="left">
+						<view class="le_text">
+							身份专区
+						</view>
+						<view class="lr_text">
+							升级身份享受更多权益
+						</view>
+					</view>
+					<view class="cet aaa">
+						<view class="lr_text">
+							查看更多
+						</view>
+						<image class="img" src="../../static/icon_me_more.png" mode="aspectFit"></image>
+					</view>
+				</view>
+				<view class="top_b">
+					<view class="quanju">
+						<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
+							<view class="cart-num" @touchend="quxiao(index)" v-if="num_list[index] != 0">
+								{{num_list[index]}}
+							</view>
+							<!-- <image v-if="index == list.length-1" class="fdkgkfmkjskjfjkgdbj"
+								src="../../static/icon_me_fenge.png" mode="aspectFit"></image> -->
+							<view class="">
+								<view style="width: max-content;margin: 0 auto;">
+									<image class="img" :src="'../../static/status'+index+'.png'" mode="aspectFit">
+									</image>
+								</view>
+								<view class="text">
+									{{item.name}}
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="top_c">
+					<view class="text">
+						常用工具
+					</view>
+					<view class="gongjus">
+						<!-- <view class="template" v-for="(item,index) in gongju_list" :key="index"
+							@click="gongju_go(item.url,item.name)">
+							<image class="img" :src="'../../static/gongju'+index+'.png'" mode="aspectFit"></image>
+							<view class="texts">
 								{{item.name}}
 							</view>
+						</view> -->
+						<view class="template" @click="gongju_go('../pagesA/gongju0','收货地址')">
+							<image class="img" :src="'../../static/gongju0.png'" mode="aspectFit"></image>
+							<view class="texts">
+								收货地址
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju1','我的收藏')">
+							<image class="img" :src="'../../static/gongju1.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的收藏
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju2','我的关注')">
+							<image class="img" :src="'../../static/gongju2.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的关注
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju3','我的足迹')">
+							<image class="img" :src="'../../static/gongju3.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的足迹
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju4','我的优惠券')">
+							<image class="img" :src="'../../static/gongju4.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的优惠券
+							</view>
+						</view>
+						<!-- ../pagesD/designyongjin -->
+						<view class="template" @click="gongju_go('../pagesD/designyongjin','我的佣金')"
+							v-if="user_info.bbs.id">
+							<image class="img" :src="'../../static/gongju5.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的佣金
+							</view>
+						</view>
+
+						<view class="template" @click="gongju_go('../pagesA/gongju6','安装评价')">
+							<image class="img" :src="'../../static/gongju6.png'" mode="aspectFit"></image>
+							<view class="texts">
+								安装评价
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju7','产品评价')">
+							<image class="img" :src="'../../static/gongju7.png'" mode="aspectFit"></image>
+							<view class="texts">
+								产品评价
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju8','站内信息')">
+							<image class="img" :src="'../../static/gongju8.png'" mode="aspectFit"></image>
+							<view class="texts">
+								站内信息
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju9','我的售后')">
+							<image class="img" :src="'../../static/gongju9.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的售后
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesA/gongju10','我的报装')">
+							<image class="img" :src="'../../static/gongju10.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的报装
+							</view>
+						</view>
+
+
+						<!-- <view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
+							v-if="user_info.bbs.id">
+							<image class="img" :src="'../../static/gongju11.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的团队
+							</view>
+						</view> -->
+
+
+
+						<view class="template" @click="gongju_go('../pagesA/gongju12','预约设计')">
+							<image class="img" :src="'../../static/gongju12.png'" mode="aspectFit"></image>
+							<view class="texts">
+								预约设计
+							</view>
+							<view class="dsalhdkjahjad" v-if="fkjsfjdisfjsl"></view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesD/hetong','我的协议')">
+							<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的协议
+							</view>
+							<view class="dsalhdkjahjad" v-if="false"></view>
 						</view>
 					</view>
 				</view>
-			</view>
-			<view class="top_c">
-				<view class="text">
-					常用工具
-				</view>
-				<view class="gongjus">
-					<!-- <view class="template" v-for="(item,index) in gongju_list" :key="index"
-						@click="gongju_go(item.url,item.name)">
-						<image class="img" :src="'../../static/gongju'+index+'.png'" mode="aspectFit"></image>
-						<view class="texts">
-							{{item.name}}
-						</view>
-					</view> -->
-					<view class="template" @click="gongju_go('../pagesA/gongju0','收货地址')">
-						<image class="img" :src="'../../static/gongju0.png'" mode="aspectFit"></image>
-						<view class="texts">
-							收货地址
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju1','我的收藏')">
-						<image class="img" :src="'../../static/gongju1.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的收藏
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju2','我的关注')">
-						<image class="img" :src="'../../static/gongju2.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的关注
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju3','我的足迹')">
-						<image class="img" :src="'../../static/gongju3.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的足迹
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju4','我的优惠券')">
-						<image class="img" :src="'../../static/gongju4.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的优惠券
-						</view>
-					</view>
-					<!-- ../pagesD/designyongjin -->
-					<view class="template" @click="gongju_go('../pagesD/designyongjin','我的佣金')" v-if="user_info.bbs.id">
-						<image class="img" :src="'../../static/gongju5.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的佣金
-						</view>
-					</view>
-
-					<view class="template" @click="gongju_go('../pagesA/gongju6','安装评价')">
-						<image class="img" :src="'../../static/gongju6.png'" mode="aspectFit"></image>
-						<view class="texts">
-							安装评价
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju7','产品评价')">
-						<image class="img" :src="'../../static/gongju7.png'" mode="aspectFit"></image>
-						<view class="texts">
-							产品评价
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju8','站内信息')">
-						<image class="img" :src="'../../static/gongju8.png'" mode="aspectFit"></image>
-						<view class="texts">
-							站内信息
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju9','我的售后')">
-						<image class="img" :src="'../../static/gongju9.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的售后
-						</view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesA/gongju10','我的报装')">
-						<image class="img" :src="'../../static/gongju10.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的报装
-						</view>
-					</view>
-
-
-					<!-- <view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
-						v-if="user_info.bbs.id">
-						<image class="img" :src="'../../static/gongju11.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的团队
-						</view>
-					</view> -->
-
-
-
-					<view class="template" @click="gongju_go('../pagesA/gongju12','预约设计')">
-						<image class="img" :src="'../../static/gongju12.png'" mode="aspectFit"></image>
-						<view class="texts">
-							预约设计
-						</view>
-						<view class="dsalhdkjahjad" v-if="fkjsfjdisfjsl"></view>
-					</view>
-					<view class="template" @click="gongju_go('../pagesD/hetong','我的协议')">
-						<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
-						<view class="texts">
-							我的协议
-						</view>
-						<view class="dsalhdkjahjad" v-if="false"></view>
-					</view>
+				<view class="top_d" @click="changeDesign">
+					切换设计师
 				</view>
 			</view>
-			<view class="top_d" @click="changeDesign">
-				切换设计师
-			</view>
+			<u-kehu :navis="false"></u-kehu>
+			<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 		</view>
-		<u-kehu :navis="false"></u-kehu>
-		<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -317,7 +321,7 @@
 					if (data.data.code == 1) {
 						uni.setStorageSync("des_info", data.data.data.myuser)
 						this.des_user = data.data.data.myuser
-					uni.stopPullDownRefresh();
+						uni.stopPullDownRefresh();
 					}
 				})
 			},

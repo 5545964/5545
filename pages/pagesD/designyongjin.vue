@@ -142,6 +142,7 @@
 				</view>
 			</view>
 		</view>
+		<u-heigth />
 		<u-timeSelect ref="myPicker" @submit="handleSubmit" :start-year="2000" :end-year="2500">
 		</u-timeSelect>
 		<u-popup border-radius="10" v-model="show" mode="center">

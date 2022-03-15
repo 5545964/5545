@@ -36,6 +36,7 @@
 			<view class="aaa">
 				提交
 			</view>
+			<u-heigth />
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
 	</view>

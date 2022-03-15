@@ -87,9 +87,6 @@
 				],
 				lun_list: [],
 				clsList: [],
-
-
-
 				system: {},
 				px: 0,
 				widthwidth: 0,
@@ -98,6 +95,8 @@
 				bianright: 0,
 				bianliang: 0,
 				bianheigth: 600,
+				imgsss: '<img src=\"' + this.$imgPath,
+				xinxi: []
 			};
 		},
 		onLoad() {
@@ -116,8 +115,17 @@
 			this.px = parseInt(uni.upx2px(100))
 			this.px = parseInt(this.px / (uni.upx2px(100) / 100))
 			this.widthwidth = parseInt(this.system.windowWidth / (uni.upx2px(100) / 100)) - this.px
-
 			this.tabberheigth = windows - nn - this.px;
+			this.$api.pots({
+				limit: 1000
+			}).then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.data.forEach(item => {
+						item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
+					})
+					this.xinxi = data.data.data.status.data
+				}
+			})
 		},
 		methods: {
 			end() {
@@ -180,7 +188,6 @@
 						})
 						break;
 					case 3:
-
 						uni.switchTab({
 							url: "/pages/Home/About"
 						})
@@ -190,6 +197,24 @@
 						uni.navigateTo({
 							url: "../pagesC/youhuijuan"
 						})
+						break;
+					case 5:
+						let aa = {}
+						this.xinxi.forEach(item => {
+							if (item.id == ev.wz) {
+								aa = item
+							}
+						})
+						if (ev.wz == "") {
+							uni.reLaunch({
+								url: "./About?titit=0"
+							})
+						} else {
+							uni.setStorageSync("fuwenbeng", aa.content)
+							uni.navigateTo({
+								url: "../pagesC/fuwenben?title=" + aa.title
+							})
+						}
 						break;
 					default:
 				}

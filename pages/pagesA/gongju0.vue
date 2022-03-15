@@ -44,6 +44,7 @@
 				新增地址
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

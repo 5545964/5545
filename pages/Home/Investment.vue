@@ -1,27 +1,26 @@
 <template>
-	<view style="height: 100%;">
-		<u-tabs :list="lisst" :weizhi="false" :show-bar="false" :isScroll="true" :current="currents" @change="changes">
-		</u-tabs>
-		<u-kehu :showsss='showsssssssss'></u-kehu>
-		<view style="height: 100%;" v-show="currents == 0">
+	<view>
+		<u-tabs :list="lisst" :weizhi="false" :show-bar="false" :isScroll="true" :current="currents"
+			@change="changes" />
+		<view v-show="currents == 0">
 			<!-- 切换 -->
 			<view class="">
 				<u-tabss :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 					@change="change"></u-tabss>
 			</view>
 			<!-- 热门栏目 -->
-			<view class="" style="height: 100%;" v-if="current==12">
+			<view v-if="current==12">
 				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 					@dianzhan="dianzhan">
 				</u-video>
 				<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 			</view>
 			<!-- 设计大咖 -->
-			<view class="" style="height: 100%;" v-if="current==13">
+			<view v-if="current==13">
 				<u-empty text="数据更新中，敬请期待！"></u-empty>
 			</view>
 			<!-- 整装设计师 -->
-			<view style="height: 100%;" v-if="current==14">
+			<view v-if="current==14">
 				<!-- 排序 -->
 				<view class="paixu">
 					<view class="paxi">
@@ -41,12 +40,12 @@
 				<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 			</view>
 			<!-- 定制家具设计师 -->
-			<view class="" style="height: 100%;" v-if="current==15">
+			<view v-if="current==15">
 				<u-empty text="数据更新中，敬请期待！"></u-empty>
 			</view>
 			<!-- 成为设计师 -->
-			<view style="height: 100%;" v-if="current==16">
-				<view class="be_main" style="height: 100%;" v-if="state<0">
+			<view v-if="current==16">
+				<view class="be_main" v-if="state<0">
 					<view class="be_designer">
 					</view>
 					<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix">
@@ -67,7 +66,6 @@
 							成为2级设计师会员
 						</view>
 					</view>
-					<view style="height: 110rpx;" class="" />
 				</view>
 				<!-- 驳回 -->
 				<view class="reject" v-if="state==2">
@@ -106,10 +104,10 @@
 				</view>
 			</view>
 			<!-- 招募令 -->
-			<view class="tokens" style="height: 100%;" v-if="current==17">
-				<view class="mian" style="height: 100%;">
-					<view class="mian_left" id="mianleft">
-						<scroll-view scroll-y="true" style="height: 100%;">
+			<view class="tokens" v-if="current==17">
+				<view class="mian">
+					<view class="mian_left">
+						<scroll-view scroll-y="true">
 							<view :class="index%2==0? 'mian_left_item':'mian_left_item1'"
 								:style="active==index?'border-left: 4rpx solid #FD7904;':''"
 								v-for="(item,index) in recruit_all" :key="index" @click="changeTokens(index,item)">
@@ -125,119 +123,124 @@
 				</view>
 			</view>
 		</view>
-		<view style="height: 100%;" class="" v-show="currents == 1">
+		<view v-show="currents == 1">
 			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
-		<view style="height: 100%;" v-show="currents == 2">
+		<view v-show="currents == 2">
 			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
-		<view style="height: 100%;" v-show="currents == 3">
+		<view v-show="currents == 3">
 			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
-		<!-- 合同弹窗 -->
-		<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
-			<view class="contract_main">
-				<!-- 合同pdf -->
-				<view class="" style="height: 700rpx; width: 100%;">
-					<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
-						<image style="width: 100%;" :src="tupianwo" mode="widthFix">
-						</image>
-					</scroll-view>
-				</view>
-				<!-- <view class="agree_xieyi" @click="toReg"> -->
-				<view class="agree_xieyi" @click="pays">
-					我已阅读并同意上述协议,{{pay}}
-				</view>
-			</view>
-		</u-popup>
-		<!-- 筛选弹窗 -->
-		<u-popup v-model="show" mode="bottom" length="70%" :closeable="true" border-radius="8">
-			<view class="klks">全部筛选</view>
-			<view class="mids">
-				<view class="type_list">
-					<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
-						<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
-							{{item.title}}
-						</view>
+		<view>
+			<u-kehu :showsss='showsssssssss'></u-kehu>
+			<!-- 合同弹窗 -->
+			<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
+				<view class="contract_main">
+					<!-- 合同pdf -->
+					<view class="" style="height: 700rpx; width: 100%;">
+						<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
+							<image style="width: 100%;" :src="tupianwo" mode="widthFix">
+							</image>
+						</scroll-view>
+					</view>
+					<!-- <view class="agree_xieyi" @click="toReg"> -->
+					<view class="agree_xieyi" @click="pays">
+						我已阅读并同意上述协议,{{pay}}
 					</view>
 				</view>
-			</view>
-			<view class="clos" :style="'bottom:'+jkl+'rpx;'">
-				<view class="reset" @click="zhongzhi(0)">
-					重置
-				</view>
-				<view class="on" @click="zhongzhi(1)">
-					确定选择
-				</view>
-			</view>
-		</u-popup>
-		<!-- 评论弹窗 -->
-		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
-			:pinglun_list="pinglun_list" @guanbi="guanbi" :bottom="heigth"></u-pinglun>
-		<!-- 确保是你本人操作 -->
-		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					确保是你本人操作
-				</view>
-				<view class="textss">
-					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
-				</view>
-				<view class="yanzhengma">
-					<view class="cet" style="justify-content: space-around;width: 100%;">
-						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
-						</view>
-						<button class="annuyt" @click="go_code">{{huoqu}}</button>
-					</view>
-				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="tongyis(0)">
-						取消
-					</view>
-					<view class="hkhnij jjhgj" @click="tongyis(1)">
-						同意
-					</view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 服务协议和隐私政策 -->
-		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					服务协议和隐私政策
-				</view>
-				<view class="textss">
-					感谢您使用宝芸邸，我们会严格
-					按照法律规定存储和使用您的个人
-					信息。您可以阅读以下几项条款了
-					解详细信息。如您同意，请勾选以
-					下几项条款并点击”同意”开始接受
-					我们的服务。
-				</view>
-				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
-						:key="index">
-						<view style="width:30%;display:flex;justify-content: flex-end;">
-							<view class="yuan" @click="hahaha(item)">
-								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+			</u-popup>
+			<!-- 筛选弹窗 -->
+			<u-popup v-model="show" mode="bottom" length="70%" :closeable="true" border-radius="8">
+				<view class="klks">全部筛选</view>
+				<view class="mids">
+					<view class="type_list">
+						<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
+							<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
+								{{item.title}}
 							</view>
 						</view>
-						<view class="mingcheng" @click="fuwenben(item)">
-							《{{item.name}}》
+					</view>
+				</view>
+				<view class="clos" :style="'bottom:'+jkl+'rpx;'">
+					<view class="reset" @click="zhongzhi(0)">
+						重置
+					</view>
+					<view class="on" @click="zhongzhi(1)">
+						确定选择
+					</view>
+				</view>
+			</u-popup>
+			<!-- 评论弹窗 -->
+			<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
+				:pinglun_list="pinglun_list" @guanbi="guanbi" :bottom="heigth"></u-pinglun>
+			<!-- 确保是你本人操作 -->
+			<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						确保是你本人操作
+					</view>
+					<view class="textss">
+						<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+					</view>
+					<view class="yanzhengma">
+						<view class="cet" style="justify-content: space-around;width: 100%;">
+							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
+							</view>
+							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="tongyis(0)">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyis(1)">
+							同意
 						</view>
 					</view>
 				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="xieyitongyi(0)">
-						暂不使用
+			</u-popup>
+			<!-- 服务协议和隐私政策 -->
+			<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						服务协议和隐私政策
 					</view>
-					<view class="hkhnij jjhgj" @click="xieyitongyi(1)">
-						同意协议
+					<view class="textss">
+						感谢您使用宝芸邸，我们会严格
+						按照法律规定存储和使用您的个人
+						信息。您可以阅读以下几项条款了
+						解详细信息。如您同意，请勾选以
+						下几项条款并点击”同意”开始接受
+						我们的服务。
+					</view>
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+							:key="index">
+							<view style="width:30%;display:flex;justify-content: flex-end;">
+								<view class="yuan" @click="hahaha(item)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
+							</view>
+							<view class="mingcheng" @click="fuwenben(item)">
+								《{{item.name}}》
+							</view>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="xieyitongyi(0)">
+							暂不使用
+						</view>
+						<view class="hkhnij jjhgj" @click="xieyitongyi(1)">
+							同意协议
+						</view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
+			</u-popup>
+		</view>
+		<!-- <view :style="'height: '+heigth+'rpx;'" /> -->
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -341,6 +344,12 @@
 				}, 1000)
 			}
 		},
+		onReachBottom(ev) {
+			if (this.current == 12) {
+				this.pages = this.pages + 1
+				this.enjoy()
+			}
+		},
 		onPullDownRefresh() {
 			this.getstate();
 			this.enjoy()
@@ -375,12 +384,7 @@
 			this.enjoys()
 			this.getdesproMoenys()
 		},
-		onReachBottom(ev) {
-			if (this.current == 12) {
-				this.pages = this.pages + 1
-				this.enjoy()
-			}
-		},
+
 		methods: {
 			changes(index) {
 				this.currents = index
@@ -666,7 +670,6 @@
 			},
 
 			navgepage(item) {
-
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
 				})
@@ -857,7 +860,7 @@
 							item.video = this.$imgPath + item.video
 							aa.push(item)
 						})
-						this.video = aa
+						this.video = [...this.video,...aa]
 					}
 					uni.stopPullDownRefresh();
 				})

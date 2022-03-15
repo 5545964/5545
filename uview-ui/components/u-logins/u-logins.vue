@@ -69,10 +69,9 @@
 				if (uni.getStorageSync("user_info").mobile == datas.phoneNumber) {
 					this.phone = false
 					uni.showToast({
-						title: '已有手机号',
-						icon: "none",
-						duration: 1000
-					});
+						title: "获取成功",
+						icon: "none"
+					})
 					return
 				}
 				this.$api.mobile({

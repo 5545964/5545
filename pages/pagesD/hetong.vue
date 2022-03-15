@@ -26,6 +26,7 @@
 				</view>
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

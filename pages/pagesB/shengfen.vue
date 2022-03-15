@@ -43,10 +43,10 @@
 		<view class="boyyty cet" v-if="usershengfen < id">
 			<!-- <view class="boyyty cet"> -->
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
-				￥{{jiage}}元升级
+				￥{{jiage}}升级
 			</view>
 			<view class="tetx" @click="topay" v-else>
-				￥{{jiage}}元升级
+				￥{{jiage}}升级
 			</view>
 		</view>
 		<!-- 确保是你本人操作 -->
@@ -123,7 +123,7 @@
 				//
 				//
 				//
-				name:"",
+				name: "",
 				mnbv: "",
 				jshdsfdfs: false,
 				shoujihao: uni.getStorageSync("user_info").mobile,
@@ -153,14 +153,14 @@
 			if (ev.title) {
 				this.title = ev.title
 			}
-			let aa = 0
+			let aa = "0"
 			if (ev.isdes) {
 				this.isdes = 1
-				aa = 1
+				aa = "1"
 			}
 			let vv = uni.getStorageSync("xieyi")
 			vv.forEach(item => {
-				if (item.state == aa) {
+				if (item.state === aa) {
 					this.xieyi.push(item)
 				}
 			})
@@ -176,7 +176,6 @@
 					this.usershengfen = uni.getStorageSync("des_info").bbs.id
 				}
 			}
-
 			this.getdata()
 		},
 		watch: {
@@ -246,7 +245,7 @@
 				}
 			},
 			hahahaa(ev) {
-				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				let phoneCodeVerification = /^1[3-9]\d{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
 					uni.showToast({
 						title: "手机号不正确",
@@ -322,6 +321,11 @@
 					id: this.id,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
+					if (res.data.code == 400) {
+						uni.navigateTo({
+							url: "./redsuccess?level=" + this.id + "&name=" + this.name
+						})
+					}
 					if (res.data.code == 200) {
 						let that = this;
 						uni.requestPayment({
@@ -337,15 +341,12 @@
 								})
 								setTimeout(() => {
 									uni.navigateTo({
-										url: "./redsuccess?level="+that.id+"&name="+that.name
+										url: "./redsuccess?level=" + that.id +
+											"&name=" + that.name
 									})
 								}, 1000)
-
 							},
 							fail: function(err) {
-								uni.navigateTo({
-									url: "./redsuccess?level="+that.id+"&name="+that.name
-								})
 								uni.showToast({
 									title: "支付失败",
 									icon: "none"
@@ -365,7 +366,10 @@
 							item["name"] = item.type.split("（")[0]
 						})
 						this.list = [...data.data.data.status]
-						this.jiage = this.list[0].money;
+						this.jiage = this.list[0].money + "元";
+						if (this.list[0].money == "0.00") {
+							this.jiage = "免费"
+						}
 						this.id = this.list[0].id
 						this.types = this.list[0].type
 						this.name = this.list[0].type
@@ -386,7 +390,10 @@
 				}
 			},
 			lunbo(ev) {
-				this.jiage = this.list[ev.detail.current].money;
+				this.jiage = this.list[ev.detail.current].money + "元";
+				if (this.list[ev.detail.current].money == "0.00") {
+					this.jiage = "免费"
+				}
 				this.id = this.list[ev.detail.current].id;
 				this.types = this.list[ev.detail.current].type;
 				this.name = this.list[ev.detail.current].name;

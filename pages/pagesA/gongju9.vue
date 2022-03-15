@@ -103,60 +103,63 @@
 				</view>
 			</view>
 		</view>
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
-			<view class="popup">
-				<view class="top">
-					提示
-				</view>
-				<view class="cets">
-					确认取消退款？
-				</view>
-				<view class="xian">
-
-				</view>
-				<view class="bottoms">
-					<view class="sdasas" @click="xuanzhea(0)">
-						取消
+		<u-heigth />
+		<view class="">
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
+				<view class="popup">
+					<view class="top">
+						提示
 					</view>
-					<view class="czcxc" @click="xuanzhea(1)">
-						确定
+					<view class="cets">
+						确认取消退款？
 					</view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 填写快递单号 -->
-		<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					填写快递单号
-				</view>
-				<view style="padding: 0 30rpx;">
-					<view class="">
-						快递公司
+					<view class="xian">
+			
 					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
-							placeholder="请填写快递公司" />
-					</view>
-					<view class="">
-						快递单号
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaididanhao"
-							placeholder="请填写快递单号" type="number" />
+					<view class="bottoms">
+						<view class="sdasas" @click="xuanzhea(0)">
+							取消
+						</view>
+						<view class="czcxc" @click="xuanzhea(1)">
+							确定
+						</view>
 					</view>
 				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="kuaidiwow(0)">
-						取消
+			</u-popup>
+			<!-- 填写快递单号 -->
+			<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						填写快递单号
 					</view>
-					<view class="hkhnij jjhgj" @click="kuaidiwow(1)">
-						同意
+					<view style="padding: 0 30rpx;">
+						<view class="">
+							快递公司
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
+								placeholder="请填写快递公司" />
+						</view>
+						<view class="">
+							快递单号
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaididanhao"
+								placeholder="请填写快递单号" type="number" />
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="kuaidiwow(0)">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="kuaidiwow(1)">
+							同意
+						</view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
-		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
+			</u-popup>
+			<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
+		</view>
 	</view>
 </template>
 

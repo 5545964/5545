@@ -19,7 +19,7 @@
 			<u-designDet :info="desInfo" :disabled="disabled" :current="current" @click="guanzhu" @dianzhan="dianzhan"
 				@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 		</view>
-		<view class="logopage" v-if="!isDesign">
+		<view class="logopage">
 			<view class="page_top">
 				<view class="top_item1" @click="lunbo(0)">
 					<image src="../../static/icon_home_heisezuofan.png"
@@ -35,7 +35,7 @@
 			</view>
 		</view>
 		<!-- 最新评论 -->
-		<view class="newpl" v-if="desInfo.pl.length>0" :style="isDesign?'margin-bottom:200rpx':''">
+		<view class="newpl" v-if="desInfo.pl.length>0">
 			<view class="" style="color: #000000;margin-bottom: 40rpx;">
 				最新评论
 			</view>
@@ -68,7 +68,7 @@
 		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
 			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
 		<!-- 优享作品 -->
-		<view class="works" v-if="!isDesign">
+		<view class="works" v-if="tuijian.length!=0">
 			<view class="title">
 				<view class="name">
 					代表作品
@@ -78,17 +78,17 @@
 				</view>
 			</view>
 			<view class="design_list">
-				<view class="" v-for="(item,index) in tuijian" :key="index" v-if="index <= 1">
+				<view class="" v-for="(item,index) in tuijian" :key="index">
 					<u-design-card :list="item" />
 				</view>
 			</view>
 		</view>
 		<!-- 编辑楼盘 -->
-		<view class="edithouse" v-if="isDesign">
+		<!-- <view class="edithouse" v-if="isDesign">
 			<view class="" @click="editHouse">
 				编辑楼盘
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -113,7 +113,6 @@
 					'https://cdn.uviewui.com/uview/swiper/swiper3.png',
 				],
 				budakai: false,
-				isDesign: false //是否是设计师端
 			};
 		},
 		onLoad(e) {
@@ -125,14 +124,15 @@
 			// 	if (data.data.code == 1) {
 			// 	}
 			// })
-			this.$api.loupanden({
-				pages: 1,
-				limit: 2
-			}).then(data => {
-				if (data.data.code == 1) {
-					this.tuijian = [...data.data.data.status.data];
-				}
-			})
+
+			// this.$api.loupanden({
+			// 	pages: 1,
+			// 	limit: 200
+			// }).then(data => {
+			// 	if (data.data.code == 1) {
+			// 		this.tuijian = [...data.data.data.status.data];
+			// 	}
+			// })
 		},
 		methods: {
 			jhsdkfjhsdlk() {
@@ -311,6 +311,15 @@
 							item["checked"] = false
 						})
 						this.pinglun(data.data.data.status)
+						this.$api.des({
+							user_id: this.desInfo.user_id
+						}).then(data => {
+							if (data.data.code == 1) {
+								this.tuijian = [...data.data.data.status.zp];
+							} else {
+								this.tuijian = [];
+							}
+						})
 					}
 				})
 			},

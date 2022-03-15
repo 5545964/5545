@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<!-- 导航 -->
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
@@ -14,7 +14,7 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class="" style="height: 100%;">
+		<view>
 			<view class="">
 				<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 					@change="change"></u-tabs>
@@ -29,6 +29,7 @@
 			</view>
 			<u-empty v-else></u-empty>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

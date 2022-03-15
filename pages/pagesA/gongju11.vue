@@ -66,7 +66,7 @@
 			</view>
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
-		<!--  :heigth="100" :po_hei="100" -->
+		<u-heigth />
 	</view>
 </template>
 

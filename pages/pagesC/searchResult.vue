@@ -27,6 +27,7 @@
 				<u-adata @click="toproduct()" :list="data_list"></u-adata>
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -13,7 +13,7 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class="home" v-if="fansList != 0">
+		<view class="home" v-if="fansList.length != 0">
 			<view class="dssadada" v-for="(item,index) in fansList" :key="index">
 				<view class="dsadsaxzczd" @click="go(item)">
 					<view class="number">
@@ -31,14 +31,14 @@
 						点击加入美居设计群
 						
 					</view> -->
-					<cell @startmessage='startmessage' contactText="点击加入美居设计群" @completemessage="completemessage" :url='item.ewm'>点击加入美居设计群</cell>
+					<cell @startmessage='startmessage' contactText="点击加入美居设计群" @completemessage="completemessage"
+						:url='item.ewm'>点击加入美居设计群</cell>
 					<!-- <image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image> -->
 				</view>
 			</view>
 		</view>
-		<view style="height: 100%;" v-else>
-			<u-empty></u-empty>
-		</view>
+		<u-empty v-else></u-empty>
+		<u-heigth />
 	</view>
 </template>
 
@@ -62,15 +62,15 @@
 		// 	this.gethomepage();
 		// },
 		methods: {
-			startmessage(ev){
-				console.log(ev,"startmessage");
+			startmessage(ev) {
+				console.log(ev, "startmessage");
 			},
-			completemessage(ev){
-				console.log(ev,"completemessage");
+			completemessage(ev) {
+				console.log(ev, "completemessage");
 			},
 			kanzhaopian(ev) {
 				uni.navigateTo({
-					url:"../Home/URL/URL?url="+ev
+					url: "../Home/URL/URL?url=" + ev
 				})
 				// let aa = [this.$imgPath + ev]
 				// uni.previewImage({
@@ -98,14 +98,14 @@
 						let aa = 0
 						data.data.data.status.data.forEach(item => {
 							item["tjtime"] = dayjs((item.createtime * 1000)).format('YYYY-MM-DD')
-							if(item.state == "1"){
+							if (item.state == "1") {
 								aa = aa + 1
 							}
 						})
 						this.fansList = []
 						this.fansList = data.data.data.status.data;
 						this.fansList.reverse()
-						uni.setStorageSync("yuyuejilunum",aa)
+						uni.setStorageSync("yuyuejilunum", aa)
 					}
 				})
 			},

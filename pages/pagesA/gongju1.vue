@@ -21,6 +21,7 @@
 			<u-video :vlist="video" @collection="collection" @pinglun="pinglun" @dianzhan="dianzhan" @del="del">
 			</u-video>
 		</view>
+		<u-heigth />
 		<u-pinglun :show="showComment" @chang="chang" :pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
 	</view>
 </template>

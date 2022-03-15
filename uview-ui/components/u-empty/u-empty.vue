@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 80%;">
+	<view style="height: 400px;">
 		<view class="cet csf">
 			<view class="">
 				<view class="jhg">

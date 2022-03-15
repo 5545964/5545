@@ -117,8 +117,8 @@
 							{{items.name}}
 						</view>
 						<view class="asd">
-							<u-input style="width: 100%;height: 100%;" @blur="baochun" v-model="data_list[items.obj]" :type="type"
-								:placeholder="items.text" />
+							<u-input style="width: 100%;height: 100%;" @blur="baochun" v-model="data_list[items.obj]"
+								:type="type" :placeholder="items.text" />
 						</view>
 					</view>
 
@@ -276,35 +276,38 @@
 				</view>
 			</view>
 		</view>
-		<u-select v-model="nianning" mode="single-column" :list="nianlist" @confirm="confirm"></u-select>
 		<view class="annui" v-if="isyuyue == 0" @click="tijiao">
 			提交预约
 		</view>
-		<u-toast ref="uToast" />
-		<u-picker mode="time" v-model="shijianshow" @confirm="zhishizhege"></u-picker>
-		<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="klks">{{chuanzhi.name}}</view>
-			<view class="mids">
-				<view class="type_list">
-					<view class="dkjshkdsf" v-for="(item,index) in poplist" :key="index">
-						<image style="width: 120rpx;height: 120rpx;" v-if="item.image!=''" @click="kan1(item.image)"
-							:src="item.image" mode="aspectFit">
-						</image>
-						<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)">
-							{{item.name}}
+		<u-heigth/>
+		<view>
+			<u-select v-model="nianning" mode="single-column" :list="nianlist" @confirm="confirm"></u-select>
+			<u-toast ref="uToast" />
+			<u-picker mode="time" v-model="shijianshow" @confirm="zhishizhege"></u-picker>
+			<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+				<view class="klks">{{chuanzhi.name}}</view>
+				<view class="mids">
+					<view class="type_list">
+						<view class="dkjshkdsf" v-for="(item,index) in poplist" :key="index">
+							<image style="width: 120rpx;height: 120rpx;" v-if="item.image!=''" @click="kan1(item.image)"
+								:src="item.image" mode="aspectFit">
+							</image>
+							<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)">
+								{{item.name}}
+							</view>
 						</view>
 					</view>
 				</view>
-			</view>
-			<view class="clos">
-				<view class="reset" @click="re">
-					重置
+				<view class="clos">
+					<view class="reset" @click="re">
+						重置
+					</view>
+					<view class="on" @click="change">
+						确定选择
+					</view>
 				</view>
-				<view class="on" @click="change">
-					确定选择
-				</view>
-			</view>
-		</u-popup>
+			</u-popup>
+		</view>
 	</view>
 </template>
 
@@ -319,20 +322,20 @@
 				shijianshow: false,
 				state: 1,
 				fans: {},
-				mony: "9980.00", 
-				isyuyue: 0, 
-				
+				mony: "9980.00",
+				isyuyue: 0,
+
 				poplist: [],
-				sel_list: "", 
-				popshow: "", 
-				name: "image", 
-				formData: {}, 
+				sel_list: "",
+				popshow: "",
+				name: "image",
+				formData: {},
 				header: {
 					"token": uni.getStorageSync("token")
-				}, 
-				action: this.$shangchuan + "/api/byd_user/addpostspic", 
-				isadd: true, 
-				
+				},
+				action: this.$shangchuan + "/api/byd_user/addpostspic",
+				isadd: true,
+
 				man_data: [{
 						id: 0,
 						age: "",
@@ -347,7 +350,7 @@
 						del: true
 					},
 				],
-				
+
 				man_list: [{
 						id: 0,
 						text: "先生"
@@ -365,11 +368,11 @@
 						text: "女孩"
 					}
 				],
-				numbers: 1000, 
-				title: "预约设计", 
-				data_list: {}, 
-				chuanzhi: {}, 
-				
+				numbers: 1000,
+				title: "预约设计",
+				data_list: {},
+				chuanzhi: {},
+
 				list: [{
 						title: '基本信息',
 						list: [{
@@ -402,7 +405,7 @@
 								name: '所在地区',
 								obj: "city",
 								text: "请填写所在地区",
-								
+
 								type: "address",
 								show: false
 							},
@@ -551,9 +554,9 @@
 			})
 		},
 		methods: {
-			baochun(){
+			baochun() {
 				console.log(this.data_list);
-				uni.setStorageSync("dataKKlist",this.data_list)
+				uni.setStorageSync("dataKKlist", this.data_list)
 			},
 			go_code() {
 				let _this = this
@@ -627,7 +630,7 @@
 				this.baochun()
 			},
 			address(ev) {
-				console.log(this.data_list,1);
+				console.log(this.data_list, 1);
 				let that = this;
 				let aa = ''
 				let bb = that.data_list
@@ -649,11 +652,11 @@
 				}).then(res => {
 					if (res.data.code == 200) {
 						uni.requestPayment({
-							timeStamp: res.data.data.timeStamp, 
-							nonceStr: res.data.data.nonceStr, 
-							package: res.data.data.package, 
-							signType: res.data.data.signType, 
-							paySign: res.data.data.paySign, 
+							timeStamp: res.data.data.timeStamp,
+							nonceStr: res.data.data.nonceStr,
+							package: res.data.data.package,
+							signType: res.data.data.signType,
+							paySign: res.data.data.paySign,
 							success: function(res) {
 								uni.showToast({
 									title: "支付成功",
@@ -844,7 +847,7 @@
 				})
 				this.data_list[oo.obj] = bb
 			},
-			
+
 			xunhuan(ev) {
 				this.poplist.forEach((item, index) => {
 					if (index == ev) {
@@ -855,23 +858,23 @@
 					}
 				})
 			},
-			
+
 			change() {
 				this.data_list[this.chuanzhi.obj] = this.sel_list;
 				this.baochun()
 				this.popshow = false;
 			},
-			
+
 			re() {
 				this.poplist.forEach(item => {
 					item.check = false
 				})
 			},
-			
+
 			async tijiao() {
 				if (await this.$login()) {
 					if (this.code != "") {
-						
+
 						this.$api.emsyzphone({
 							phone: this.data_list.phone,
 							yzm: this.code
@@ -881,7 +884,8 @@
 								uni.requestSubscribeMessage({
 									tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
 									complete: function(res) {
-										that.data_list["user_id"] = uni.getStorageSync("user_info").id;
+										that.data_list["user_id"] = uni.getStorageSync("user_info")
+											.id;
 										let aa = that.data_list.people;
 										let bb = [];
 										let cc = false;
@@ -906,7 +910,7 @@
 												icon: "none"
 											})
 										}
-										
+
 										that.data_list.people = bb
 										let dd = Object.keys(that.data_list).length;
 										if (dd != 15) {
@@ -954,12 +958,12 @@
 
 				}
 			},
-			
+
 			guan() {
 				this.popshow = false;
 				this.shijianshow = false;
 			},
-			
+
 			add() {
 				let aa = this.man_data.length
 				if (aa <= 10) {
@@ -976,7 +980,7 @@
 					}
 				}
 			},
-			
+
 			danxuans(ev, id, index, oo) {
 				let aa = this.man_data;
 				aa[index].select = ev;
@@ -984,12 +988,12 @@
 				this.man_data.push(...aa)
 				this.data_list[oo.obj] = this.man_data;
 			},
-			
+
 			danxuan(ev, id, oo) {
 				this.numbers = ev
 				this.data_list[oo.obj] = ev
 			},
-			
+
 			open(ev) {
 				if (ev.obj == "style") {
 					this.poplist = [];
@@ -1096,8 +1100,8 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					
-					
+
+
 					border-bottom: 1px solid #DEDEDE;
 					position: relative;
 				}
@@ -1317,8 +1321,8 @@
 
 		.type_item {
 			padding: 0 25rpx;
-			
-			
+
+
 			background: #F6F6F6;
 			border-radius: 35rpx;
 			font-size: 26rpx;
@@ -1333,8 +1337,8 @@
 		.active {
 			background: #007399;
 			padding: 0 25rpx;
-			
-			
+
+
 			border-radius: 35rpx;
 			font-size: 26rpx;
 			color: #FFFFFF;

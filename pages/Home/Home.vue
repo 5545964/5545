@@ -24,17 +24,17 @@
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
 							:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
-							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video" />
 						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 			</view>
 			<u-adata :list="data_list" @click="go_shop"></u-adata>
 			<u-kehu :showsss='show'></u-kehu>
+			<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
+			<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 			<tab-bar></tab-bar>
 		</view>
-		<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
-		<u-back-top :scroll-top="scrollTop"></u-back-top>
 	</view>
 </template>
 <script>
@@ -58,16 +58,29 @@
 				lun_list: [],
 				keyword: "",
 				list: [],
-				imgurl: this.$imgPath
+				imgurl: this.$imgPath,
+				imgsss: '<img src=\"' + this.$imgPath,
+				xinxi: []
 			};
 		},
 		onLoad() {
 			this.alls()
+			const res = uni.getSystemInfoSync()
+			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 		},
 		onShow() {
 			this.budenglugengxin()
 			uni.setStorageSync("shouzhi", 0)
-
+			this.$api.pots({
+				limit: 1000
+			}).then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.data.forEach(item => {
+						item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
+					})
+					this.xinxi = data.data.data.status.data
+				}
+			})
 		},
 		onPullDownRefresh() {
 			this.budenglugengxin()
@@ -82,8 +95,6 @@
 				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
 					uni.setStorageSync("navbarheigth", data.height)
 				}).exec();
-				const res = uni.getSystemInfoSync()
-				uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 				this.$api.shopcart({
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
@@ -122,13 +133,20 @@
 						uni.setStorageSync("xieyi", [])
 					}
 				})
+				this.$api.mymake({
+					user_id: uni.getStorageSync("user_info").id,
+					limit: 1000
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("yuyuejilunum", data.data.data.status.data.length)
+					}
+				})
 			},
 			denglu() {
 				this.budenglugengxin()
 			},
 			budenglu() {
-
-
+				uni.setStorageSync("showssss", false)
 			},
 			ended(ev) {
 				this.autoplay = true
@@ -141,9 +159,7 @@
 			},
 			gaizhi(ev) {
 				this.current = ev.detail.current
-				if (ev.detail.current == this.lun_list.length - 1) {
-
-				} else {
+				if (ev.detail.current == this.lun_list.length - 1) {} else {
 					this.videoContext.pause()
 				}
 			},
@@ -157,7 +173,6 @@
 				this.gosss(aa)
 			},
 			gosss(ev) {
-				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
 						if (ev.head != "") {
@@ -190,14 +205,32 @@
 						break;
 					case 4:
 						uni.navigateTo({
-							url: "../pagesC/youhuijuan?id="+ev.cupons
+							url: "../pagesC/youhuijuan?id=" + ev.cupons
 						})
+						break;
+					case 5:
+						let aa = {}
+						this.xinxi.forEach(item => {
+							if (item.id == ev.wz) {
+								aa = item
+							}
+						})
+
+						if (ev.wz == "") {
+							uni.reLaunch({
+								url: "./About?titit=0"
+							})
+						} else {
+							uni.setStorageSync("fuwenbeng", aa.content)
+							uni.navigateTo({
+								url: "../pagesC/fuwenben?title=" + aa.title
+							})
+						}
 						break;
 					default:
 				}
 			},
 			go_shop(ev) {
-				console.log(ev);
 				if (ev.alls.video != "" && ev.alls.video != null) {
 					return true;
 				}
@@ -236,13 +269,12 @@
 						break;
 					case 4:
 						uni.navigateTo({
-							url: "../pagesC/youhuijuan?id="+ev.alls.cupons
+							url: "../pagesC/youhuijuan?id=" + ev.alls.cupons
 						})
 						break;
 					default:
 				}
 			},
-
 			seach_go() {
 				uni.navigateTo({
 					url: "./search/search"

@@ -32,7 +32,7 @@
 			"path": "pages/Home/About",
 			"style": {
 				"navigationBarTitleText": "关于宝芸邸",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				"navigationBarTextStyle": "black"
 			}
 		},
@@ -327,14 +327,6 @@
 					"path": "my",
 					"style": {
 						"navigationBarTitleText": "个人资料编辑",
-						"enablePullDownRefresh": false,
-						"navigationStyle": "custom"
-					}
-				},
-				{
-					"path": "images",
-					"style": {
-						"navigationBarTitleText": "图片处理",
 						"enablePullDownRefresh": false,
 						"navigationStyle": "custom"
 					}

@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<!-- 导航 -->
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
@@ -14,19 +14,19 @@
 				</view>
 			</u-navbar>
 		</view>
-		<!-- 标签 -->
 		<view>
 			<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		</view>
 		<view v-if="current==0">
 			<u-design @pageA="pageA" @pageB="pageB" :pages="pages"></u-design>
 		</view>
-		<view style="height: 100%;" v-if="current==1">
+		<view v-if="current==1">
 			<u-FlagshipSuite @pageA="pageA" @pageB="pageB" :pages="pages"></u-FlagshipSuite>
 		</view>
-		<view style="height: 100%;" v-if="current==2">
+		<view v-if="current==2">
 			<u-HouseType :pages="pages" @pageA="pageA" @pageB="pageB"></u-HouseType>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 
@@ -49,11 +49,11 @@
 		},
 		onLoad(ev) {
 			console.log(ev);
-			if(ev.title){
+			if (ev.title) {
 				this.title = ev.title
 			}
-			if(ev.current){
-					this.current = ev.current
+			if (ev.current) {
+				this.current = ev.current
 			}
 		},
 		onReachBottom(ev) {

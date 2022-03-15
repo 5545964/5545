@@ -28,6 +28,7 @@
 			</view>
 			<u-cart :list="list" @kan="dsadsa" @click="del"></u-cart>
 		</view>
+		<u-heigth />
 		<u-timeSelect ref="myPicker" :datas="datas" @submit="handleSubmit" :start-year="2000" :end-year="2500">
 		</u-timeSelect>
 	</view>

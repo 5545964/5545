@@ -62,6 +62,7 @@
 				</view>
 			</view>
 		</view>
+		<u-heigth />
 		<u-popup width="640" :closeable="true" border-radius="10" v-model="jujue" mode="center">
 			<view class="popup">
 				<view class="top">

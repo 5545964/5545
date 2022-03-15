@@ -105,6 +105,7 @@
 				</view>
 			</scroll-view>
 		</view>
+		<u-heigth />
 		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
 			<view class="klks">全部筛选</view>
 			<view class="mids">

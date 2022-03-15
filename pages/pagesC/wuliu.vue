@@ -60,6 +60,7 @@
 				</u-time-line-item>
 			</u-time-line>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

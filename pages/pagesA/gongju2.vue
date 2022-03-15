@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
@@ -54,6 +54,7 @@
 			</view>
 		</view>
 		<u-empty v-else></u-empty>
+		<u-heigth />
 	</view>
 </template>
 

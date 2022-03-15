@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -18,19 +18,20 @@
 		</view>
 		<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<view class="home">
-			<view style="height: 100%;" class="" v-if="current == 0">
+			<view v-if="current == 0">
 				<u-empty></u-empty>
 			</view>
-			<view style="height: 100%;" class="" v-if="current == 1">
+			<view v-if="current == 1">
 				<u-empty></u-empty>
 			</view>
-			<view style="height: 100%;" class="" v-if="current == 2">
+			<view v-if="current == 2">
 				<u-empty></u-empty>
 			</view>
-			<view style="height: 100%;" class="" v-if="current == 3">
+			<view v-if="current == 3">
 				<u-empty></u-empty>
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

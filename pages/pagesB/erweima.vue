@@ -22,6 +22,7 @@
 			<view class="tetx">
 				保存图片
 			</view>
+			<u-heigth />
 		</view>
 	</view>
 </template>

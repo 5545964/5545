@@ -93,6 +93,7 @@
 
 			</view>
 		</view>
+		<u-heigth />
 		<view class="car_foot">
 			<view class="all-sel-btn centerboth">
 				<text v-if="allSel==true" class="iconfont car-sel" @click="allSelBtn"></text>

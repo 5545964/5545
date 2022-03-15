@@ -3,239 +3,253 @@
 		<view style="height: 40rpx;">
 			<u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		</view>
-		<swiper :style="'height: '+heigth+'px;'" :circular="true" :duration="300" @change="lun_change"
-			:current="current">
-			<swiper-item v-for="(item,index) in lists" :key="index">
-				<scroll-view style="height: 100%;" scroll-y="true">
-					<view class="swiper-item">
-						<view class="top">
-							<view class="text">
-								{{item.name}}
-							</view>
-							<view class="xian"></view>
-							<view style="height: 20rpx;"></view>
-							<view class="content">
-								<u-parse :html="item.content"></u-parse>
-							</view>
-						</view>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<scroll-view :style="'height: '+heigth+'px;'" scroll-y="true">
-					<view class="swiper-item" style="height: 100%;padding: 0;">
-						<view class="top" style="height: 100%;">
-							<view class="text">
-								业务地图
-							</view>
-							<view class="xian" style="margin: 0 30rpx;"></view>
-							<view style="height: 20rpx;padding: 0 30rpx;"></view>
-							<view style="padding: 0 30rpx;">
-								<u-search bgColor="#f6f6f6" placeholder="输入关键字搜索" v-model="keyword" @search="like">
-								</u-search>
-							</view>
-							<view style="height: 30rpx;width: 100%;" />
-							<view style="height: 100%;">
-								<view class="papapa" v-if="lickc.length!=0"
-									style="margin-bottom:30rpx;border-bottom: 1px solid #007399;padding-bottom:10rpx;">
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;">
-												<view class="mian_left_item cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{lickc[0].title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;">
-												<view class="mian_left_item cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{lickc[1].title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;">
-												<view class="mian_left_item cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{lickc[2].title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;" v-for="(item,index) in lickc[3]"
-												:key="index" @click="lidsadsa(index,item)">
-												<view :class="active22==index?'mian_left_item':'mian_left_item1'"
-													class="cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{item.title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
+		<view class="">
+			<swiper :style="'height: '+heigth+'px;'" :circular="true" :duration="300" @change="lun_change"
+				:current="current">
+				<swiper-item v-for="(item,index) in lists" :key="index">
+					<scroll-view style="height: 100%;" scroll-y="true">
+						<view class="swiper-item">
+							<view class="top">
+								<view class="text">
+									{{item.name}}
 								</view>
-								<view class="papapa" style="height: 100%;">
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist"
-												:key="index" @click="changeTokens(index,item)">
-												<view :class="active==index?'mian_left_item':'mian_left_item1'"
-													class="cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{item.title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist0"
-												:key="index" @click="changeTokens0(index,item)">
-												<view :class="active0==index?'mian_left_item':'mian_left_item1'"
-													class="cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{item.title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist1"
-												:key="index" @click="changeTokens1(index,item)">
-												<view :class="active1==index?'mian_left_item':'mian_left_item1'"
-													class="cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{item.title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
-									<view class="mian_left">
-										<scroll-view scroll-y="true" style="height: 100%;">
-											<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist2"
-												:key="index" @click="changeTokens2(index,item)">
-												<view :class="active2==index?'mian_left_item':'mian_left_item1'"
-													class="cet">
-													<view style="width:100rpx;text-align: left;line-height:35rpx;">
-														{{item.title}}
-													</view>
-												</view>
-											</view>
-										</scroll-view>
-									</view>
+								<view class="xian"></view>
+								<view style="height: 20rpx;"></view>
+								<view class="content">
+									<u-parse :html="item.content"></u-parse>
 								</view>
 							</view>
 						</view>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<scroll-view :style="'height: '+heigth+'px;'" scroll-y="true">
-					<view class="swiper-item">
-						<view class="top">
-							<view class="text">
-								资讯中心
-							</view>
-							<view class="xian"></view>
-							<view style="height: 20rpx;"></view>
-							<view class="hahah" @click="shouURl(item)" v-for="(item,index) in xinxi" :key="index">
-								<view class="">
-									<view class="hnjh">
-										{{item.title}}
-									</view>
-									<view class="timess">
-										{{item.refreshtime_text}}
-									</view>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item>
+					<scroll-view :style="'height: '+heigth+'px;'" scroll-y="true">
+						<view class="swiper-item" style="height: 100%;padding: 0;">
+							<view class="top" style="height: 100%;">
+								<view class="text">
+									业务地图
 								</view>
-								<view class="">
-									<image class="imghjk" :src="imgPath+item.simage" mode="aspectFit">
-									</image>
+								<view class="xian" style="margin: 0 30rpx;"></view>
+								<view style="height: 20rpx;padding: 0 30rpx;"></view>
+								<view style="padding: 0 30rpx;">
+									<u-search bgColor="#f6f6f6" placeholder="输入关键字搜索" v-model="keyword" @search="like">
+									</u-search>
+								</view>
+								<view style="height: 30rpx;width: 100%;" />
+								<view style="height: 100%;">
+									<view class="papapa" v-if="lickc.length!=0"
+										style="margin-bottom:30rpx;border-bottom: 1px solid #007399;padding-bottom:10rpx;">
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;">
+													<view class="mian_left_item cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{lickc[0].title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;">
+													<view class="mian_left_item cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{lickc[1].title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;">
+													<view class="mian_left_item cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{lickc[2].title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;" v-for="(item,index) in lickc[3]"
+													:key="index" @click="lidsadsa(index,item)">
+													<view :class="active22==index?'mian_left_item':'mian_left_item1'"
+														class="cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{item.title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+									</view>
+									<view class="papapa" style="height: 100%;">
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist"
+													:key="index" @click="changeTokens(index,item)">
+													<view :class="active==index?'mian_left_item':'mian_left_item1'"
+														class="cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{item.title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist0"
+													:key="index" @click="changeTokens0(index,item)">
+													<view :class="active0==index?'mian_left_item':'mian_left_item1'"
+														class="cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{item.title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist1"
+													:key="index" @click="changeTokens1(index,item)">
+													<view :class="active1==index?'mian_left_item':'mian_left_item1'"
+														class="cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{item.title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+										<view class="mian_left">
+											<scroll-view scroll-y="true" style="height: 100%;">
+												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist2"
+													:key="index" @click="changeTokens2(index,item)">
+													<view :class="active2==index?'mian_left_item':'mian_left_item1'"
+														class="cet">
+														<view style="width:100rpx;text-align: left;line-height:35rpx;">
+															{{item.title}}
+														</view>
+													</view>
+												</view>
+											</scroll-view>
+										</view>
+									</view>
 								</view>
 							</view>
 						</view>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item>
+					<scroll-view :style="'height: '+heigth+'px;'" scroll-y="true">
+						<view class="swiper-item">
+							<view class="top">
+								<view class="text">
+									资讯中心
+								</view>
+								<view class="xian"></view>
+								<view style="height: 20rpx;"></view>
+								<view class="hahah" @click="shouURl(item)" v-for="(item,index) in xinxi" :key="index">
+									<view class="">
+										<view class="hnjh">
+											{{item.title}}
+										</view>
+										<view class="timess">
+											{{item.refreshtime_text}}
+										</view>
+									</view>
+									<view class="">
+										<image class="imghjk" :src="imgPath+item.simage" mode="aspectFit">
+										</image>
+									</view>
+								</view>
+							</view>
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view>
+			<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						服务协议和隐私政策
 					</view>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
+					<view class="textss">
+						感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下协议了解详细信息。如您同意，请勾选协议并点击”同意”开始接受我们的服务。
+					</view>
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;justify-content: end;">
+							<view style="width:30%;display:flex;justify-content: flex-end;">
+								<view class="yuan" @click="hahaha(tanchaung)">
+									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28">
+									</u-icon>
+								</view>
+							</view>
+							<view class="mingcheng" @click="shouURls(tanchaung)">
+								《{{tanchaung.name}}》
+							</view>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="yuedu = false">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyixieyi(tanchaung)">
+							同意
+						</view>
+					</view>
+				</view>
+			</u-popup>
 
-		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					服务协议和隐私政策
-				</view>
-				<view class="textss">
-					感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下协议了解详细信息。如您同意，请勾选协议并点击”同意”开始接受我们的服务。
-				</view>
-				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;">
-						<view style="width:30%;display:flex;justify-content: flex-end;">
-							<view class="yuan" @click="hahaha(tanchaung)">
-								<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
-							</view>
+			<u-popup width="500" border-radius="30" v-model="yuedus" mode="center">
+				<view class="yueduwo">
+					<view class="texts">
+						{{qianyue}}
+					</view>
+					<view class="textsss">
+						{{huxing}}
+					</view>
+					<view class="" v-if="!cduan">
+						<view class="llll" @click="llll">
+							楼盘设计
 						</view>
-						<view class="mingcheng" @click="shouURls(tanchaung)">
-							《{{tanchaung.name}}》
+						<view class="kkkk" @click="kkkk">
+							户型攻略
 						</view>
 					</view>
-				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="yuedu = false">
-						取消
+					<view class="" v-else>
+						<view class="llll" @click="duan(0)">
+							成为设计师
+						</view>
+						<view class="kkkk" @click="duan(1)">
+							成为美居会员
+						</view>
 					</view>
-					<view class="hkhnij jjhgj" @click="tongyixieyi(tanchaung)">
-						同意
+				</view>
+			</u-popup>
+			<u-popup width="500" border-radius="30" v-model="shenghe" mode="center">
+				<view class="yueduwo">
+					<view class="texts">
+						{{mnmn}}
+					</view>
+					<view class="textsss" style="margin:30px 0;">
+						{{nmnm}}
+					</view>
+					<view class="lllls" @click="shenghe = false">
+						确定
 					</view>
 				</view>
-			</view>
-		</u-popup>
-
-		<u-popup width="500" border-radius="30" v-model="yuedus" mode="center">
-			<view class="yueduwo">
-				<view class="texts">
-					{{qianyue}}
-				</view>
-				<view class="textsss">
-					{{huxing}}
-				</view>
-				<view class="llll" @click="llll">
-					楼盘设计
-				</view>
-				<view class="kkkk" @click="kkkk">
-					户型攻略
-				</view>
-			</view>
-		</u-popup>
-		<u-popup width="500" border-radius="30" v-model="shenghe" mode="center">
-			<view class="yueduwo">
-				<view class="texts">
-					{{mnmn}}
-				</view>
-				<view class="textsss" style="margin:30px 0;">
-					{{nmnm}}
-				</view>
-				<view class="lllls" @click="shenghe = false">
-					确定
-				</view>
-			</view>
-		</u-popup>
-		<u-kehu url="./booking/AppointmentDesign" heigth="1000"></u-kehu>
-		<u-toast ref="uToast" />
-		<u-back-top :scroll-top="0"></u-back-top>
+			</u-popup>
+			<u-kehu url="./booking/AppointmentDesign" heigth="1000"></u-kehu>
+			<u-toast ref="uToast" />
+			<u-back-top :scroll-top="0"></u-back-top>
+		</view>
 		<tab-bar v-show="!yuedu"></tab-bar>
 	</view>
 </template>
@@ -245,6 +259,7 @@
 	export default {
 		data() {
 			return {
+				cduan: false,
 				nmnm: "",
 				mnmn: "",
 				shenghe: false,
@@ -297,7 +312,7 @@
 						content: ""
 					}
 				],
-				current: 3,
+				current: 0,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -313,51 +328,52 @@
 				tanchaung: {},
 				agid: "",
 				lickc: [],
-				klklkl:0
+				klklkl: 0,
+				lickid: 0
 			};
 		},
-		onLoad() {
-			this.alls()
+		onLoad(ev) {
+			console.log(ev);
+			if (ev.titit) {
+				this.current = 4
+			}
 		},
 		onShow() {
 			this.active = 0
 			this.active0 = 0
 			this.active1 = 0
 			this.active2 = 0
-
+			this.idid = uni.getStorageSync("idid") || 1
+			this.alls()
 			const res = uni.getSystemInfoSync();
 			this.heigth = res.windowHeight;
-			this.idid = uni.getStorageSync("idid") || 1
-		},
-		onPullDownRefresh() {
-			this.alls()
 		},
 		methods: {
+			duan(ev) {
+				if (ev == 0) {
+					uni.reLaunch({
+						url: "./Investment?is_re=1"
+					})
+				} else {
+					uni.navigateTo({
+						url: "../pagesB/shengfen"
+					})
+				}
+			},
 			like() {
 				this.$api.likelp({
-					title: this.keyword
+					title: this.keyword,
+					id: this.lickid
 				}).then(data => {
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
 							item["check"] = false
 							item["name"] = item.title + "的相关协议"
 						})
-						this.lickc = []
-						this.lickc.push({
-							title: "搜索",
-						})
-						this.lickc.push({
-							title: "搜索"
-						})
-						this.lickc.push({
-							title: "搜索"
-						})
-						this.lickc.push(data.data.data.status)
-						this.active = 999
-						this.active0 = 999
-						this.active2 = 999
-						this.active1 = 999
+						this.datalist2 = data.data.data.status
+						this.active2 = 0
 					} else {
+						this.datalist2 = []
 						uni.showToast({
 							title: "暂无数据",
 							icon: "none"
@@ -371,16 +387,15 @@
 				})
 			},
 			llll() {
-				if(this.klklkl = 1){
+				if (this.klklkl == 1) {
 					uni.navigateTo({
 						url: "../pagesD/uploadCase"
 					})
-				}else{
+				} else {
 					uni.navigateTo({
 						url: "../pagesC/HouseDesign"
 					})
 				}
-				
 			},
 			// 康复文本
 			fuwenben(ev) {
@@ -420,7 +435,6 @@
 						icon: "none"
 					})
 				}
-
 			},
 			lp(ev) {
 				this.$api.lpmap({
@@ -438,6 +452,13 @@
 				})
 			},
 			alls() {
+				this.$api.myuser({
+					user_id: uni.getStorageSync("user_info").id || 0
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("user_info", data.data.data.myuser)
+					}
+				})
 				this.$api.map().then(data => {
 					if (data.data.code == 1) {
 						this.datalist = [...data.data.data.status]
@@ -445,6 +466,7 @@
 							this.datalist0 = [...this.datalist[0].child]
 							if (this.datalist0[0].child) {
 								this.datalist1 = [...this.datalist0[0].child]
+								this.lickid = this.datalist1[0].id
 								this.lp(this.datalist1[0].id)
 							}
 						}
@@ -462,17 +484,16 @@
 						uni.stopPullDownRefresh();
 					}
 				})
-				this.lists.forEach(item => {
+				for (let i in this.lists) {
 					this.$api.bydadout({
-						state: item.id
+						state: this.lists[i].id
 					}).then(data => {
 						if (data.data.code == 1) {
-							item.content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
+							this.lists[i].content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
 								.imgsss);
 						}
 					})
-				})
-
+				}
 			},
 			async changeTokens2(index, item) {
 				this.lickc = []
@@ -483,12 +504,12 @@
 					item.check = false
 					this.tanchaung = item
 					let aa = uni.getStorageSync("user_info")
-					if (!aa.bbs.id) {
-						return this.$refs.uToast.show({
-							title: '您还不是美居独家设计师或美居会员',
-							type: 'default',
-							duration: 3000
-						})
+					if (!aa.bbs.id && aa.des == 0) {
+						this.qianyue = "您还不是设计师或美居会员"
+						this.huxing = "点击前往成为美居设计师或美居会员"
+						this.cduan = true
+						this.yuedus = true
+						return
 					}
 					this.$api.mapstation({
 						user_id: aa.id,
@@ -503,8 +524,8 @@
 											this.yuedu = true
 											this.idid = 1
 											uni.setStorageSync("idid", this.idid)
+											return
 										}
-										return
 									}
 								}
 								if (item.sign_bid == 0) {
@@ -512,8 +533,8 @@
 										this.yuedu = true
 										this.idid = 0
 										uni.setStorageSync("idid", this.idid)
+										return
 									}
-									return
 								}
 								if (item.sign_bid != 0 || item.sign_did != 0) {
 									this.qianyue = "该楼盘已被签约"
@@ -529,7 +550,6 @@
 									}
 									uni.setStorageSync("idid", this.idid)
 									this.yuedus = true;
-									return
 								}
 							}
 						} else if (data.data.code == 1) {
@@ -538,6 +558,7 @@
 								this.klklkl = 1
 							} else {
 								this.qianyue = "美居独家经营权申请已通过"
+								this.klklkl = 0
 							}
 							this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
 							this.yuedus = true;
@@ -547,6 +568,7 @@
 								this.idid = 1
 							}
 							uni.setStorageSync("idid", this.idid)
+							// 审核中
 						} else if (data.data.code == 2) {
 							if (this.idid == 1) {
 								this.mnmn = "美居独家设计权申请正在审核"
@@ -555,6 +577,8 @@
 							}
 							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
 							this.shenghe = true;
+
+							// 拒绝
 						} else if (data.data.code == 3) {
 							if (this.idid == 1) {
 								this.mnmn = "美居独家设计权申请被拒绝"
@@ -581,6 +605,13 @@
 					item.check = false
 					this.tanchaung = item
 					let aa = uni.getStorageSync("user_info")
+					if (!aa.bbs.id) {
+						this.qianyue = "您还不是设计师或美居会员"
+						this.huxing = "点击前往成为美居设计师或美居会员"
+						this.cduan = true
+						this.yuedus = true
+						return
+					}
 					this.$api.mapstation({
 						user_id: aa.id,
 						bid: item.id,
@@ -666,6 +697,7 @@
 			changeTokens1(index, item) {
 				this.lickc = []
 				this.lp(item.id)
+				this.lickid = item.id
 				this.active1 = index
 			},
 			changeTokens0(index, item) {
@@ -689,6 +721,7 @@
 					this.datalist0 = [...item.child]
 					if (this.datalist0[0].child.length != 0) {
 						this.datalist1 = [...this.datalist0[0].child]
+						this.lickid = this.datalist1[0].id
 						this.lp(this.datalist1[0].id)
 					}
 				} else {

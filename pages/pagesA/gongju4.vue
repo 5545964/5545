@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -14,8 +14,8 @@
 			</u-navbar>
 		</view>
 		<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
-		<view class="home" style="height: 100%;">
-			<view style="height: 100%;" v-show="current == 0">
+		<view class="home">
+			<view v-show="current == 0">
 				<view v-for="(item,index) in coupon_list0" :key="index" @click="xuanzhewo(item)">
 					<view class="coupon">
 						<view class="left">
@@ -41,7 +41,7 @@
 				</view>
 				<u-empty mode="coupon" v-if="coupon_list0.length == 0"></u-empty>
 			</view>
-			<view style="height: 100%;" v-show="current == 1">
+			<view v-show="current == 1">
 				<view v-for="(item,index) in coupon_list1" :key="index">
 					<view class="coupons">
 						<view class="left">
@@ -70,7 +70,7 @@
 				</view>
 				<u-empty mode="coupon" v-if="coupon_list1.length == 0"></u-empty>
 			</view>
-			<view style="height: 100%;" v-show="current == 2">
+			<view v-show="current == 2">
 				<view v-for="(item,index) in coupon_list2" :key="index">
 					<view class="coupons">
 						<view class="left">
@@ -100,6 +100,7 @@
 				<u-empty mode="coupon" v-if="coupon_list2.length == 0"></u-empty>
 			</view>
 		</view>
+		<u-heigth />
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
 	</view>
 </template>

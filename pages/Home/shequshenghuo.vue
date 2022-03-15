@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -14,6 +14,7 @@
 			</u-navbar>
 		</view>
 		<u-empty  text="数据更新中，敬请期待！"></u-empty>
+		<u-heigth />
 	</view>
 </template>
 

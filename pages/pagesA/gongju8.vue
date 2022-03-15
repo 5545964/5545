@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -58,6 +58,7 @@
 				</view>
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 
@@ -90,9 +91,10 @@
 				user_id: uni.getStorageSync("user_info").id
 			}).then(data => {
 				if (data.data.code == 1) {
-					let indexss=-1
+					let indexss = -1
 					data.data.data.status.forEach((item, index) => {
-						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1].create_at.split(" ")[0]) {
+						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
+							.create_at.split(" ")[0]) {
 							this.data_list[indexss].list.push({
 								title: item.zt,
 								text: item.content
@@ -112,9 +114,10 @@
 			})
 			this.$api.activtz().then(data => {
 				if (data.data.code == 1) {
-					let indexss=-1
+					let indexss = -1
 					data.data.data.status.forEach((item, index) => {
-						if (index > 0 && item.stime_text.split(" ")[0] == data.data.data.status[index - 1].stime_text.split(" ")[0]) {
+						if (index > 0 && item.stime_text.split(" ")[0] == data.data.data.status[index - 1]
+							.stime_text.split(" ")[0]) {
 							this.data_lists[indexss].list.push({
 								title: item.name,
 								text: item.content
@@ -140,7 +143,7 @@
 				})
 			},
 			gos(ev) {
-				uni.setStorageSync("fuwenben",ev)
+				uni.setStorageSync("fuwenben", ev)
 				uni.navigateTo({
 					// url: "./xiangqing?id=" + ev
 					url: "./xiangqing"

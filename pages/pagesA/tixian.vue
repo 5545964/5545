@@ -101,6 +101,7 @@
 			<view class="dasdasdxzxcx" @click="qianyue" v-else>
 				去签约
 			</view>
+			<u-heigth />
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign" :po_hei="100"></u-kehu>
 	</view>

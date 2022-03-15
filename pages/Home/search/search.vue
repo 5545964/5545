@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="sssss">
@@ -16,7 +16,7 @@
 		<view class="seath">
 			<u-search @search="seach_go" :focus="true" v-model="keyword" bg-color="#f2f2f2"></u-search>
 		</view>
-		<view class="" style="height: 100%;">
+		<view>
 			<u-adata @click="go" :list="data_list" :height="30"></u-adata>
 			<u-empty v-show="xianshi"></u-empty>
 		</view>

@@ -102,13 +102,12 @@
 			</view>
 		</view>
 		<u-toast ref="uToast" />
-		<!-- <view style="height: 110rpx;">
-		</view> -->
 		<view class="bottomssss cet">
 			<view class="dasdasdxzxcx" @click="tijiao">
 				提交
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

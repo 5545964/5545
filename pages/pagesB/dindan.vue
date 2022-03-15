@@ -134,230 +134,233 @@
 					</swiper-item>
 				</swiper>
 			</view>
+			<u-heigth />
 		</view>
-		<!-- 查看安装详情 -->
-		<u-popup width="500" border-radius="30" v-model="anzhuang" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					安装详情
-				</view>
-				<view style="padding: 0 30rpx;">
-					<view class="">
-						姓名
+		<view class="">
+			<!-- 查看安装详情 -->
+			<u-popup width="500" border-radius="30" v-model="anzhuang" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						安装详情
 					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
-							placeholder="请填写快递公司" />
-					</view>
-					<view class="">
-						电话
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aphone"
-							placeholder="请填写快递单号" type="number" />
-					</view>
-					<view v-if="bzxq.abh" class="">
+					<view style="padding: 0 30rpx;">
 						<view class="">
-							安装人员编号
+							姓名
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.abh"
+							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
+								placeholder="请填写快递公司" />
+						</view>
+						<view class="">
+							电话
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
+								v-model="bzxq.aphone" placeholder="请填写快递单号" type="number" />
+						</view>
+						<view v-if="bzxq.abh" class="">
+							<view class="">
+								安装人员编号
+							</view>
+							<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+								<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
+									v-model="bzxq.abh" placeholder="请填写快递单号" type="number" />
+							</view>
+						</view>
+						<view class="">
+							预计上门时间
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.atime"
 								placeholder="请填写快递单号" type="number" />
 						</view>
 					</view>
-					<view class="">
-						预计上门时间
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.atime"
-							placeholder="请填写快递单号" type="number" />
-					</view>
-				</view>
-				<!-- <view class="anniusss">
-					<view class="hkhnij" @click="anzhuang=false">
-						取消
-					</view>
-					<view class="hkhnij jjhgj" @click="anzhuang=false">
-						同意
-					</view>
-				</view> -->
-			</view>
-		</u-popup>
-		<!-- 填写快递单号 -->
-		<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					填写快递单号
-				</view>
-				<view style="padding: 0 30rpx;">
-					<view class="">
-						快递公司
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
-							placeholder="请填写快递公司" />
-					</view>
-					<view class="">
-						快递单号
-					</view>
-					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaididanhao"
-							placeholder="请填写快递单号" type="number" />
-					</view>
-				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="kuaidiwow(0)">
-						取消
-					</view>
-					<view class="hkhnij jjhgj" @click="kuaidiwow(1)">
-						同意
-					</view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 确认取消该订单 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="show" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 确认取消该订单么？ </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="xuanzhe(0)"> 取消 </view>
-					<view class="czcxc" @click="xuanzhe(1)"> 确定 </view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 确认取消退款 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 确认取消退款？ </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="xuanzhea(0)"> 取消 </view>
-					<view class="czcxc" @click="xuanzhea(1)"> 确定 </view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- quxiaoshouhou -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="quxiaoshouhou" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 确认取消售后？ </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="shouhoou(0)"> 取消 </view>
-					<view class="czcxc" @click="shouhoou(1)"> 确定 </view>
-				</view>
-			</view>
-		</u-popup>
-		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
-		<!-- 确保是你本人操作 -->
-		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					确保是你本人操作
-				</view>
-				<view class="textss">
-					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
-				</view>
-				<view class="yanzhengma">
-					<view class="cet" style="justify-content: space-around;width: 100%;">
-						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+					<!-- <view class="anniusss">
+						<view class="hkhnij" @click="anzhuang=false">
+							取消
 						</view>
-						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						<view class="hkhnij jjhgj" @click="anzhuang=false">
+							同意
+						</view>
+					</view> -->
+				</view>
+			</u-popup>
+			<!-- 填写快递单号 -->
+			<u-popup width="500" border-radius="30" v-model="kuaidi" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						填写快递单号
+					</view>
+					<view style="padding: 0 30rpx;">
+						<view class="">
+							快递公司
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
+								placeholder="请填写快递公司" />
+						</view>
+						<view class="">
+							快递单号
+						</view>
+						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
+							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaididanhao"
+								placeholder="请填写快递单号" type="number" />
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="kuaidiwow(0)">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="kuaidiwow(1)">
+							同意
+						</view>
 					</view>
 				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="tongyis(0)">
-						取消
+			</u-popup>
+			<!-- 确认取消该订单 -->
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="show" mode="center">
+				<view class="popup">
+					<view class="top"> 提示 </view>
+					<view class="cets"> 确认取消该订单么？ </view>
+					<view class="xian"> </view>
+					<view class="bottoms">
+						<view class="sdasas" @click="xuanzhe(0)"> 取消 </view>
+						<view class="czcxc" @click="xuanzhe(1)"> 确定 </view>
 					</view>
-					<view class="hkhnij jjhgj" @click="tongyis(1)">
-						同意
+				</view>
+			</u-popup>
+			<!-- 确认取消退款 -->
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
+				<view class="popup">
+					<view class="top"> 提示 </view>
+					<view class="cets"> 确认取消退款？ </view>
+					<view class="xian"> </view>
+					<view class="bottoms">
+						<view class="sdasas" @click="xuanzhea(0)"> 取消 </view>
+						<view class="czcxc" @click="xuanzhea(1)"> 确定 </view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
-		<!-- 服务协议和隐私政策 -->
-		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					服务协议和隐私政策
+			</u-popup>
+			<!-- quxiaoshouhou -->
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="quxiaoshouhou" mode="center">
+				<view class="popup">
+					<view class="top"> 提示 </view>
+					<view class="cets"> 确认取消售后？ </view>
+					<view class="xian"> </view>
+					<view class="bottoms">
+						<view class="sdasas" @click="shouhoou(0)"> 取消 </view>
+						<view class="czcxc" @click="shouhoou(1)"> 确定 </view>
+					</view>
 				</view>
-				<view class="textss">
-					感谢您使用宝芸邸，我们会严格
-					按照法律规定存储和使用您的个人
-					信息。您可以阅读以下几项条款了
-					解详细信息。如您同意，请勾选以
-					下几项条款并点击”同意”开始接受
-					我们的服务。
+			</u-popup>
+			<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
+			<!-- 确保是你本人操作 -->
+			<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						确保是你本人操作
+					</view>
+					<view class="textss">
+						<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+					</view>
+					<view class="yanzhengma">
+						<view class="cet" style="justify-content: space-around;width: 100%;">
+							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
+							</view>
+							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="tongyis(0)">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyis(1)">
+							同意
+						</view>
+					</view>
 				</view>
-				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
-						:key="index">
-						<view style="width:30%;display:flex;justify-content: flex-end;">
-							<view class="yuan" @click="hahaha(item)">
-								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+			</u-popup>
+			<!-- 服务协议和隐私政策 -->
+			<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						服务协议和隐私政策
+					</view>
+					<view class="textss">
+						感谢您使用宝芸邸，我们会严格
+						按照法律规定存储和使用您的个人
+						信息。您可以阅读以下几项条款了
+						解详细信息。如您同意，请勾选以
+						下几项条款并点击”同意”开始接受
+						我们的服务。
+					</view>
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+							:key="index">
+							<view style="width:30%;display:flex;justify-content: flex-end;">
+								<view class="yuan" @click="hahaha(item)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
+							</view>
+							<view class="mingcheng" @click="fuwenben(item)">
+								《{{item.name}}》
 							</view>
 						</view>
-						<view class="mingcheng" @click="fuwenben(item)">
-							《{{item.name}}》
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="tongyi(0)">
+							暂不使用
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyixieyi()">
+							同意协议
 						</view>
 					</view>
 				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="tongyi(0)">
-						暂不使用
+			</u-popup>
+			<!-- 确认安装完成 -->
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="qurren" mode="center">
+				<view class="popup">
+					<view class="top"> 提示 </view>
+					<view class="cets"> 是否安装完成 </view>
+					<view class="xian"> </view>
+					<view class="bottoms">
+						<view class="sdasas" @click="qurren = false"> 取消 </view>
+						<view class="czcxc" @click="dakaishouji(2)" v-if="yianzhaungkaiguan"> 确定 </view>
+						<view class="czcxc" @click="anzhaungwancheng()" v-else> 确定 </view>
 					</view>
-					<view class="hkhnij jjhgj" @click="tongyixieyi()">
-						同意协议
+				</view>
+			</u-popup>
+			<!-- 是否需要安装 -->
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
+				<view class="popup">
+					<view class="top"> 提示 </view>
+					<view class="cets"> 是否需要安装？</view>
+					<view class="xian"> </view>
+					<view class="bottoms">
+						<view class="sdasas" @click="baozhuangshow = false"> 否 </view>
+						<view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
+						<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
-		<!-- 确认安装完成 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="qurren" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 是否安装完成 </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="qurren = false"> 取消 </view>
-					<view class="czcxc" @click="dakaishouji(2)" v-if="yianzhaungkaiguan"> 确定 </view>
-					<view class="czcxc" @click="anzhaungwancheng()" v-else> 确定 </view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 是否需要安装 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 是否需要安装？</view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="baozhuangshow = false"> 否 </view>
-					<view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
-					<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 确认收到商品 -->
-		<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
-			<view class="popup">
-				<view class="top"> 提示 </view>
-				<view class="cets"> 确认签收该订单商品？ </view>
-				<view class="xian"> </view>
-				<view class="bottoms">
-					<view class="sdasas" @click="shows = false"> 取消 </view>
-					<view class="czcxc" v-if="querenqianshoukaiguan" @click="dakaishouji(0)">
-						确定
+			</u-popup>
+			<!-- 确认收到商品 -->
+			<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
+				<view class="popup">
+					<view class="top"> 提示 </view>
+					<view class="cets"> 确认签收该订单商品？ </view>
+					<view class="xian"> </view>
+					<view class="bottoms">
+						<view class="sdasas" @click="shows = false"> 取消 </view>
+						<view class="czcxc" v-if="querenqianshoukaiguan" @click="dakaishouji(0)">
+							确定
+						</view>
+						<view class="czcxc" v-else @click="querenshouhuo"> 确定 </view>
 					</view>
-					<view class="czcxc" v-else @click="querenshouhuo"> 确定 </view>
 				</view>
-			</view>
-		</u-popup>
-
+			</u-popup>
+		</view>
 	</view>
 </template>
 
@@ -998,7 +1001,7 @@
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,
-						user_id:uni.getStorageSync("user_info").id
+						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
 							uni.showToast({

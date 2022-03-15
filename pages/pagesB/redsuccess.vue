@@ -18,6 +18,18 @@
 		<view class="write_msg">
 			<view class="write_item">
 				<view class="">
+					姓名
+				</view>
+				<input style="text-align: right;" v-model="names" type="text" value="" placeholder="请输入姓名" />
+			</view>
+			<view class="write_item">
+				<view class="">
+					性别
+				</view>
+				<input style="text-align: right;" v-model="sex" type="text" value="" placeholder="请输入性别" />
+			</view>
+			<view class="write_item">
+				<view class="">
 					手机号
 				</view>
 				<input style="text-align: right;" v-model="phone" type="number" value="" placeholder="请输入手机号" />
@@ -57,7 +69,7 @@
 				<view class="">
 					详细地址
 				</view>
-				<input style="text-align: right;" v-model="addressxq" type="text" value="" placeholder="请输入电子邮箱" />
+				<input style="text-align: right;" v-model="addressxq" type="text" value="" placeholder="请输入详细地址" />
 			</view>
 		</view>
 		<view class="" style="height: 100rpx;">
@@ -76,12 +88,17 @@
 <script>
 	export default {
 		onLoad(ev) {
-			console.log(ev);
 			this.level = ev.level
 			this.name = ev.name
+			let aa = uni.getStorageSync("user_info")
+			if (aa) {
+				this.phone = aa.mobile
+			}
 		},
 		data() {
 			return {
+				sex: "",
+				names: "",
 				name: "",
 				level: "",
 				addressxq: "",
@@ -165,7 +182,9 @@
 							mobile: this.phone,
 							level: this.level,
 							levelname: this.name,
-							addressxq: this.addressxq
+							addressxq: this.addressxq,
+							name: this.names,
+							sex: this.sex
 						}).then(data => {
 							uni.showToast({
 								title: data.data.msg,

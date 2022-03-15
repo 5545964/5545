@@ -170,22 +170,25 @@
 				</view>
 			</view>
 		</view>
-		<u-timeSelect ref="myPicker" @submit="handleSubmit" :start-year="2000" :end-year="2500">
-		</u-timeSelect>
-		<u-popup border-radius="10" v-model="show" mode="center">
-			<view class="tanchu">
-				<view class="top">
-					提示
+		<u-heigth />
+		<view class="">
+			<u-timeSelect ref="myPicker" @submit="handleSubmit" :start-year="2000" :end-year="2500">
+			</u-timeSelect>
+			<u-popup border-radius="10" v-model="show" mode="center">
+				<view class="tanchu">
+					<view class="top">
+						提示
+					</view>
+					<view class="center">
+						未完成的订单不可体现佣金
+					</view>
+					<view class="text" @click="guanbi">
+						确定
+					</view>
 				</view>
-				<view class="center">
-					未完成的订单不可体现佣金
-				</view>
-				<view class="text" @click="guanbi">
-					确定
-				</view>
-			</view>
-		</u-popup>
-		<u-kehu url="../Home/booking/AppointmentDesign" :po_hei="100"></u-kehu>
+			</u-popup>
+			<u-kehu url="../Home/booking/AppointmentDesign" :po_hei="100"></u-kehu>
+		</view>
 	</view>
 </template>
 

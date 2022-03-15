@@ -44,6 +44,7 @@
 				<image class="imgs" :src="item.content" mode="widthFix"></image>
 			</view>
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

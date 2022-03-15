@@ -97,7 +97,7 @@
 				</view>
 			</scroll-view>
 		</view>
-
+		<u-heigth />
 		<!-- 底部 -->
 		<view class="flag_foot">
 			<button class="reset" open-type="contact">咨询客服</button>

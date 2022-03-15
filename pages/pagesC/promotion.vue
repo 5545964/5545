@@ -46,6 +46,7 @@
 		<view class="" style="height: 20rpx;">
 
 		</view>
+		<u-heigth />
 	</view>
 </template>
 
@@ -86,6 +87,16 @@
 				}
 			})
 			this.videoContext = uni.createVideoContext('video')
+			this.$api.pots({
+				limit: 1000
+			}).then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.data.forEach(item => {
+						item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
+					})
+					this.xinxi = data.data.data.status.data
+				}
+			})
 		},
 		data() {
 			return {
@@ -96,6 +107,8 @@
 				title: "限时抢购",
 				lun_list: [],
 				data_list: [],
+				imgsss: '<img src=\"' + this.$imgPath,
+				xinxi: []
 			};
 		},
 		onUnload() {
@@ -158,6 +171,24 @@
 							url: "./youhuijuan?id=" + ev.cupons
 						})
 						break;
+						case 5:
+							let aa = {}
+							this.xinxi.forEach(item => {
+								if (item.id == ev.wz) {
+									aa = item
+								}
+							})
+							if (ev.wz == "") {
+								uni.reLaunch({
+									url: "./About?titit=0"
+								})
+							} else {
+								uni.setStorageSync("fuwenbeng", aa.content)
+								uni.navigateTo({
+									url: "./fuwenben?title=" + aa.title
+								})
+							}
+							break;
 					default:
 				}
 			},

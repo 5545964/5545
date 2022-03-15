@@ -1,5 +1,5 @@
 <template>
-	<view style="height: 100%;">
+	<view>
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
 				<view class="navbar_top">
@@ -30,33 +30,36 @@
 					mode="aspectFit"></image>
 			</view>
 		</view>
-		<view class="home" style="height: 100%;">
-			<u-video v-if="video.length != 0"  @play="bofang" @ended="ended" :vlist="video" @collection="collection" @pinglun="pinglunaa"
-				@dianzhan="dianzhan"></u-video>
+		<view class="home">
+			<u-video v-if="video.length != 0" @play="bofang" @ended="ended" :vlist="video" @collection="collection"
+				@pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
 			<u-empty v-else></u-empty>
 		</view>
-		<!-- 弹窗 -->
-		<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="klks">全部筛选</view>
-			<view class="mids">
-				<view class="type_list">
-					<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)"
-						v-for="(item,index) in fenleis" :key="index">
-						{{item.title}}
+		<view class="">
+			<!-- 弹窗 -->
+			<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+				<view class="klks">全部筛选</view>
+				<view class="mids">
+					<view class="type_list">
+						<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)"
+							v-for="(item,index) in fenleis" :key="index">
+							{{item.title}}
+						</view>
 					</view>
 				</view>
-			</view>
-			<view class="clos">
-				<view class="reset" @click="re">
-					重置
+				<view class="clos">
+					<view class="reset" @click="re">
+						重置
+					</view>
+					<view class="on" @click="changesssss">
+						确定选择
+					</view>
 				</view>
-				<view class="on" @click="changesssss">
-					确定选择
-				</view>
-			</view>
-		</u-popup>
-		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
-			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
+			</u-popup>
+			<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
+				:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
+		</view>
+		<u-heigth />
 	</view>
 </template>
 
@@ -64,9 +67,9 @@
 	export default {
 		data() {
 			return {
-				style:[],
-				color:[],
-				huxincategory:[],
+				style: [],
+				color: [],
+				huxincategory: [],
 				fenleis: [],
 				show: false,
 				current: 0,
@@ -271,7 +274,7 @@
 			pinglun() {
 				this.showComment = true;
 			},
-			
+
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					this.dianzhansssss = false
@@ -289,7 +292,7 @@
 					})
 				}
 			},
-			
+
 			async collection(ev) {
 				if (await this.$login()) {
 					let state = ev.isfollow ? 1 : 0;
@@ -328,8 +331,8 @@
 	.active {
 		background: #007399;
 		padding: 0 40rpx;
-		
-		
+
+
 		border-radius: 35rpx;
 		font-size: 26rpx;
 		color: #FFFFFF;

@@ -7,28 +7,29 @@
 				<scroll-view scroll-x class="u-scroll-view" :scroll-left="scrollLeft" scroll-with-animation>
 					<view class="u-scroll-box" :class="{'u-tabs-scorll-flex': !isScroll}">
 						<block v-if="list[0].id">
-							<view class="u-tab-item u-line-1" :id="'u-tab-item-' + item.id" v-for="(item, index) in list"
-								:key="item.id" @tap="clickTab(item.id)" :style="[tabItemStyle(item.id)]">
-								<u-badge :count="item[count] || item['count'] || 0" :offset="offset" size="mini"></u-badge>
+							<view class="u-tab-item u-line-1" :id="'u-tab-item-' + item.id"
+								v-for="(item, index) in list" :key="item.id" @tap="clickTab(item.id)"
+								:style="[tabItemStyle(item.id)]">
+								<u-badge :count="item[count] || item['count'] || 0" :offset="offset" size="mini">
+								</u-badge>
 								{{ item[name] || item['name']}}
 							</view>
 						</block>
 						<block v-else>
 							<view class="u-tab-item u-line-1" :id="'u-tab-item-' + index" v-for="(item, index) in list"
 								:key="index" @tap="clickTab(index)" :style="[tabItemStyle(index)]">
-								<u-badge :count="item[count] || item['count'] || 0" :offset="offset" size="mini"></u-badge>
+								<u-badge :count="item[count] || item['count'] || 0" :offset="offset" size="mini">
+								</u-badge>
 								{{ item[name] || item['name']}}
 							</view>
 						</block>
-						
+
 						<view v-if="showBar" class="u-tab-bar" :style="[tabBarStyle]"></view>
 					</view>
 				</scroll-view>
 			</view>
 		</view>
 	</view>
-
-
 </template>
 
 <script>
