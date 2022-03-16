@@ -1,1 +1,0 @@
-<view class="dasds data-v-d09ecc1a"><u-tabbar vue-id="d01cb1fc-1" id="tabbar" list="{{list}}" value="{{current}}" data-event-opts="{{[['^change',[['ChangBar']]],['^input',[['__set_model',['','current','$event',[]]]]]]}}" bind:change="__e" bind:input="__e" class="data-v-d09ecc1a" bind:__l="__l"></u-tabbar></view>

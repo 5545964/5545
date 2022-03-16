@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "商城",
-  "enablePullDownRefresh": true,
-  "navigationBarTextStyle": "black",
-  "usingComponents": {
-    "u-adata": "/uview-ui/components/u-adata/u-adata"
-  }
-}

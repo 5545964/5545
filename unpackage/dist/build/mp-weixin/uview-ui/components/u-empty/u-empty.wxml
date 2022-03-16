@@ -1,1 +1,0 @@
-<view style="height:400px;" class="data-v-3833a24c"><view class="cet csf data-v-3833a24c"><view class="data-v-3833a24c"><view class="jhg data-v-3833a24c"><image class="image data-v-3833a24c" src="{{src}}" mode="aspectFit"></image></view><view class="dns data-v-3833a24c" style="{{('color:'+color+';')}}">{{''+text+''}}</view></view></view></view>
