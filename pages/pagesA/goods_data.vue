@@ -1102,7 +1102,7 @@
 				}
 			},
 			hahahaa(ev) {
-				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				let phoneCodeVerification = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
 					uni.showToast({
 						title: "手机号不正确",

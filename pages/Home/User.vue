@@ -286,10 +286,11 @@
 			};
 		},
 		onLoad() {
-			this.showssss = uni.getStorageSync("showssss")
+			
 		},
 		onShow() {
 			this.alls()
+			this.showssss = uni.getStorageSync("showssss")
 		},
 		onPullDownRefresh() {
 			this.alls()
@@ -316,12 +317,14 @@
 				this.user_info = uni.getStorageSync("user_info")
 				this.shuliang(this.user_info.id)
 				this.$api.desmyuser({
-					user_id: this.user_info
+					user_id: this.user_info.id
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.setStorageSync("des_info", data.data.data.myuser)
 						this.des_user = data.data.data.myuser
 						uni.stopPullDownRefresh();
+					}else{
+						uni.setStorageSync("des_info", {})
 					}
 				})
 			},

@@ -2,9 +2,17 @@
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
 			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;">
-				<video :page-gesture="true" :http-cache="false" codec="software" :play-strategy="1" :title="item.title" :id="'video' + item.id" class="vide" @play="playing" 
-				:src="item.video" @error="videoErrorCallback"
-					controls></video>
+				<video 
+				:page-gesture="false" 
+				:http-cache="false" 
+				codec="software" 
+				:play-strategy="1" 
+				:title="item.title"
+				:id="'video' + item.id" class="vide" 
+				:src="item.video"
+				@play="playing" 
+				@error="videoErrorCallback"
+				/>
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">
 				<button open-type="share" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">
@@ -44,7 +52,7 @@
 					</view>
 				</button>
 			</view>
-			<view v-else style="">
+			<view v-else>
 				<button @click="del(item)" class="dasdxz"
 					style="margin: 0;padding: 0;background-color: #FFFFFF;justify-content:flex-end">
 					<view class="text" style="padding: 0rpx 10rpx;border-radius:10rpx;border:1px solid #606266">
@@ -53,7 +61,6 @@
 				</button>
 			</view>
 		</view>
-
 	</view>
 </template>
 
@@ -99,19 +106,18 @@
 		methods: {
 			playing(e) {
 				let that = this;
-				let currentId = e.currentTarget.id; // 获取当前视频id
-				that.videoContent = uni.createVideoContext(currentId);
+				that.vv = e.currentTarget.id; // 获取当前视频id
+				that.videoContent = uni.createVideoContext(that.vv, that);
+				that.videoContent.requestFullScreen();
 				let trailer = that.list;
 				trailer.forEach(function(item, index) { // 获取json对象并遍历, 停止非当前视频
 					if (item.video != null && item.video != "") {
 						let temp = 'video' + item.id;
-						if (temp != currentId) {
-							uni.createVideoContext(temp,that).pause(); //暂停视频播放事件
+						if (temp != that.vv) {
+							uni.createVideoContext(temp, that).pause(); //暂停视频播放事件
 						}
 					}
-
 				})
-
 			},
 			share(ev) {
 				this.$emit("share", ev);

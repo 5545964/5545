@@ -184,8 +184,8 @@
 						感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下协议了解详细信息。如您同意，请勾选协议并点击”同意”开始接受我们的服务。
 					</view>
 					<view style="padding:20rpx 0;">
-						<view class="cet" style="margin:10rpx 0;justify-content: end;">
-							<view style="width:30%;display:flex;justify-content: flex-end;">
+						<view class="cet" style="margin:10rpx 0;justify-content: center;">
+							<view style="display:flex;justify-content: flex-end;">
 								<view class="yuan" @click="hahaha(tanchaung)">
 									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28">
 									</u-icon>
@@ -255,7 +255,6 @@
 </template>
 
 <script>
-	import dayjs from "@/dayjs"
 	export default {
 		data() {
 			return {
@@ -333,7 +332,6 @@
 			};
 		},
 		onLoad(ev) {
-			console.log(ev);
 			if (ev.titit) {
 				this.current = 4
 			}

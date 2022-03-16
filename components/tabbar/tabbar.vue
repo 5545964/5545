@@ -12,7 +12,6 @@
 				current: 0,
 				timer: "",
 				num: 0,
-				zairu: true,
 			};
 		},
 		mounted() {
@@ -40,10 +39,10 @@
 				}
 			},
 			ChangBar(e) {
+				console.log(1111111111);
 				uni.switchTab({
 					url: '/' + this.list[e].pagePath
 				})
-				this.$emit("tabbers")
 			}
 		}
 

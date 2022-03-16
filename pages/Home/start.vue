@@ -1,8 +1,8 @@
 <template>
 	<view class="start_page">
-		<video :enable-play-gesture="true" :http-cache="false" codec="software" :play-strategy="1" @ended="ended" id="video_play" :src="videosrc" :vslide-gesture-in-fullscreen="false" :loop="false"
-			:autoplay="true" object-fit="cover" :page-gesture="false" :controls="false"
-			style="height: 100%;width: 100%"></video>
+		<video :http-cache="false" codec="software" :play-strategy="1" @ended="ended" id="video_play" :src="videosrc"
+			:vslide-gesture-in-fullscreen="false" :autoplay="true" :muted="false" object-fit="cover" :controls="false"
+			style="height: 100%;width: 100%" />
 		<view class="skip" @click="ended">
 			跳过
 		</view>
@@ -16,19 +16,42 @@
 				this.path = ev.url
 			}
 			this.videoContext = uni.createVideoContext('video_play')
-			setTimeout(()=>{
+			this.time = setTimeout(() => {
 				this.ended()
-			},9500)
+			}, 9500)
+			this.$api.indexbar().then(data => {
+				if (data.data.code == 1) {
+					let aa = []
+					data.data.data.status.forEach(item => {
+						aa.push({
+							pagePath: item.url.url,
+							iconPath: this.$imgPath + item.fimage,
+							selectedIconPath: this.$imgPath + item.image,
+							text: item.title
+						})
+					})
+					uni.setStorageSync("tabber", aa)
+					uni.setStorageSync("edits", data.data.data.edits)
+					uni.setStorageSync("kehu", data.data.data.kefu)
+					if (uni.getStorageSync("user_info")) {
+						uni.setStorageSync("showssss", false)
+						return
+					}
+					uni.setStorageSync("showssss", data.data.data.edit)
+				}
+			})
 		},
 		data() {
 			return {
-				videoContext:"",
+				time: "",
+				videoContext: "",
 				path: "",
 				videosrc: "https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/77b0e5c3c6ee5f8174fa72bb3a399d4d9124e811.m4v",
 			};
 		},
 		methods: {
 			ended() {
+				clearTimeout(this.time)
 				this.videoContext.pause()
 				uni.switchTab({
 					url: "/pages/Home/Home"

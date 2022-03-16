@@ -9,7 +9,6 @@ const instance = ajax.create({
 	}
 })
 const token = uni.getStorageSync("token").token;
-const user = uni.getStorageSync("user_info");
 instance.interceptors.request.use(
 	config => {
 		if (token != "") {

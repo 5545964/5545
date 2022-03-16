@@ -176,7 +176,7 @@
 							item.video = this.$imgPath + item.video
 							aa.push(item)
 						})
-						this.video = aa
+						this.video = [...this.video,...aa]
 						if (this.dianzhansssss) {
 							this.pinglunaa(this.video[this.indexdas], this.indexdas)
 						}

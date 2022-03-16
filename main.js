@@ -4,12 +4,17 @@ import store from './store'
 Vue.config.productionTip = false
 App.mpType = 'app'
 import uView from 'uview-ui'
-import dayjs from "dayjs";
 Vue.use(uView);
+import dayjs from "dayjs";
+Vue.prototype.$dayjs = dayjs
 import tabBar from "@/components/tabbar/tabbar.vue" 
 Vue.component('tab-bar', tabBar)
 import login from "utils/islogin.js"
 Vue.prototype.$login = login
+import api from '@/api'
+Vue.prototype.$api = api
+
+
 Vue.prototype.$imgPath = "https://bao.scwushen.com"
 Vue.prototype.$shangchuan = "http://bao.scwushen.com/index.php"
 Vue.prototype.$imgs = function(url) {
@@ -23,9 +28,7 @@ Vue.prototype.$imgs = function(url) {
 	}
 }
 Vue.prototype.$shangchuan = "https://bao.scwushen.com/index.php"
-Vue.prototype.$dayjs = dayjs
-import api from '@/api'
-Vue.prototype.$api = api
+
 const app = new Vue({
 	...App,
 	store

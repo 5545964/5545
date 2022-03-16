@@ -10,32 +10,6 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-			if (ev.path == "pages/Home/Home") {
-				uni.navigateTo({
-					url: "./pages/Home/start"
-				})
-			}
-			this.$api.indexbar().then(data => {
-				if (data.data.code == 1) {
-					let aa = []
-					data.data.data.status.forEach(item => {
-						aa.push({
-							pagePath: item.url.url,
-							iconPath: this.$imgPath + item.fimage,
-							selectedIconPath: this.$imgPath + item.image,
-							text: item.title
-						})
-					})
-					uni.setStorageSync("tabber", aa)
-					uni.setStorageSync("edits", data.data.data.edits)
-					uni.setStorageSync("kehu", data.data.data.kefu)
-					if (uni.getStorageSync("user_info")) {
-						uni.setStorageSync("showssss", false)
-						return
-					}
-					uni.setStorageSync("showssss", data.data.data.edit)
-				}
-			})
 		}
 	}
 </script>

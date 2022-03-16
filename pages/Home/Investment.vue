@@ -46,24 +46,42 @@
 			<!-- 成为设计师 -->
 			<view v-if="current==16">
 				<view class="be_main" v-if="state<0">
-					<view class="be_designer">
+					<view class="be_designer" />
+					<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix" />
+					<view v-if="edit">
+						<view class="be_foot" v-if="yanzhengtanchaung">
+							<view class="pay" @click="ananana(0)">
+								成为1级设计师会员
+							</view>
+							<view class="pay" @click="ananana(1)">
+								成为2级设计师会员
+							</view>
+						</view>
+						<view class="be_foot" v-else>
+							<view class="pay" @click="getcontein(0)">
+								成为1级设计师会员
+							</view>
+							<view class="pay" @click="getcontein(1)">
+								成为2级设计师会员
+							</view>
+						</view>
 					</view>
-					<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix">
-					</image>
-					<view class="be_foot" v-if="yanzhengtanchaung">
-						<view class="pay" @click="ananana(0)">
-							成为1级设计师会员
+					<view v-else>
+						<view class="be_foot" v-if="yanzhengtanchaung">
+							<view class="pay" @click="ananana(1)">
+								成为2级设计师会员
+							</view>
+							<view class="pay" @click="ananana(2)">
+								成为3级设计师会员
+							</view>
 						</view>
-						<view class="pay" @click="ananana(1)">
-							成为2级设计师会员
-						</view>
-					</view>
-					<view class="be_foot" v-else>
-						<view class="pay" @click="getcontein(0)">
-							成为1级设计师会员
-						</view>
-						<view class="pay" @click="getcontein(1)">
-							成为2级设计师会员
+						<view class="be_foot" v-else>
+							<view class="pay" @click="getcontein(1)">
+								成为2级设计师会员
+							</view>
+							<view class="pay" @click="getcontein(2)">
+								成为3级设计师会员
+							</view>
 						</view>
 					</view>
 				</view>
@@ -240,7 +258,6 @@
 				</view>
 			</u-popup>
 		</view>
-		<!-- <view :style="'height: '+heigth+'rpx;'" /> -->
 		<tab-bar></tab-bar>
 	</view>
 </template>
@@ -250,6 +267,7 @@
 	export default {
 		data() {
 			return {
+				edit: true, //true为一二级设计师，false为二三级设计师
 				mmmmmm: "",
 				dasdsdas: this.$imgPath,
 				showsssssssss: false,
@@ -384,7 +402,6 @@
 			this.enjoys()
 			this.getdesproMoenys()
 		},
-
 		methods: {
 			changes(index) {
 				this.currents = index
@@ -433,23 +450,15 @@
 				}
 
 			},
-
 			fuwenben(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.name
 				})
 			},
-
 			hahaha(item) {
 				item.check = !item.check
 			},
-
-
-
-
-
-
 			tongyixieyi(ev) {
 				if (this.xieyi.length > 0) {
 					this.yuedu = true;
@@ -458,17 +467,14 @@
 					this.yuedu = false;
 				}
 			},
-
 			tongyis(ev) {
 				if (ev == 1) {
 					if (this.code != "") {
-
 						this.$api.emsyzphone({
 							phone: this.shoujihao,
 							yzm: this.code
 						}).then(data => {
-
-							if (true) {
+							if (data.data.code == 1) {
 								this.shoujiyanzheng = false
 								this.getcontein(this.diandedijige)
 							} else {
@@ -490,7 +496,6 @@
 					this.shoujiyanzheng = false;
 				}
 			},
-
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
@@ -522,9 +527,8 @@
 					})
 				}
 			},
-
 			hahahaa(ev) {
-				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				let phoneCodeVerification = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
 					uni.showToast({
 						title: "手机号不正确",
@@ -532,9 +536,7 @@
 					})
 				}
 			},
-
 			ananana(ev) {
-
 				this.diandedijige = ev
 				this.yuedu = true
 			},
@@ -599,7 +601,23 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						if (data.data.data) {
-							this.allssssss = data.data.data.status
+							this.edit = data.data.data.edit
+							data.data.data.status.forEach(item => {
+								if (item.id == 5) {
+									this.allssssss.push(item)
+								}
+							})
+							data.data.data.status.forEach(item => {
+								if (item.id == 3) {
+									this.allssssss.push(item)
+								}
+							})
+							data.data.data.status.forEach(item => {
+								if (item.id == 4) {
+									this.allssssss.push(item)
+								}
+							})
+							// this.allssssss = data.data.data.status
 							uni.stopPullDownRefresh();
 						}
 					}
@@ -668,7 +686,6 @@
 					this.dianzhansssss = false
 				}
 			},
-
 			navgepage(item) {
 				uni.navigateTo({
 					url: `../pagesC/ClubStar?id=${item.id}`
@@ -679,11 +696,9 @@
 					url: "../pagesD/regDesigner/regDesigner"
 				})
 			},
-
 			pinglun() {
 				this.showComment = true;
 			},
-
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					let type = ev.zans ? 1 : 0;
@@ -700,7 +715,6 @@
 					})
 				}
 			},
-
 			async collection(ev) {
 				if (await this.$login()) {
 					let state = ev.isfollow ? 1 : 0;
@@ -717,14 +731,21 @@
 					})
 				}
 			},
-
 			toReg() {
 				this.showContract = false;
 				let aa = 0
-				if (this.diandedijige == 0) {
-					aa = 5
+				if (this.edit) {
+					if (this.diandedijige == 0) {
+						aa = 5
+					} else {
+						aa = 3
+					}
 				} else {
-					aa = 3
+					if (this.diandedijige == 1) {
+						aa = 3
+					} else {
+						aa = 4
+					}
 				}
 				uni.navigateTo({
 
@@ -737,7 +758,6 @@
 				this.parsesssss = item.content
 
 			},
-
 			async getcontein(ev) {
 				if (await this.$login()) {
 					let that = this;
@@ -764,28 +784,21 @@
 					});
 				}
 			},
-			looks(url) {
-				if (url.indexOf("http") == -1) {
-					url = this.$imgPath + url
-				}
-				uni.downloadFile({
-					url: url,
-					success(res) {
-						const filePath = res.tempFilePath;
-						uni.openDocument({
-							filePath,
-							success(res) {}
-						})
-					}
-				})
-			},
 			pays() {
 				let that = this
 				let aa = 0
-				if (that.diandedijige == 0) {
-					aa = 5
+				if (that.edit) {
+					if (that.diandedijige == 0) {
+						aa = 5
+					} else {
+						aa = 3
+					}
 				} else {
-					aa = 3
+					if (that.diandedijige == 1) {
+						aa = 3
+					} else {
+						aa = 4
+					}
 				}
 				that.$api.buylevel({
 					id: aa,
@@ -814,6 +827,21 @@
 									icon: "none"
 								})
 							}
+						})
+					}
+				})
+			},
+			looks(url) {
+				if (url.indexOf("http") == -1) {
+					url = this.$imgPath + url
+				}
+				uni.downloadFile({
+					url: url,
+					success(res) {
+						const filePath = res.tempFilePath;
+						uni.openDocument({
+							filePath,
+							success(res) {}
 						})
 					}
 				})
@@ -860,7 +888,7 @@
 							item.video = this.$imgPath + item.video
 							aa.push(item)
 						})
-						this.video = [...this.video,...aa]
+						this.video = [...this.video, ...aa]
 					}
 					uni.stopPullDownRefresh();
 				})

@@ -57,29 +57,45 @@
 		<!-- 成为设计师 -->
 		<view style="height: 100%;" v-if="current==16">
 			<view class="be_main" style="height: 100%;" v-if="state<0">
-				<view class="be_designer">
+				<view class="be_designer" />
+				<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix" />
+				<view v-if="edit">
+					<view class="be_foot" v-if="yanzhengtanchaung">
+						<view class="pay" @click="ananana(0)">
+							成为1级设计师会员
+						</view>
+						<view class="pay" @click="ananana(1)">
+							成为2级设计师会员
+						</view>
+					</view>
+					<view class="be_foot" v-else>
+						<view class="pay" @click="getcontein(0)">
+							成为1级设计师会员
+						</view>
+						<view class="pay" @click="getcontein(1)">
+							成为2级设计师会员
+						</view>
+					</view>
 				</view>
-				<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix">
-				</image>
-				<view class="be_foot" v-if="yanzhengtanchaung">
-					<view class="pay" @click="ananana(0)">
-						成为1级设计师会员
+				<view v-else>
+					<view class="be_foot" v-if="yanzhengtanchaung">
+						<view class="pay" @click="ananana(1)">
+							成为2级设计师会员
+						</view>
+						<view class="pay" @click="ananana(2)">
+							成为3级设计师会员
+						</view>
 					</view>
-					<view class="pay" @click="ananana(1)">
-						成为2级设计师会员
+					<view class="be_foot" v-else>
+						<view class="pay" @click="getcontein(1)">
+							成为2级设计师会员
+						</view>
+						<view class="pay" @click="getcontein(2)">
+							成为3级设计师会员
+						</view>
 					</view>
 				</view>
-				<view class="be_foot" v-else>
-					<view class="pay" @click="getcontein(0)">
-						成为1级设计师会员
-					</view>
-					<view class="pay" @click="getcontein(1)">
-						成为2级设计师会员
-					</view>
-				</view>
-
 			</view>
-
 			<!-- 驳回 -->
 			<view class="reject" v-if="state==2">
 				<image src="../../static/icon_me_reject.png" class="imgrej" mode="aspectFit"></image>
@@ -135,110 +151,113 @@
 				</view>
 			</view>
 		</view>
-		<!-- 合同弹窗 -->
-		<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
-			<view class="contract_main">
-				<!-- 合同pdf -->
-				<view class="" style="height: 700rpx; width: 100%;">
-					<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
-						<image style="width: 100%;" :src="tupianwo" mode="widthFix">
-						</image>
-					</scroll-view>
-				</view>
-				<!-- <view class="agree_xieyi" @click="toReg"> -->
-				<view class="agree_xieyi" @click="pays">
-					我已阅读并同意上述协议,{{pay}}
-				</view>
-			</view>
-		</u-popup>
-		<!-- 筛选弹窗 -->
-		<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="klks">全部筛选</view>
-			<view class="mids">
-				<view class="type_list">
-					<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
-						<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
-							{{item.title}}
-						</view>
+		<view class="">
+			<!-- 合同弹窗 -->
+			<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
+				<view class="contract_main">
+					<!-- 合同pdf -->
+					<view class="" style="height: 700rpx; width: 100%;">
+						<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
+							<image style="width: 100%;" :src="tupianwo" mode="widthFix">
+							</image>
+						</scroll-view>
+					</view>
+					<!-- <view class="agree_xieyi" @click="toReg"> -->
+					<view class="agree_xieyi" @click="pays">
+						我已阅读并同意上述协议,{{pay}}
 					</view>
 				</view>
-			</view>
-			<view class="clos">
-				<view class="reset" @click="zhongzhi(0)">
-					重置
-				</view>
-				<view class="on" @click="zhongzhi(1)">
-					确定选择
-				</view>
-			</view>
-		</u-popup>
-		<!-- 评论弹窗 -->
-		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
-			:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
-		<!-- 确保是你本人操作 -->
-		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					确保是你本人操作
-				</view>
-				<view class="textss">
-					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
-				</view>
-				<view class="yanzhengma">
-					<view class="cet" style="justify-content: space-around;width: 100%;">
-						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
-						</view>
-						<button class="annuyt" @click="go_code">{{huoqu}}</button>
-					</view>
-				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="tongyis(0)">
-						取消
-					</view>
-					<view class="hkhnij jjhgj" @click="tongyis(1)">
-						同意
-					</view>
-				</view>
-			</view>
-		</u-popup>
-		<!-- 服务协议和隐私政策 -->
-		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					服务协议和隐私政策
-				</view>
-				<view class="textss">
-					感谢您使用宝芸邸，我们会严格
-					按照法律规定存储和使用您的个人
-					信息。您可以阅读以下几项条款了
-					解详细信息。如您同意，请勾选以
-					下几项条款并点击”同意”开始接受
-					我们的服务。
-				</view>
-				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
-						:key="index">
-						<view style="width:30%;display:flex;justify-content: flex-end;">
-							<view class="yuan" @click="hahaha(item)">
-								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+			</u-popup>
+			<!-- 筛选弹窗 -->
+			<u-popup v-model="show" mode="bottom" length="60%" :closeable="true" border-radius="8">
+				<view class="klks">全部筛选</view>
+				<view class="mids">
+					<view class="type_list">
+						<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
+							<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
+								{{item.title}}
 							</view>
 						</view>
-						<view class="mingcheng" @click="fuwenben(item)">
-							《{{item.name}}》
+					</view>
+				</view>
+				<view class="clos">
+					<view class="reset" @click="zhongzhi(0)">
+						重置
+					</view>
+					<view class="on" @click="zhongzhi(1)">
+						确定选择
+					</view>
+				</view>
+			</u-popup>
+			<!-- 评论弹窗 -->
+			<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
+				:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
+			<!-- 确保是你本人操作 -->
+			<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						确保是你本人操作
+					</view>
+					<view class="textss">
+						<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+					</view>
+					<view class="yanzhengma">
+						<view class="cet" style="justify-content: space-around;width: 100%;">
+							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
+							</view>
+							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="tongyis(0)">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyis(1)">
+							同意
 						</view>
 					</view>
 				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="xieyitongyi(0)">
-						暂不使用
+			</u-popup>
+			<!-- 服务协议和隐私政策 -->
+			<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						服务协议和隐私政策
 					</view>
-					<view class="hkhnij jjhgj" @click="xieyitongyi(1)">
-						同意协议
+					<view class="textss">
+						感谢您使用宝芸邸，我们会严格
+						按照法律规定存储和使用您的个人
+						信息。您可以阅读以下几项条款了
+						解详细信息。如您同意，请勾选以
+						下几项条款并点击”同意”开始接受
+						我们的服务。
+					</view>
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+							:key="index">
+							<view style="width:30%;display:flex;justify-content: flex-end;">
+								<view class="yuan" @click="hahaha(item)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
+							</view>
+							<view class="mingcheng" @click="fuwenben(item)">
+								《{{item.name}}》
+							</view>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="xieyitongyi(0)">
+							暂不使用
+						</view>
+						<view class="hkhnij jjhgj" @click="xieyitongyi(1)">
+							同意协议
+						</view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
+			</u-popup>
+		</view>
 	</view>
 </template>
 
@@ -247,6 +266,7 @@
 	export default {
 		data() {
 			return {
+				edit: true,
 				mmmmmm: "",
 				dasdsdas: this.$imgPath,
 				tupianwo: "",
@@ -458,8 +478,7 @@
 							phone: this.shoujihao,
 							yzm: this.code
 						}).then(data => {
-							// if (data.data.code == 1) {
-							if (true) {
+							if (data.data.code == 1) {
 								this.shoujiyanzheng = false
 								this.getcontein(this.diandedijige)
 							} else {
@@ -515,7 +534,7 @@
 			},
 			// 判断手机号
 			hahahaa(ev) {
-				let phoneCodeVerification = /^[1][3,4,5,7,8][0-9]{9}$/;
+				let phoneCodeVerification = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
 				if (!phoneCodeVerification.test(ev.detail.value)) {
 					uni.showToast({
 						title: "手机号不正确",
@@ -587,7 +606,23 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						if (data.data.data) {
-							this.allssssss = data.data.data.status
+							this.edit = data.data.data.edit
+							data.data.data.status.forEach(item => {
+								if (item.id == 5) {
+									this.allssssss.push(item)
+								}
+							})
+							data.data.data.status.forEach(item => {
+								if (item.id == 3) {
+									this.allssssss.push(item)
+								}
+							})
+							data.data.data.status.forEach(item => {
+								if (item.id == 4) {
+									this.allssssss.push(item)
+								}
+							})
+							// this.allssssss = data.data.data.status
 							// this.pay = '支付￥' + data.data.data.status.money
 						}
 					}
@@ -705,20 +740,7 @@
 					})
 				}
 			},
-			// 跳转填写资料
-			toReg() {
-				this.showContract = false;
-				let aa = 0
-				if (this.diandedijige == 0) {
-					aa = 5
-				} else {
-					aa = 3
-				}
-				uni.navigateTo({
-					// url: "./regDesigner/regDesigner?nageid=" + this.allssssss[this.diandedijige].id
-					url: "./regDesigner/regDesigner?nageid=" + aa
-				})
-			},
+			
 			changeTokens(index, item) {
 				this.active = index
 				this.parsesssss = item.content
@@ -764,31 +786,22 @@
 
 				}
 			},
-			// 查看模板
-			looks(url) {
-				if (url.indexOf("http") == -1) {
-					url = this.$imgPath + url
-				}
-				uni.downloadFile({
-					// e.target.dataset.name 是文件的地址
-					url: url,
-					success(res) {
-						const filePath = res.tempFilePath;
-						uni.openDocument({
-							filePath,
-							success(res) {}
-						})
-					}
-				})
-			},
 			// 支付填写资料
 			pays() {
 				let that = this
 				let aa = 0
-				if (that.diandedijige == 0) {
-					aa = 5
+				if (that.edit) {
+					if (that.diandedijige == 0) {
+						aa = 5
+					} else {
+						aa = 3
+					}
 				} else {
-					aa = 3
+					if (that.diandedijige == 0) {
+						aa = 3
+					} else {
+						aa = 4
+					}
 				}
 				that.$api.buylevel({
 					// id: that.allssssss[that.diandedijige].id,
@@ -824,6 +837,45 @@
 				})
 				// }
 			},
+			// 跳转填写资料
+			toReg() {
+				this.showContract = false;
+				let aa = 0
+				if (this.edit) {
+					if (this.diandedijige == 0) {
+						aa = 5
+					} else {
+						aa = 3
+					}
+				} else {
+					if (this.diandedijige == 1) {
+						aa = 3
+					} else {
+						aa = 4
+					}
+				}
+				uni.navigateTo({
+					url: "./regDesigner/regDesigner?nageid=" + aa
+				})
+			},
+			// 查看模板
+			looks(url) {
+				if (url.indexOf("http") == -1) {
+					url = this.$imgPath + url
+				}
+				uni.downloadFile({
+					// e.target.dataset.name 是文件的地址
+					url: url,
+					success(res) {
+						const filePath = res.tempFilePath;
+						uni.openDocument({
+							filePath,
+							success(res) {}
+						})
+					}
+				})
+			},
+
 			// 热门栏目
 			enjoys() {
 				this.$api.recruit().then(data => {
@@ -865,7 +917,7 @@
 							item.video = this.$imgPath + item.video
 							aa.push(item)
 						})
-						this.video = aa
+						this.video = [...this.video,...aa]
 					}
 				})
 

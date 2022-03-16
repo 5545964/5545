@@ -71,10 +71,7 @@
 					page: 1,
 					limit: 10000
 				}).then(data => {
-
 					//todo 判断是否为空
-
-
 					if (this.current == 0) { //商品 
 						this.list = []
 						data.data.data.status.data.forEach((item, index) => {
@@ -90,7 +87,6 @@
 						this.video = []
 						data.data.data.status.data.forEach((item, index) => {
 							this.video.push({
-
 								id: item.id,
 								type: 0,
 								video: this.$imgPath + item.content.video,

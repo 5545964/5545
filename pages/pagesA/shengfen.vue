@@ -54,7 +54,7 @@
 					</view>
 					<view class="name" style="width: 70%;">
 						<u-input inputAlign="right" size="200" v-model="card_id" placeholder="请填写您的身份证号码"
-							type="number" />
+							type="text" />
 					</view>
 				</view>
 			</view>
