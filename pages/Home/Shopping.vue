@@ -5,11 +5,13 @@
 			<view class="wrap">
 				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :indicator-dots="true" :circular="true"
 					:autoplay="autoplay" :interval="3000" :duration="1000">
-					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
-							:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
-							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
-						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
+					<swiper-item v-for="(item,index) in lun_list" :key="index">
+						<view  style="border-radius: 20rpx;height: 100%;">
+							<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
+								:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
+								v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+							<image :lazy-load="true" v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
+						</view>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -17,7 +19,7 @@
 			<view class="shop_cls">
 				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)"
 					v-if="item.switch == 1">
-					<image :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;"
+					<image :lazy-load="true" :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;"
 						mode="aspectFit">
 					</image>
 					<view class="">
@@ -35,7 +37,7 @@
 					</view>
 				</view>
 				<view class="lookmore" @click="more(item)">
-					查看更多<image src="../../static/icon_shop_hsmore.png"
+					查看更多<image :lazy-load="true" src="../../static/icon_shop_hsmore.png"
 						style="width: 10rpx;height: 18rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
@@ -47,13 +49,13 @@
 		</view>
 		<view class="shopcar" :style="'left: '+bianright+'rpx;top: '+bianheigth+'rpx;'" @touchend="end"
 			@touchmove.stop="move" @click="tocar">
-			<image src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
+			<image :lazy-load="true" src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
 			购物车
 			<view class="cart-num" v-if="cart_num !=0 && cart_num">
 				{{cart_num}}
 			</view>
 		</view>
-		<tab-bar></tab-bar>
+		<u-dianji></u-dianji>
 	</view>
 </template>
 
@@ -169,7 +171,6 @@
 				this.autoplay = false
 			},
 			gosss(ev) {
-				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
 

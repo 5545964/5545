@@ -22,9 +22,12 @@
 				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :indicator-dots="true" :circular="true"
 					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
-							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
-						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
+						<view style="border-radius: 20rpx;height: 100%;">
+							<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
+								v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+							<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit">
+							</image>
+						</view>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -171,24 +174,24 @@
 							url: "./youhuijuan?id=" + ev.cupons
 						})
 						break;
-						case 5:
-							let aa = {}
-							this.xinxi.forEach(item => {
-								if (item.id == ev.wz) {
-									aa = item
-								}
-							})
-							if (ev.wz == "") {
-								uni.reLaunch({
-									url: "./About?titit=0"
-								})
-							} else {
-								uni.setStorageSync("fuwenbeng", aa.content)
-								uni.navigateTo({
-									url: "./fuwenben?title=" + aa.title
-								})
+					case 5:
+						let aa = {}
+						this.xinxi.forEach(item => {
+							if (item.id == ev.wz) {
+								aa = item
 							}
-							break;
+						})
+						if (ev.wz == "") {
+							uni.reLaunch({
+								url: "./About?titit=0"
+							})
+						} else {
+							uni.setStorageSync("fuwenbeng", aa.content)
+							uni.navigateTo({
+								url: "./fuwenben?title=" + aa.title
+							})
+						}
+						break;
 					default:
 				}
 			},

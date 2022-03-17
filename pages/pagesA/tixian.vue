@@ -108,7 +108,6 @@
 </template>
 
 <script>
-	import dayjs from 'dayjs'
 	export default {
 		data() {
 			return {
@@ -144,7 +143,7 @@
 			if (data.length != 0) {
 				data.forEach(item => {
 					item["checked"] = false
-					item.createtime = dayjs(item.createtime * 1000).format('YYYY-MM-DD HH:mm:ss')
+					item.createtime = this.$u.timeFormat(item.createtime, 'yyyy-mm-dd hh:MM:ss')
 				})
 				this.datas = [...data]
 			}
@@ -202,11 +201,9 @@
 				this.$api.gettask({
 					user_id: userid
 				}).then(data => {
-					if (data.data.code == 1) {
-						console.log(data.data.data);
-					} else {
+					if (data.data.code != 1) {
 						this.rw()
-					}
+					} 
 				})
 			},
 			god(ev) {

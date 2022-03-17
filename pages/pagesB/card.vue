@@ -182,7 +182,6 @@
 				});
 			},
 			goss(ev) {
-				console.log(ev);
 				uni.navigateTo({
 					url: "../pagesC/FlagshipSet?id=" + this.imgList[ev].id
 				})
@@ -209,7 +208,6 @@
 			},
 			go() {
 				let that = this;
-				console.log(that.latitude, that.longitude, Number(that.latitude), Number(that.longitude));
 				uni.openLocation({
 					latitude: Number(that.latitude),
 					longitude: Number(that.longitude),

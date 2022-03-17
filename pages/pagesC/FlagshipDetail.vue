@@ -20,16 +20,18 @@
 				:autoplay="autoplay" :interval="3000" :duration="1000" @change="gaizhi">
 				<swiper-item v-for="(item,index) in alls.imagexq" :key="index" @click="kaniamgss(item)">
 					<!-- gosheji -->
-					<image style="width: 100%;height: 450rpx;" :src="img+item.image" mode="aspectFit"></image>
+					<image :lazy-load="true"  style="width: 100%;height: 450rpx;" :src="img+'/index/index/show?url='+item.image+'&width=750&height=450'" mode="aspectFit"></image>
 				</swiper-item>
-				<swiper-item style="position: relative;" v-if="vr_image != ''">
-					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image"
-						mode="aspectFit">
-					</image>
-					<view style="top:50%;left: 50%;" class="fdjksfhdsjk cet" @click="goVR(alls)">
-						<view class="fsds">
-							点击VR
-							100%所见所得
+				<swiper-item v-if="vr_image != ''">
+					<view style="position: relative;height: 100%;">
+						<image :lazy-load="true" style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="img+'/index/index/show?url='+vr_image+'&width=750&height=450'"
+							mode="aspectFit">
+						</image>
+						<view style="top:50%;left: 50%;" class="fdjksfhdsjk cet" @click="goVR(alls)">
+							<view class="fsds">
+								点击VR
+								100%所见所得
+							</view>
 						</view>
 					</view>
 				</swiper-item>
@@ -81,12 +83,13 @@
 								<view class="kklm" style="width: 100%;height: 100%;" @click="dianjishouzhis(items)"
 									v-if="items.fzb != null && shouzhi == 0">
 								</view>
-								<image @click="dianjishouzhi(items)"
+								<image :lazy-load="true" @click="dianjishouzhi(items)"
 									:style="'left: '+items.fzb[0]+'px;top: '+items.fzb[1]+'px;'" class="imhjk"
 									v-if="items.fzb != null && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit">
 								</image>
-								<image :src="img+items.shop.photo" mode="widthFix"></image>
+								
+								<image :lazy-load="true" :src="img+'/index/index/show?url='+items.shop.photo+'&width=750'" mode="widthFix"></image>
 								<!-- 测试 -->
 								<!-- <image
 									src="https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/98a44083ef6cb32e2b60fa83d0309f900ba6843f.jpg"
@@ -383,7 +386,8 @@
 						this.list = []
 						this.list.push(...aa)
 						if (data.data.data.status.vrimage != '' && data.data.data.status.vrimage != null) {
-							this.vr_image = this.$imgPath + data.data.data.status.vrimage
+							// this.$imgPath + 
+							this.vr_image = data.data.data.status.vrimage
 						}
 						if (data.data.data.status.video != '' && data.data.data.status.video != null) {
 							this.video = this.$imgPath + data.data.data.status.video
@@ -469,7 +473,6 @@
 				new Promise(resolve => {
 					let selectorQuery = uni.createSelectorQuery();
 					selectorQuery.selectAll('.class-item').boundingClientRect((rects) => {
-						console.log(rects, "rects");
 						if (!rects.length) {
 							setTimeout(() => {
 								this.getMenuItemTop();

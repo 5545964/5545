@@ -93,13 +93,15 @@
 				<view style="padding:20rpx 0;">
 					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
 						:key="index">
-						<view style="width:30%;display:flex;justify-content: flex-end;">
+						<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
 							<view class="yuan" @click="hahaha(item)">
 								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 							</view>
 						</view>
-						<view class="mingcheng" @click="fuwenben(item)">
-							《{{item.name}}》
+						<view style="width:70%;padding: 0 10rpx;">
+							<view class="mingcheng" @click="fuwenben(item)">
+								《{{item.name}}》
+							</view>
 						</view>
 					</view>
 				</view>
@@ -181,7 +183,6 @@
 		watch: {
 			shoujiyanzheng: function(val, oldVal) {
 				if (!val) {
-					console.log(val);
 					this.code = ""
 				}
 			},

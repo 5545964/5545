@@ -83,7 +83,6 @@
 				if (data.data.code == 1) {
 					this.express = data.data.data.status.conpany.title
 					this.list = data.data.data.status.data
-					console.log(this.list);
 				}
 			})
 		},

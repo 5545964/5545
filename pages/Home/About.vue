@@ -185,14 +185,15 @@
 					</view>
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;justify-content: center;">
-							<view style="display:flex;justify-content: flex-end;">
+							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(tanchaung)">
-									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28">
-									</u-icon>
+									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 								</view>
 							</view>
-							<view class="mingcheng" @click="shouURls(tanchaung)">
-								《{{tanchaung.name}}》
+							<view style="width:70%;padding: 0 10rpx;">
+								<view class="mingcheng" @click="shouURls(tanchaung)">
+									《{{tanchaung.name}}》
+								</view>
 							</view>
 						</view>
 					</view>
@@ -250,7 +251,7 @@
 			<u-toast ref="uToast" />
 			<u-back-top :scroll-top="0"></u-back-top>
 		</view>
-		<tab-bar v-show="!yuedu"></tab-bar>
+		<u-dianji v-show="!yuedu"></u-dianji>
 	</view>
 </template>
 

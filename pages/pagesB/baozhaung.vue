@@ -70,7 +70,6 @@
 			}
 		},
 		onLoad(ev) {
-			console.log(ev);
 			this.orderid = ev.orderid
 			let aa = uni.getStorageSync("baozhaung")
 			aa.forEach(item=>{
@@ -80,7 +79,6 @@
 			if(ev.tiao){
 				this.tiao = ev.tiao
 			}
-			console.log(this.tiao);
 		},
 		methods: {
 			jsCars() {
@@ -90,7 +88,6 @@
 						shopid.push(item.id)
 					}
 				})
-				console.log(shopid);
 				this.$api.sqlading({
 					shopid:shopid,
 					orderid:this.orderid,

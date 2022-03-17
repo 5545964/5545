@@ -185,7 +185,7 @@
 				}
 			},
 			async pinglun(ev) {
-				console.log(ev);
+
 				if (await this.$login()) {
 					let aa = ev
 
@@ -199,7 +199,7 @@
 			},
 			// 选星星
 			async xuanxinxin(ev) {
-				console.log(ev);
+
 				if (await this.$login()) {
 					this.$api.star({
 						user_id: uni.getStorageSync("user_info").id,
@@ -215,7 +215,7 @@
 				}
 			},
 			async dianzhan(ev) {
-				console.log(ev);
+
 				// alls.zans !=null && alls.zans != ''
 				if (await this.$login()) {
 					let aa = ""
@@ -271,7 +271,7 @@
 			},
 			//关注
 			async guanzhu(ev) {
-				console.log(ev);
+
 				if (await this.$login()) {
 					this.$api.desfollow({
 						user_id: uni.getStorageSync("user_info").id,

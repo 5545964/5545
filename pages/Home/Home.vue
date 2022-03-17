@@ -21,11 +21,14 @@
 			<view class="wrap">
 				<swiper @change="gaizhi" style="height: 300rpx;width: 100%;" :indicator-dots="true" :circular="true"
 					:autoplay="autoplay" :interval="3000" :duration="1000">
-					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
-						<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
-							:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
-							v-if="item.video !=null && item.video != ''" :src="imgurl + item.video" />
-						<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit"></image>
+					<swiper-item v-for="(item,index) in lun_list" :key="index">
+						<view style="border-radius: 20rpx;height: 100%;">
+							<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
+								:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
+								v-if="item.video !=null && item.video != ''" :src="imgurl + item.video" />
+							<image v-if="item.image !=''" @click="lunbochang" :src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'" mode="widthFix">
+							</image>
+						</view>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -33,7 +36,7 @@
 			<u-kehu :showsss='show'></u-kehu>
 			<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 			<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
-			<tab-bar></tab-bar>
+			<u-dianji></u-dianji>
 		</view>
 	</view>
 </template>
@@ -139,6 +142,18 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.setStorageSync("yuyuejilunum", data.data.data.status.data.length)
+					}
+				})
+				this.$api.letter({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("letter", data.data.data.status.length)
+					}
+				})
+				this.$api.activtz().then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("activtz", data.data.data.status.length)
 					}
 				})
 			},
@@ -286,6 +301,23 @@
 				})
 			},
 			alls() {
+				this.$api.banner().then(data => {
+					if (data.data.code == 1) {
+						this.lun_list = [];
+						let aa = []
+						data.data.data.status.forEach(item => {
+							// this.$imgPath + 
+							item.image = item.image
+							if (item.position == 0) {
+								aa.push(item)
+							}
+						})
+						this.lun_list = aa;
+						uni.stopPullDownRefresh();
+					} else {
+						this.lun_list = []
+					}
+				})
 				this.$api.indexcontent().then(data => {
 					if (data.data.code == 1) {
 						this.data_list = [];
@@ -313,6 +345,7 @@
 						this.data_list = []
 					}
 				})
+
 				this.$api.shopicon().then(data => {
 					if (data.data.code == 1) {
 						let aa = {
@@ -343,23 +376,6 @@
 						}
 						this.list = [...aa.home]
 						uni.setStorageSync("icon", aa)
-
-					}
-				})
-				this.$api.banner().then(data => {
-					if (data.data.code == 1) {
-						this.lun_list = [];
-						let aa = []
-						data.data.data.status.forEach(item => {
-							item.image = this.$imgPath + item.image
-							if (item.position == 0) {
-								aa.push(item)
-							}
-						})
-						this.lun_list = aa;
-						uni.stopPullDownRefresh();
-					} else {
-						this.lun_list = []
 					}
 				})
 				this.videoContext = uni.createVideoContext('video')

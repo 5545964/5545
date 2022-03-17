@@ -48,7 +48,6 @@
 			};
 		},
 		onLoad(ev) {
-			console.log(ev);
 			if (ev.title) {
 				this.title = ev.title
 			}

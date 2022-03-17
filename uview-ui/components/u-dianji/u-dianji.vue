@@ -39,7 +39,6 @@
 				}
 			},
 			ChangBar(e) {
-				console.log(1111111111);
 				uni.switchTab({
 					url: '/' + this.list[e].pagePath
 				})

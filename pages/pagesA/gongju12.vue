@@ -43,7 +43,6 @@
 </template>
 
 <script>
-	import dayjs from "@/dayjs"
 	export default {
 		data() {
 			return {
@@ -53,38 +52,19 @@
 		},
 		onLoad(ev) {
 			this.title = ev.title
-			// this.gethomepage()
 		},
 		onShow() {
 			this.gethomepage()
 		},
-		// mounted: function() {
-		// 	this.gethomepage();
-		// },
 		methods: {
 			startmessage(ev) {
-				console.log(ev, "startmessage");
 			},
 			completemessage(ev) {
-				console.log(ev, "completemessage");
 			},
 			kanzhaopian(ev) {
 				uni.navigateTo({
 					url: "../Home/URL/URL?url=" + ev
 				})
-				// let aa = [this.$imgPath + ev]
-				// uni.previewImage({
-				// 	urls: aa,
-				// 	longPressActions: {
-				// 		itemList: ['发送给朋友', '保存图片', '收藏'],
-				// 		success: function(data) {
-
-				// 		},
-				// 		fail: function(err) {
-
-				// 		}
-				// 	}
-				// });
 			},
 			bindIcon(icon) {
 				return this.$imgPath + icon;
@@ -97,7 +77,7 @@
 					if (data.data.code == 1) {
 						let aa = 0
 						data.data.data.status.data.forEach(item => {
-							item["tjtime"] = dayjs((item.createtime * 1000)).format('YYYY-MM-DD')
+							item["tjtime"] = this.$u.timeFormat(item.createtime, 'yyyy-mm-dd')
 							if (item.state == "1") {
 								aa = aa + 1
 							}

@@ -152,7 +152,6 @@
 		methods: {
 			changyong(ev) {
 				this.qwer = ev[0].label
-				console.log(ev);
 			},
 			xuansss(ev) {
 				let aa = this.shop_data

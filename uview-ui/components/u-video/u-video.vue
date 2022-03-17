@@ -2,17 +2,9 @@
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
 			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;">
-				<video 
-				:page-gesture="false" 
-				:http-cache="false" 
-				codec="software" 
-				:play-strategy="1" 
-				:title="item.title"
-				:id="'video' + item.id" class="vide" 
-				:src="item.video"
-				@play="playing" 
-				@error="videoErrorCallback"
-				/>
+				<video :page-gesture="false" :http-cache="false" codec="software" :play-strategy="1" :title="item.title"
+					:id="'video' + item.id" class="vide" :src="item.video" @play="playing"
+					@error="videoErrorCallback" />
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">
 				<button open-type="share" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">
@@ -102,6 +94,27 @@
 		},
 		mounted() {
 			this.list = [...this.vlist]
+			// this.list = [{
+			// 		title: "1234",
+			// 		id: 0,
+			// 		video: "https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4"
+			// 	},
+			// 	{
+			// 		title: "1234",
+			// 		id: 1,
+			// 		video: "https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4"
+			// 	},
+			// 	{
+			// 		title: "1234",
+			// 		id: 2,
+			// 		video: "https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4"
+			// 	},
+			// 	{
+			// 		title: "1234",
+			// 		id: 3,
+			// 		video: "https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20200317.mp4"
+			// 	}
+			// ]
 		},
 		methods: {
 			playing(e) {

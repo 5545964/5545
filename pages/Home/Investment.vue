@@ -237,15 +237,35 @@
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
 							:key="index">
-							<view style="width:30%;display:flex;justify-content: flex-end;">
+							
+							
+							
+							
+							<!-- <view style="width:30%;display:flex;justify-content: flex-end;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 								</view>
 							</view>
 							<view class="mingcheng" @click="fuwenben(item)">
 								《{{item.name}}》
+							</view> -->
+							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
+								<view class="yuan" @click="hahaha(item)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
 							</view>
+							<view style="width:70%;padding: 0 10rpx;">
+								<view class="mingcheng" @click="fuwenben(item)">
+									《{{item.name}}》
+								</view>
+							</view>
+							
+							
+							
+							
 						</view>
+						
+						
 					</view>
 					<view class="anniusss">
 						<view class="hkhnij" @click="xieyitongyi(0)">
@@ -258,12 +278,11 @@
 				</view>
 			</u-popup>
 		</view>
-		<tab-bar></tab-bar>
+		<u-dianji></u-dianji>
 	</view>
 </template>
 
 <script>
-	import dayjs from "dayjs"
 	export default {
 		data() {
 			return {
@@ -412,12 +431,8 @@
 					urls: [aa],
 					longPressActions: {
 						itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function(data) {
-							console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
-						},
-						fail: function(err) {
-							console.log(err.errMsg);
-						}
+						success: function(data) {},
+						fail: function(err) {}
 					}
 				});
 			},
@@ -563,10 +578,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach((item, index) => {
-								console.log(item.createtime, this.$u.timeFormat(item.createtime,
-									'yyyy-mm-dd'));
-								item.createtime = item.createtime * 1000
-								item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
+								item.createtime = this.$u.timeFormat(this.timestamp, 'yyyy/mm/dd')
 								item.label = item.label ? item.label.split(",") : ""
 								item.work = item.work ? item.work.split(",") : ""
 							})
@@ -899,8 +911,7 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
-							item.createtime = item.createtime * 1000
-							item.createtime = dayjs(item.createtime).format('YYYY/MM/DD')
+							item.createtime = this.$u.timeFormat(this.timestamp, 'yyyy/mm/dd')
 							item.label = item.label ? item.label.split(",") : ""
 							item.work = item.work ? item.work.split(",") : ""
 						})

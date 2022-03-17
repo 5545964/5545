@@ -403,13 +403,15 @@
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
 							:key="index">
-							<view style="width:30%;display:flex;justify-content: flex-end;">
+							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 								</view>
 							</view>
-							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name}}》
+							<view style="width:70%;padding: 0 10rpx;">
+								<view class="mingcheng" @click="fuwenben(item)">
+									《{{item.name}}》
+								</view>
 							</view>
 						</view>
 					</view>
@@ -481,8 +483,8 @@
 </template>
 
 <script>
-	import dayjs from 'dayjs'
-	dayjs.extend(require('dayjs/plugin/duration'));
+	// import dayjs from 'dayjs'
+	// dayjs.extend(require('dayjs/plugin/duration'));
 	export default {
 		data() {
 			return {
@@ -844,8 +846,7 @@
 							if (item.orderid == this.order_idsssss) {
 								this.data_list = item;
 								if (this.data_list.paytime) {
-									this.data_list.paytime = dayjs(this.data_list.paytime * 1000).format(
-										'YYYY-MM-DD HH:mm:ss')
+									this.data_list.paytime = this.$u.timeFormat(this.data_list.paytime, 'yyyy-mm-dd hh:MM:ss')
 								}
 								if (this.data_list.image) {
 									let img = this.data_list.image;

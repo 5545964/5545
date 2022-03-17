@@ -91,6 +91,7 @@
 				user_id: uni.getStorageSync("user_info").id
 			}).then(data => {
 				if (data.data.code == 1) {
+					uni.setStorageSync("letter", data.data.data.status.length)
 					let indexss = -1
 					data.data.data.status.forEach((item, index) => {
 						if (index > 0 && item.create_at.split(" ")[0] == data.data.data.status[index - 1]
@@ -114,6 +115,7 @@
 			})
 			this.$api.activtz().then(data => {
 				if (data.data.code == 1) {
+					uni.setStorageSync("activtz", data.data.data.status.length)
 					let indexss = -1
 					data.data.data.status.forEach((item, index) => {
 						if (index > 0 && item.stime_text.split(" ")[0] == data.data.data.status[index - 1]

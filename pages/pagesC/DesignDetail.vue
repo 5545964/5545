@@ -21,7 +21,8 @@
 				<swiper-item v-for="(item,index) in list" :key="index" @click="kaniamg(item)">
 					<image style="width: 100%;height: 450rpx;" :src="item" mode="aspectFit"></image>
 				</swiper-item>
-				<swiper-item style="position: relative;">
+				<swiper-item>
+					<view style="height: 100%;position: relative;">					
 					<view class="fdjksfhdsjk cet" @click="govr">
 						<view class="fsds">
 							点击VR
@@ -31,10 +32,13 @@
 					<image style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="vr_image"
 						mode="aspectFit">
 					</image>
+					</view>
 				</swiper-item>
 				<swiper-item v-if="video">
-					<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
-						style="width: 100%;height: 450rpx;" :src="imgPath+video"></video>
+					<view style="height: 100%;">
+						<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
+							style="width: 100%;height: 450rpx;" :src="imgPath+video"></video>
+					</view>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -263,7 +267,7 @@
 			},
 			// 选星星
 			async xuanxinxin(ev) {
-				console.log(ev);
+
 				if (await this.$login()) {
 					this.$api.star({
 						user_id: uni.getStorageSync("user_info").id,
@@ -280,7 +284,7 @@
 			},
 			//点赞
 			async dianzhan(ev) {
-				console.log(ev);
+
 				if (await this.$login()) {
 					this.budakai = false;
 					let aa = ""
@@ -313,7 +317,7 @@
 			},
 			//关注
 			async guanzhu(ev) {
-				console.log(ev);
+
 				if (await this.$login()) {
 					this.$api.desfollow({
 						user_id: uni.getStorageSync("user_info").id,

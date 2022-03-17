@@ -170,7 +170,6 @@
 		},
 		methods: {
 			zhankai(ev) {
-				console.log(ev);
 				uni.setStorageSync("zhankai", ev.index)
 			},
 			zhonghe() {

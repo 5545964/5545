@@ -3,7 +3,7 @@
 		<view class="datas">
 			<view class="dsaada" v-if="index%2==0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image v-if="item.image != ''" :src="imgPath+item.image" mode="widthFix"></image>
+					<image :lazy-load="true" v-if="item.image != ''" :src="imgPath+'/index/index/show?url='+item.image+'&width=335&height=350'" mode="widthFix"></image>
 					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
 						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
 						@play="playing" :src="imgPath+item.video" controls></video>
@@ -26,7 +26,7 @@
 		<view class="datas">
 			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image v-if="item.image != ''" :src="imgPath+item.image" mode="widthFix"></image>
+					<image :lazy-load="true" v-if="item.image != ''" :src="imgPath+'/index/index/show?url='+item.image+'&width=335&height=350'" mode="widthFix"></image>
 					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
 						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
 						@play="playing" :src="imgPath+item.video" controls></video>

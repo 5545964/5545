@@ -555,7 +555,6 @@
 		},
 		methods: {
 			baochun() {
-				console.log(this.data_list);
 				uni.setStorageSync("dataKKlist", this.data_list)
 			},
 			go_code() {
@@ -630,7 +629,6 @@
 				this.baochun()
 			},
 			address(ev) {
-				console.log(this.data_list, 1);
 				let that = this;
 				let aa = ''
 				let bb = that.data_list
@@ -639,7 +637,6 @@
 						bb[ev.obj] = res.address;
 						that.data_list = {}
 						that.data_list = bb
-						console.log(that.data_list);
 						that.baochun()
 					}
 				});

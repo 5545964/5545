@@ -97,7 +97,6 @@
 </template>
 
 <script>
-	import dayjs from "dayjs"
 	export default {
 		name: 'u-designDet',
 		props: {
@@ -174,8 +173,7 @@
 		watch: {
 			info() {
 				this.alls = this.info
-				this.alls.createtime = this.alls.createtime * 1000
-				this.alls.createtime = dayjs(this.alls.createtime).format('YYYY/MM/DD');
+				this.alls.createtime = this.$u.timeFormat(this.timestamp, 'yyyy/mm/dd')
 				this.alls.avatar = this.$imgPath + this.alls.avatar;
 				if (this.alls.label) {
 					this.list1 = [...this.alls.label.split(",")]

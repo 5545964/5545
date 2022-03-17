@@ -145,6 +145,7 @@
 							<view class="texts">
 								站内信息
 							</view>
+							<view class="dsalhdkjahjad" v-if="zhanleixin"></view>
 						</view>
 						<view class="template" @click="gongju_go('../pagesA/gongju9','我的售后')">
 							<image class="img" :src="'../../static/gongju9.png'" mode="aspectFit"></image>
@@ -193,7 +194,7 @@
 			<u-kehu :navis="false"></u-kehu>
 			<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 		</view>
-		<tab-bar></tab-bar>
+		<u-dianji></u-dianji>
 	</view>
 </template>
 
@@ -201,6 +202,7 @@
 	export default {
 		data() {
 			return {
+				zhanleixin: false,
 				showssss: false,
 				fkjsfjdisfjsl: false,
 				user_info_id: "",
@@ -286,7 +288,7 @@
 			};
 		},
 		onLoad() {
-			
+
 		},
 		onShow() {
 			this.alls()
@@ -323,7 +325,7 @@
 						uni.setStorageSync("des_info", data.data.data.myuser)
 						this.des_user = data.data.data.myuser
 						uni.stopPullDownRefresh();
-					}else{
+					} else {
 						uni.setStorageSync("des_info", {})
 					}
 				})
@@ -360,8 +362,27 @@
 				this.navbarheigth = 0
 			},
 			shuliang(ev) {
+				this.$api.letter({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						if (data.data.data.status.length > uni.getStorageSync("letter")) {
+							this.zhanleixin = true
+						} else {
+							this.zhanleixin = false
+						}
+
+					}
+				})
+				this.$api.activtz().then(data => {
+					if (data.data.code == 1) {
+						if (data.data.data.status.length > uni.getStorageSync("activtz")) {
+							this.zhanleixin = true
+						}
+					}
+				})
 				this.$api.mymake({
-					user_id: ev,
+					user_id: uni.getStorageSync("user_info").id,
 					limit: 1000
 				}).then(data => {
 					if (data.data.code == 1) {
@@ -382,7 +403,7 @@
 				})
 				// 默认地址
 				this.$api.addressshow({
-					id: ev
+					id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
@@ -395,7 +416,7 @@
 				})
 				// 用户信息
 				this.$api.myuser({
-					user_id: ev || 0
+					user_id: uni.getStorageSync("user_info").id || 0
 				}).then(data => {
 					if (data.data.code == 1) {
 						this.user_info = data.data.data.myuser
@@ -405,7 +426,7 @@
 				})
 				// 订单数
 				this.$api.myorder({
-					user_id: ev
+					user_id: uni.getStorageSync("user_info").id
 				}).then((data) => {
 					if (data.data.code == 1) {
 						let aa = [0, 0, 0, 0, 0]

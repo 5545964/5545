@@ -403,13 +403,11 @@
 				}
 			},
 			asdfg(ev) {
-				console.log(ev);
 				this.imgListsss.push(ev.data.status)
 			},
 			// 删除图片
 			deleteimg(index) {
 				this.imgListsss.splice(index, 1)
-				console.log(this.imgListsss);
 			},
 			shangchuan(ev) {
 				if (this.isdes == 1) {
@@ -419,7 +417,6 @@
 					this.avatarss = ev.data.status
 					this.avatar = ev.data.status
 				}
-				console.log(this.avatarss, this.avatar);
 			},
 			// 选择城市
 			showcitys(item) {
