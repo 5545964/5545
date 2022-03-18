@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "系统消息",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

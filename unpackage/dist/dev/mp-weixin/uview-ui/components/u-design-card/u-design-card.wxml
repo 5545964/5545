@@ -1,0 +1,1 @@
+<view data-event-opts="{{[['tap',[['topage']]]]}}" class="card data-v-29f388e0" bindtap="__e"><image style="border-radius:20rpx;" src="{{img+list.simage}}" mode="aspectFit" class="data-v-29f388e0"></image><view class="gghGG data-v-29f388e0" style="margin-top:24rpx;">{{''+list.name+''}}</view></view>

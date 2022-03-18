@@ -3,7 +3,7 @@
 		<video :http-cache="false" codec="software" :play-strategy="1" @ended="ended" id="video_play" :src="videosrc"
 			:vslide-gesture-in-fullscreen="false" :autoplay="true" :muted="false" object-fit="cover" :controls="false"
 			style="height: 100%;width: 100%" />
-		<view class="skip" @click="ended">
+		<view class="skip" @click="ended" v-if="xianshi">
 			跳过
 		</view>
 	</view>
@@ -19,6 +19,9 @@
 			this.time = setTimeout(() => {
 				this.ended()
 			}, 9500)
+			setTimeout(() => {
+				this.xianshi = true
+			}, 3000)
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					let aa = []
@@ -40,9 +43,20 @@
 					uni.setStorageSync("showssss", data.data.data.edit)
 				}
 			})
+			this.$api.agreements().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					uni.setStorageSync("xieyi", data.data.data.status)
+				} else {
+					uni.setStorageSync("xieyi", [])
+				}
+			})
 		},
 		data() {
 			return {
+				xianshi:false,
 				time: "",
 				videoContext: "",
 				path: "",

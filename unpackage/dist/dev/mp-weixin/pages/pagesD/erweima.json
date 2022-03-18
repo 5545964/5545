@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "上传二维码",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-upload": "/uview-ui/components/u-upload/u-upload",
+    "u-kehu": "/uview-ui/components/u-kehu/u-kehu"
+  }
+}
