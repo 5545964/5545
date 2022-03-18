@@ -33,7 +33,6 @@
 					</view> -->
 					<cell @startmessage='startmessage' contactText="点击加入美居设计群" @completemessage="completemessage"
 						:url='item.ewm'>点击加入美居设计群</cell>
-					<!-- <image class="img" :src="bindIcon(item.ewm)" mode="aspectFit"></image> -->
 				</view>
 			</view>
 		</view>

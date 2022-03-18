@@ -60,7 +60,7 @@
 								@click="goshop(item3)">
 								<view class="right_view">
 									<view class="">
-										<image :src="imgtilte+item3.simage"
+										<image :src="imgtilte+'/index/index/show?url='+item3.simage+'&width=180&height=180'"
 											style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
 										</image>
 									</view>
@@ -87,7 +87,7 @@
 				<view class="item-container" v-for="item3 in destaoxi" :key='item3.id' @click="go_youhuijuan(item3)">
 					<view class="right_view">
 						<view class="">
-							<image :src="imgtilte+item3.simage"
+							<image :src="imgtilte+'/index/index/show?url='+item3.simage+'&width=180&height=180'"
 								style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
 							</image>
 						</view>
@@ -157,10 +157,10 @@
 		onLoad() {
 			uni.removeStorageSync('canpingindex');
 			uni.removeStorageSync('zhankai');
+			this.getCate()
 		},
 		onShow() {
 			this.current = uni.getStorageSync("canpingindex") || 0;
-			this.getCate()
 		},
 		computed: {
 			shopListALL() {

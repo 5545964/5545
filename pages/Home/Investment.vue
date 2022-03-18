@@ -394,6 +394,10 @@
 			this.getdesproMoenys()
 		},
 		onShow() {
+			this.getstate();
+			this.enjoy()
+			this.enjoys()
+			this.getdesproMoenys()
 			this.list = uni.getStorageSync('icon').wanghong
 			this.list.forEach(item => {
 				if (item.id == 16) {
@@ -416,10 +420,7 @@
 				this.yanzhengtanchaung = false;
 			}
 
-			this.getstate();
-			this.enjoy()
-			this.enjoys()
-			this.getdesproMoenys()
+			
 		},
 		methods: {
 			changes(index) {
@@ -897,7 +898,7 @@
 							if (item.follow) {
 								item.isfollow = true
 							}
-							item.video = this.$imgPath + item.video
+							// item.video = this.$imgPath + item.video
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]
