@@ -5,6 +5,7 @@
   "navigationBarTextStyle": "black",
   "usingComponents": {
     "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
-    "u-popup": "/uview-ui/components/u-popup/u-popup"
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "cell": "plugin://materialPlugin/cell"
   }
 }

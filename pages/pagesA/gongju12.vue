@@ -26,11 +26,7 @@
 						<image class="img" mode="aspectFit" src="../../static/icon_shop_hsmore.png"></image>
 					</view>
 				</view>
-				<view class="dsfedfed" @click="kanzhaopian(item.ewm)">
-					<!-- <view class="text">
-						点击加入美居设计群
-						
-					</view> -->
+				<view class="dsfedfed">
 					<cell @startmessage='startmessage' contactText="点击加入美居设计群" @completemessage="completemessage"
 						:url='item.ewm'>点击加入美居设计群</cell>
 				</view>
@@ -45,6 +41,7 @@
 	export default {
 		data() {
 			return {
+				cellurl:"",
 				title: "",
 				fansList: [],
 			};
@@ -61,9 +58,9 @@
 			completemessage(ev) {
 			},
 			kanzhaopian(ev) {
-				uni.navigateTo({
-					url: "../Home/URL/URL?url=" + ev
-				})
+				// uni.navigateTo({
+				// 	url: "../Home/URL/URL?url=" + ev
+				// })
 			},
 			bindIcon(icon) {
 				return this.$imgPath + icon;

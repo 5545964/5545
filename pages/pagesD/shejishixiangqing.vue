@@ -13,7 +13,7 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class="">
+		<view style="background: #fff;">
 			<view class="xunhuan" v-for="(item,index) in list" :key="index">
 				<view class="dshk">
 					{{item.title}}
@@ -83,19 +83,14 @@
 					<!-- 上传 -->
 				</view>
 			</view>
+			<view class="dsfedfed">
+				<cell contactText="点击加入美居设计群" :url='desOrder.ewm'>点击查看美居设计群</cell>
+			</view>
 		</view>
 		<view style="height: 100rpx;">
 
 		</view>
-		<view class="bngh" v-if="isyuyue == 0">
-			<!-- <view class="annui" @click="tijiao(0)" style="background-color: #EFEFEF;color: #333333;">
-				查看二维码
-			</view> -->
-			<!-- <view class="annui" @click="tijiao(1)" v-if="desOrder.state == 1">
-				确认完成
-			</view> -->
-		</view>
-		<view class="bngh" v-if="isyuyue != 0">
+		<view class="bngh" v-if="jdtime">
 			<view class="annui" @click="tijiao(3)" style="background-color: #EFEFEF;color: #333333;">
 				拒绝
 			</view>
@@ -322,6 +317,7 @@
 				],
 				isdes: 0,
 				desOrder: {},
+				jdtime: true,
 			};
 		},
 		onLoad(ev) {
@@ -332,6 +328,11 @@
 				this.isdes = ev.isdes
 				let arr = []
 				this.desOrder = uni.getStorageSync("des_order");
+				if (this.desOrder.jdtime == '' || this.desOrder.jdtime == null) {
+					this.jdtime = true
+				} else {
+					this.jdtime = false
+				}
 				this.desOrder.people = this.desOrder.people.split(",")
 				this.desOrder.people.forEach(item => {
 					let obj = {
@@ -568,6 +569,13 @@
 </script>
 
 <style lang="scss" scoped>
+	.dsfedfed {
+		background-color: #FFFFFF;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding-bottom: 20rpx;
+	}
 	.bngh {
 		position: fixed;
 		display: flex;

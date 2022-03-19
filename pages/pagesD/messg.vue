@@ -15,7 +15,7 @@
 		</view>
 		<view class="home">
 			<view>
-				<view v-for="(item,index) in data_list" :key="index">
+				<view v-for="(item,index) in data_list" :key="index" style="padding-bottom:20rpx;">
 					<view class="haha" @click="go(item)">
 						<view class="xunhuan">
 							<view class="texdasdsas">
@@ -50,6 +50,9 @@
 								</view>
 							</view>
 						</view>
+					</view>
+					<view class="dsfedfed">
+						<cell contactText="点击加入美居设计群" :url='item.ewm'>点击查看美居设计群</cell>
 					</view>
 					<view class="hahahadadda" v-if="item.jdtime =='' || item.jdtime ==null">
 						<view class="text qwe" @click="jiedan(index,0)">
@@ -197,6 +200,14 @@
 </script>
 
 <style lang="scss" scoped>
+	.dsfedfed {
+		background-color: #FFFFFF;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		padding-bottom: 20rpx;
+	}
+
 	.popup {
 		.xcvb {
 			height: 100%;
@@ -287,9 +298,6 @@
 		.haha {
 			padding: 30rpx;
 			background: #FFFFFF;
-			border-radius: 10rpx 10rpx 0 0;
-
-
 
 			.neitong {
 				display: flex;

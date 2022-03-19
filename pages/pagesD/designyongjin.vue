@@ -70,11 +70,16 @@
 							{{item.order_id}}
 						</view>
 						<view class="win">
-							<text v-if="item.states == 0">待付设计定金</text>
-							<text v-if="item.states == 1">已付设计定金</text>
-							<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
-							<text v-if="item.statess >= 0 && item.statess <4">已下单付款</text>
-						 	<text v-if="item.statess >= 4">订单完成</text>
+							<block v-if="item.statess == null">
+								<text v-if="item.states == 0">待付设计定金</text>
+								<text v-if="item.states == 1">已付设计定金</text>
+								<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
+							</block>
+							<block v-if="item.statess != null">
+								<text v-if="item.statess.state >= 0 && item.statess.state <4">已下单付款</text>
+								<text v-if="item.statess.state >= 4">订单完成</text>
+							</block>
+
 							<text v-if="item.sq == 0">佣金未申请</text>
 							<text v-if="item.sq == 1">佣金申请中</text>
 							<text v-if="item.tixian == 1">佣金申请成功</text>
@@ -202,22 +207,28 @@
 		},
 		onShow() {
 			this.getdata()
-			this.$api.desmyuser({user_id: uni.getStorageSync("user_info").id}).then(data=>{if(data.data.code == 1) {uni.setStorageSync("des_info", data.data.data.myuser)}})
+			this.$api.desmyuser({
+				user_id: uni.getStorageSync("user_info").id
+			}).then(data => {
+				if (data.data.code == 1) {
+					uni.setStorageSync("des_info", data.data.data.myuser)
+				}
+			})
 		},
 		methods: {
 			goods(ev) {
-				if(ev.sex){
+				if (ev.sex) {
 					uni.setStorageSync("des_order", ev)
 					uni.navigateTo({
 						url: "./shejishixiangqing?isdes=1"
 					})
-				}else{
+				} else {
 					uni.showToast({
-						title:"此订单不能查看详情!",
-						icon:"error"
+						title: "此订单不能查看详情!",
+						icon: "error"
 					})
 				}
-				
+
 			},
 			wodeteam() {
 				uni.navigateTo({
@@ -237,7 +248,7 @@
 								item["cjprice"] = item.price
 								item.price = 0
 							})
-							this.monList = [...this.monList,...data.data.data.status]
+							this.monList = [...this.monList, ...data.data.data.status]
 						}
 					})
 				}
@@ -246,7 +257,7 @@
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.monList = [...this.monList,...data.data.data.status]
+						this.monList = [...this.monList, ...data.data.data.status]
 						this.allprice = data.data.data.all.toFixed(2);
 						this.canprice = data.data.data.can.toFixed(2);
 						uni.setStorageSync("monList", this.monList)

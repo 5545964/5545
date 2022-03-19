@@ -630,6 +630,7 @@
 					cartids = 0
 				}
 				if (this.address != '') {
+					console.log(this.tijiaozjia);
 					this.$api.cartpay({
 						cuponsid: this.cuponsid,
 						swj: this.swj,
@@ -643,7 +644,7 @@
 						type: 0,
 						specidsize: specidsizes,
 						specid: specids,
-						price: this.zjia - this.dinjing,
+						price: this.tijiaozjia.toFixed(2),
 						dzg: this.dzg
 					}).then(res => {
 						if (res.data.code == 200) {

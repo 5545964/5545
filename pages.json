@@ -563,7 +563,10 @@
 						"navigationBarTitleText": "系统消息",
 						"enablePullDownRefresh": false,
 						"navigationStyle": "custom",
-						"navigationBarTextStyle": "black"
+						"navigationBarTextStyle": "black",
+						"usingComponents": {
+							"cell": "plugin://materialPlugin/cell"
+						}
 					}
 				},
 				{
@@ -590,7 +593,10 @@
 						"navigationBarTitleText": "订单详情",
 						"enablePullDownRefresh": false,
 						"navigationStyle": "custom",
-						"navigationBarTextStyle": "black"
+						"navigationBarTextStyle": "black",
+						"usingComponents": {
+							"cell": "plugin://materialPlugin/cell"
+						}
 					}
 				},
 				{
