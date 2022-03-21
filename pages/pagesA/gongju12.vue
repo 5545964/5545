@@ -41,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				cellurl:"",
+				cellurl: "",
 				title: "",
 				fansList: [],
 			};
@@ -53,10 +53,8 @@
 			this.gethomepage()
 		},
 		methods: {
-			startmessage(ev) {
-			},
-			completemessage(ev) {
-			},
+			startmessage(ev) {},
+			completemessage(ev) {},
 			kanzhaopian(ev) {
 				// uni.navigateTo({
 				// 	url: "../Home/URL/URL?url=" + ev
@@ -74,14 +72,15 @@
 						let aa = 0
 						data.data.data.status.data.forEach(item => {
 							item["tjtime"] = this.$u.timeFormat(item.createtime, 'yyyy-mm-dd')
-							if (item.state == "1") {
+							if (item.state == 1) {
 								aa = aa + 1
 							}
 						})
 						this.fansList = []
 						this.fansList = data.data.data.status.data;
 						this.fansList.reverse()
-						uni.setStorageSync("yuyuejilunum", aa)
+						uni.setStorageSync("yuyuejilunum", data.data.data.status.data.length)
+						uni.setStorageSync("yuyuele", aa)
 					}
 				})
 			},

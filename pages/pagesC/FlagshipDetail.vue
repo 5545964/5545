@@ -19,13 +19,13 @@
 			<swiper style="width: 100%;height: 450rpx;" :current="currents" :indicator-dots="true" :circular="true"
 				:autoplay="autoplay" :interval="3000" :duration="1000" @change="gaizhi">
 				<swiper-item v-for="(item,index) in alls.imagexq" :key="index" @click="kaniamgss(item)">
-					<!-- gosheji -->
-					<image :lazy-load="true"  style="width: 100%;height: 450rpx;" :src="img+'/index/index/show?url='+item.image+'&width=750&height=450'" mode="aspectFit"></image>
+					<image :lazy-load="true" style="width: 100%;height: 450rpx;" :src="img+item.image" mode="aspectFit">
+					</image>
 				</swiper-item>
 				<swiper-item v-if="vr_image != ''">
 					<view style="position: relative;height: 100%;">
-						<image :lazy-load="true" style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)" :src="img+'/index/index/show?url='+vr_image+'&width=750&height=450'"
-							mode="aspectFit">
+						<image :lazy-load="true" style="width: 100%;height: 450rpx;" @click="kaniamg(vr_image)"
+							:src="img+vr_image" mode="aspectFit">
 						</image>
 						<view style="top:50%;left: 50%;" class="fdjksfhdsjk cet" @click="goVR(alls)">
 							<view class="fsds">
@@ -47,6 +47,7 @@
 
 
 		<view class="u-menu-wrap">
+
 			<scroll-view style="height: 520px;" scroll-y scroll-with-animation class="u-tab-view menu-scroll-view"
 				:scroll-top="scrollTop">
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item"
@@ -57,7 +58,7 @@
 			</scroll-view>
 
 			<scroll-view style="height: 520px;" :scroll-top="scrollRightTop" scroll-y scroll-with-animation
-				class="right-box" @scroll="rightScroll" :scroll-into-view="itemId">
+				class="right-box u-tab-views" @scroll="rightScroll" :scroll-into-view="itemId">
 				<view class="class-item" :id="'item' + index" v-for="(item,index) in tabbar" :key="index">
 					<view :class="index%2==0? 'mian_left_items':'mian_left_item1s'"
 						style="text-align:center;height:50rpx;line-height:50rpx;color: #fff;font-size:28rpx;">
@@ -67,7 +68,7 @@
 						<u-designDet id="descard" :info="desInfo" @click="guanzhu" @dianzhan="dianzhan"
 							@qushejishi="pinglun" @pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 					</view>
-					<u-parse v-if="item.desdesdesdesde == 2" :html="alls.deslg"></u-parse>
+					<!-- <u-parse v-if="item.desdesdesdesde == 2" :html="alls.deslg"></u-parse> -->
 					<view v-if="item.desdesdesdesde == 0" v-for="(items,indexs) in item.leftdata" :key="indexs">
 						<view style="position: relative;">
 							<!-- VR -->
@@ -88,8 +89,8 @@
 									v-if="items.fzb != null && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit">
 								</image>
-								
-								<image :lazy-load="true" :src="img+'/index/index/show?url='+items.shop.photo+'&width=750'" mode="widthFix"></image>
+
+								<image :lazy-load="true" :src="img+items.shop.photo" mode="widthFix"></image>
 								<!-- 测试 -->
 								<!-- <image
 									src="https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/98a44083ef6cb32e2b60fa83d0309f900ba6843f.jpg"
@@ -144,7 +145,7 @@
 				menuItemPos: [],
 				arr: [],
 				scrollRightTop: 0,
-				timer: null,
+				timer: null
 			}
 		},
 		onLoad(ev) {
@@ -351,7 +352,7 @@
 						for (var i = 0; i < mm.length; i++) {
 							mm[i]["leftdata"] = []
 							mm[i]["desdesdesdesde"] = 0
-							if (mm[i].id == 1) {
+							if (mm[i].id == 1 || mm[i].id == 2) {
 								if (this.alls.designer == "") {
 									for (var j = 0; j < kk.length; j++) {
 										if (mm[i].id == kk[j].leftid) {
@@ -363,10 +364,11 @@
 									mm[i].desdesdesdesde = 1
 								}
 							}
-							if (mm[i].id == 2) {
-								mm[i].desdesdesdesde = 2
-							}
-							if (mm[i].id != 2 && mm[i].id != 1) {
+							// if (mm[i].id == 2) {
+							// 	mm[i].desdesdesdesde = 2
+							// }
+							// if (mm[i].id != 2 && mm[i].id != 1) {
+							if (mm[i].id != 1) {
 								for (var j = 0; j < kk.length; j++) {
 									if (mm[i].id == kk[j].leftid) {
 										mm[i].leftdata.push(kk[j])
@@ -476,7 +478,7 @@
 						if (!rects.length) {
 							setTimeout(() => {
 								this.getMenuItemTop();
-							}, 5000);
+							}, 10000);
 							return;
 						}
 						rects.forEach((rect) => {
@@ -485,6 +487,7 @@
 						})
 					}).exec()
 				})
+
 			},
 			async rightScroll(e) {
 				this.oldScrollTop = e.detail.scrollTop;
@@ -557,7 +560,10 @@
 
 	.u-tab-view {
 		width: 14%;
+	}
 
+	.u-tab-views {
+		width: 86%;
 	}
 
 	.u-tab-item {
@@ -598,7 +604,7 @@
 
 	.class-item {
 		font-size: 0;
-		margin-bottom: 30rpx;
+		// margin-bottom: 30rpx;
 	}
 
 

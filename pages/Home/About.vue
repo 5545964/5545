@@ -187,7 +187,8 @@
 						<view class="cet" style="margin:10rpx 0;justify-content: center;">
 							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(tanchaung)">
-									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28">
+									</u-icon>
 								</view>
 							</view>
 							<view style="width:70%;padding: 0 10rpx;">
@@ -329,7 +330,8 @@
 				agid: "",
 				lickc: [],
 				klklkl: 0,
-				lickid: 0
+				lickid: 0,
+				jiji:""
 			};
 		},
 		onLoad(ev) {
@@ -410,9 +412,17 @@
 			// 同意协议
 			tongyixieyi(ev) {
 				if (ev.check) {
+					let aa = 0
+					if(this.idid == 1){
+						aa = 48
+					}
+					if(this.idid == 0){
+						aa = 49
+					}
 					this.$api.userag({
 						userid: uni.getStorageSync("user_info").id,
-						agid: this.agid
+						agid: aa,
+						title:this.tanchaung.title
 					})
 					this.$api.tjsq({
 						user_id: uni.getStorageSync("user_info").id,
@@ -494,12 +504,27 @@
 					})
 				}
 			},
+			klkl(ev, index) {
+				// 0是D,1是B
+				this.$api.lpagreement({
+					id: ev
+				}).then(data => {
+					if (data.data.code == 1) {
+						if(index == 0){
+							this.jiji = data.data.data.status.dcontents
+						}
+						if(index == 1){
+							this.jiji = data.data.data.status.bcontents
+						}
+					}
+				})
+			},
 			async changeTokens2(index, item) {
 				this.lickc = []
 				if (await this.$login()) {
 					this.active2 = index
 					this.loupanid = item.id
-					this.agid = item.ag.id
+					// this.agid = item.ag.id
 					item.check = false
 					this.tanchaung = item
 					let aa = uni.getStorageSync("user_info")
@@ -523,6 +548,7 @@
 											this.yuedu = true
 											this.idid = 1
 											uni.setStorageSync("idid", this.idid)
+											this.klkl(item.id, 0)
 											return
 										}
 									}
@@ -532,9 +558,11 @@
 										this.yuedu = true
 										this.idid = 0
 										uni.setStorageSync("idid", this.idid)
+										this.klkl(item.id, 1)
 										return
 									}
 								}
+
 								if (item.sign_bid != 0 || item.sign_did != 0) {
 									this.qianyue = "该楼盘已被签约"
 									if (item.sign_bid == aa.id || item.sign_did == aa.id) {
@@ -600,7 +628,7 @@
 				if (await this.$login()) {
 					this.active22 = index
 					this.loupanid = item.id
-					this.agid = item.ag.id
+					// this.agid = item.ag.id
 					item.check = false
 					this.tanchaung = item
 					let aa = uni.getStorageSync("user_info")
@@ -737,7 +765,7 @@
 				})
 			},
 			shouURls(ev) {
-				uni.setStorageSync("fuwenbeng", ev.ag.content)
+				uni.setStorageSync("fuwenbeng", this.jiji)
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.title
 				})

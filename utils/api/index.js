@@ -1,6 +1,9 @@
 import request from "./request.js"
 
 export default {
+	lpagreement(params = {}) {
+		return request.post("/api/bydshop/lpagreement", params);
+	},
 	likelp(params = {}) {
 		return request.post("/api/bydshop/likelp", params);
 	},

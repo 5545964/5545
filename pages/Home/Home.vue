@@ -140,7 +140,14 @@
 					limit: 1000
 				}).then(data => {
 					if (data.data.code == 1) {
+						let bb = 0
+						data.data.data.status.data.forEach(item => {
+							if (item.state == "1") {
+								bb = bb + 1
+							}
+						})
 						uni.setStorageSync("yuyuejilunum", data.data.data.status.data.length)
+						uni.setStorageSync("yuyuele", bb)
 					}
 				})
 				this.$api.letter({

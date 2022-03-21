@@ -387,13 +387,15 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = uni.getStorageSync("yuyuejilunum")
+						let cc = uni.getStorageSync("yuyuele")
 						let bb = 0
 						data.data.data.status.data.forEach(item => {
 							if (item.state == "1") {
 								bb = bb + 1
 							}
 						})
-						if (bb > aa) {
+						console.log(data.data.data.status.data.length,aa,bb,cc);
+						if (data.data.data.status.data.length > aa || bb > cc) {
 							this.fkjsfjdisfjsl = true
 						} else {
 							this.fkjsfjdisfjsl = false

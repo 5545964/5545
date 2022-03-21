@@ -14,7 +14,7 @@
 			</u-navbar>
 		</view>
 		<view class="home">
-			<u-parse :html="content"></u-parse>
+			<u-parse :tagStyle="style" :html="content"></u-parse>
 		</view>
 	</view>
 </template>
@@ -23,8 +23,12 @@
 	export default {
 		data() {
 			return {
-				content:"", 
+				content: "",
 				title: "富文本",
+				style: {
+					// 字符串的形式
+					image:'width: 300rpx;'
+				}
 			};
 		},
 		onLoad(ev) {
@@ -32,7 +36,7 @@
 				this.title = ev.title;
 			}
 			let aa = uni.getStorageSync("fuwenbeng")
-			if(aa){
+			if (aa) {
 				this.content = aa
 			}
 		},
@@ -55,10 +59,10 @@
 </script>
 
 <style lang="scss" scoped>
-	.home {
-		width: 100%;
-		height: 100%;
-	}
+	// .home {
+	// 	width: 100%;
+	// 	height: 100%;
+	// }
 
 	.navbar {
 		.navbar_top {
