@@ -82,19 +82,16 @@
 							<!-- 手指拇 -->
 							<view class="mengban">
 								<view class="kklm" style="width: 100%;height: 100%;" @click="dianjishouzhis(items)"
-									v-if="items.fzb != null && shouzhi == 0">
+									v-if="items.fzb[0] && items.fzb[1] && shouzhi == 0">
 								</view>
 								<image :lazy-load="true" @click="dianjishouzhi(items)"
 									:style="'left: '+items.fzb[0]+'px;top: '+items.fzb[1]+'px;'" class="imhjk"
-									v-if="items.fzb != null && shouzhi == 0" src="../../static/gif.gif"
-									mode="aspectFit">
-								</image>
-
-								<image :lazy-load="true" :src="img+items.shop.photo" mode="widthFix"></image>
-								<!-- 测试 -->
+									v-if="items.fzb[0] && items.fzb[1] && shouzhi == 0" src="../../static/gif.gif"
+									mode="aspectFit" />
+								<image :lazy-load="true" :src="img+items.shop.photo" mode="widthFix" />
 								<!-- <image
 									src="https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/98a44083ef6cb32e2b60fa83d0309f900ba6843f.jpg"
-									mode="widthFix"></image> -->
+									mode="widthFix"/> -->
 							</view>
 						</view>
 					</view>
@@ -109,8 +106,7 @@
 				预约设计
 			</view>
 		</view>
-		<view class="" style="height: 110rpx;">
-		</view>
+		<view class="" style="height: 110rpx;" />
 	</view>
 </template>
 <script>
@@ -152,13 +148,12 @@
 			this.shenme_id = ev.id
 			this.allss(this.shenme_id)
 			this.videoContext = uni.createVideoContext('video')
-
 		},
 		onShow() {
 			this.getMenuItemTop()
 			setTimeout(() => {
 				this.autoplay = true
-			}, 5000)
+			}, 10000)
 		},
 		methods: {
 			gaizhi(ev) {
@@ -181,7 +176,6 @@
 			bofang(ev) {
 				this.autoplay = false
 			},
-
 			dianjishouzhi(ev) {
 				this.shouzhi = 1
 				uni.navigateTo({
@@ -225,7 +219,6 @@
 					}
 				});
 			},
-
 			async pinglun(ev) {
 				if (await this.$login()) {
 					uni.navigateTo({
@@ -233,7 +226,6 @@
 					})
 				}
 			},
-
 			async xuanxinxin(ev) {
 				if (await this.$login()) {
 					this.$api.star({
@@ -249,7 +241,6 @@
 					})
 				}
 			},
-
 			async dianzhan(ev) {
 				if (await this.$login()) {
 					let aa = ""
@@ -279,7 +270,6 @@
 					})
 				}
 			},
-
 			async guanzhu(ev) {
 				if (await this.$login()) {
 					this.$api.desfollow({
@@ -302,7 +292,6 @@
 					})
 				}
 			},
-
 			desDetails(ev) {
 				this.$api.desxq({
 					id: ev,
@@ -475,16 +464,19 @@
 				new Promise(resolve => {
 					let selectorQuery = uni.createSelectorQuery();
 					selectorQuery.selectAll('.class-item').boundingClientRect((rects) => {
+						let aa = []
 						if (!rects.length) {
 							setTimeout(() => {
 								this.getMenuItemTop();
-							}, 10000);
+							}, 8000);
 							return;
 						}
 						rects.forEach((rect) => {
-							this.arr.push(rect.top.toFixed(2) - rects[0].top.toFixed(2));
+							aa.push(rect.top.toFixed(2) - rects[0].top.toFixed(2));
 							resolve();
 						})
+						this.arr = [...aa]
+						console.log(this.arr);
 					}).exec()
 				})
 

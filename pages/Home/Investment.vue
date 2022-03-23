@@ -395,7 +395,7 @@
 		},
 		onShow() {
 			this.getstate();
-			this.enjoy()
+			// this.enjoy()
 			this.enjoys()
 			this.getdesproMoenys()
 			this.list = uni.getStorageSync('icon').wanghong

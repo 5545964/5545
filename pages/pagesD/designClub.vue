@@ -395,7 +395,7 @@
 			}
 			// 验证弹窗
 			this.getstate();
-			this.enjoy()
+			// this.enjoy()
 			this.enjoys()
 			this.getdesproMoenys()
 		},
