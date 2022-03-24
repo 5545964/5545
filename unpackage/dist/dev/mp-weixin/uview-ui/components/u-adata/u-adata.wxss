@@ -1,0 +1,87 @@
+@charset "UTF-8";
+.cxzcxz.data-v-4a6abaa8 {
+  margin: 20rpx 0;
+  width: -webkit-fit-content;
+  width: fit-content;
+  padding: 8rpx 14rpx;
+  background: #FF716D;
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.fgfg.data-v-4a6abaa8 {
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #E11915;
+}
+.xccxcc.data-v-4a6abaa8 {
+  font-size: 18rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  padding: 7rpx 10rpx;
+}
+.dsadsdxz.data-v-4a6abaa8 {
+  background: #FF716D;
+  border-radius: 6rpx;
+}
+.kjhkjh.data-v-4a6abaa8 {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10rpx 20rpx;
+  align-items: center;
+}
+.left_mony.data-v-4a6abaa8 {
+  padding-right: 30rpx;
+  width: auto;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #E11915;
+}
+.rigth_monys.data-v-4a6abaa8 {
+  width: auto;
+}
+.rigth_mony.data-v-4a6abaa8 {
+  font-size: 24rpx;
+  font-weight: 400;
+  text-decoration: line-through;
+  color: #999999;
+}
+.dsaada.data-v-4a6abaa8 {
+  height: -webkit-fit-content;
+  height: fit-content;
+  background-color: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+.gghGG.data-v-4a6abaa8 {
+  overflow: hidden;
+  /*超出的部分隐藏起来。*/
+  white-space: nowrap;
+  /*不显示的地方用省略号...代替*/
+  text-overflow: ellipsis;
+  /* 支持 IE */
+}
+.ssj.data-v-4a6abaa8 {
+  text-align: center;
+  margin: 20rpx 0;
+  width: 270rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #000000;
+  overflow: hidden;
+}
+.datas.data-v-4a6abaa8 {
+  width: 335rpx;
+}
+.img.data-v-4a6abaa8 {
+  width: 335rpx;
+  height: 350rpx;
+}
+.are.data-v-4a6abaa8 {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30rpx;
+}
+
