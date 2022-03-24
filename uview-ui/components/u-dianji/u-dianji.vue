@@ -39,6 +39,7 @@
 				}
 			},
 			ChangBar(e) {
+				uni.setStorageSync("dianji",e)
 				uni.switchTab({
 					url: '/' + this.list[e].pagePath
 				})

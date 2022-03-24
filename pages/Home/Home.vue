@@ -26,7 +26,9 @@
 							<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
 								:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
 								v-if="item.video !=null && item.video != ''" :src="imgurl + item.video" />
-							<image v-if="item.image !=''" @click="lunbochang" :src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'" mode="widthFix"/>
+							<image v-if="item.image !=''" @click="lunbochang"
+								:src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'"
+								mode="widthFix" />
 						</view>
 					</swiper-item>
 				</swiper>
