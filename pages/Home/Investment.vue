@@ -1091,21 +1091,9 @@
 		background-color: #FFFFFF;
 		width: 100%;
 		height: 110rpx;
-
-
 	}
 
 	.pay {
-
-
-
-
-
-
-
-
-
-
 		padding: 20rpx 40rpx;
 		background: #007399;
 		border-radius: 35rpx;
@@ -1113,7 +1101,7 @@
 		color: #FFFFFF;
 		text-align: center;
 		position: relative;
-		z-index: 100;
+		// z-index: 100;
 	}
 
 	.imgrej {

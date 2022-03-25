@@ -153,7 +153,7 @@
 			this.getMenuItemTop()
 			setTimeout(() => {
 				this.autoplay = true
-			}, 10000)
+			}, 7000)
 		},
 		methods: {
 			gaizhi(ev) {

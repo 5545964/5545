@@ -1494,7 +1494,7 @@
 			.centre {
 				display: flex;
 				align-data_list: center;
-				justify-content: end;
+				justify-content: flex-start;
 				margin-bottom: 20rpx;
 
 				.fsdfsfs {
