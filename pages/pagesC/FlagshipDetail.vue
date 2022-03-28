@@ -349,6 +349,7 @@
 										}
 									}
 								} else {
+									// 设计师
 									this.desDetails(this.alls.designer)
 									mm[i].desdesdesdesde = 1
 								}
@@ -357,7 +358,7 @@
 							// 	mm[i].desdesdesdesde = 2
 							// }
 							// if (mm[i].id != 2 && mm[i].id != 1) {
-							if (mm[i].id != 1) {
+							if (mm[i].id != 1 && mm[i].id != 2) {
 								for (var j = 0; j < kk.length; j++) {
 									if (mm[i].id == kk[j].leftid) {
 										mm[i].leftdata.push(kk[j])
