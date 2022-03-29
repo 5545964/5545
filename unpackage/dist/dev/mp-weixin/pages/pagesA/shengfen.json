@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "上传身份信息",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-upload": "/uview-ui/components/u-upload/u-upload",
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth"
+  }
+}

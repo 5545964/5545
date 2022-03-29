@@ -47,7 +47,6 @@
 
 
 		<view class="u-menu-wrap">
-
 			<scroll-view style="height: 520px;" scroll-y scroll-with-animation class="u-tab-view menu-scroll-view"
 				:scroll-top="scrollTop">
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item"
@@ -56,7 +55,6 @@
 					{{item.name}}
 				</view>
 			</scroll-view>
-
 			<scroll-view style="height: 520px;" :scroll-top="scrollRightTop" scroll-y scroll-with-animation
 				class="right-box u-tab-views" @scroll="rightScroll" :scroll-into-view="itemId">
 				<view class="class-item" :id="'item' + index" v-for="(item,index) in tabbar" :key="index">
@@ -409,6 +407,7 @@
 					default:
 				}
 			},
+			// 点击左边
 			async swichMenu(index) {
 				if (this.arr.length == 0) {
 					await this.getMenuItemTop();
@@ -427,14 +426,12 @@
 					query.select('.' + elClass).fields({
 						size: true
 					}, res => {
-
 						if (!res) {
 							setTimeout(() => {
 								this.getElRect(elClass);
 							}, 10);
 							return;
 						}
-
 						this[dataVal] = res.height;
 						resolve();
 					}).exec();
