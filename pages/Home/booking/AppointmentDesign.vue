@@ -63,7 +63,7 @@
 							订单编号
 						</view>
 						<view class="cxz">
-							{{fans.orderid}}
+							{{fans.orderid||""}}
 						</view>
 					</view>
 					<view v-if="fans.desbh.bh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
@@ -71,7 +71,7 @@
 							设计师编号
 						</view>
 						<view class="cxz">
-							{{fans.desbh.bh}}
+							{{fans.desbh.bh||""}}
 						</view>
 					</view>
 					<view v-if="fans.xsbh.bh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
@@ -79,7 +79,7 @@
 							美居会员编号
 						</view>
 						<view class="cxz">
-							{{fans.xsbh.bh}}
+							{{fans.xsbh.bh||""}}
 						</view>
 					</view>
 					<view v-if="fans.userbh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
@@ -87,7 +87,7 @@
 							馨级美居会员编号
 						</view>
 						<view class="cxz">
-							{{fans.userbh}}
+							{{fans.userbh||""}}
 						</view>
 					</view>
 				</view>
@@ -96,17 +96,17 @@
 		<view class="">
 			<view class="xunhuan" v-for="(item,index) in list" :key="index">
 				<view class="dshk">
-					{{item.title}}
+					{{item.title||""}}
 				</view>
 				<view class="dadsda" v-for="(items,indexs) in item.list" :key="indexs">
 					<!-- 显示数据 -->
 					<view class="inputs" v-if="items.type == 'Displays_data'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd">
 							<view class="textss">
-								{{items.text}}
+								{{items.text||""}}
 							</view>
 						</view>
 					</view>
@@ -114,7 +114,7 @@
 					<!-- 单行输入框 -->
 					<view class="inputs" v-if="items.type == 'input'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd">
 							<u-input style="width: 100%;height: 100%;" @blur="baochun" v-model="data_list[items.obj]"
@@ -131,13 +131,13 @@
 						<view class="asd cet">
 							<u-input style="width: 170rpx;height: 100%;" v-model="code" :type="type"
 								placeholder="请输入验证码" />
-							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
 					</view>
 					<!-- 弹出选项 -->
 					<view class="inputs" v-if="items.type == 'Picker'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd">
 							<u-input v-model="data_list[items.obj]" @click="open(items)" type="text" :disabled="true"
@@ -148,7 +148,7 @@
 					<!-- 弹出选项 -->
 					<view class="inputs" v-if="items.type == 'address'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd" style="width: 65%;">
 							<u-input v-model="data_list[items.obj]" @click="address(items)" type="text" :disabled="true"
@@ -159,14 +159,14 @@
 					<!-- 单选框 -->
 					<view class="inputs" v-if="items.type == 'checkbox'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd cet">
 							<view class="cet czczc" v-for="(itema,indexa) in items.select"
 								@click="danxuan(indexa,items.id,items)" :key="indexa">
 								<view :class="[numbers==indexa?'hhjhjh':'yuanquan']"></view>
 								<view class="textss">
-									{{itema}}
+									{{itema||""}}
 								</view>
 							</view>
 						</view>
@@ -175,7 +175,7 @@
 					<!-- 多行行输入框 -->
 					<view class="inputs" v-if="items.type == 'textarea'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd" style="width: 70%;">
 							<textarea style="width: 100%;" placeholder-style="color: #999999;" @blur="baochun"
@@ -186,13 +186,13 @@
 					<!-- 其他选项 -->
 					<view class="inputss" v-if="items.type == 'xuan'">
 						<view class="cxz" style="margin-bottom: 20rpx;">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd">
 							<view v-if="items.list.length == 0">
 								<view class="czccxz" v-for="(itemc,indexc) in man_data" :key="indexc">
 									<view style="width: 25%;">
-										成员{{indexc+1}}
+										成员{{indexc+1||""}}
 									</view>
 									<view class="jjj">
 										<view class="cet" style="margin-bottom: 40rpx;margin-left: 40rpx;"
@@ -200,7 +200,7 @@
 											@click="danxuans(indexa,items.id,indexc,items)" :key="indexa">
 											<view :class="[man_data[indexc].select==indexa?'hhjhjh':'yuanquan']"></view>
 											<view class="textss">
-												{{itema.text}}
+												{{itema.text||""}}
 											</view>
 										</view>
 									</view>
@@ -222,7 +222,7 @@
 							<view v-else>
 								<view class="czccxz" v-for="(itemc,indexc) in items.list" :key="indexc">
 									<view style="width: 25%;">
-										成员{{indexc+1}}
+										成员{{indexc+1||""}}
 									</view>
 									<view style="display: flex;">
 										<view class="jjj">
@@ -237,7 +237,7 @@
 										</view>
 										<view class="cet" style="margin-left: 50rpx;">
 											<view class="textss">
-												{{itemc.age}}
+												{{itemc.age||""}}
 											</view>
 											<view style="padding-left: 10rpx;">
 												岁
@@ -253,7 +253,7 @@
 					<!-- 上传 -->
 					<view class="inputas" v-if="items.type == 'upload'">
 						<view class="cxz">
-							{{items.name}}<text class="khkkk">{{items.text}}</text>
+							{{items.name||""}}<text class="khkkk">{{items.text||""}}</text>
 						</view>
 						<view v-if="items.img_list.length == 0">
 							<view class="asdsss">
@@ -285,7 +285,7 @@
 			<u-toast ref="uToast" />
 			<u-picker mode="time" v-model="shijianshow" @confirm="zhishizhege"></u-picker>
 			<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-				<view class="klks">{{chuanzhi.name}}</view>
+				<view class="klks">{{chuanzhi.name||""}}</view>
 				<view class="mids">
 					<view class="type_list">
 						<view class="dkjshkdsf" v-for="(item,index) in poplist" :key="index">
@@ -293,7 +293,7 @@
 								:src="item.image" mode="aspectFit">
 							</image>
 							<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)">
-								{{item.name}}
+								{{item.name||""}}
 							</view>
 						</view>
 					</view>

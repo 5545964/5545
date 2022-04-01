@@ -25,7 +25,7 @@
 						<scroll-view :style="'height: ' + height + 'px;'" scroll-y="true">
 							<view class="swiper-item" v-for="(items, indexs) in item.data_list" :key="indexs">
 								<view class="top" @click="goods(items)">
-									<view class="text"> 订单编号：{{ items.orderid }} </view>
+									<view class="text"> 订单编号：{{ items.orderid ||""}} </view>
 									<view class="status" v-show="items.state == 0"> 待付款 </view>
 									<view class="status" v-show="items.state == 1"> 待发货 </view>
 									<view class="status" v-show="items.state == 2"> 发货中 </view>
@@ -52,19 +52,19 @@
 									</view>
 									<view style="margin-left: 10rpx;">
 										<view class="name">
-											{{ itemc.name }}
+											{{ itemc.name ||""}}
 										</view>
-										<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-											class="fsdfsfs fdsds">￥{{itemc.sonprice}}</text>
+										<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+											class="fsdfsfs fdsds">￥{{itemc.sonprice||""}}</text>
 									</view>
 								</view>
 								<view class="kfhkjsdh" @click="goods(items)">
 									<view class="text">
-										总金额：<text class="reds">￥{{ items.price }}</text>
+										总金额：<text class="reds">￥{{ items.price ||""}}</text>
 									</view>
 									<view class="status" v-show="items.state == 0"> 未支付 </view>
 									<view class="status" v-show="items.state != 0 && items.state != 9">
-										已支付￥{{ items.price }}
+										已支付￥{{ items.price ||""}}
 									</view>
 								</view>
 								<view class="anniu">
@@ -269,7 +269,7 @@
 								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
 									type="number" />
 							</view>
-							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
 					</view>
 					<view class="anniusss">
@@ -306,7 +306,7 @@
 							</view>
 							<view style="width:70%;padding: 0 10rpx;">
 								<view class="mingcheng" @click="fuwenben(item)">
-									《{{item.name}}》
+									《{{item.name||""}}》
 								</view>
 							</view>
 						</view>

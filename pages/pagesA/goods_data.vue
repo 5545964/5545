@@ -22,7 +22,7 @@
 					<view class="cet cdsfsdfs">
 						<image class="img" src="../../static/loudou.png" mode="aspectFit"></image>
 						<view class="jhjk">
-							{{daojishi}}后自动取消订单
+							{{daojishi||""}}后自动取消订单
 						</view>
 					</view>
 				</view>
@@ -32,20 +32,20 @@
 				<view style="width: 86%;">
 					<view class="cet" style="justify-content: flex-start;">
 						<view class="name">
-							{{data_list.username}}
+							{{data_list.username||""}}
 						</view>
 						<view class="phone">
-							{{data_list.phone}}
+							{{data_list.phone||""}}
 						</view>
 					</view>
 					<view class="text lll">
-						{{data_list.address}}{{data_list.addressxq}}
+						{{data_list.address||""}}{{data_list.addressxq||""}}
 					</view>
 				</view>
 			</view>
 			<view class="swiper-item">
 				<view class="top">
-					<view class="text"> 订单编号：{{ data_list.orderid }} </view>
+					<view class="text"> 订单编号：{{ data_list.orderid ||""}} </view>
 					<view class="status" v-show="data_list.state == 0"> 待付款 </view>
 					<view class="status" v-show="data_list.state == 1"> 待发货 </view>
 					<view class="status" v-show="data_list.state == 2"> 发货中 </view>
@@ -72,10 +72,10 @@
 					</view>
 					<view class="" style="margin-left: 20rpx;">
 						<view class="name">
-							{{itemc.name}}
+							{{itemc.name||""}}
 						</view>
-						<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-							class="fsdfsfs fdsds">￥{{(itemc.num* itemc.sonprice).toFixed(2)}}</text>
+						<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+							class="fsdfsfs fdsds">￥{{(itemc.num* itemc.sonprice).toFixed(2)||""}}</text>
 					</view>
 				</view>
 				<view style="">
@@ -84,7 +84,7 @@
 							商品总价：
 						</view>
 						<view class="red">
-							￥{{data_list.price}}
+							￥{{data_list.price||""}}
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
@@ -92,7 +92,7 @@
 							数量
 						</view>
 						<view class="reds">
-							共{{data_list.num}}件
+							共{{data_list.num||""}}件
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
@@ -100,7 +100,7 @@
 							运费
 						</view>
 						<view class="red">
-							<text v-if="data_list.yf !=0 && data_list.yf !==null">{{data_list.yf}}</text><text
+							<text v-if="data_list.yf !=0 && data_list.yf !==null">{{data_list.yf||""}}</text><text
 								v-else>包邮</text>
 						</view>
 					</view>
@@ -110,7 +110,7 @@
 						</view>
 						<view class="cet">
 							<view class="red">
-								<text>-￥{{data_list.yh_price}}</text>
+								<text>-￥{{data_list.yh_price||""}}</text>
 							</view>
 							<image style="width: 8rpx;height: 14rpx;margin-left: 10rpx;"
 								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
@@ -122,13 +122,13 @@
 				</view>
 				<view class="kfhkjsdh">
 					<view class="text">
-						总金额：<text class="reds">￥{{data_list.price}}</text>
+						总金额：<text class="reds">￥{{data_list.price||""}}</text>
 					</view>
 					<view class="status" v-show="data_list.state == 0">
 						未支付
 					</view>
 					<view class="status" v-show="data_list.state != 0">
-						已支付￥{{data_list.price}}
+						已支付￥{{data_list.price||""}}
 					</view>
 				</view>
 			</view>
@@ -141,20 +141,20 @@
 				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">订单编号：</view>
-					<view class="djkshfk">{{data_list.orderid}}</view>
+					<view class="djkshfk">{{data_list.orderid||""}}</view>
 
 				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">创建时间：</view>
-					<view class="djkshfk">{{data_list.create_at}}</view>
+					<view class="djkshfk">{{data_list.create_at||""}}</view>
 				</view>
 				<view class="kfosjd" v-if="data_list.paytime">
 					<view class="dmskajd">支付时间：</view>
-					<view class="djkshfk">{{data_list.paytime}}</view>
+					<view class="djkshfk">{{data_list.paytime||""}}</view>
 				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">订单备注：</view>
-					<view class="djkshfk">{{data_list.content||"无备注"}}</view>
+					<view class="djkshfk">{{data_list.content||"无备注"||""}}</view>
 				</view>
 			</view>
 			<view class="tuikuans" v-show="data_list.state == 5 || data_list.state == 6 || data_list.state == 7">
@@ -166,12 +166,12 @@
 				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">退款理由：</view>
-					<view class="djkshfk">{{data_list.state_text}}</view>
+					<view class="djkshfk">{{data_list.state_text||""}}</view>
 
 				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">补充说明：</view>
-					<view class="djkshfk" v-if="data_list.tuik_ly">{{data_list.tuik_ly}}</view>
+					<view class="djkshfk" v-if="data_list.tuik_ly">{{data_list.tuik_ly||""}}</view>
 					<view class="djkshfk" v-else></view>
 				</view>
 				<view class="hahahahha">
@@ -191,7 +191,7 @@
 
 				</view>
 				<view class="kfosjd">
-					<view class="djkshfk">{{data_list.bohui}}</view>
+					<view class="djkshfk">{{data_list.bohui||""}}</view>
 				</view>
 			</view>
 		</view>
@@ -373,7 +373,7 @@
 							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
 								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
 							</view>
-							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
 					</view>
 					<view class="anniusss">
@@ -410,7 +410,7 @@
 							</view>
 							<view style="width:70%;padding: 0 10rpx;">
 								<view class="mingcheng" @click="fuwenben(item)">
-									《{{item.name}}》
+									《{{item.name||""}}》
 								</view>
 							</view>
 						</view>

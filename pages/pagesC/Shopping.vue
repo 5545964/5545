@@ -23,10 +23,10 @@
 				<view class="cet" style="justify-content: space-between;">
 					<view style="width: 90%;">
 						<view class="title">
-							{{alls.name}}
+							{{alls.name||""}}
 						</view>
 						<view class="text">
-							{{alls.set}}
+							{{alls.set||""}}
 						</view>
 					</view>
 					<view class="">
@@ -43,14 +43,14 @@
 				<view class="cet" style="justify-content: space-between;margin-top: 30rpx;">
 					<view class="cet" style="justify-content: space-between;">
 						<view class="mony">
-							￥{{xiaoshoujiage}}
+							￥{{xiaoshoujiage||""}}
 						</view>
 						<view class="monys">
-							￥{{alls.cb_price}}
+							￥{{alls.cb_price||""}}
 						</view>
 					</view>
 					<view class="yue">
-						月销{{alls.xl}}
+						月销{{alls.xl||""}}
 					</view>
 				</view>
 			</view>
@@ -62,18 +62,18 @@
 				</view>
 				<view class="cet" style="margin: 0 40rpx;">
 					<!-- <view class="yunfei">
-						{{shifa}}
+						{{shifa||""}}
 					</view>
 					<view class="yunfei">
 						至
 					</view>
 					<view class="yunfei">
-						{{shouhuo}}
+						{{shouhuo||""}}
 					</view>
 					<view class="shu">
 					</view> -->
 					<view class="yunfei">
-						运费：<text v-if="alls.yf != 0">{{alls.yf}}</text><text v-else>包邮</text>
+						运费：<text v-if="alls.yf != 0">{{alls.yf||""}}</text><text v-else>包邮</text>
 					</view>
 				</view>
 			</view>
@@ -89,7 +89,7 @@
 						请选择
 					</view>
 					<view class="yunfei" v-else>
-						{{alls.son[isSize].spections}}
+						{{alls.son[isSize].spections||""}}
 					</view>
 				</view>
 			</view>
@@ -102,10 +102,10 @@
 				</view>
 				<view class="cet" style="margin: 0 40rpx;">
 					<!-- <view class="yunfei" v-for="(item,index) in baozhang" :key="index">
-						{{item}}<text v-if="index < baozhang.length - 1"> · </text>
+						{{item||""}}<text v-if="index < baozhang.length - 1"> · </text>
 					</view> -->
 					<view class="yunfei">
-						{{alls.bz}}
+						{{alls.bz||""}}
 					</view>
 				</view>
 			</view>
@@ -123,14 +123,14 @@
 					<view class="skfksdfsd">
 						<view class="">
 							<view class="name">
-								{{pinglun_list[0].name}}
+								{{pinglun_list[0].name||""}}
 							</view>
 							<view class="time">
-								{{pinglun_list[0].create_at}}
+								{{pinglun_list[0].create_at||""}}
 							</view>
 						</view>
 						<view class="text">
-							{{pinglun_list[0].content}}
+							{{pinglun_list[0].content||""}}
 						</view>
 						<block class="" v-for="(item,index) in pinglun_list[0].image" :key="index">
 							<image @click="kan(item)" style="width: 100rpx;height: 100rpx;margin: 20rpx;"
@@ -191,7 +191,7 @@
 					</view>
 					<view class="cat" @click="gocart">
 						<view class="cart-num" v-if="cart_num != 0">
-							{{cart_num}}
+							{{cart_num||""}}
 						</view>
 						<image class="img" src="../../static/icon_shop_gouwuche.png" mode="aspectFit"></image>
 						<view class="text">
@@ -222,13 +222,13 @@
 				<!-- <view v-for="(item,index) in xuanzhes" :key="index">
 					<view class="xuanzhe">
 						<view :class="[xuanzhed==index?'dashfdshf':'xuanzhe_q']">
-							{{item.title}}
+							{{item.title||""}}
 						</view>
 					</view>
 					<view class="cxczc">
 						<view class="daasdzxcxzcz" v-for="(items,indexs) in item.list" :key="indexs"
 							@click="tan(indexs)">
-							{{items.title}}
+							{{items.title||""}}
 						</view>
 					</view>
 				</view> -->
@@ -243,7 +243,7 @@
 					<view style="width: 70%;">
 						<view
 							style="font-size: 35rpx;font-weight: 800;color: #FF4B3C;overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
-							{{alls.name}}{{'-'+alls.son[isSize].spections||''}}
+							{{alls.name||""}}{{'-'+alls.son[isSize].spections||''}}
 						</view>
 						<view class="" style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;">
 							￥{{alls.son[isSize].xc_price||"请选择"}}
@@ -257,7 +257,7 @@
 					<view class="color_ul">
 						<view :class="isType==item.id?'color_li':'.color_li1'" @click="chooseType(item)"
 							v-for="item in typeArr" :key="item.id">
-							{{item.spections}}
+							{{item.spections||""}}
 						</view>
 					</view>
 				</view> -->
@@ -268,7 +268,7 @@
 					<view class="color_ul">
 						<view :class="isSize==index?'color_li':'.color_li1'" @click="chooseSize(index)"
 							v-for="(item,index) in alls.son" :key="item.id">
-							{{item.spections}}
+							{{item.spections||""}}
 						</view>
 					</view>
 				</view>
@@ -282,7 +282,7 @@
 							-
 						</view>
 						<view class="num_view">
-							{{value}}
+							{{value||""}}
 						</view>
 						<view class="add_btn" @click="add">
 							+
@@ -304,7 +304,7 @@
 						</view>
 						<view class="cat" @click="gocart">
 							<view class="cart-num" v-if="cart_num != 0">
-								{{cart_num}}
+								{{cart_num||""}}
 							</view>
 							<image class="img" src="../../static/icon_shop_gouwuche.png" mode="aspectFit"></image>
 							<view class="text">

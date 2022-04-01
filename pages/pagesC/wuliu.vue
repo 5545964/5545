@@ -23,7 +23,7 @@
 						快递公司:
 					</view>
 					<view class="aass" @longtap="copy(0)">
-						{{express}}
+						{{express||""}}
 					</view>
 				</view>
 				<view class="">
@@ -31,7 +31,7 @@
 						快递编号:
 					</view>
 					<view class="aass" @longtap="copy(1)">
-						{{expressorder}}
+						{{expressorder||""}}
 					</view>
 				</view>
 				<u-empty text="数据为空" mode="list"></u-empty>
@@ -45,14 +45,14 @@
 					<template v-slot:content>
 						<view>
 							<view class="time">
-								{{item.time}}
+								{{item.time||""}}
 							</view>
 							<view class="toutiao_item">
 								<view style="font-size: 32rpx;margin-bottom: 10rpx;font-weight: 800;" class="">
-									{{item.status}}
+									{{item.status||""}}
 								</view>
 								<view style="color: #999999;width: 470rpx;" class="">
-									{{item.context}}
+									{{item.context||""}}
 								</view>
 							</view>
 						</view>

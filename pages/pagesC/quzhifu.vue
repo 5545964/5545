@@ -20,14 +20,14 @@
 				<view style="width: 84%;" v-if="address != ''">
 					<view class="cet" style="justify-content: flex-start;">
 						<view class="name">
-							{{address_name}}
+							{{address_name||""}}
 						</view>
 						<view class="phone">
-							{{address_phone}}
+							{{address_phone||""}}
 						</view>
 					</view>
 					<view class="text liangdiandain">
-						{{address}}
+						{{address||""}}
 					</view>
 				</view>
 				<view v-else style="margin-right: 150px;">
@@ -42,14 +42,14 @@
 					</view>
 					<view class="" style="margin-left:20rpx;">
 						<view class="name">
-							{{itemc.name}}
+							{{itemc.name||""}}
 						</view>
 						<view class="name" style="margin: 20rpx 0;">
-							规格：{{itemc.specidsize}}
+							规格：{{itemc.specidsize||""}}
 						</view>
 						<view class="">
-							<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-								class="fsdfsfs fdsds">￥{{itemc.xc_price * itemc.num}}</text>
+							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+								class="fsdfsfs fdsds">￥{{itemc.xc_price * itemc.num||""}}</text>
 						</view>
 					</view>
 				</view>
@@ -59,7 +59,7 @@
 							商品总价：
 						</view>
 						<view class="red">
-							￥{{zjia}}
+							￥{{zjia||""}}
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
@@ -67,7 +67,7 @@
 							数量
 						</view>
 						<view class="reds">
-							共{{znum}}件
+							共{{znum||""}}件
 						</view>
 					</view>
 					<view class="text kfhkjsdh" v-if="dinjing != 0">
@@ -75,7 +75,7 @@
 							定金
 						</view>
 						<view class="red">
-							-￥{{dinjing}}
+							-￥{{dinjing||""}}
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
@@ -83,7 +83,7 @@
 							运费
 						</view>
 						<view class="red" v-if="yf != 0">
-							￥{{yf}}
+							￥{{yf||""}}
 						</view>
 						<view class="red" v-else>
 							包邮
@@ -95,11 +95,11 @@
 						</view>
 						<view class="cet">
 							<view class="red" v-if="youhuijuan_num != 0">
-								<text>-￥{{youhuijuanjine}}</text>
+								<text>-￥{{youhuijuanjine||""}}</text>
 							</view>
 							<view class="red" v-else>
-								<text @click="goyouhuijuan" v-if="nengyong != 0">{{nengyongtext}}</text><text
-									v-else>{{youhuijuantext}}</text>
+								<text @click="goyouhuijuan" v-if="nengyong != 0">{{nengyongtext||""}}</text><text
+									v-else>{{youhuijuantext||""}}</text>
 							</view>
 							<image style="width: 8rpx;height: 14rpx;margin-left: 10rpx;"
 								src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
@@ -111,7 +111,7 @@
 				</view>
 				<view class="text kfhkjsdh">
 					<view class="">
-						总金额：<text class="red">￥{{zjia}}</text>
+						总金额：<text class="red">￥{{zjia||""}}</text>
 					</view>
 					<view class="red">
 						未支付
@@ -135,7 +135,7 @@
 			<view class="anniu">
 				<view class="">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
-						class="hejimony">{{tijiaozjia.toFixed(2)}}</text>
+						class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text>
 				</view>
 				<view v-if="buyanzheng" class="button" @click="xianshi">
 					提交订单
@@ -149,7 +149,7 @@
 			<view class="anniu">
 				<view class="">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
-						class="hejimony">{{tijiaozjia.toFixed(2)}}</text>
+						class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text>
 				</view>
 				<view class="button" @click="annui()">
 					提交订单
@@ -170,7 +170,7 @@
 						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
 							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
 						</view>
-						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 					</view>
 				</view>
 				<view class="anniusss">
@@ -207,7 +207,7 @@
 						</view>
 						<view style="width:70%;padding: 0 10rpx;">
 							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name}}》
+								《{{item.name||""}}》
 							</view>
 						</view>
 					</view>

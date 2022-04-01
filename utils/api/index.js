@@ -1,5 +1,4 @@
 import request from "./request.js"
-
 export default {
 	lpagreement(params = {}) {
 		return request.post("/api/bydshop/lpagreement", params);
@@ -396,5 +395,8 @@ export default {
 	},
 	bzxq(params = {}) {
 		return request.post("/api/bydshop/bzxq", params);
-	}
+	},
+	qzqy(params = {}) {
+		return request.post("/api/byd_user/qzqy", params);
+	},
 }

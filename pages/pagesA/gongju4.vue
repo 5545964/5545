@@ -20,21 +20,21 @@
 					<view class="coupon">
 						<view class="left">
 							<view class="text">
-								{{item.cupons.name}}
+								{{item.cupons.name||""}}
 							</view>
 							<view class="textd">
-								{{item.cupons.endtime_text}}到期
+								{{item.cupons.endtime_text||""}}到期
 							</view>
 							<view class="textd">
-								满{{item.cupons.cb_price}}减{{item.cupons.yh_price}}
+								满{{item.cupons.cb_price||""}}减{{item.cupons.yh_price||""}}
 							</view>
 						</view>
 						<view class="right">
 							<view class="">
-								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price}}</text>
+								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price||""}}</text>
 							</view>
 							<view class="dsjhbd">
-								满{{item.cupons.cb_price}}可用
+								满{{item.cupons.cb_price||""}}可用
 							</view>
 						</view>
 					</view>
@@ -46,21 +46,21 @@
 					<view class="coupons">
 						<view class="left">
 							<view class="text">
-								{{item.cupons.name}}
+								{{item.cupons.name||""}}
 							</view>
 							<view class="textd">
-								{{item.cupons.endtime_text}}到期
+								{{item.cupons.endtime_text||""}}到期
 							</view>
 							<view class="textd">
-								满{{item.cupons.cb_price}}减{{item.cupons.yh_price}}
+								满{{item.cupons.cb_price||""}}减{{item.cupons.yh_price||""}}
 							</view>
 						</view>
 						<view class="right">
 							<view class="">
-								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price}}</text>
+								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price||""}}</text>
 							</view>
 							<view class="dsjhbd">
-								满{{item.cupons.cb_price}}可用
+								满{{item.cupons.cb_price||""}}可用
 							</view>
 							<view class="img">
 								<image class="" src="../../static/icon_me_used.png" mode="aspectFit"></image>
@@ -75,21 +75,21 @@
 					<view class="coupons">
 						<view class="left">
 							<view class="text">
-								{{item.cupons.name}}
+								{{item.cupons.name||""}}
 							</view>
 							<view class="textd">
-								{{item.cupons.endtime_text}}到期
+								{{item.cupons.endtime_text||""}}到期
 							</view>
 							<view class="textd">
-								满{{item.cupons.cb_price}}减{{item.cupons.yh_price}}
+								满{{item.cupons.cb_price||""}}减{{item.cupons.yh_price||""}}
 							</view>
 						</view>
 						<view class="right">
 							<view class="">
-								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price}}</text>
+								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price||""}}</text>
 							</view>
 							<view class="dsjhbd">
-								满{{item.cupons.cb_price}}可用
+								满{{item.cupons.cb_price||""}}可用
 							</view>
 							<view class="img">
 								<image class="" src="../../static/icon_me_invalid.png" mode="aspectFit"></image>

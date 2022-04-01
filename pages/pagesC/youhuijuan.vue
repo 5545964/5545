@@ -22,7 +22,7 @@
 				<view class="cet" style="justify-content: space-between;">
 					<view class="">
 						<view class="title">
-							{{youhuijuan.name}}
+							{{youhuijuan.name||""}}
 						</view>
 						<view class="text">
 							优惠卷
@@ -34,14 +34,14 @@
 				<view class="cet" style="justify-content: space-between;margin-top: 30rpx;">
 					<view class="cet" style="justify-content: space-between;">
 						<view class="mony">
-							￥{{youhuijuan.price}}
+							￥{{youhuijuan.price||""}}
 						</view>
 						<view class="monys">
-							￥{{youhuijuan.cb_price}}
+							￥{{youhuijuan.cb_price||""}}
 						</view>
 					</view>
 					<view class="yue">
-						库存{{youhuijuan.num}}
+						库存{{youhuijuan.num||""}}
 					</view>
 				</view>
 			</view>

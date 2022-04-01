@@ -346,6 +346,14 @@
 						"navigationStyle": "custom"
 					}
 
+				}, {
+					"path": "tanchuang",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+					}
+
 				}
 			]
 		},

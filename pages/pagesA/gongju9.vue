@@ -20,7 +20,7 @@
 			<view class="swiper">
 				<view class="swiper-item" v-for="(items,indexs) in list" :key="indexs">
 					<view class="top"  @click="goods(items)">
-						<view class="text"> 订单编号：{{ items.orderid }} </view>
+						<view class="text"> 订单编号：{{ items.orderid ||""}} </view>
 						<block
 							v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
 							<view class="status" v-show="items.states == 0"> 退换货审核中 </view>
@@ -35,19 +35,19 @@
 						</view>
 						<view style="margin-left: 10rpx;">
 							<view class="name">
-								{{ itemc.name }}
+								{{ itemc.name ||""}}
 							</view>
-							<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-								class="fsdfsfs fdsds">￥{{itemc.sonprice}}</text>
+							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+								class="fsdfsfs fdsds">￥{{itemc.sonprice||""}}</text>
 						</view>
 					</view>
 					<view class="kfhkjsdh" @click="goods(items)">
 						<view class="text">
-							总金额：<text class="reds">￥{{ items.price }}</text>
+							总金额：<text class="reds">￥{{ items.price ||""}}</text>
 						</view>
 						<view class="status" v-show="items.state == 0"> 未支付 </view>
 						<view class="status" v-show="items.state != 0 && items.state != 9">
-							已支付￥{{ items.price }}
+							已支付￥{{ items.price ||""}}
 						</view>
 					</view>
 					<view class="anniu">

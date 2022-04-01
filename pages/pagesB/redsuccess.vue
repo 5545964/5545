@@ -43,7 +43,7 @@
 						<u-input inputAlign="left" size="200" v-model="code" maxlength="6" placeholder="请输入验证码"
 							type="number" />
 					</view>
-					<button class="annuyt" @click="go_code">{{huoqu}}</button>
+					<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 				</view>
 			</view>
 			<view class="write_item">

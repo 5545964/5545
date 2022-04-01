@@ -23,7 +23,7 @@
 				<view class="card" v-for="(item,index) in data_list" :key="index" @click="topage(item)">
 					<image :src="img+item.simage" style="width: 690rpx;height: 350rpx;" mode=""></image>
 					<view class="" style="margin-top: 24rpx;">
-						{{item.name}}
+						{{item.name||""}}
 					</view>
 				</view>
 			</view>

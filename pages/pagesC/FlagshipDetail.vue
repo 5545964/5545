@@ -52,7 +52,7 @@
 				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item"
 					:class="index%2==0? 'mian_left_item':'mian_left_item1'"
 					:style="current==index?'border-left: 4rpx solid #FD7904;':''" @tap.stop="swichMenu(index)">
-					{{item.name}}
+					{{item.name||""}}
 				</view>
 			</scroll-view>
 			<scroll-view style="height: 520px;" :scroll-top="scrollRightTop" scroll-y scroll-with-animation
@@ -60,7 +60,7 @@
 				<view class="class-item" :id="'item' + index" v-for="(item,index) in tabbar" :key="index">
 					<view :class="index%2==0? 'mian_left_items':'mian_left_item1s'"
 						style="text-align:center;height:50rpx;line-height:50rpx;color: #fff;font-size:28rpx;">
-						{{item.name}}
+						{{item.name||""}}
 					</view>
 					<view v-if="item.desdesdesdesde == 1">
 						<u-designDet id="descard" :info="desInfo" @click="guanzhu" @dianzhan="dianzhan"
@@ -304,9 +304,25 @@
 			},
 			async goVR(ev) {
 				if (await this.$login()) {
-					uni.navigateTo({
-						url: "../Home/URL/URL?url=" + ev.url
-					})
+					uni.showModal({
+						title: '提示',
+						content: '如要购买，请在浏览器中打开！',
+						success: function(res) {
+							if (res.confirm) {
+								uni.setClipboardData({
+									data: ev.url,
+									showToast: false,
+									success: function() {}
+								});
+							} else if (res.cancel) {
+								uni.navigateTo({
+									url: "../Home/URL/URL?url=" + ev.url
+								})
+							}
+						}
+					});
+
+
 				}
 			},
 			async gosheji() {

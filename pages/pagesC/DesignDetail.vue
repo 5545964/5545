@@ -45,7 +45,7 @@
 		<view class="shop_list">
 			<view class="title">
 				<view class="name">
-					{{alls.name}}
+					{{alls.name||""}}
 					<view class="bor_bot">
 
 					</view>

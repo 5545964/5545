@@ -31,20 +31,20 @@
 					<image class="car-img" :src="img+item.shop.simage" mode="aspectFill"></image>
 					<view class="car-mes centerboth">
 						<view class="mes-box">
-							<view class="g-name line2">{{item.shop.name}}</view>
+							<view class="g-name line2">{{item.shop.name||""}}</view>
 							<view class="price-change-num clearfix">
-								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
+								<view class="price">￥<text class="yj-price">{{item.price||""}}</text></view>
 								<view class="num-box centerboth">
 									<text class="iconfont car-sub" @click.stop="changeNums(0,shopIndex)"></text>
-									<view>{{item.num}}</view>
+									<view>{{item.num||""}}</view>
 									<text class="iconfont car-add" @click.stop="changeNums(1,shopIndex)"></text>
 								</view>
 							</view>
 							<view class="fdsds">
-								<text class="fdsds"> 规格：</text>{{item.specidsize}}
+								<text class="fdsds"> 规格：</text>{{item.specidsize||""}}
 							</view>
 							<text class="fdsds"> 合计：</text><text
-								class="fsdfsfs fdsds">￥{{Number(item.price).toFixed(2)}}</text>
+								class="fsdfsfs fdsds">￥{{Number(item.price).toFixed(2)||""}}</text>
 						</view>
 					</view>
 				</view>
@@ -68,20 +68,20 @@
 					<image class="car-img" :src="img+item.shop.simage" mode="aspectFill"></image>
 					<view class="car-mes centerboth">
 						<view class="mes-box">
-							<view class="g-name line2">{{item.shop.name}}</view>
+							<view class="g-name line2">{{item.shop.name||""}}</view>
 							<view class="price-change-num clearfix">
-								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
+								<view class="price">￥<text class="yj-price">{{item.price||""}}</text></view>
 								<view class="num-box centerboth">
 									<text class="iconfont car-sub" @click.stop="changeNum(0,shopIndex)"></text>
-									<view>{{item.num}}</view>
+									<view>{{item.num||""}}</view>
 									<text class="iconfont car-add" @click.stop="changeNum(1,shopIndex)"></text>
 								</view>
 							</view>
 							<view class="fdsds">
-								<text class="fdsds"> 规格：</text>{{item.specidsize}}
+								<text class="fdsds"> 规格：</text>{{item.specidsize||""}}
 							</view>
 							<text class="fdsds"> 合计：</text><text
-								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)}}</text>
+								class="fsdfsfs fdsds">￥{{(item.num * item.price).toFixed(2)||""}}</text>
 						</view>
 					</view>
 				</view>
@@ -105,7 +105,7 @@
 			<view class="foot_right">
 				<view class="">
 					<view class="all_price">
-						合计：<text style="color: #E11915;">￥{{allAmount.toFixed(2)}}</text>
+						合计：<text style="color: #E11915;">￥{{allAmount.toFixed(2)||""}}</text>
 					</view>
 					<view class="acitvity">
 						(不含运费，优惠金额见结算页面)

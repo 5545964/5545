@@ -28,12 +28,12 @@
 				<view class="" style="width: 60%;margin-right: 40rpx;">
 					<view class="type_list">
 						<view class="type_item" v-for="(item,index) in list1" :key="index">
-							{{item}}
+							{{item||""}}
 						</view>
 					</view>
 					<view class="top-ss sss" v-for="(item,index) in list_s" :key="index">
 						<view class="dasjbash">
-							{{item.name}}
+							{{item.name||""}}
 						</view>
 						<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
 							:show-percent="false" :percent="item.num" />
@@ -46,7 +46,7 @@
 					 :key="index">
 					<image @click="todetails(item)" :src="imgtitle+item.simage" style="border-radius: 20rpx;" mode="aspectFit"></image>
 					<view @click="todetails(item)" class="gghGG" style="margin-top: 24rpx;">
-						{{item.name}}
+						{{item.name||""}}
 					</view>
 					<image v-if="!aaa" @click="sanchu(item)" class="imgss" src="../../../static/icon_close_ico.png"
 						mode="aspectFit"></image>

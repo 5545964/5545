@@ -18,14 +18,14 @@
 			<view v-if="current == 0">
 				<view v-for="(item,index) in data_list" :key="index">
 					<view class="xunhuan">
-						{{item.time}}
+						{{item.time||""}}
 					</view>
 					<view class="haha" v-for="(items,indexs) in item.list" :key="indexs">
 						<view class="texts">
-							{{items.title}}
+							{{items.title||""}}
 						</view>
 						<view class="neirong">
-							{{items.text}}
+							{{items.text||""}}
 						</view>
 						<!-- <view class="win">
 
@@ -39,14 +39,14 @@
 			<view v-if="current == 1">
 				<view v-for="(item,index) in data_lists" :key="index">
 					<view class="xunhuan">
-						{{item.time}}
+						{{item.time||""}}
 					</view>
 					<view class="haha" v-for="(items,indexs) in item.list" :key="indexs" @click="gos(items.text)">
 						<view class="texts" style="text-align: center;">
-							{{items.title}}
+							{{items.title||""}}
 						</view>
 						<!-- <view class="neirong">
-							{{items.text}}
+							{{items.text||""}}
 						</view> -->
 						<view class="win">
 

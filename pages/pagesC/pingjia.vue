@@ -22,7 +22,7 @@
 						</image>
 						<view class="">
 							<view class="name">
-								{{nameh}}
+								{{nameh||""}}
 							</view>
 							<view class="dsakd">
 								设计师

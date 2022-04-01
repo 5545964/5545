@@ -23,11 +23,11 @@
 					<!-- <u-input v-if="index == 0" @click="open()" input-align="left" :disabled="true" v-model="item.value"
 						:placeholder="item.name" type="text" /> -->
 					<view v-if="index == 0" @click="open()">
-						{{item.name}}
+						{{item.name||""}}
 					</view>
 					<u-input v-else @blur="fcun" v-model="item.value" input-align="left" :placeholder="item.name"
 						type="text" />
-					<!-- {{item.name}} -->
+					<!-- {{item.name||""}} -->
 					<!-- <image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="aspectFit">
 					</image> -->
 					<!-- <u-dropdown :border-bottom="true">

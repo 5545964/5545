@@ -11,7 +11,7 @@
 						<view class="swiper-item">
 							<view class="top">
 								<view class="text">
-									{{item.name}}
+									{{item.name||""}}
 								</view>
 								<view class="xian"></view>
 								<view style="height: 20rpx;"></view>
@@ -44,7 +44,7 @@
 												<view style="margin-bottom:20rpx;">
 													<view class="mian_left_item cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{lickc[0].title}}
+															{{lickc[0].title||""}}
 														</view>
 													</view>
 												</view>
@@ -55,7 +55,7 @@
 												<view style="margin-bottom:20rpx;">
 													<view class="mian_left_item cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{lickc[1].title}}
+															{{lickc[1].title||""}}
 														</view>
 													</view>
 												</view>
@@ -66,7 +66,7 @@
 												<view style="margin-bottom:20rpx;">
 													<view class="mian_left_item cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{lickc[2].title}}
+															{{lickc[2].title||""}}
 														</view>
 													</view>
 												</view>
@@ -79,7 +79,7 @@
 													<view :class="active22==index?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title}}
+															{{item.title||""}}
 														</view>
 													</view>
 												</view>
@@ -94,7 +94,7 @@
 													<view :class="active==index?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title}}
+															{{item.title||""}}
 														</view>
 													</view>
 												</view>
@@ -107,7 +107,7 @@
 													<view :class="active0==index?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title}}
+															{{item.title||""}}
 														</view>
 													</view>
 												</view>
@@ -120,7 +120,7 @@
 													<view :class="active1==index?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title}}
+															{{item.title||""}}
 														</view>
 													</view>
 												</view>
@@ -133,7 +133,7 @@
 													<view :class="active2==index?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title}}
+															{{item.title||""}}
 														</view>
 													</view>
 												</view>
@@ -157,10 +157,10 @@
 								<view class="hahah" @click="shouURl(item)" v-for="(item,index) in xinxi" :key="index">
 									<view class="">
 										<view class="hnjh">
-											{{item.title}}
+											{{item.title||""}}
 										</view>
 										<view class="timess">
-											{{item.refreshtime_text}}
+											{{item.refreshtime_text||""}}
 										</view>
 									</view>
 									<view class="">
@@ -193,7 +193,7 @@
 							</view>
 							<view style="width:70%;padding: 0 10rpx;">
 								<view class="mingcheng" @click="shouURls(tanchaung)">
-									《{{tanchaung.name}}》
+									《{{tanchaung.name||""}}》
 								</view>
 							</view>
 						</view>
@@ -212,10 +212,10 @@
 			<u-popup width="500" border-radius="30" v-model="yuedus" mode="center">
 				<view class="yueduwo">
 					<view class="texts">
-						{{qianyue}}
+						{{qianyue||""}}
 					</view>
 					<view class="textsss">
-						{{huxing}}
+						{{huxing||""}}
 					</view>
 					<view class="" v-if="!cduan">
 						<view class="llll" @click="llll">
@@ -238,10 +238,10 @@
 			<u-popup width="500" border-radius="30" v-model="shenghe" mode="center">
 				<view class="yueduwo">
 					<view class="texts">
-						{{mnmn}}
+						{{mnmn||""}}
 					</view>
 					<view class="textsss" style="margin:30px 0;">
-						{{nmnm}}
+						{{nmnm||""}}
 					</view>
 					<view class="lllls" @click="shenghe = false">
 						确定

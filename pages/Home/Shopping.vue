@@ -23,7 +23,7 @@
 						mode="aspectFit">
 					</image>
 					<view class="">
-						{{item.title}}
+						{{item.title||""}}
 					</view>
 				</view>
 			</view>
@@ -32,7 +32,7 @@
 		<view class="shop_list" v-for="(item,index) in list" :key="item.id">
 			<view class="title">
 				<view class="name">
-					{{item.name}}
+					{{item.name||""}}
 					<view class="bor_bot">
 					</view>
 				</view>
@@ -52,7 +52,7 @@
 			<image :lazy-load="true" src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
 			购物车
 			<view class="cart-num" v-if="cart_num !=0 && cart_num">
-				{{cart_num}}
+				{{cart_num||""}}
 			</view>
 		</view>
 		<u-dianji></u-dianji>

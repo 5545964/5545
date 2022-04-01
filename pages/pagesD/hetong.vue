@@ -19,7 +19,7 @@
 				<view class="template" v-for="(item,index) in alls" :key="index" @click="kan(item)">
 					<view class="cet">
 						<view class="texts">
-							{{item.ag.name}}
+							{{item.ag.name||""}}
 						</view>
 						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>
 					</view>

@@ -96,7 +96,7 @@
 							驳回原因：
 						</view>
 						<view class="reason_text">
-							{{desinfo.bhnew}}
+							{{desinfo.bhnew||""}}
 						</view>
 					</view>
 					<view class="resest" @click="resss">
@@ -129,7 +129,7 @@
 							<view :class="index%2==0? 'mian_left_item':'mian_left_item1'"
 								:style="active==index?'border-left: 4rpx solid #FD7904;':''"
 								v-for="(item,index) in recruit_all" :key="index" @click="changeTokens(index,item)">
-								{{item.category}}
+								{{item.category||""}}
 							</view>
 						</scroll-view>
 					</view>
@@ -164,7 +164,7 @@
 					</view>
 					<!-- <view class="agree_xieyi" @click="toReg"> -->
 					<view class="agree_xieyi" @click="pays">
-						我已阅读并同意上述协议,{{pay}}
+						我已阅读并同意上述协议,{{pay||""}}
 					</view>
 				</view>
 			</u-popup>
@@ -175,7 +175,7 @@
 					<view class="type_list">
 						<view style="width: 33.3%;" v-for="(item,index) in modeList" :key="index">
 							<view :class="item.check? 'type_item1':'type_item'" @click="xuanzhesssss(item)">
-								{{item.title}}
+								{{item.title||""}}
 							</view>
 						</view>
 					</view>
@@ -207,7 +207,7 @@
 								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
 									type="number" />
 							</view>
-							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
 					</view>
 					<view class="anniusss">
@@ -247,7 +247,7 @@
 								</view>
 							</view>
 							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name}}》
+								《{{item.name||""}}》
 							</view> -->
 							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(item)">
@@ -256,7 +256,7 @@
 							</view>
 							<view style="width:70%;padding: 0 10rpx;">
 								<view class="mingcheng" @click="fuwenben(item)">
-									《{{item.name}}》
+									《{{item.name||""}}》
 								</view>
 							</view>
 							

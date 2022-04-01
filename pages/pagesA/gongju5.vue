@@ -21,7 +21,7 @@
 							￥
 						</view>
 						<view class="mony dasize">
-							{{canprice}}
+							{{canprice||""}}
 						</view>
 						<view class="mony xiaosize">
 							可提现(元)
@@ -48,7 +48,7 @@
 						总佣金(元)
 					</view>
 					<view class="number">
-						￥{{allprice}}
+						￥{{allprice||""}}
 					</view>
 				</view>
 				<view class="">
@@ -56,7 +56,7 @@
 						可提佣金(元)
 					</view>
 					<view class="number">
-						￥{{canprice}}
+						￥{{canprice||""}}
 					</view>
 				</view>
 			</view>
@@ -74,7 +74,7 @@
 					</view>
 					<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 						<view class="dsdxcxvxs">
-							{{datas}}
+							{{datas||""}}
 						</view>
 						<u-icon name="arrow-down"></u-icon>
 					</view>
@@ -99,10 +99,10 @@
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
 					<view class="vdfdd" v-if="item.money==currents">
 						<view class="win">
-							{{item.order_id}}
+							{{item.order_id||""}}
 						</view>
 						<view class="win">
-							{{item.state==1?'已完成':"未完成"}}
+							{{item.state==1?'已完成':"未完成"||""}}
 						</view>
 						<view class="win">
 							{{item.cjprice||0}}
@@ -111,7 +111,7 @@
 							{{item.price||0}}
 						</view>
 						<view class="win">
-							{{item.type==0?'商品':'拉新'}}
+							{{item.type==0?'商品':'拉新'||""}}
 						</view>
 					</view>
 				</view>
@@ -123,7 +123,7 @@
 					</view>
 					<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 						<view class="dsdxcxvxs">
-							{{datas}}
+							{{datas||""}}
 						</view>
 						<u-icon name="arrow-down"></u-icon>
 					</view>

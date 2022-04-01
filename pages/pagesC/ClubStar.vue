@@ -48,15 +48,15 @@
 					</view>
 					<view class="" style="margin-left: 20rpx;">
 						<view class="" style="font-size: 24rpx;color: #303133;">
-							{{desInfo.pl[0].name}}
+							{{desInfo.pl[0].name||""}}
 						</view>
 						<view class="" style="font-size: 20rpx;color: #909399;">
-							{{desInfo.pl[0].create_at}}
+							{{desInfo.pl[0].create_at||""}}
 						</view>
 					</view>
 				</view>
 				<view class="content">
-					{{desInfo.pl[0].content}}
+					{{desInfo.pl[0].content||""}}
 				</view>
 				<view class="see_all" @click="jhsdkfjhsdlk">
 					查看全部评论

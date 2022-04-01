@@ -1,4 +1,5 @@
 <script>
+	import logs from '@/utils/islogin.js'
 	export default {
 		onLaunch(ev) {
 			console.log(process.env.NODE_ENV);
@@ -11,6 +12,21 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
+		},
+		onShow() {
+			clearInterval(uni.getStorageSync("setInterval", aa))
+			let aa = setInterval(() => {
+				this.$api.qzqy({
+					user_id: uni.getStorageSync("user_info").id || 0
+				}).then(data => {
+					if (data.data.code == 0) {
+						// uni.navigateTo({
+						// 	url: "/pages/pagesB/tanchuang"
+						// })
+					}
+				})
+			}, 1000)
+			uni.setStorageSync("setInterval", aa)
 		}
 	}
 </script>

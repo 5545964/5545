@@ -36,7 +36,7 @@
 					常用理由
 				</view>
 				<view class="">
-					{{qwer}}
+					{{qwer||""}}
 				</view>
 			</view>
 			<view>
@@ -50,10 +50,10 @@
 						</view>
 						<view style="margin-left: 10rpx;">
 							<view class="name">
-								{{ itemc.name }}
+								{{ itemc.name ||""}}
 							</view>
-							<text class="fdsds">共{{itemc.num}}件 合计：</text><text
-								class="fsdfsfs fdsds">￥{{itemc.sonprice}}</text>
+							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+								class="fsdfsfs fdsds">￥{{itemc.sonprice||""}}</text>
 						</view>
 					</view>
 

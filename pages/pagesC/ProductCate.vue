@@ -29,7 +29,7 @@
 				<view v-for="(item,index) in cateList" :key="index" class="u-tab-item"
 					:class="[current==index ? 'u-tab-item-active' : '']" :data-current="index"
 					@tap.stop="swichMenu(index)">
-					<text class="u-line-1">{{item.title}}</text>
+					<text class="u-line-1">{{item.title||""}}</text>
 				</view>
 			</scroll-view>
 			<scroll-view v-if="mmok == 0" style="width: 76%;height: 100%;" scroll-y class="right-box">
@@ -66,7 +66,7 @@
 									</view>
 									<view class="img_right">
 										<view class="top_text">
-											{{item3.name}}
+											{{item3.name||""}}
 										</view>
 										<view class="right_bottom">
 											<view class="" style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
@@ -93,11 +93,11 @@
 						</view>
 						<view class="img_right">
 							<view class="top_text">
-								{{item3.name}}
+								{{item3.name||""}}
 							</view>
 							<view class="right_bottom">
 								<view class="" style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
-									￥{{item3.price||0}}
+									￥{{item3.price||0||""}}
 								</view>
 							</view>
 						</view>

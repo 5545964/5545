@@ -21,7 +21,7 @@
 							￥
 						</view>
 						<view class="mony dasize">
-							{{canprice}}
+							{{canprice||""}}
 						</view>
 					</view>
 					<view class="mony xiaosize" style="font-size:24rpx;text-align: center;margin-top: 20rpx;">
@@ -45,7 +45,7 @@
 					</view>
 					<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 						<view class="dsdxcxvxs">
-							{{datas}}
+							{{datas||""}}
 						</view>
 						<u-icon name="arrow-down"></u-icon>
 					</view>
@@ -67,7 +67,7 @@
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
 					<view class="vdfdd">
 						<view class="win">
-							{{item.order_id}}
+							{{item.order_id||""}}
 						</view>
 						<view class="win">
 							<block v-if="item.statess == null">
@@ -100,7 +100,7 @@
 					</view>
 					<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 						<view class="dsdxcxvxs">
-							{{datas}}
+							{{datas||""}}
 						</view>
 						<u-icon name="arrow-down"></u-icon>
 					</view>

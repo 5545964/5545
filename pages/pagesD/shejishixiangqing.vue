@@ -16,17 +16,17 @@
 		<view style="background: #fff;">
 			<view class="xunhuan" v-for="(item,index) in list" :key="index">
 				<view class="dshk">
-					{{item.title}}
+					{{item.title||""}}
 				</view>
 				<view class="dadsda" v-for="(items,indexs) in item.list" :key="indexs">
 					<!-- 显示数据 -->
 					<view class="inputs" v-if="items.type == 'Displays_data'">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd" style="width: 76%;">
 							<view class="textss">
-								{{items.text}}
+								{{items.text||""}}
 							</view>
 						</view>
 					</view>
@@ -34,26 +34,26 @@
 					<!-- 其他选项 -->
 					<view class="inputss" v-if="items.type == 'xuan'">
 						<view class="cxz" style="margin-bottom: 20rpx;">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd">
 							<view v-show="items.list.length != 0">
 								<view class="" v-for="(itemc,indexc) in items.list" :key="indexc">
 									<view class="czccxz" v-if="itemc.sex">
 										<view style="width: 25%;">
-											成员{{indexc+1}}
+											成员{{indexc+1||""}}
 										</view>
 										<view style="display: flex;justify-content: center;align-items: center;">
 											<view class="jjj">
 												<view class="cet">
 													<view class="textss">
-														{{itemc.sex}}
+														{{itemc.sex||""}}
 													</view>
 												</view>
 											</view>
 											<view class="cet" style="margin-left: 50rpx;">
 												<view class="textss">
-													{{itemc.age}}
+													{{itemc.age||""}}
 												</view>
 												<view style="padding-left: 10rpx;">
 													岁
@@ -69,7 +69,7 @@
 					<!-- 上传 -->
 					<view class="inputas" v-if="items.type == 'upload'">
 						<view class="cxz">
-							{{items.name}}<text class="khkkk">{{items.text}}</text>
+							{{items.name||""}}<text class="khkkk">{{items.text||""}}</text>
 						</view>
 						<view v-if="items.img_list.length != 0">
 							<view class="asdssss">

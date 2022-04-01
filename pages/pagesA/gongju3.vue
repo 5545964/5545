@@ -21,7 +21,7 @@
 				</view>
 				<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 					<view class="dsdxcxvxs">
-						{{datas}}
+						{{datas||""}}
 					</view>
 					<u-icon name="arrow-down"></u-icon>
 				</view>

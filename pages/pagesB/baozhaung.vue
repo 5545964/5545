@@ -26,9 +26,9 @@
 					<image class="car-img" :src="img+item.simage" mode="aspectFill"></image>
 					<view class="car-mes centerboth">
 						<view class="mes-box">
-							<view class="g-name line2">{{item.name}}</view>
+							<view class="g-name line2">{{item.name||""}}</view>
 							<view class="price-change-num clearfix">
-								<view class="price">￥<text class="yj-price">{{item.price}}</text></view>
+								<view class="price">￥<text class="yj-price">{{item.price||""}}</text></view>
 							</view>
 						</view>
 					</view>

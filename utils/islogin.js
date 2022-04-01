@@ -28,6 +28,7 @@ function log() {
 									uni.setStorageSync("token", data.data.data);
 									uni.setStorageSync("key", data.data.data.status.key);
 									uni.setStorageSync("showssss", false)
+									
 									api.myuser({
 										user_id: data.data.data.status.id
 									}).then(data => {

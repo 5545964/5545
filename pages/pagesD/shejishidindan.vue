@@ -58,13 +58,13 @@
 										</view>
 										<view style="margin-left: 30rpx;">
 											<view class="name">
-												客户姓名：{{items.name}}
+												客户姓名：{{items.name||""}}
 											</view>
 											<view class="name">
 												客户性别：<text v-if="items.sex == 0">男</text><text v-else>女</text>
 											</view>
 											<view class="name">
-												联系方式：{{items.phone}}
+												联系方式：{{items.phone||""}}
 											</view>
 											<view class="name">
 												客户地址：{{items.city?items.city+items.dire:""}}

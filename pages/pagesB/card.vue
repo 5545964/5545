@@ -5,10 +5,10 @@
 				<image class="img" src="../../static/login.png" mode="aspectFit"></image>
 				<view class="tops">
 					<view class="name pad">
-						{{userinfo.username}}
+						{{userinfo.username||""}}
 					</view>
 					<view class="name" style="font-size:15px;margin-bottom:30rpx;">
-						{{userinfo.bbs.type}}
+						{{userinfo.bbs.type||""}}
 					</view>
 					<view class="text pad">
 						{{userinfo.biaoti||"设计师买手整装平台"}}
@@ -25,7 +25,7 @@
 							<view class="cet vxcvx" v-if="item !=''" @click="copy(item,index)">
 								<image class="img" :src="'../../static/icons'+index+'.png'" mode="aspectFit"></image>
 								<view class="text" style="width: 100rpx;" v-if="index == 3">
-									{{item}}
+									{{item||""}}
 								</view>
 							</view>
 						</view>
@@ -48,7 +48,7 @@
 				<image class="img" src="../../static/icon_me_shouye.png" mode="aspectFit"></image>
 			</view>
 		</view>
-		<view class="works" style="display:flex;flex-flow:column;justify-content:center;align-items: center;">
+		<view class="works" style="display:flex;flex-flow:column;justify-content:center;align-items: center;margin-bottom: 60rpx;">
 			<view class="title">
 				<view class="name">
 					小程序二维码
@@ -64,7 +64,7 @@
 		<view class="works">
 			<view class="title">
 				<view class="name">
-					旗舰整装套系
+					整装套系
 					<view class="bor_bot">
 
 					</view>
@@ -142,19 +142,26 @@
 					})
 				}
 			})
-			this.$api.qjset({
-				setid: 13,
-				page: 1,
-				limit: 10
-			}).then(data => {
+			this.$api.indexcontent().then(data => {
 				if (data.data.code == 1) {
-					data.data.data.status.data.forEach(item => {
-						item.image = item.simage
-					})
-					data.data.data.status.data.sort(function() {
-						return Math.random() - 0.5; // 值为 -0.5 ~ 0.5 的随机数
+					data.data.data.status.sort(function() {
+						return Math.random() - 0.5;
 					});
-					this.tuijian = [data.data.data.status.data[0], data.data.data.status.data[1]];
+					this.tuijian = [];
+					console.log(data.data.data.status);
+					data.data.data.status.forEach((item, index) => {
+						if (index <= 1) {
+							this.tuijian.push({
+								id: item.id,
+								title: item.name,
+								image: item.image,
+								video: "",
+								alls: item
+							})
+						}
+					})
+				} else {
+					this.data_list = []
 				}
 			})
 			this.$api.ewm({
@@ -374,6 +381,8 @@
 	}
 
 	.navbar {
+		height: 1rpx;
+		overflow: hidden;
 		.navbar_top {
 			border: 1px solid #FFFFFF;
 			overflow: hidden;
@@ -411,7 +420,6 @@
 	.works {
 		// padding: 0 30rpx;
 		// margin-top: -120rpx;
-		margin-bottom: 60rpx;
 
 		.title {
 			padding: 50rpx 30rpx;

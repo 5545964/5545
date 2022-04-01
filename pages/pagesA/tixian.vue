@@ -27,7 +27,7 @@
 									v-show="currents == 0">
 								</view>
 								<view class="cdscdf">
-									{{item.createtime}}
+									{{item.createtime||""}}
 								</view>
 							</view>
 							<view class="rigtt" @click="god(item)">
@@ -39,15 +39,15 @@
 						</view>
 						<view class="top-bottom" @click="god(item)">
 							<view class="text">
-								订单编号：{{item.order_id}}
+								订单编号：{{item.order_id||""}}
 							</view>
 						</view>
 						<view class="top-bottom" @click="god(item)">
 							<view class="text">
-								订单价格：￥{{item.cjprice}}
+								订单价格：￥{{item.cjprice||""}}
 							</view>
 							<view class="text">
-								可提佣金：￥{{item.price}}
+								可提佣金：￥{{item.price||""}}
 							</view>
 						</view>
 					</view>
@@ -77,12 +77,12 @@
 						<view class="top-bottom">
 							<view class="">
 								<view class="text">
-									获得佣金：￥{{item.cjprice}}
+									获得佣金：￥{{item.cjprice||""}}
 								</view>
 							</view>
 							<view class="">
 								<view class="text">
-									可提佣金：￥{{item.price}}
+									可提佣金：￥{{item.price||""}}
 								</view>
 							</view>
 						</view>

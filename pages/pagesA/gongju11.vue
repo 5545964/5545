@@ -20,7 +20,7 @@
 						总人数
 					</view>
 					<view class="mony">
-						<text v-if="man_num != ''">{{man_num}}</text><text v-else>0</text>
+						<text v-if="man_num != ''">{{man_num||""}}</text><text v-else>0</text>
 					</view>
 				</view>
 				<view class="text">
@@ -28,7 +28,7 @@
 						总返利(元)
 					</view>
 					<view class="mony">
-						￥<text v-if="mony != ''">{{mony}}</text><text v-else>0</text>
+						￥<text v-if="mony != ''">{{mony||""}}</text><text v-else>0</text>
 					</view>
 				</view>
 			</view>
@@ -43,20 +43,20 @@
 									<image class="img" :src="items.users.avatar" mode="aspectFit"></image>
 									<view class="">
 										<view class="name">
-											<text v-if="items.users.username != ''">{{items.users.username}}</text><text
+											<text v-if="items.users.username != ''">{{items.users.username||""}}</text><text
 												v-else>未知昵称</text>
 										</view>
 										<view class="text">
-											<text v-if="items.users.mobile != ''">{{items.users.mobile}}</text><text
+											<text v-if="items.users.mobile != ''">{{items.users.mobile||""}}</text><text
 												v-else>无</text>
 										</view>
 									</view>
 								</view>
 								<view v-if="current == 1" class="mony">
-									人数：<text v-if="items.son != ''">{{items.son}}</text><text v-else>0</text>
+									人数：<text v-if="items.son != ''">{{items.son||""}}</text><text v-else>0</text>
 								</view>
 								<view class="mony">
-									￥<text v-if="items.moneys != ''">{{items.moneys}}</text><text v-else>0</text>
+									￥<text v-if="items.moneys != ''">{{items.moneys||""}}</text><text v-else>0</text>
 								</view>
 							</view>
 						</scroll-view>

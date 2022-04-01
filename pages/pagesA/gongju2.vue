@@ -21,19 +21,19 @@
 							<image class="imgd" :src="img + item.avatar" mode="aspectFit"></image>
 						</view>
 						<view class="dadasdad" style="margin-top:20rpx;">
-							{{item.username}}
+							{{item.username||""}}
 						</view>
 					</view>
 					<view class="bottom" style="width: 66%;">
 						<view class="top-ss">
 							<view class="top" v-for="(items,indexs) in item.list" :key="indexs">
-								{{items}}
+								{{items||""}}
 							</view>
 						</view>
 						<view class="fsfds">
 							<view class="top-ss sss" v-for="(it,ind) in item.list_s" :key="ind">
 								<view class="dasjbash">
-									{{it.name}}
+									{{it.name||""}}
 								</view>
 								<u-line-progress style="width: 100%;height:50rpx ;" active-color="#479ABB" :height="10"
 									:show-percent="false" :percent="it.num" />
@@ -45,10 +45,10 @@
 					<image :src="item.image" mode="aspectFit"></image>
 				</view>
 				<view class="name">
-					设计师-{{item.username}}
+					设计师-{{item.username||""}}
 				</view>
 				<view class="time">
-					{{item.createtime}}
+					{{item.createtime||""}}
 				</view>
 				<u-rate v-model="item.star" active-color="#FD7904" :disabled="true"></u-rate>
 			</view>

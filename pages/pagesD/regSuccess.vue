@@ -18,10 +18,10 @@
 		</view>
 		<image class="banner" src="../../static/about_tijiao_bg.png" mode="aspectFit"></image>
 		<view class="sucView">
-			<view class="text1">{{list.title}}</view>
-			<view class="text2">{{list.text}}</view>
+			<view class="text1">{{list.title||""}}</view>
+			<view class="text2">{{list.text||""}}</view>
 			<view @click="topage" class="knowView">
-				<view class="knowText">{{list.botton}}</view>
+				<view class="knowText">{{list.botton||""}}</view>
 			</view>
 		</view>
 	</view>

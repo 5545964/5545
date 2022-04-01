@@ -8,11 +8,11 @@
 				<image class="img" v-else src="../../static/icon_me_bianji.png" mode=""></image>
 				<view class="center">
 					<view class="text">
-						<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>
+						<text v-if="user_info != ''">{{user_info.username||""}}</text><text v-else>未登录</text>
 					</view>
 					<block v-if="desinfo != ''">
 						<view class="text_bottom" v-if="desinfo.bbs != null">
-							<text>{{desinfo.bbs.type}}</text>
+							<text>{{desinfo.bbs.type||""}}</text>
 						</view>
 					</block>
 				</view>
@@ -95,14 +95,14 @@
 				<view class="quanju">
 					<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
 						<view class="cart-num" v-if="index <=1 && num_list[index] != 0">
-							{{num_list[index]}}
+							{{num_list[index]||""}}
 						</view>
 						<view class="">
 							<view style="width: max-content;margin: 0 auto;">
 								<image class="img" :src="'../../static/des'+index+'.png'" mode="aspectFit"></image>
 							</view>
 							<view class="text">
-								{{item.name}}
+								{{item.name||""}}
 							</view>
 						</view>
 					</view>
@@ -118,7 +118,7 @@
 						<view class="cet">
 							<image class="img" :src="'../../static/desgongju'+index+'.png'" mode="aspectFit"></image>
 							<view class="texts">
-								{{item.name}}
+								{{item.name||""}}
 							</view>
 						</view>
 						<image class="fanhui" src="../../static/icon_home_heiseyoufan.png" mode="aspectFit"></image>

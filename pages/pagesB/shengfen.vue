@@ -23,13 +23,13 @@
 					<view :id="'id'+ index" class="fdsfhks">
 						<view class="fdjlkfsjd">
 							<view class="textsda">
-								<!-- {{item.name}} -->
+								<!-- {{item.name||""}} -->
 							</view>
 							<image class="img" src="../../static/xunzhang.png" mode="aspectFit"></image>
 						</view>
 						<view class="dsdadreawdew">
 							<view class="dasdsadsxzcz">
-								{{item.type}}特权：
+								{{item.type||""}}特权：
 							</view>
 							<view class="" v-html="item.content">
 
@@ -43,10 +43,10 @@
 		<view class="boyyty cet" v-if="usershengfen < id">
 			<!-- <view class="boyyty cet"> -->
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
-				￥{{jiage}}升级
+				￥{{jiage||""}}升级
 			</view>
 			<view class="tetx" @click="topay" v-else>
-				￥{{jiage}}升级
+				￥{{jiage||""}}升级
 			</view>
 		</view>
 		<!-- 确保是你本人操作 -->
@@ -63,7 +63,7 @@
 						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
 							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
 						</view>
-						<button class="annuyt" @click="go_code">{{huoqu}}</button>
+						<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 					</view>
 				</view>
 				<view class="anniusss">
@@ -100,7 +100,7 @@
 						</view>
 						<view style="width:70%;padding: 0 10rpx;">
 							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name}}》
+								《{{item.name||""}}》
 							</view>
 						</view>
 					</view>

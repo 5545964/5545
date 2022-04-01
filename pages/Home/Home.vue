@@ -8,10 +8,10 @@
 				<view v-if="item.switch == 1" class="text" v-for="(item,index) in list" :key="index"
 					@click="go(item.page,index)">
 					<view class="color_text hhnhb">
-						{{item.up}}
+						{{item.up||""}}
 					</view>
 					<view class="color_text hhnhb">
-						{{item.down}}
+						{{item.down||""}}
 					</view>
 				</view>
 			</view>

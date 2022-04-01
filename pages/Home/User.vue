@@ -8,11 +8,11 @@
 					<image class="img" v-else src="../../static/icon_me_avatar.png" mode=""></image>
 					<view class="center">
 						<view class="text">
-							<text v-if="user_info != ''">{{user_info.username}}</text><text v-else>未登录</text>
+							<text v-if="user_info != ''">{{user_info.username||""}}</text><text v-else>未登录</text>
 						</view>
 						<view v-if="user_info != ''">
 							<view class="text_bottom" v-if="user_info.bbs != null && user_info.bbs.type != '' ">
-								<text>{{user_info.bbs.type}}</text>
+								<text>{{user_info.bbs.type||""}}</text>
 							</view>
 						</view>
 					</view>
@@ -61,7 +61,7 @@
 					<view class="quanju">
 						<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
 							<view class="cart-num" @touchend="quxiao(index)" v-if="num_list[index] != 0">
-								{{num_list[index]}}
+								{{num_list[index]||""}}
 							</view>
 							<!-- <image v-if="index == list.length-1" class="fdkgkfmkjskjfjkgdbj"
 								src="../../static/icon_me_fenge.png" mode="aspectFit"></image> -->
@@ -71,7 +71,7 @@
 									</image>
 								</view>
 								<view class="text">
-									{{item.name}}
+									{{item.name||""}}
 								</view>
 							</view>
 						</view>
@@ -86,7 +86,7 @@
 							@click="gongju_go(item.url,item.name)">
 							<image class="img" :src="'../../static/gongju'+index+'.png'" mode="aspectFit"></image>
 							<view class="texts">
-								{{item.name}}
+								{{item.name||""}}
 							</view>
 						</view> -->
 						<view class="template" @click="gongju_go('../pagesA/gongju0','收货地址')">

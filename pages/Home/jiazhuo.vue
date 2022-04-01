@@ -43,7 +43,7 @@
 					<view class="type_list">
 						<view :class="[item.check ? 'active' : 'type_item']" @click="xunhuan(index)"
 							v-for="(item,index) in fenleis" :key="index">
-							{{item.title}}
+							{{item.title||""}}
 						</view>
 					</view>
 				</view>

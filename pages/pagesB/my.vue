@@ -18,7 +18,7 @@
 				<!-- 禁止输入 -->
 				<view class="inputs" v-if="items.status == 'disabled'">
 					<view class="cxz">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="asd">
 						<u-input style="width: 100%;height: 100%;" :disabled="true" v-model="items.inp" type="text" />
@@ -28,7 +28,7 @@
 				<!-- 单显示 -->
 				<view class="design" v-if="items.status == 'select'  && isdes == 1">
 					<view class="cxz">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="">
 						<u-input style="width: 100%;height: 100%;" v-model="items.inp" type="text" disabled="" />
@@ -38,12 +38,12 @@
 				<!-- 单行输入框 -->
 				<view class="inputs" v-if="items.status == 'text'" @click="showcitys(items)">
 					<view class="cxz">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="asd">
 						<template>
 							<view class="" style="text-align: right;" v-if="items.id==9">
-								{{items.inp}}
+								{{items.inp||""}}
 							</view>
 							<u-input v-else style="width: 100%;height: 100%;" v-model="items.inp" type="text"
 								:placeholder="items.placeholder" />
@@ -55,12 +55,12 @@
 				<view v-if="items.status == 'phone'" @click="showcitys(items)">
 					<view class="inputs">
 						<view class="cxz">
-							{{items.name}}
+							{{items.name||""}}
 						</view>
 						<view class="asd">
 							<template>
 								<view class="" style="text-align: right;" v-if="items.id==9">
-									{{items.inp}}
+									{{items.inp||""}}
 								</view>
 								<u-input v-else style="width: 100%;height: 100%;" v-model="items.inp" type="text"
 									:placeholder="items.placeholder" />
@@ -76,7 +76,7 @@
 								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
 									type="number" />
 							</view>
-							<button class="annuyt" @click="go_code">{{huoqu}}</button>
+							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
 					</view>
 				</view>
@@ -84,7 +84,7 @@
 				<!-- 多行行输入框 -->
 				<view class="inputs" v-if="items.status == 'textarea'">
 					<view class="cxz">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="asd" style="width: 60%;">
 						<textarea style="width: 100%;" placeholder-style="color: #999999;" v-model="items.inp"
@@ -95,7 +95,7 @@
 				<!-- 上传 -->
 				<view class="inputas" v-if="items.status == 'upload'">
 					<view class="cxz">
-						{{items.name}}<text class="khkkk">{{items.text}}</text>
+						{{items.name||""}}<text class="khkkk">{{items.text||""}}</text>
 					</view>
 					<view class="asdsss">
 						<template>
@@ -110,7 +110,7 @@
 				<!-- 设计师手机号 -->
 				<!-- <view class="inputs" v-if="items.status == 'phone' && isdes == 1" @click="showcitys(items)">
 					<view class="cxz">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="asd">
 						<u-input style="width: 100%;height: 100%;" v-model="items.inp" type="text"
@@ -121,7 +121,7 @@
 				<!-- 设计师上传 -->
 				<view class="design" v-if="items.status == 'designupload' && isdes == 1">
 					<view class="cxz" style="padding: 30rpx 0;">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="img_list">
 						<u-upload :fileList="imgList" :action="action" max-count="9" width="160" height="160"
@@ -133,11 +133,11 @@
 				<!-- 设计师标签 -->
 				<view class="design" v-if="items.status == 'designbiao'  && isdes == 1" @click="show=true">
 					<view class="cxz">
-						{{items.name}}
+						{{items.name||""}}
 					</view>
 					<view class="type_list" v-if="actList.length>0">
 						<view class="type_item1" v-for="(item,index) in actList" :key="item">
-							{{item}}
+							{{item||""}}
 						</view>
 					</view>
 					<view class="type_list" v-else>
@@ -167,7 +167,7 @@
 				<view class="type_list">
 					<view :class="item.act?'type_item1':'type_item'" v-for="(item,index) in modeList" :key="item"
 						@click="change(item)">
-						{{item.title}}
+						{{item.title||""}}
 					</view>
 				</view>
 			</view>

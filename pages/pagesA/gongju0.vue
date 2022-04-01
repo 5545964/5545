@@ -20,14 +20,14 @@
 						<view class="ing">
 							<view class="djkashk">
 								<view class="name">
-									{{item.username}}
+									{{item.username||""}}
 								</view>
 								<view class="phone">
-									{{item.phone}}
+									{{item.phone||""}}
 								</view>
 							</view>
 							<view class="add">
-								{{item.title}}{{item.address}}
+								{{item.title||""}}{{item.address||""}}
 							</view>
 							<view class="default" v-if="item.auto==1">
 								默认地址
