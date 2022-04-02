@@ -3,6 +3,7 @@
 	export default {
 		onLaunch(ev) {
 			console.log(process.env.NODE_ENV);
+			uni.setStorageSync("yanzheng", true)
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
 			}
@@ -17,15 +18,18 @@
 			clearInterval(uni.getStorageSync("setInterval", aa))
 			let aa = setInterval(() => {
 				this.$api.qzqy({
-					user_id: uni.getStorageSync("user_info").id || 0
+					// user_id: uni.getStorageSync("user_info").id || 0
+					user_id: 0
 				}).then(data => {
-					if (data.data.code == 0) {
-						// uni.navigateTo({
-						// 	url: "/pages/pagesB/tanchuang"
-						// })
+					if (data.data.code == 1) {
+						if (uni.getStorageSync("yanzheng")) {
+							uni.reLaunch({
+								url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status.agid
+							})
+						}
 					}
 				})
-			}, 1000)
+			}, 5000)
 			uni.setStorageSync("setInterval", aa)
 		}
 	}

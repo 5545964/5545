@@ -29,7 +29,7 @@
 					</view>
 				</view>
 				<view class="anniusss">
-					<navigator class="hkhnij" target="miniProgram" open-type="exit">
+					<navigator class="hkhnij" target="miniProgram" open-type="exit" @click="clea">
 						退出小程序
 					</navigator>
 					<view class="hkhnij jjhgj" @click="tongyixieyi()">
@@ -46,36 +46,53 @@
 		data() {
 			return {
 				yuedu: true,
+				xieyi: [],
+				agid: 0
 			};
 		},
-		onLoad() {},
+		onLoad(ev) {
+			this.yuedu = true
+			uni.setStorageSync("yanzheng", false)
+			this.agid = ev.agid;
+			let aa = uni.getStorageSync("xieyi")
+			aa.forEach(item => {
+				if (item.id == this.agid) {
+					this.xieyi.push(item)
+				}
+			})
+
+		},
 		onShow() {},
 		methods: {
+			clea() {
+				uni.clearStorageSync()
+			},
 			tongyixieyi() {
-				if (this.buyanzheng) {
-					let mm = 0
-					let aa = []
-					this.xieyi.forEach(item => {
-						if (item.check) {
-							mm++
-							aa.push(item)
-						}
-					})
-					if (this.xieyi.length != mm) {
-						return uni.showToast({
-							title: "请阅读并同意协议",
-							icon: "none"
-						})
+				let mm = 0
+				let aa = []
+				this.xieyi.forEach(item => {
+					if (item.check) {
+						mm++
+						aa.push(item)
 					}
-					aa.forEach(item => {
-						this.$api.userag({
-							userid: uni.getStorageSync("user_info").id,
-							agid: item.id
-						})
+				})
+				if (this.xieyi.length != mm) {
+					return uni.showToast({
+						title: "请阅读并同意协议",
+						icon: "none"
 					})
-					this.shoujiyanzheng = false;
-					this.yuedu = false
 				}
+				aa.forEach(item => {
+					this.$api.userag({
+						userid: uni.getStorageSync("user_info").id,
+						agid: item.id
+					})
+				})
+				uni.setStorageSync("yanzheng", true)
+				this.yuedu = false
+				uni.reLaunch({
+					url: "/pages/Home/Home"
+				})
 			},
 			tongyi(ev) {
 				if (ev == 1) {

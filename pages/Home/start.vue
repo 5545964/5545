@@ -16,11 +16,15 @@
 				this.path = ev.url
 			}
 			this.videoContext = uni.createVideoContext('video_play')
-			this.time = setTimeout(() => {
-				this.ended()
-			}, 9500)
 			setTimeout(() => {
-				this.xianshi = true
+				let routes = getCurrentPages() //获取当前页面栈
+				let curRoute = routes[routes.length - 1].route
+				if (curRoute != "pages/pagesB/tanchuang") {
+					this.time = setTimeout(() => {
+						this.ended()
+					}, 6500)
+					this.xianshi = true
+				}
 			}, 3000)
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
@@ -56,7 +60,7 @@
 		},
 		data() {
 			return {
-				xianshi:false,
+				xianshi: false,
 				time: "",
 				videoContext: "",
 				path: "",
