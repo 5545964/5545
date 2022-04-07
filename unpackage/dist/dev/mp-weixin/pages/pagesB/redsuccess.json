@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-city-select": "/uview-ui/components/u-city-select/u-city-select"
+  }
+}
