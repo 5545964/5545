@@ -25,7 +25,7 @@
 						<view style="border-radius: 20rpx;height: 100%;">
 							<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
 								:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
-								v-if="item.video !=null && item.video != ''" :src="imgurl + item.video" />
+								v-if="item.video !=null && item.video != ''" :src="item.video" />
 							<image v-if="item.image !=''" @click="lunbochang"
 								:src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'"
 								mode="widthFix" />
@@ -314,8 +314,8 @@
 						this.lun_list = [];
 						let aa = []
 						data.data.data.status.forEach(item => {
-							// item.image = this.$imgPath + item.image
 							if (item.position == 0) {
+								item.video = this.$imgs(item.video)
 								aa.push(item)
 							}
 						})
@@ -334,7 +334,7 @@
 									id: item.id,
 									title: item.name,
 									image: "",
-									video: item.video,
+									video: this.$imgs(item.video),
 									alls: item
 								})
 							} else {

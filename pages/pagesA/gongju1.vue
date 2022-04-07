@@ -89,7 +89,7 @@
 							this.video.push({
 								id: item.id,
 								type: 0,
-								video: this.$imgPath + item.content.video,
+								video: this.$imgs(item.content.video),
 								sc: false,
 								pl: 200,
 								dz: true,

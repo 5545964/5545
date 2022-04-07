@@ -24,7 +24,7 @@
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
 						<view style="border-radius: 20rpx;height: 100%;">
 							<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
-								v-if="item.video !=null && item.video != ''" :src="imgurl + item.video"></video>
+								v-if="item.video !=null && item.video != ''" :src="item.video"></video>
 							<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit">
 							</image>
 						</view>
@@ -63,6 +63,7 @@
 					data.data.data.status.forEach(item => {
 						item.image = this.$imgPath + item.image
 						if (item.position == 2) {
+							item.video = this.$imgs(item.video)
 							aa.push(item)
 						}
 					})

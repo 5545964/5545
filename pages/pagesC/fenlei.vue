@@ -34,7 +34,7 @@
 				</swiper-item>
 				<swiper-item v-if="list.video != ''">
 					<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended" style="width: 100%;height: 450rpx;"
-						:src="img+list.video"></video>
+						:src="list.video"></video>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -69,6 +69,7 @@
 			go_shop.shop.forEach(item=>{
 				item.content=this.img+item.content
 			})
+			go_shop.video = this.$imgs(go_shop.video)
 			this.list = go_shop
 
 		},

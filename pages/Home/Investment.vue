@@ -237,10 +237,10 @@
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
 							:key="index">
-							
-							
-							
-							
+
+
+
+
 							<!-- <view style="width:30%;display:flex;justify-content: flex-end;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
@@ -259,13 +259,13 @@
 									《{{item.name||""}}》
 								</view>
 							</view>
-							
-							
-							
-							
+
+
+
+
 						</view>
-						
-						
+
+
 					</view>
 					<view class="anniusss">
 						<view class="hkhnij" @click="xieyitongyi(0)">
@@ -308,7 +308,6 @@
 					}
 				],
 				tupianwo: "",
-
 				yanzhengtanchaung: true,
 				yuedu: false,
 				xieyi: [],
@@ -317,7 +316,6 @@
 				shoujihao: uni.getStorageSync("user_info").mobile,
 				code: "",
 				huoqu: "获取验证码",
-
 				diandedijige: 0,
 				modeList: [],
 				mobanid: [
@@ -388,6 +386,8 @@
 			}
 		},
 		onPullDownRefresh() {
+			this.video = []
+			this.pages = 1
 			this.getstate();
 			this.enjoy()
 			this.enjoys()
@@ -420,7 +420,7 @@
 				this.yanzhengtanchaung = false;
 			}
 
-			
+
 		},
 		methods: {
 			changes(index) {
@@ -898,7 +898,7 @@
 							if (item.follow) {
 								item.isfollow = true
 							}
-							// item.video = this.$imgPath + item.video
+							item.video = this.$imgs(item.video)
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]

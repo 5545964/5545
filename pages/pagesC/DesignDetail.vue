@@ -37,7 +37,7 @@
 				<swiper-item v-if="video">
 					<view style="height: 100%;">
 						<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
-							style="width: 100%;height: 450rpx;" :src="imgPath+video"></video>
+							style="width: 100%;height: 450rpx;" :src="video"></video>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -215,8 +215,7 @@
 						})
 						this.alls = aa;
 						this.vr_image = this.$imgPath + data.data.data.status.vr_image
-						// this.video = this.$imgPath + data.data.data.status.video
-						this.video = data.data.data.status.video
+						this.video = this.$imgs(data.data.data.status.video)
 						this.$api.desxq({
 							id: aa.des.id,
 							user_id: uni.getStorageSync("user_info").id||0

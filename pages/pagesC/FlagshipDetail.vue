@@ -396,7 +396,7 @@
 							this.vr_image = data.data.data.status.vrimage
 						}
 						if (data.data.data.status.video != '' && data.data.data.status.video != null) {
-							this.video = this.$imgPath + data.data.data.status.video
+							this.video = this.$imgs(data.data.data.status.video)
 						}
 					} else {
 						uni.showToast({
