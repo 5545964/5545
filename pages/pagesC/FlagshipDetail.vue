@@ -304,23 +304,26 @@
 			},
 			async goVR(ev) {
 				if (await this.$login()) {
-					uni.showModal({
-						title: '提示',
-						content: '如要购买，请在浏览器中打开！',
-						success: function(res) {
-							if (res.confirm) {
-								uni.setClipboardData({
-									data: ev.url,
-									showToast: false,
-									success: function() {}
-								});
-							} else if (res.cancel) {
-								uni.navigateTo({
-									url: "../Home/URL/URL?url=" + ev.url
-								})
-							}
-						}
-					});
+					uni.navigateTo({
+						url: "../Home/URL/URL?url=" + ev.url
+					})
+					// uni.showModal({
+					// 	title: '提示',
+					// 	content: '如要购买，请在浏览器中打开！',
+					// 	success: function(res) {
+					// 		if (res.confirm) {
+					// 			uni.setClipboardData({
+					// 				data: ev.url,
+					// 				showToast: false,
+					// 				success: function() {}
+					// 			});
+					// 		} else if (res.cancel) {
+					// 			uni.navigateTo({
+					// 				url: "../Home/URL/URL?url=" + ev.url
+					// 			})
+					// 		}
+					// 	}
+					// });
 
 
 				}

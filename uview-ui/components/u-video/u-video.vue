@@ -2,9 +2,9 @@
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
 			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;">
-				<video :page-gesture="false" :http-cache="false" codec="software" :play-strategy="1" :title="item.title"
+				<video :page-gesture="false" :http-cache="false" :title="item.title"
 					:id="'video' + item.id" class="vide" :src="item.video" @play="playing"
-					@error="videoErrorCallback" />
+					@error="videoErrorCallback" play-btn-position="center" 	enable-auto-rotation/>
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">
 				<button open-type="share" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">

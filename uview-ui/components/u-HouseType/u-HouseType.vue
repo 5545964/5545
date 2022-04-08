@@ -105,7 +105,7 @@
 						if (item.follow) {
 							item.isfollow = true
 						}
-						item.video = this.$imgPath + item.video
+						item.video = this.$imgs(item.video)
 						if (item.state == "2") {
 							aa.push(item)
 						}
@@ -138,7 +138,7 @@
 							if (item.follow) {
 								item.isfollow = true
 							}
-							item.video = this.$imgPath + item.video
+							item.video = this.$imgs(item.video)
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]
