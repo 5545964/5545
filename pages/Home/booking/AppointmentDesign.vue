@@ -90,6 +90,14 @@
 							{{fans.userbh||""}}
 						</view>
 					</view>
+					<view v-if="fans.sbh!=0" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+						<view class="cxz">
+							客服编号
+						</view>
+						<view class="cxz">
+							{{fans.sbh||""}}
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>

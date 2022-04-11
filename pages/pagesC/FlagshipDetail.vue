@@ -146,6 +146,10 @@
 			this.shenme_id = ev.id
 			this.allss(this.shenme_id)
 			this.videoContext = uni.createVideoContext('video')
+			uni.showShareMenu({
+				withShareTicket: true,
+				menus: ['shareAppMessage', 'shareTimeline']
+			})
 		},
 		onShow() {
 			this.getMenuItemTop()

@@ -1,10 +1,30 @@
 <template>
 	<view class="home">
 		<view class="hahahaaa" v-for="(item,index) in list" :key="index">
-			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;">
-				<video :page-gesture="false" :http-cache="false" :title="item.title"
-					:id="'video' + item.id" class="vide" :src="item.video" @play="playing"
-					@error="videoErrorCallback" play-btn-position="center" 	enable-auto-rotation/>
+			<view class="" style="width: 690rpx;height: 390rpx;margin-bottom: 20rpx;position: relative;">
+
+				<view style="height: 100%;width: 100%;position: absolute;top: 0;left: 0;" class="cet"
+					@click="bofang(item)" v-if="item.videos !=0 && item.isimg">
+					<view class="">
+						<view class="">
+							<image src="../../../static/play_one.png" style="width: 100rpx;height: 100rpx;" />
+						</view>
+						<!-- <view style="text-align: center;color: #FFFFFF;">
+							10:39
+						</view> -->
+					</view>
+				</view>
+
+
+				<image v-if="item.videos !=0 && item.isimg" class="vide" :src="item.videos" @click="bofang(item)" />
+				<video v-else :page-gesture="false" :http-cache="false" :title="item.title" :id="'video' + item.id"
+					class="vide" :src="item.video" @play="playing" @error="videoErrorCallback"
+					play-btn-position="center" enable-auto-rotation />
+
+
+
+
+
 			</view>
 			<view class="dadas" @click="share(item)" v-if="!item.is_hf">
 				<button open-type="share" class="dasdxz" style="margin: 0;padding: 0;background-color: #FFFFFF;">
@@ -75,13 +95,21 @@
 				default () {
 					return [];
 				}
-			}
+			},
+			scrollTop: {
+				type: Number,
+				default: 0
+			},
 		},
 		data() {
 			return {
 				videoContent: "",
 				list: [],
 				dijige: 0,
+				ghgh: true,
+				xuan: {},
+				vide: {},
+				scrollTops: 0
 			}
 		},
 		watch: {
@@ -90,26 +118,45 @@
 				if (this.list[this.dijige].showComment) {
 					this.$emit("pinglun", this.list[this.dijige], this.dijige);
 				}
-			}
+			},
+			scrollTop(val) {
+				let aa = this.scrollTops + 600
+				let bb = this.scrollTops - 600
+				if (aa < val) {
+					uni.createVideoContext("video" + this.xuan.id, this).pause()
+					uni.createVideoContext(this.vide, this).pause()
+				}
+				if (aa > val) {
+					uni.createVideoContext("video" + this.xuan.id, this).pause()
+					uni.createVideoContext(this.vide, this).pause()
+				}
+			},
 		},
 		mounted() {
 			this.list = [...this.vlist]
 		},
 		methods: {
+			bofang(ev) {
+				this.xuan = ev
+				this.videoContent = uni.createVideoContext("video" + ev.id, this);
+				this.videoContent.play()
+				this.scrollTops = this.scrollTop
+				ev.isimg = !ev.isimg
+			},
 			playing(e) {
-				let that = this;
-				that.vv = e.currentTarget.id; // 获取当前视频id
-				that.videoContent = uni.createVideoContext(that.vv, that);
-				that.videoContent.requestFullScreen();
-				let trailer = that.list;
-				trailer.forEach(function(item, index) { // 获取json对象并遍历, 停止非当前视频
+				let that = this
+				that.videoContent = uni.createVideoContext(e.currentTarget.id, that);
+				that.vide = e.currentTarget.id
+				that.list.forEach(function(item, index) {
 					if (item.video != null && item.video != "") {
-						let temp = 'video' + item.id;
-						if (temp != that.vv) {
-							uni.createVideoContext(temp, that).pause(); //暂停视频播放事件
+						let temp = "video" + item.id
+						if (temp != e.currentTarget.id) {
+							uni.createVideoContext('video' + item.id, that).pause();
+							item.isimg = true
 						}
 					}
 				})
+				that.videoContent.requestFullScreen();
 			},
 			share(ev) {
 				this.$emit("share", ev);
@@ -130,7 +177,6 @@
 				}
 				this.$emit("dianzhan", ev);
 			},
-
 			del(ev) {
 				this.$emit("del", ev);
 			},

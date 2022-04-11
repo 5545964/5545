@@ -31,7 +31,7 @@
 			</view>
 		</view>
 		<view class="home">
-			<u-video v-if="video.length != 0" @play="bofang" @ended="ended" :vlist="video" @collection="collection"
+			<u-video :scrollTop="scrollTop" v-if="video.length != 0" @play="bofang" @ended="ended" :vlist="video" @collection="collection"
 				@pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
 			<u-empty v-else></u-empty>
 		</view>
@@ -93,7 +93,8 @@
 				lkjh: "",
 				dsaa: {},
 				indexdas: "",
-				pages: 1
+				pages: 1,
+				scrollTop:0
 			};
 		},
 		onLoad(ev) {
@@ -126,6 +127,9 @@
 				}
 			})
 		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
+		},
 		onReachBottom(ev) {
 			this.pages = this.pages + 1
 			this.alls()
@@ -142,10 +146,12 @@
 					this.dianzhansssss = true
 					this.indexdas = index
 					this.pinglun_list = []
-					this.pinglun_list = ev.pl
-					this.pinglun_list.forEach(item => {
-						item["checked"] = false
-					})
+					if (ev.pl) {
+						this.pinglun_list = ev.pl
+						this.pinglun_list.forEach(item => {
+							item["checked"] = false
+						})
+					}
 					this.showComment = true;
 					this.itemsss = ev;
 				}
@@ -167,6 +173,7 @@
 						data.data.data.status.data.forEach(item => {
 							item["iszan"] = false
 							item["isfollow"] = false
+							item["isimg"] = true
 							if (item.zans) {
 								item.iszan = true
 							}
@@ -174,6 +181,8 @@
 								item.isfollow = true
 							}
 							item.video = this.$imgs(item.video)
+							item.videos = this.$imgs(item.videos)
+							console.log(item.videos);
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]

@@ -11,7 +11,7 @@
 			</view>
 		</view> 
 		<u-empty v-else></u-empty> -->
-		<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
+		<u-video :scrollTop="scrollTops" v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
 			@dianzhan="dianzhan"></u-video>
 		<u-empty v-else></u-empty>
 		<!-- 弹窗 -->
@@ -62,12 +62,16 @@
 				cad: [],
 				pagess: 0,
 				videoindex: 0,
+				scrollTops: 0
 			};
 		},
 		watch: {
 			pages(val) {
 				this.pagess = this.pages
 				this.alls()
+			},
+			scrollTop(val) {
+				this.scrollTops = val
 			},
 		},
 		mounted() {
@@ -99,6 +103,7 @@
 					data.data.data.status.data.forEach(item => {
 						item["iszan"] = false
 						item["isfollow"] = false
+						item["isimg"] = true
 						if (item.zans) {
 							item.iszan = true
 						}
@@ -110,7 +115,7 @@
 							aa.push(item)
 						}
 					})
-					this.video[this.videoindex].pl = ["",""]
+					this.video[this.videoindex].pl = ["", ""]
 					this.video[this.videoindex].pl = [...aa[this.videoindex].pl]
 					if (this.dianzhansssss) {
 						this.pinglunaa(this.video[this.indexdas], this.indexdas)
@@ -130,6 +135,7 @@
 						data.data.data.status.data.forEach(item => {
 							item["iszan"] = false
 							item["isfollow"] = false
+							item["isimg"] = true
 							// 点赞
 							if (item.zans) {
 								item.iszan = true
@@ -152,10 +158,12 @@
 					this.dianzhansssss = true
 					this.indexdas = index
 					this.pinglun_list = []
-					this.pinglun_list = ev.pl
-					this.pinglun_list.forEach(item => {
-						item["checked"] = false
-					})
+					if (ev.pl) {
+						this.pinglun_list = ev.pl
+						this.pinglun_list.forEach(item => {
+							item["checked"] = false
+						})
+					}
 					this.showComment = true;
 					this.itemsss = ev;
 				}

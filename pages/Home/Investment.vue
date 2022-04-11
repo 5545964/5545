@@ -10,8 +10,8 @@
 			</view>
 			<!-- 热门栏目 -->
 			<view v-if="current==12">
-				<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
-					@dianzhan="dianzhan">
+				<u-video :scrollTop="scrollTop" v-if="video.length != 0" :vlist="video" @collection="collection"
+					@pinglun="pinglunaa" @dianzhan="dianzhan">
 				</u-video>
 				<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 			</view>
@@ -370,6 +370,7 @@
 				],
 				dsaa: {},
 				pages: 1,
+				scrollTop: 0
 			}
 		},
 		onLoad(ev) {
@@ -384,6 +385,9 @@
 				this.pages = this.pages + 1
 				this.enjoy()
 			}
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		},
 		onPullDownRefresh() {
 			this.video = []
@@ -684,13 +688,15 @@
 			},
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
+					this.itemsss = ev;
 					this.indexdas = index
 					this.pinglun_list = []
-					this.pinglun_list = ev.pl
-					this.pinglun_list.forEach(item => {
-						item["checked"] = false
-					})
-					this.itemsss = ev;
+					if (ev.pl) {
+						this.pinglun_list = ev.pl
+						this.pinglun_list.forEach(item => {
+							item["checked"] = false
+						})
+					}
 					if (!this.dianzhansssss && !this.showComment) {
 						this.video[index].showComment = true
 						return this.showComment = true;
@@ -892,6 +898,7 @@
 							item["iszan"] = false
 							item["isfollow"] = false
 							item["showComment"] = this.showComment
+							item["isimg"] = true
 							if (item.zans) {
 								item.iszan = true
 							}
@@ -899,6 +906,7 @@
 								item.isfollow = true
 							}
 							item.video = this.$imgs(item.video)
+							item.videos = this.$imgs(item.videos)
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]

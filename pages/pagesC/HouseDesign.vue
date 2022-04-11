@@ -24,7 +24,7 @@
 			<u-FlagshipSuite @pageA="pageA" @pageB="pageB" :pages="pages"></u-FlagshipSuite>
 		</view>
 		<view v-if="current==2">
-			<u-HouseType :pages="pages" @pageA="pageA" @pageB="pageB"></u-HouseType>
+			<u-HouseType :scrollTop="scrollTop" :pages="pages" @pageA="pageA" @pageB="pageB"></u-HouseType>
 		</view>
 		<u-heigth />
 	</view>
@@ -45,6 +45,7 @@
 				current: 0,
 				pages: 1,
 				shuo: true,
+				scrollTop:0
 			};
 		},
 		onLoad(ev) {
@@ -54,6 +55,9 @@
 			if (ev.current) {
 				this.current = ev.current
 			}
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		},
 		onReachBottom(ev) {
 			if (this.shuo) {

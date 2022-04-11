@@ -21,8 +21,8 @@
 		</view>
 		<!-- 热门栏目 -->
 		<view class="" style="height: 100%;" v-if="current==12">
-			<u-video v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
-				@dianzhan="dianzhan">
+			<u-video :scrollTop="scrollTop" v-if="video.length != 0" :vlist="video" @collection="collection"
+				@pinglun="pinglunaa" @dianzhan="dianzhan">
 			</u-video>
 			<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 		</view>
@@ -237,9 +237,9 @@
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
 							:key="index">
-							
-							
-							
+
+
+
 							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
@@ -250,10 +250,10 @@
 									《{{item.name||""}}》
 								</view>
 							</view>
-							
-							
-							
-							
+
+
+
+
 						</view>
 					</view>
 					<view class="anniusss">
@@ -367,9 +367,12 @@
 				],
 				dsaa: {},
 				pages: 1,
+				scrollTop: 0
 			}
 		},
-		onLoad() {},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
+		},
 		onShow() {
 			this.list = uni.getStorageSync('icon').wanghong
 			this.list.forEach(item => {
@@ -412,10 +415,8 @@
 					urls: [aa],
 					longPressActions: {
 						itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function(data) {
-						},
-						fail: function(err) {
-						}
+						success: function(data) {},
+						fail: function(err) {}
 					}
 				});
 			},
@@ -683,10 +684,12 @@
 				if (await this.$login()) {
 					this.indexdas = index
 					this.pinglun_list = []
-					this.pinglun_list = ev.pl
-					this.pinglun_list.forEach(item => {
-						item["checked"] = false
-					})
+					if (ev.pl) {
+						this.pinglun_list = ev.pl
+						this.pinglun_list.forEach(item => {
+							item["checked"] = false
+						})
+					}
 					this.itemsss = ev;
 					if (!this.dianzhansssss && !this.showComment) {
 						this.video[index].showComment = true
@@ -745,7 +748,7 @@
 					})
 				}
 			},
-			
+
 			changeTokens(index, item) {
 				this.active = index
 				this.parsesssss = item.content
@@ -913,6 +916,7 @@
 							item["iszan"] = false
 							item["isfollow"] = false
 							item["showComment"] = this.showComment
+							item["isimg"] = true
 							if (item.zans) {
 								item.iszan = true
 							}
@@ -922,7 +926,7 @@
 							// item.video = this.$imgPath + item.video
 							aa.push(item)
 						})
-						this.video = [...this.video,...aa]
+						this.video = [...this.video, ...aa]
 					}
 				})
 
