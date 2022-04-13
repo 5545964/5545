@@ -122,14 +122,14 @@
 			scrollTop(val) {
 				let aa = this.scrollTops + 600
 				let bb = this.scrollTops - 600
-				if (aa < val) {
-					uni.createVideoContext("video" + this.xuan.id, this).pause()
-					uni.createVideoContext(this.vide, this).pause()
-				}
-				if (aa > val) {
-					uni.createVideoContext("video" + this.xuan.id, this).pause()
-					uni.createVideoContext(this.vide, this).pause()
-				}
+				// if (aa < val) {
+				// 	uni.createVideoContext("video" + this.xuan.id, this).pause()
+				// 	uni.createVideoContext(this.vide, this).pause()
+				// }
+				// if (aa > val) {
+				// 	uni.createVideoContext("video" + this.xuan.id, this).pause()
+				// 	uni.createVideoContext(this.vide, this).pause()
+				// }
 			},
 		},
 		mounted() {

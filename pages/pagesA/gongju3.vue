@@ -21,7 +21,7 @@
 				</view>
 				<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 					<view class="dsdxcxvxs">
-						{{datas||""}}
+						{{$u.timeFormat(datas, 'yyyy-mm-dd')}}
 					</view>
 					<u-icon name="arrow-down"></u-icon>
 				</view>
@@ -39,7 +39,7 @@
 
 		data() {
 			return {
-				datas: this.$dayjs(`${new Date()}`).format('YYYY-MM-DD'),
+				datas: Date.parse(new Date()),
 				title: "我的足迹",
 				list: []
 			};
@@ -51,28 +51,29 @@
 			this.getMyfoot()
 		},
 		methods: {
-			dsadsa(ev){
+			dsadsa(ev) {
 				uni.navigateTo({
-					url:"../pagesC/Shopping?shopid="+ev.id
+					url: "../pagesC/Shopping?shopid=" + ev.id
 				})
 			},
 			getMyfoot() {
 				this.$api.myfootxr({
 					user_id: uni.getStorageSync('user_info').id,
-					time: this.$dayjs(this.datas).unix(),
+					time: this.datas / 1000,
 					page: 1,
 					limit: 10000
 				}).then(data => {
-					this.list = [];
-					data.data.data.status.forEach((item, index) => {
-						this.list.push({
-							img: this.$imgPath + item.content.simage,
-							title: item.content.name,
-							num: item.content.xl,
-							id: item.shop_id
-						})
-					});
-
+					if (data.data.code == 1) {
+						this.list = [];
+						data.data.data.status.forEach((item, index) => {
+							this.list.push({
+								img: this.$imgPath + item.content.simage,
+								title: item.content.name,
+								num: item.content.xl,
+								id: item.shop_id
+							})
+						});
+					}
 				})
 			},
 			del(ev, index) {

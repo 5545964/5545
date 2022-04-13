@@ -111,6 +111,7 @@
 							item.isfollow = true
 						}
 						item.video = this.$imgs(item.video)
+						item.videos = this.$imgs(item.videos)
 						if (item.state == "2") {
 							aa.push(item)
 						}
@@ -145,6 +146,7 @@
 								item.isfollow = true
 							}
 							item.video = this.$imgs(item.video)
+							item.videos = this.$imgs(item.videos)
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]

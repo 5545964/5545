@@ -35,6 +35,15 @@
 									<u-search bgColor="#f6f6f6" placeholder="输入关键字搜索" v-model="keyword" @search="like">
 									</u-search>
 								</view>
+								<view
+									style="width: 100%;text-align: center;height: 60rpx;line-height: 60rpx;display: flex;align-items: center;justify-content: center;"
+									@click="show = true">
+									<view class="">
+										{{xuanzhe}}
+									</view>
+									<image src="../../static/icon_home_sanjiao.png"
+										style="width: 30rpx;height: 20rpx;margin-left: 20rpx;" />
+								</view>
 								<view style="height: 30rpx;width: 100%;" />
 								<view style="height: 100%;">
 									<view class="papapa" v-if="lickc.length!=0"
@@ -87,53 +96,15 @@
 										</view>
 									</view>
 									<view class="papapa" style="height: 100%;">
-										<view class="mian_left">
+										<view class="mian_left" v-for="(item,index) in datalist" :key="index">
 											<scroll-view scroll-y="true" style="height: 100%;">
-												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist"
-													:key="index" @click="changeTokens(index,item)">
-													<view :class="active==index?'mian_left_item':'mian_left_item1'"
+												<view style="margin-bottom:20rpx;" v-for="(items,indexs) in item"
+													:key="indexs" @click="changeTokens(index,indexs)">
+													<view
+														:class="items.active==indexs?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title||""}}
-														</view>
-													</view>
-												</view>
-											</scroll-view>
-										</view>
-										<view class="mian_left">
-											<scroll-view scroll-y="true" style="height: 100%;">
-												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist0"
-													:key="index" @click="changeTokens0(index,item)">
-													<view :class="active0==index?'mian_left_item':'mian_left_item1'"
-														class="cet">
-														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title||""}}
-														</view>
-													</view>
-												</view>
-											</scroll-view>
-										</view>
-										<view class="mian_left">
-											<scroll-view scroll-y="true" style="height: 100%;">
-												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist1"
-													:key="index" @click="changeTokens1(index,item)">
-													<view :class="active1==index?'mian_left_item':'mian_left_item1'"
-														class="cet">
-														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title||""}}
-														</view>
-													</view>
-												</view>
-											</scroll-view>
-										</view>
-										<view class="mian_left">
-											<scroll-view scroll-y="true" style="height: 100%;">
-												<view style="margin-bottom:20rpx;" v-for="(item,index) in datalist2"
-													:key="index" @click="changeTokens2(index,item)">
-													<view :class="active2==index?'mian_left_item':'mian_left_item1'"
-														class="cet">
-														<view style="width:100rpx;text-align: left;line-height:35rpx;">
-															{{item.title||""}}
+															{{items.title||""}}
 														</view>
 													</view>
 												</view>
@@ -175,6 +146,8 @@
 			</swiper>
 		</view>
 		<view>
+			<u-select v-model="show" :list="columns" @confirm="confirm"></u-select>
+
 			<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
 				<view class="yueduwo">
 					<view class="text">
@@ -185,15 +158,17 @@
 					</view>
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;justify-content: center;">
-							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
-								<view class="yuan" @click="hahaha(tanchaung)">
-									<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28">
-									</u-icon>
+							<view style="display:flex;align-items: center;">
+								<view>
+									<view class="yuan" @click="hahaha(tanchaung)">
+										<u-icon v-if="tanchaung.check" name="checkbox-mark" color="#2979ff" size="28">
+										</u-icon>
+									</view>
 								</view>
-							</view>
-							<view style="width:70%;padding: 0 10rpx;">
-								<view class="mingcheng" @click="shouURls(tanchaung)">
-									《{{tanchaung.name||""}}》
+								<view style="padding: 0 10rpx;">
+									<view class="mingcheng" @click="shouURls(tanchaung)">
+										《{{tanchaung.name||""}}》
+									</view>
 								</view>
 							</view>
 						</view>
@@ -260,6 +235,12 @@
 	export default {
 		data() {
 			return {
+				user_infos: uni.getStorageSync("user_info"),
+				mm: [],
+				zhuangtai: 0,
+				xuanzhe: "",
+				show: false,
+				columns: [],
 				cduan: false,
 				nmnm: "",
 				mnmn: "",
@@ -313,7 +294,7 @@
 						content: ""
 					}
 				],
-				current: 0,
+				current: 3,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -331,7 +312,7 @@
 				lickc: [],
 				klklkl: 0,
 				lickid: 0,
-				jiji:""
+				jiji: ""
 			};
 		},
 		onLoad(ev) {
@@ -407,22 +388,24 @@
 			},
 			// 同意协议
 			hahaha(item) {
+				console.log(item);
 				item.check = !item.check
 			},
 			// 同意协议
 			tongyixieyi(ev) {
+				console.log(ev);
 				if (ev.check) {
 					let aa = 0
-					if(this.idid == 1){
+					if (this.idid == 1) {
 						aa = 48
 					}
-					if(this.idid == 0){
+					if (this.idid == 0) {
 						aa = 49
 					}
 					this.$api.userag({
 						userid: uni.getStorageSync("user_info").id,
 						agid: aa,
-						title:this.tanchaung.title
+						title: this.tanchaung.title
 					})
 					this.$api.tjsq({
 						user_id: uni.getStorageSync("user_info").id,
@@ -445,7 +428,39 @@
 					})
 				}
 			},
-			lp(ev) {
+			confirm(ev) {
+				this.xuanzhe = ev[0].label
+				this.mao(ev[0].value, 0, 0)
+			},
+			changeTokens(index, indexs) {
+				if (this.datalist[index][indexs].address) {
+					this.changeTokens2(this.datalist[index][indexs], )
+				} else {
+					if (this.user_infos.bbs.id == 1 && this.datalist[index - 1][indexs].did == 0) {
+						this.datalist[index][indexs]["name"] = this.datalist[index][indexs].title + "的相关协议"
+						this.datalist[index][indexs]["quxian"] = false
+						this.datalist[index][indexs]["check"] = false
+						this.tanchaung = this.datalist[index][indexs]
+						this.yuedu = true
+					}
+					this.datalist[index].forEach(item => {
+						item.active = indexs
+					})
+					let del = []
+					this.datalist.forEach((item, indexa) => {
+						if (indexa > index) {
+							del.push(indexa)
+						}
+					})
+					del.forEach(item => {
+						this.datalist.splice(item, 1)
+					})
+					this.mao(this.datalist[index][indexs].id, index + 1, indexs)
+
+
+				}
+			},
+			lp(ev, dian) {
 				this.$api.lpmap({
 					id: ev
 				}).then(data => {
@@ -454,9 +469,32 @@
 							item["check"] = false
 							item["name"] = item.title + "的相关协议"
 						})
-						this.datalist2 = data.data.data.status
-					} else {
-						this.datalist2 = []
+						this.datalist0 = []
+						this.datalist0 = [...this.datalist]
+						this.datalist0[dian] = [...data.data.data.status]
+						this.datalist = [...this.datalist0]
+					}
+				})
+			},
+			mao(ev, dian, indexs) {
+				this.$api.map({
+					pid: ev
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach((item, index) => {
+							item["active"] = 0
+						})
+						if (data.data.data.status.length != 0) {
+							this.datalist0 = []
+							this.datalist0 = [...this.datalist]
+							this.datalist0[dian] = [...data.data.data.status]
+							this.datalist = [...this.datalist0]
+							this.mao(this.datalist[dian][indexs].id, dian + 1, indexs)
+							this.zhuangtai = dian + 1
+						} else {
+							let bb = this.datalist.length
+							this.lp(this.datalist[bb - 1][indexs].id, dian)
+						}
 					}
 				})
 			},
@@ -468,17 +506,18 @@
 						uni.setStorageSync("user_info", data.data.data.myuser)
 					}
 				})
-				this.$api.map().then(data => {
+				this.$api.map({
+					pid: this.pid
+				}).then(data => {
 					if (data.data.code == 1) {
-						this.datalist = [...data.data.data.status]
-						if (this.datalist[0].child) {
-							this.datalist0 = [...this.datalist[0].child]
-							if (this.datalist0[0].child) {
-								this.datalist1 = [...this.datalist0[0].child]
-								this.lickid = this.datalist1[0].id
-								this.lp(this.datalist1[0].id)
-							}
-						}
+						data.data.data.status.forEach((item, index) => {
+							item["value"] = item.id
+							item["label"] = item.title
+							item["active"] = 0
+						})
+						this.columns = data.data.data.status
+						this.xuanzhe = this.columns[0].title
+						this.mao(this.columns[0].id, 0, 0)
 						uni.stopPullDownRefresh();
 					}
 				})
@@ -510,24 +549,23 @@
 					id: ev
 				}).then(data => {
 					if (data.data.code == 1) {
-						if(index == 0){
+						if (index == 0) {
 							this.jiji = data.data.data.status.dcontents
 						}
-						if(index == 1){
+						if (index == 1) {
 							this.jiji = data.data.data.status.bcontents
 						}
 					}
 				})
 			},
-			async changeTokens2(index, item) {
+			async changeTokens2(item) {
 				this.lickc = []
 				if (await this.$login()) {
-					this.active2 = index
 					this.loupanid = item.id
-					// this.agid = item.ag.id
 					item.check = false
 					this.tanchaung = item
-					let aa = uni.getStorageSync("user_info")
+					// 判断会员
+					let aa = this.user_infos
 					if (!aa.bbs.id && aa.des == 0) {
 						this.qianyue = "您还不是设计师或美居会员"
 						this.huxing = "点击前往成为美居设计师或美居会员"
@@ -554,7 +592,8 @@
 									}
 								}
 								if (item.sign_bid == 0) {
-									if (aa.bbs.id != 0) {
+									// if (aa.bbs.id != 0) {
+									if (aa.bbs.id == 2) {
 										this.yuedu = true
 										this.idid = 0
 										uni.setStorageSync("idid", this.idid)
@@ -562,7 +601,6 @@
 										return
 									}
 								}
-
 								if (item.sign_bid != 0 || item.sign_did != 0) {
 									this.qianyue = "该楼盘已被签约"
 									if (item.sign_bid == aa.id || item.sign_did == aa.id) {
@@ -739,25 +777,7 @@
 				this.active0 = index
 
 			},
-			changeTokens(index, item) {
-				this.lickc = []
-				this.active0 = 0
-				this.active1 = 0
-				this.active2 = 0
-				if (item.child) {
-					this.datalist0 = [...item.child]
-					if (this.datalist0[0].child.length != 0) {
-						this.datalist1 = [...this.datalist0[0].child]
-						this.lickid = this.datalist1[0].id
-						this.lp(this.datalist1[0].id)
-					}
-				} else {
-					this.datalist0 = []
-					this.datalist1 = []
-					this.datalist2 = []
-				}
-				this.active = index
-			},
+
 			shouURl(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
@@ -888,8 +908,7 @@
 
 	.papapa {
 		display: flex;
-		align-items: center;
-		justify-content: space-between;
+		align-items: flex-start;
 	}
 
 	.mian_left {
