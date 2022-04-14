@@ -127,6 +127,13 @@
 								我的佣金
 							</view>
 						</view>
+						<view class="template" @click="gongju_go('../pagesD/peixun','培训费用')"
+							v-if="user_info.bbs.id">
+							<image class="img" :src="'../../static/gongju14.png'" mode="aspectFit"></image>
+							<view class="texts">
+								培训费用
+							</view>
+						</view>
 
 						<view class="template" @click="gongju_go('../pagesA/gongju6','安装评价')">
 							<image class="img" :src="'../../static/gongju6.png'" mode="aspectFit"></image>

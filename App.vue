@@ -2,10 +2,19 @@
 	import logs from '@/utils/islogin.js'
 	export default {
 		onLaunch(ev) {
-			console.log(process.env.NODE_ENV);
 			uni.setStorageSync("yanzheng", true)
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
+				if (uni.getStorageSync("user_info")) {
+					this.$api.ewmjoin({
+						user_id: uni.getStorageSync("user_info").id,
+						pid: ev.query.uid
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.removeStorageSync('yaoqinguid')
+						}
+					})
+				}
 			}
 			if (ev.query.level) {
 				if (ev.query.level === "undefined") {
@@ -15,22 +24,45 @@
 			}
 		},
 		onShow() {
-			// clearInterval(uni.getStorageSync("setInterval", aa))
-			// let aa = setInterval(() => {
-			// 	this.$api.qzqy({
-			// 		// user_id: uni.getStorageSync("user_info").id || 0
-			// 		user_id: 0
-			// 	}).then(data => {
-			// 		if (data.data.code == 1) {
-			// 			if (uni.getStorageSync("yanzheng")) {
-			// 				uni.reLaunch({
-			// 					url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status.agid
-			// 				})
-			// 			}
-			// 		}
-			// 	})
-			// }, 5000)
-			// uni.setStorageSync("setInterval", aa)
+			if (true) {
+				clearInterval(uni.getStorageSync("setInterval", aa))
+				let aa = setInterval(() => {
+					let aa = {
+						user_id: uni.getStorageSync("user_info").id || 0
+					}
+					this.$api.qzqy(aa).then(data => {
+						if (data.data.code == 1) {
+							if (uni.getStorageSync("yanzheng")) {
+								uni.reLaunch({
+									url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
+										.agid
+								})
+							}
+						}
+					})
+					this.$api.timeout(aa).then(data => {
+						if (data.data.code == 1) {
+							if (uni.getStorageSync("yanzheng")) {
+								uni.reLaunch({
+									url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
+										.agid + "&lpid=" + data.data.data.status.lpid
+								})
+							}
+						}
+					})
+					this.$api.tgfw(aa).then(data => {
+						if (data.data.code == 1) {
+							if (uni.getStorageSync("yanzheng")) {
+								uni.reLaunch({
+									url: "/pages/pagesB/tanchuangfuwu?status=" + JSON.stringify(
+										data.data.data.status)
+								})
+							}
+						}
+					})
+				}, 10000)
+				uni.setStorageSync("setInterval", aa)
+			}
 		}
 	}
 </script>

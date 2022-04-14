@@ -65,7 +65,7 @@
 					</view>
 				</view>
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
-					<view class="vdfdd">
+					<view class="vdfdd" v-if="item.money == 1 && item.px == 1">
 						<view class="win">
 							{{item.order_id||""}}
 						</view>
@@ -80,8 +80,10 @@
 								<text v-if="item.statess.state >= 4">订单完成</text>
 							</block>
 
-							<text v-if="item.sq == 0">佣金未申请</text>
-							<text v-if="item.sq == 1">佣金申请中</text>
+							<block v-if="item.tixian != 1">
+								<text v-if="item.sq == 0">佣金未申请</text>
+								<text v-if="item.sq == 1">佣金申请中</text>
+							</block>
 							<text v-if="item.tixian == 1">佣金申请成功</text>
 						</view>
 						<view class="win">

@@ -354,6 +354,14 @@
 						"navigationStyle": "custom"
 					}
 
+				}, {
+					"path": "tanchuangfuwu",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom"
+					}
+
 				}
 			]
 		},
@@ -633,6 +641,15 @@
 						"navigationStyle": "custom",
 						"navigationBarTextStyle": "black"
 					}
+				}, {
+					"path": "peixun",
+					"style": {
+						"navigationBarTitleText": "培训费用",
+						"enablePullDownRefresh": false,
+						"navigationStyle": "custom",
+						"navigationBarTextStyle": "black"
+					}
+
 				}
 			]
 		}

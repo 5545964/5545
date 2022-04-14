@@ -52,9 +52,9 @@
 			// 	})
 			// })
 			this.$api.myag({
-				userid:uni.getStorageSync("user_info").id
-			}).then(data=>{
-				if(data.data.code == 1){
+				userid: uni.getStorageSync("user_info").id
+			}).then(data => {
+				if (data.data.code == 1) {
 					this.alls = data.data.data.status
 				}
 			})
@@ -62,7 +62,12 @@
 		},
 		methods: {
 			kan(ev) {
-				uni.setStorageSync("fuwenbeng", ev.ag.content)
+				console.log(ev);
+				if (ev.content != "" && ev.content != null) {
+					uni.setStorageSync("fuwenbeng", ev.content)
+				} else {
+					uni.setStorageSync("fuwenbeng", ev.ag.content)
+				}
 				uni.navigateTo({
 					url: "../pagesC/fuwenben?title=" + ev.ag.name
 				})

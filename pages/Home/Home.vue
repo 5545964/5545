@@ -73,6 +73,7 @@
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 		},
 		onShow() {
+			uni.setStorageSync("yanzheng", true)
 			this.budenglugengxin()
 			uni.setStorageSync("shouzhi", 0)
 			this.$api.pots({

@@ -340,6 +340,7 @@
 									title: "购买" + that.types + "成功",
 									icon: "success"
 								})
+								uni.setStorageSync("yanzheng", true)
 								setTimeout(() => {
 									uni.navigateTo({
 										url: "./redsuccess?level=" + that.id +

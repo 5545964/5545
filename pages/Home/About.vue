@@ -95,7 +95,7 @@
 											</scroll-view>
 										</view>
 									</view>
-									<view class="papapa" style="height: 100%;">
+									<view class="papapa" v-else style="height: 100%;">
 										<view class="mian_left" v-for="(item,index) in datalist" :key="index">
 											<scroll-view scroll-y="true" style="height: 100%;">
 												<view style="margin-bottom:20rpx;" v-for="(items,indexs) in item"
@@ -156,7 +156,24 @@
 					<view class="textss">
 						感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下协议了解详细信息。如您同意，请勾选协议并点击”同意”开始接受我们的服务。
 					</view>
-					<view style="padding:20rpx 0;">
+					<view style="padding:20rpx 0;" v-if="tanchaung.quxian">
+						<view class="cet" style="margin:10rpx 0;justify-content: center;">
+							<view style="display:flex;align-items: center;" v-for="(item,index) in xieyi" :key="index">
+								<view>
+									<view class="yuan" @click="hahaha(item)">
+										<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28">
+										</u-icon>
+									</view>
+								</view>
+								<view style="padding: 0 10rpx;">
+									<view class="mingcheng" @click="shouURls(item)">
+										《{{item.name||""}}》
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view style="padding:20rpx 0;" v-else>
 						<view class="cet" style="margin:10rpx 0;justify-content: center;">
 							<view style="display:flex;align-items: center;">
 								<view>
@@ -173,12 +190,37 @@
 							</view>
 						</view>
 					</view>
+
 					<view class="anniusss">
 						<view class="hkhnij" @click="yuedu = false">
 							取消
 						</view>
-						<view class="hkhnij jjhgj" @click="tongyixieyi(tanchaung)">
+
+						<view class="hkhnij jjhgj" @click="tongyixieyi(0)" v-if="tanchaung.quxian">
 							同意
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyixieyi(tanchaung)" v-else>
+							同意
+						</view>
+					</view>
+				</view>
+			</u-popup>
+			<!-- b1推广权 -->
+			<u-popup width="500" border-radius="30" v-model="shengqings" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						楼盘推广权申请
+					</view>
+					<view class="textss" style="padding: 30rpx;">
+						是否申请<text class="mingcheng">{{shengqing}}</text>的推广权
+					</view>
+
+					<view class="anniusss">
+						<view class="hkhnij" @click="shengqings = false">
+							否
+						</view>
+						<view class="hkhnij jjhgj" @click="tuihuang(tanchaung)">
+							是
 						</view>
 					</view>
 				</view>
@@ -235,6 +277,8 @@
 	export default {
 		data() {
 			return {
+				shengqings: "",
+				shengqing: false,
 				user_infos: uni.getStorageSync("user_info"),
 				mm: [],
 				zhuangtai: 0,
@@ -331,6 +375,22 @@
 			this.heigth = res.windowHeight;
 		},
 		methods: {
+			// 申请推广
+			tuihuang() {
+				this.$api.blp({
+					lpid: this.tanchaung.id,
+					user_id: this.user_infos.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.shengqings = false
+					} else {
+						uni.showToast({
+							title: "暂无数据",
+							icon: "none"
+						})
+					}
+				})
+			},
 			duan(ev) {
 				if (ev == 0) {
 					uni.reLaunch({
@@ -386,14 +446,43 @@
 					url: "../pagesC/fuwenben?title=" + ev.name
 				})
 			},
-			// 同意协议
+			// 点击协议圆圈
 			hahaha(item) {
-				console.log(item);
 				item.check = !item.check
+				this.$forceUpdate();
+			},
+			hahahas(index) {
+				this.xieyi[index].check = !this.xieyi[index].check
 			},
 			// 同意协议
 			tongyixieyi(ev) {
-				console.log(ev);
+				if (ev == 0) {
+					let aa = []
+					this.xieyi.forEach(item => {
+						if (item.check) {
+							this.$api.userag({
+								userid: uni.getStorageSync("user_info").id,
+								agid: item.id,
+								title: item.name
+							})
+						}
+					})
+					this.$api.tjsq({
+						user_id: uni.getStorageSync("user_info").id,
+						bid: this.xieyi[0].datalist.id,
+						sole_type: 2,
+						cate: 1
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.yuedu = false
+							this.$refs.uToast.show({
+								title: '区域申请成功，请留意系统消息查看审核结果。',
+								type: 'default'
+							})
+						}
+					})
+					return
+				}
 				if (ev.check) {
 					let aa = 0
 					if (this.idid == 1) {
@@ -405,12 +494,14 @@
 					this.$api.userag({
 						userid: uni.getStorageSync("user_info").id,
 						agid: aa,
+						lpid: this.tanchaung.id,
 						title: this.tanchaung.title
 					})
 					this.$api.tjsq({
 						user_id: uni.getStorageSync("user_info").id,
 						bid: this.loupanid,
-						sole_type: this.idid
+						sole_type: this.idid,
+						cate: 0
 					}).then(data => {
 						if (data.data.code == 1) {
 							this.yuedu = false
@@ -418,7 +509,6 @@
 								title: '楼盘申请成功，请留意系统消息查看审核结果。',
 								type: 'default'
 							})
-							this.alls()
 						}
 					})
 				} else {
@@ -428,24 +518,37 @@
 					})
 				}
 			},
+			// 弹窗
 			confirm(ev) {
 				this.xuanzhe = ev[0].label
 				this.mao(ev[0].value, 0, 0)
 			},
+			// 切换选项，签约区县
 			changeTokens(index, indexs) {
+				this.datalist[index].forEach(item => {
+					item.active = indexs
+				})
 				if (this.datalist[index][indexs].address) {
-					this.changeTokens2(this.datalist[index][indexs], )
+					this.changeTokens2(this.datalist[index][indexs])
 				} else {
-					if (this.user_infos.bbs.id == 1 && this.datalist[index - 1][indexs].did == 0) {
-						this.datalist[index][indexs]["name"] = this.datalist[index][indexs].title + "的相关协议"
-						this.datalist[index][indexs]["quxian"] = false
-						this.datalist[index][indexs]["check"] = false
-						this.tanchaung = this.datalist[index][indexs]
+					// 签约区县
+					if (this.user_infos.bbs.id == 1 && this.datalist[index][indexs].did == 0) {
+						this.tanchaung["quxian"] = true
+						let aa = uni.getStorageSync("xieyi")
+						let cc = []
+						aa.forEach(item => {
+							if (item.state == 12) {
+								item["datalist"] = this.datalist[index][indexs]
+								item["quxian"] = true
+								item.name = this.datalist[index][indexs].title + "的相关协议"
+								cc.push(item)
+							}
+						})
+						this.xieyi = [...cc]
 						this.yuedu = true
 					}
-					this.datalist[index].forEach(item => {
-						item.active = indexs
-					})
+					// 下一级数据处理
+
 					let del = []
 					this.datalist.forEach((item, indexa) => {
 						if (indexa > index) {
@@ -456,10 +559,9 @@
 						this.datalist.splice(item, 1)
 					})
 					this.mao(this.datalist[index][indexs].id, index + 1, indexs)
-
-
 				}
 			},
+			// 楼盘列表
 			lp(ev, dian) {
 				this.$api.lpmap({
 					id: ev
@@ -468,6 +570,9 @@
 						data.data.data.status.forEach(item => {
 							item["check"] = false
 							item["name"] = item.title + "的相关协议"
+							item["names"] = item.title
+							item["active"] = 0
+							item["quxian"] = false
 						})
 						this.datalist0 = []
 						this.datalist0 = [...this.datalist]
@@ -476,6 +581,7 @@
 					}
 				})
 			},
+			// 列表数据加载
 			mao(ev, dian, indexs) {
 				this.$api.map({
 					pid: ev
@@ -499,6 +605,7 @@
 				})
 			},
 			alls() {
+				// 用户信息
 				this.$api.myuser({
 					user_id: uni.getStorageSync("user_info").id || 0
 				}).then(data => {
@@ -506,6 +613,7 @@
 						uni.setStorageSync("user_info", data.data.data.myuser)
 					}
 				})
+				// 业务地图
 				this.$api.map({
 					pid: this.pid
 				}).then(data => {
@@ -521,6 +629,7 @@
 						uni.stopPullDownRefresh();
 					}
 				})
+				// 咨询中心
 				this.$api.pots({
 					limit: 1000
 				}).then(data => {
@@ -532,6 +641,7 @@
 						uni.stopPullDownRefresh();
 					}
 				})
+				// 前三项
 				for (let i in this.lists) {
 					this.$api.bydadout({
 						state: this.lists[i].id
@@ -558,7 +668,9 @@
 					}
 				})
 			},
+			// 楼盘签约
 			async changeTokens2(item) {
+				console.log(item);
 				this.lickc = []
 				if (await this.$login()) {
 					this.loupanid = item.id
@@ -583,21 +695,27 @@
 								if (this.idid == 1) {
 									if (item.sign_did == 0) {
 										if (aa.des != 0) {
-											this.yuedu = true
+											console.log('des', "d端");
 											this.idid = 1
 											uni.setStorageSync("idid", this.idid)
 											this.klkl(item.id, 0)
+											this.yuedu = true
 											return
 										}
 									}
 								}
 								if (item.sign_bid == 0) {
-									// if (aa.bbs.id != 0) {
+									if (aa.bbs.id == 1) {
+										this.shengqing = this.tanchaung.names
+										this.shengqings = true
+										return
+									}
 									if (aa.bbs.id == 2) {
-										this.yuedu = true
+										console.log("bbs", "B2");
 										this.idid = 0
 										uni.setStorageSync("idid", this.idid)
 										this.klkl(item.id, 1)
+										this.yuedu = true
 										return
 									}
 								}
@@ -662,6 +780,8 @@
 					})
 				}
 			},
+
+
 			async lidsadsa(index, item) {
 				if (await this.$login()) {
 					this.active22 = index
@@ -777,7 +897,6 @@
 				this.active0 = index
 
 			},
-
 			shouURl(ev) {
 				uni.setStorageSync("fuwenbeng", ev.content)
 				uni.navigateTo({
@@ -785,10 +904,18 @@
 				})
 			},
 			shouURls(ev) {
-				uni.setStorageSync("fuwenbeng", this.jiji)
-				uni.navigateTo({
-					url: "../pagesC/fuwenben?title=" + ev.title
-				})
+				if (ev.quxian) {
+					uni.setStorageSync("fuwenbeng", ev.content)
+					uni.navigateTo({
+						url: "../pagesC/fuwenben?title=" + ev.name
+					})
+				} else {
+					uni.setStorageSync("fuwenbeng", this.jiji)
+					uni.navigateTo({
+						url: "../pagesC/fuwenben?title=" + ev.title
+					})
+				}
+
 			},
 			lun_change(index) {
 				this.current = index.detail.current;

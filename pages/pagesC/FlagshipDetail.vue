@@ -111,6 +111,9 @@
 	export default {
 		data() {
 			return {
+				mobanid: [
+					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU'
+				],
 				autoplay: false,
 				videoContext: "",
 				desdesdesdesde: 0,
@@ -308,9 +311,29 @@
 			},
 			async goVR(ev) {
 				if (await this.$login()) {
+					that.$api.vrnews({
+						user_id: uni.getStorageSync("user_info").id,
+						news: ev.url
+					})
 					uni.navigateTo({
 						url: "../Home/URL/URL?url=" + ev.url
 					})
+					// let that = this;
+					// uni.requestSubscribeMessage({
+					// 	provider: 'weixin',
+					// 	tmplIds: that.mobanid,
+					// 	success: function(res) {
+					// 		that.$api.vrnews({
+					// 			user_id: uni.getStorageSync("user_info").id,
+					// 			news: ev.url
+					// 		})
+					// 	},
+					// 	complete: function(res) {
+					// 		uni.navigateTo({
+					// 			url: "../Home/URL/URL?url=" + ev.url
+					// 		})
+					// 	},
+					// });
 					// uni.showModal({
 					// 	title: '提示',
 					// 	content: '如要购买，请在浏览器中打开！',
@@ -328,8 +351,6 @@
 					// 		}
 					// 	}
 					// });
-
-
 				}
 			},
 			async gosheji() {

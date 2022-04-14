@@ -399,4 +399,39 @@ export default {
 	qzqy(params = {}) {
 		return request.post("/api/byd_user/qzqy", params);
 	},
+	timeout(params = {}) {
+		return request.post("/api/byd_user/timeout", params);
+	},
+	blp(params = {}) {
+		return request.post("/api/byd_user/blp", params);
+	},
+	ewmjoin(params = {}) {
+		return request.post("/api/byd_user/ewmjoin", params);
+	},
+	tgfw(params = {}) {
+		return request.post("/api/byd_user/tgfw", params);
+	},
+	fwsure(params = {}) {
+		return request.post("/api/byd_user/fwsure", params);
+	},
+	pxxr(params = {}) {
+		return request.post("/api/bydshop/pxxr", params);
+	},
+	pxsq(params = {}) {
+		return request.post("/api/bydshop/pxsq", params);
+	},
+	qxment(params = {}) {
+		return request.post("/api/bydshop/qxment", params);
+	},
+	vrnews(params = {}) {
+		return request.post("/api/bydshop/vrnews", params);
+	},
+	
+	
+	
+
+
+
+
+
 }

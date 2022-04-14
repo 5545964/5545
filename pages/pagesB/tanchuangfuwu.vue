@@ -3,46 +3,56 @@
 		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
 			<view class="yueduwo">
 				<view class="text">
-					服务协议和隐私政策
+					提供服务
 				</view>
-				<view class="textss" v-if="goumai">
-					感谢您使用宝芸邸，我们会严格
-					按照法律规定存储和使用您的个人
-					信息。您可以阅读以下几项条款了
-					解详细信息。如您同意，请勾选以
-					下几项条款并点击”同意”开始接受
-					我们的服务。
+				<view class="textss">
+					是否为此订单提供服务
 				</view>
-				<view class="textss" v-else>
-					感谢您使用宝芸邸，您的合约已到期， 请续约
-				</view>
+
 				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
-						:key="index">
-						<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
-							<view class="yuan" @click="hahaha(item)" v-if="goumai">
-								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+					<view class="cet">
+						<view>
+							<view class="mingcheng" style="padding:10rpx 0;">
+								一次物流
 							</view>
 						</view>
-						<view style="width:70%;padding: 0 10rpx;">
-							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name||""}}》
+					</view>
+					<view class="cet">
+						<view>
+							<view class="mingcheng" style="padding:10rpx 0;">
+								二次物流
 							</view>
 						</view>
+					</view>
+					<view class="cet">
+						<view>
+							<view class="mingcheng" style="padding:10rpx 0;">
+								安装费
+							</view>
+						</view>
+					</view>
+					<view class="cet">
+						<view>
+							<view class="mingcheng" style="padding:10rpx 0;">
+								售后服务
+							</view>
+						</view>
+					</view>
+				</view>
+				<view style="padding:40rpx;">
+					<view style="padding:10rpx 0;">
+						姓名：<text class="mingcheng">{{item.order.username||""}}</text>
+					</view>
+					<view style="padding:10rpx 0;">
+						地址：<text class="mingcheng">{{item.order.address||""}}{{item.order.addressxq||""}}</text>
 					</view>
 				</view>
 				<view class="anniusss">
-					<navigator class="hkhnij" target="miniProgram" open-type="exit" @click="clea" v-if="goumai">
-						退出小程序
-					</navigator>
-					<view class="hkhnij" target="miniProgram" open-type="exit" @click="quxiao" v-else>
-						取消
+					<view class="hkhnij jjhgj" @click="tongyi(0)">
+						否
 					</view>
-					<view class="hkhnij jjhgj" @click="tongyixieyi()" v-if="goumai">
-						同意协议
-					</view>
-					<view class="hkhnij jjhgj" @click="go()" v-else>
-						去购买续约
+					<view class="hkhnij jjhgj" @click="tongyi(1)">
+						是
 					</view>
 				</view>
 			</view>
@@ -56,106 +66,32 @@
 			return {
 				yuedu: true,
 				xieyi: [],
-				agid: 0,
-				lpid: 0,
-				goumai: true,
-				state: 999
+				agid: 0
 			};
 		},
 		onLoad(ev) {
 			this.yuedu = true
 			uni.setStorageSync("yanzheng", false)
-			this.agid = ev.agid;
-			if (ev.lpid) {
-				this.lpid = ev.lpid;
-			}
-
-			let aa = uni.getStorageSync("xieyi")
-			aa.forEach(item => {
-				if (item.id == this.agid) {
-					this.state = item.state
-					this.xieyi.push(item)
-				}
-			})
-			if (this.state == 0 || this.state == 1) {
-				this.goumai = false
-			}
+			console.log(JSON.parse(ev.status));
+			this.xieyi = JSON.parse(ev.status)
 		},
 		methods: {
-			//合约到期
-			quxiao() {
-				let aa = 999
-				if (this.state == 0 || this.state == 8 || this.state == 9) {
-					aa = 0
-				} else if (this.state == 1 || this.state == 11 || this.state == 10) {
-					aa = 1
-				}
-				this.$api.qxment({
-					state: aa,
-					agid: this.agid,
-					userid: uni.getStorageSync("user_info").id
-				}).then(data => {
-					if (data.data.code == 1) {
-						uni.setStorageSync("yanzheng", true)
-						this.yuedu = false
-						uni.reLaunch({
-							url: "/pages/Home/Home"
-						})
-					}
-				})
-			},
-			go() {
-				uni.reLaunch({
-					url: "/pages/pagesB/shengfen"
-				})
-			},
-			clea() {
-				uni.clearStorageSync()
-			},
-			tongyixieyi() {
-				let mm = 0
+			tongyi(ev) {
 				let aa = []
 				this.xieyi.forEach(item => {
-					if (item.check) {
-						mm++
-						aa.push(item)
-					}
+					aa.push(item.id)
 				})
-				if (this.xieyi.length != mm) {
-					return uni.showToast({
-						title: "请阅读并同意协议",
-						icon: "none"
-					})
-				}
-				aa.forEach(item => {
-					this.$api.userag({
-						userid: uni.getStorageSync("user_info").id,
-						agid: item.id,
-						lpid: this.lpid
+				this.$api.fwsure({
+					user_id: uni.getStorageSync("user_info").id,
+					choice: ev,
+					id: aa
+				}).then(data => {
+					uni.reLaunch({
+						url: "/pages/Home/Home"
 					})
 				})
-				uni.setStorageSync("yanzheng", true)
-				this.yuedu = false
-				uni.reLaunch({
-					url: "/pages/Home/Home"
-				})
+
 			},
-			tongyi(ev) {
-				if (ev == 1) {
-					this.yuedu = true;
-				} else {
-					this.yuedu = false;
-				}
-			},
-			hahaha(item) {
-				item.check = !item.check
-			},
-			fuwenben(ev) {
-				uni.setStorageSync("fuwenbeng", ev.content)
-				uni.navigateTo({
-					url: "../pagesC/fuwenben?title=" + ev.name
-				})
-			}
 		}
 	}
 </script>
