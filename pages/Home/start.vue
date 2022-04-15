@@ -26,37 +26,6 @@
 					this.xianshi = true
 				}
 			}, 3000)
-			this.$api.indexbar().then(data => {
-				if (data.data.code == 1) {
-					let aa = []
-					data.data.data.status.forEach(item => {
-						aa.push({
-							pagePath: item.url.url,
-							iconPath: this.$imgPath + item.fimage,
-							selectedIconPath: this.$imgPath + item.image,
-							text: item.title
-						})
-					})
-					uni.setStorageSync("tabber", aa)
-					uni.setStorageSync("edits", data.data.data.edits)
-					uni.setStorageSync("kehu", data.data.data.kefu)
-					if (uni.getStorageSync("user_info")) {
-						uni.setStorageSync("showssss", false)
-						return
-					}
-					uni.setStorageSync("showssss", data.data.data.edit)
-				}
-			})
-			this.$api.agreements().then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					uni.setStorageSync("xieyi", data.data.data.status)
-				} else {
-					uni.setStorageSync("xieyi", [])
-				}
-			})
 		},
 		data() {
 			return {

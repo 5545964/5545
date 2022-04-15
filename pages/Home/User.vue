@@ -60,7 +60,7 @@
 				<view class="top_b">
 					<view class="quanju">
 						<view class="zczx" v-for="(item,index) in list" :key="index" @click="go(item)">
-							<view class="cart-num" @touchend="quxiao(index)" v-if="num_list[index] != 0">
+							<view class="cart-num" @touchend.stop="quxiao(index)" v-if="num_list[index] != 0">
 								{{num_list[index]||""}}
 							</view>
 							<!-- <image v-if="index == list.length-1" class="fdkgkfmkjskjfjkgdbj"

@@ -38,7 +38,6 @@ Vue.prototype.$imgs = function(url) {
 	}
 }
 
-
 Vue.prototype.$shangchuan = "https://bao.scwushen.com/index.php"
 
 

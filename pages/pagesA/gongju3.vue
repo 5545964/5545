@@ -93,9 +93,8 @@
 				this.$refs.myPicker.show();
 			},
 			handleSubmit(e) {
-				// {year: "2019", month: "07", day: "17", hour: "15", minute: "21"}
-				this.datas = `${e.year}-${e.month}-${e.day}`;
-
+				let aa = e.year + "-" + e.month + "-" + e.day
+				this.datas = Date.parse(new Date(aa).toString())
 				this.getMyfoot()
 			},
 			back(ev) {

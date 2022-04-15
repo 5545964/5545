@@ -907,6 +907,7 @@
 							}
 							item.video = this.$imgs(item.video)
 							item.videos = this.$imgs(item.videos)
+							console.log(item);
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]

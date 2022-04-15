@@ -52,7 +52,7 @@
 								style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 						</view> -->
 					</view>
-					<u-collapse ref="collapse">
+					<u-collapse ref="collapse" v-if="kklkl.length!=0">
 						<u-collapse-item @change="zhankai" ref="collapseItem" :name="item1.id" :title="item1.title"
 							:isDot="true" v-for="(item1, index1) in kklkl" :key="index1" :index="index1"
 							:open="item1.check">
@@ -60,7 +60,8 @@
 								@click="goshop(item3)">
 								<view class="right_view">
 									<view class="">
-										<image :src="imgtilte+'/index/index/show?url='+item3.simage+'&width=180&height=180'"
+										<image
+											:src="imgtilte+'/index/index/show?url='+item3.simage+'&width=180&height=180'"
 											style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
 										</image>
 									</view>
@@ -78,6 +79,7 @@
 							</view>
 						</u-collapse-item>
 					</u-collapse>
+				    <u-empty text="暂无商品" mode="data" v-else/>
 				</view>
 			</scroll-view>
 			<scroll-view v-if="mmok == 1" style="width: 76%;height: 100%;" scroll-y class="right-box">
@@ -227,7 +229,7 @@
 			},
 			go_youhuijuan(ev) {
 				uni.navigateTo({
-					url: "./youhuijuan?id="+ev.id
+					url: "./youhuijuan?id=" + ev.id
 				})
 			},
 			go_shop(ev) {
@@ -287,6 +289,7 @@
 			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
+				console.log(index, this.cateList[index]);
 				this.current = index;
 				uni.setStorageSync("canpingindex", index)
 				if (this.cateList[index].id == 31 || this.cateList[index].id == 32 || this.cateList[index].id == 33) {
@@ -299,36 +302,41 @@
 					})
 				} else if (this.cateList[index].id != 82) {
 					this.mmok = 0
-					this.kklkl = this.cateList[index].child
-					let aa = this.cateList[index].child
-					for (let i = 0; i < aa.length; i++) {
-						let data = await this.$api.categoryshop({
-							id: aa[i].id
-						})
-						if (data.data.code == 1) {
-							aa[i]["neirong"] = data.data.data.status.data
+					if (this.cateList[index].child) {
+						this.kklkl = this.cateList[index].child
+						let aa = this.cateList[index].child
+						for (let i = 0; i < aa.length; i++) {
+							let data = await this.$api.categoryshop({
+								id: aa[i].id
+							})
+							if (data.data.code == 1) {
+								aa[i]["neirong"] = data.data.data.status.data
+							}
 						}
-					}
-					this.cateList[index].child.forEach((item, index) => {
-						item["check"] = false
-					})
-					this.kklkl = []
-					this.kklkl = this.cateList[index].child
-					for (let i in this.kklkl) {
-						this.kklkl[i].neirong = this.kklkl[i].neirong.sort(function(a, b) {
-							return b.xc_price - a.xc_price
+						this.cateList[index].child.forEach((item, index) => {
+							item["check"] = false
 						})
+						this.kklkl = []
+						this.kklkl = this.cateList[index].child
+						for (let i in this.kklkl) {
+							this.kklkl[i].neirong = this.kklkl[i].neirong.sort(function(a, b) {
+								return b.xc_price - a.xc_price
+							})
+						}
+						this.$nextTick(() => {
+							this.$refs.collapse.init()
+						})
+						let asa = uni.getStorageSync("zhankai") || 0;
+						this.kklkl[asa].check = true
+					} else {
+						this.kklkl = []
 					}
-					this.$nextTick(() => {
-						this.$refs.collapse.init()
-					})
-					let asa = uni.getStorageSync("zhankai") || 0;
-					this.kklkl[asa].check = true
+
 				} else {
 					this.mmok = 2
 					this.destaoxi = []
 					this.$api.cupons({
-						id:0
+						id: 0
 					}).then(data => {
 						this.destaoxi = []
 						if (data.data.code == 1) {

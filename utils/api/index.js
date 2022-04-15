@@ -210,9 +210,6 @@ export default {
 	bydadout(params = {}) {
 		return request.post("/api/bydindex/bydadout", params);
 	},
-	loupanlike(params = {}) {
-		return request.post("/api/bydindex/loupanlike", params);
-	},
 	indexlike(params = {}) {
 		return request.post("/api/bydindex/indexlike", params);
 	},
@@ -426,6 +423,10 @@ export default {
 	vrnews(params = {}) {
 		return request.post("/api/bydshop/vrnews", params);
 	},
+	cuxx(params = {}) {
+		return request.post("/api/bydshop/cuxx", params);
+	},
+	
 	
 	
 	

@@ -142,20 +142,20 @@
 			},
 			getdata() {
 				let time = new Date().getTime()
+				console.log(time);
 				this.$api.mycupon({
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
-							if (item.usetime == null && time < item.cupons.endtime * 1000 && item.state ==
-								0) {
+							item.cupons.endtime = item.cupons.endtime * 1000
+							if (item.usetime == null && time < item.cupons.endtime && item.state == 0) {
 								this.coupon_list0.push(item)
 							}
-							if (item.state == 1 || item.usetime != null && time < item.cupons.endtime *
-								1000) {
+							if (item.state == 1 || item.usetime != null && time < item.cupons.endtime) {
 								this.coupon_list1.push(item)
 							}
-							if (time > item.cupons.endtime * 1000) {
+							if (time > item.cupons.endtime) {
 								this.coupon_list2.push(item)
 							}
 						})

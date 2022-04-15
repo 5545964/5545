@@ -66,25 +66,24 @@
 			this.yuedu = true
 			uni.setStorageSync("yanzheng", false)
 			this.agid = ev.agid;
-			if (ev.lpid) {
-				this.lpid = ev.lpid;
-			}
-
+			this.lpid = ev.lpid;
 			let aa = uni.getStorageSync("xieyi")
 			aa.forEach(item => {
 				if (item.id == this.agid) {
-					this.state = item.state
+					if (this.lpid == 22222) {
+						this.state = item.state
+					}
 					this.xieyi.push(item)
 				}
 			})
-			if (this.state == 0 || this.state == 1) {
+			if (this.lpid == 22222) {
 				this.goumai = false
 			}
 		},
 		methods: {
 			//合约到期
 			quxiao() {
-				let aa = 999
+				let aa = 0
 				if (this.state == 0 || this.state == 8 || this.state == 9) {
 					aa = 0
 				} else if (this.state == 1 || this.state == 11 || this.state == 10) {
@@ -93,7 +92,7 @@
 				this.$api.qxment({
 					state: aa,
 					agid: this.agid,
-					userid: uni.getStorageSync("user_info").id
+					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.setStorageSync("yanzheng", true)

@@ -19,7 +19,6 @@
 			</view>
 		</view>
 		<u-select v-model="show" :label-name="labelName" @confirm="confirm" :list="options2"></u-select>
-		<!-- 设计列表 -->
 		<view class="design_list">
 			<view class="" v-for="(item,index) in lou_list" :key="index">
 				<u-design-card :list="item" />
@@ -191,7 +190,7 @@
 					if (data.data.code == 1) {
 						this.lou_list = data.data.data.status
 					} else {
-						this.lou_list = [];
+						this.lou_list = [...this.lou_lists];
 						uni.showToast({
 							title: data.data.msg,
 							duration: 1000,
@@ -202,6 +201,7 @@
 			},
 			// 选择
 			showSelect(index) {
+				console.log(index);
 				let key = ""
 				if (index > 0) {
 					key = this.dropList[index - 1].name
@@ -212,6 +212,7 @@
 				let arr = []
 				if (index == 0) {
 					key = 1
+					this.lou_list = this.lou_lists
 				}
 				this.labelName = this.dropList[index].keys
 				this.deletesame(key, index)

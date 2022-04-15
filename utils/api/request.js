@@ -1,4 +1,5 @@
 import ajax from "./u-ajax/js_sdk/"
+import api from '@/utils/api'
 const instance = ajax.create({
 	baseURL: "https://bao.scwushen.com/index.php",
 	timeout: 60000,
@@ -30,6 +31,10 @@ instance.interceptors.response.use(
 		return response
 	},
 	error => {
+		api.cuxx({
+			user_id: uni.getStorageSync("user_info").id || 0,
+			content: JSON.stringify(error)
+		})
 		uni.showToast({
 			title: "服务器繁忙,请稍后重试",
 			duration: 1200,

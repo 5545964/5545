@@ -311,9 +311,10 @@
 			},
 			async goVR(ev) {
 				if (await this.$login()) {
-					that.$api.vrnews({
+					console.log(ev.url.split('https://720.3vjia.com/'));
+					this.$api.vrnews({
 						user_id: uni.getStorageSync("user_info").id,
-						news: ev.url
+						news: ev.url.split('https://720.3vjia.com/')[1]
 					})
 					uni.navigateTo({
 						url: "../Home/URL/URL?url=" + ev.url
