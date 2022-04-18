@@ -36,13 +36,13 @@
 						昵称
 					</view>
 					<view class="win">
-						状态
-					</view>
-					<view class="win">
 						服务费
 					</view>
 					<view class="win">
 						培训费用
+					</view>
+					<view class="win">
+						时间
 					</view>
 				</view>
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index">
@@ -50,19 +50,19 @@
 						<view class="win">
 							{{item.user.username||""}}
 						</view>
-						<view class="win">
+						<!-- <view class="win">
 							<text v-if="item.px == 0">未申请</text>
 							<text v-if="item.px == 1">已申请</text>
-						</view>
+						</view> -->
 						<view class="win">
 							{{item.cjprice||0}}
 						</view>
 						<view class="win">
 							{{item.price||0}}
 						</view>
-						<!-- <view class="win">
-							申请提现
-						</view> -->
+						<view class="win">
+							{{$u.timeFormat(item.createtime, 'yyyy-mm-dd')}}
+						</view>
 					</view>
 				</view>
 				<view class="daddasda" @click="peiun(item)">
@@ -125,7 +125,7 @@
 			tixians(ev) {
 				let aa = []
 				this.monLists.forEach(item => {
-					console.log(item.tixian,ev);
+					console.log(item.tixian, ev);
 					if (item.tixian == ev) {
 						aa.push(item)
 					}

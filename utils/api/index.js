@@ -426,10 +426,14 @@ export default {
 	cuxx(params = {}) {
 		return request.post("/api/bydshop/cuxx", params);
 	},
-	
-	
-	
-	
+	videopl(params = {}) {
+		return request.post("/api/bydindex/videopl", params);
+	},
+
+
+
+
+
 
 
 

@@ -104,7 +104,8 @@
 				options1: [],
 				options2: [],
 				arrs: [],
-				selindex: 0
+				selindex: 0,
+				sousuosuo: true
 			};
 		},
 		mounted() {
@@ -115,8 +116,10 @@
 		},
 		watch: {
 			pages(val) {
-				this.pagess = this.pages
-				this.alls()
+				if (this.sousuosuo) {
+					this.pagess = this.pages
+					this.alls()
+				}
 			},
 		},
 		methods: {
@@ -188,6 +191,7 @@
 					name: this.keyword
 				}).then(data => {
 					if (data.data.code == 1) {
+						this.sousuosuo = false
 						this.lou_list = data.data.data.status
 					} else {
 						this.lou_list = [...this.lou_lists];
@@ -212,6 +216,7 @@
 				let arr = []
 				if (index == 0) {
 					key = 1
+					this.sousuosuo = true
 					this.lou_list = this.lou_lists
 				}
 				this.labelName = this.dropList[index].keys

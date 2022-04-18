@@ -367,7 +367,8 @@
 				],
 				dsaa: {},
 				pages: 1,
-				scrollTop: 0
+				scrollTop: 0,
+				mmkm: {}
 			}
 		},
 		onPageScroll(e) {
@@ -647,10 +648,11 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.enjoy(1)
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -666,10 +668,11 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.enjoy(1)
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -680,23 +683,37 @@
 				}
 
 			},
-			async pinglunaa(ev, index) {
-				if (await this.$login()) {
-					this.indexdas = index
-					this.pinglun_list = []
-					if (ev.pl) {
-						this.pinglun_list = ev.pl
-						this.pinglun_list.forEach(item => {
-							item["checked"] = false
-						})
-					}
-					this.itemsss = ev;
-					if (!this.dianzhansssss && !this.showComment) {
-						this.video[index].showComment = true
-						return this.showComment = true;
+			pinglunshuju() {
+				this.$api.videopl({
+					id: this.mmkm.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.pinglun_list = [...data.data.data.status]
+					} else {
+						this.pinglun_list = []
 					}
 					this.showComment = true;
-					this.dianzhansssss = false
+				})
+			},
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.mmkm = ev
+					this.pinglunshuju()
+					// this.indexdas = index
+					// this.pinglun_list = []
+					// if (ev.pl) {
+					// 	this.pinglun_list = ev.pl
+					// 	this.pinglun_list.forEach(item => {
+					// 		item["checked"] = false
+					// 	})
+					// }
+					// this.itemsss = ev;
+					// if (!this.dianzhansssss && !this.showComment) {
+					// 	this.video[index].showComment = true
+					// 	return this.showComment = true;
+					// }
+					// this.showComment = true;
+					// this.dianzhansssss = false
 				}
 			},
 			// 跳转设计师详情

@@ -11,8 +11,8 @@
 			</view>
 		</view> 
 		<u-empty v-else></u-empty> -->
-		<u-video :scrollTop="scrollTops" v-if="video.length != 0" :vlist="video" @collection="collection" @pinglun="pinglunaa"
-			@dianzhan="dianzhan"></u-video>
+		<u-video :scrollTop="scrollTops" v-if="video.length != 0" :vlist="video" @collection="collection"
+			@pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
 		<u-empty v-else></u-empty>
 		<!-- 弹窗 -->
 		<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="changd"
@@ -62,7 +62,8 @@
 				cad: [],
 				pagess: 0,
 				videoindex: 0,
-				scrollTops: 0
+				scrollTops: 0,
+				mmkm: {}
 			};
 		},
 		watch: {
@@ -153,21 +154,35 @@
 					}
 				})
 			},
-			async pinglunaa(ev, index) {
-				this.videoindex = index
-				if (await this.$login()) {
-					this.pagess = this.pages
-					this.dianzhansssss = true
-					this.indexdas = index
-					this.pinglun_list = []
-					if (ev.pl) {
-						this.pinglun_list = ev.pl
-						this.pinglun_list.forEach(item => {
-							item["checked"] = false
-						})
+			pinglunshuju() {
+				this.$api.videopl({
+					id: this.mmkm.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.pinglun_list = [...data.data.data.status]
+					} else {
+						this.pinglun_list = []
 					}
 					this.showComment = true;
-					this.itemsss = ev;
+				})
+			},
+			async pinglunaa(ev, index) {
+				// this.videoindex = index
+				if (await this.$login()) {
+					this.mmkm = ev
+					this.pinglunshuju()
+					// this.pagess = this.pages
+					// this.dianzhansssss = true
+					// this.indexdas = index
+					// this.pinglun_list = []
+					// if (ev.pl) {
+					// 	this.pinglun_list = ev.pl
+					// 	this.pinglun_list.forEach(item => {
+					// 		item["checked"] = false
+					// 	})
+					// }
+					// this.showComment = true;
+					// this.itemsss = ev;
 				}
 			},
 			// 点赞
@@ -216,10 +231,12 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.allsa()
+							// this.allsa()
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -235,11 +252,11 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.alls()
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",

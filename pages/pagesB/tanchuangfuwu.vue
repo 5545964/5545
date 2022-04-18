@@ -41,10 +41,10 @@
 				</view>
 				<view style="padding:40rpx;">
 					<view style="padding:10rpx 0;">
-						姓名：<text class="mingcheng">{{item.order.username||""}}</text>
+						姓名：<text class="mingcheng">{{xieyi[0].order.username||""}}</text>
 					</view>
 					<view style="padding:10rpx 0;">
-						地址：<text class="mingcheng">{{item.order.address||""}}{{item.order.addressxq||""}}</text>
+						地址：<text class="mingcheng">{{xieyi[0].order.address||""}}{{xieyi[0].order.addressxq||""}}</text>
 					</view>
 				</view>
 				<view class="anniusss">
@@ -72,7 +72,6 @@
 		onLoad(ev) {
 			this.yuedu = true
 			uni.setStorageSync("yanzheng", false)
-			console.log(JSON.parse(ev.status));
 			this.xieyi = JSON.parse(ev.status)
 		},
 		methods: {

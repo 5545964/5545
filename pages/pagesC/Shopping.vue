@@ -43,14 +43,14 @@
 				<view class="cet" style="justify-content: space-between;margin-top: 30rpx;">
 					<view class="cet" style="justify-content: space-between;">
 						<view class="mony">
-							￥{{xiaoshoujiage||""}}
+							￥{{xiaoshoujiage||0}}
 						</view>
 						<view class="monys">
-							￥{{alls.cb_price||""}}
+							￥{{alls.cb_price||0}}
 						</view>
 					</view>
 					<view class="yue">
-						月销{{alls.xl||""}}
+						月销{{alls.xl||0}}
 					</view>
 				</view>
 			</view>

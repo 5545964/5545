@@ -31,6 +31,9 @@
 						</view>
 					</view>
 				</view>
+				<button class="djsa" open-type="contact">
+					客服
+				</button>
 				<view class="anniusss">
 					<navigator class="hkhnij" target="miniProgram" open-type="exit" @click="clea" v-if="goumai">
 						退出小程序
@@ -160,6 +163,22 @@
 </script>
 
 <style lang="scss" scoped>
+	.djsa {
+		top: 40%;
+		left: 2%;
+		padding: 0;
+		position: fixed;
+		text-align: center;
+		font-size: 30rpx;
+		font-weight: 400;
+		color: #666666;
+		width: 100rpx;
+		height: 100rpx;
+		background: #ffffff;
+		border-radius: 50%;
+		line-height: 100rpx;
+	}
+
 	.popup {
 		.xcvb {
 			height: 100%;

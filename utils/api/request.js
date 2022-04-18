@@ -31,17 +31,17 @@ instance.interceptors.response.use(
 		return response
 	},
 	error => {
-		api.cuxx({
-			user_id: uni.getStorageSync("user_info").id || 0,
-			content: JSON.stringify(error)
-		})
+		// api.cuxx({
+		// 	user_id: uni.getStorageSync("user_info").id || 0,
+		// 	content: JSON.stringify(error)
+		// })
 		uni.showToast({
 			title: "服务器繁忙,请稍后重试",
 			duration: 1200,
 			icon: "none"
 		})
 		setTimeout(() => {
-			uni.navigateBack(-1)
+			// uni.navigateBack(-1)
 		}, 1000)
 		return Promise.reject(error)
 	}

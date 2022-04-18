@@ -151,6 +151,9 @@
 			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
 		<view>
+			<!-- 评论弹窗 -->
+			<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
+				:pinglun_list="pinglun_list" @guanbi="guanbi" :bottom="heigth" />
 			<u-kehu :showsss='showsssssssss'></u-kehu>
 			<!-- 合同弹窗 -->
 			<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
@@ -189,9 +192,6 @@
 					</view>
 				</view>
 			</u-popup>
-			<!-- 评论弹窗 -->
-			<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
-				:pinglun_list="pinglun_list" @guanbi="guanbi" :bottom="heigth"></u-pinglun>
 			<!-- 确保是你本人操作 -->
 			<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
 				<view class="yueduwo">
@@ -370,7 +370,8 @@
 				],
 				dsaa: {},
 				pages: 1,
-				scrollTop: 0
+				scrollTop: 0,
+				mmkm: {}
 			}
 		},
 		onLoad(ev) {
@@ -643,9 +644,11 @@
 			pingjia(item) {
 				this.dsaa = item
 			},
+			// 关闭评论
 			guanbi() {
 				this.showComment = false
 			},
+			// 发评论
 			chang(text, pla) {
 				if (pla == "发表评论请文明用语") {
 					this.$api.indexpl({
@@ -653,10 +656,11 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.enjoy(1)
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -672,10 +676,11 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.enjoy(1)
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -684,25 +689,39 @@
 						}
 					})
 				}
-
 			},
-			async pinglunaa(ev, index) {
-				if (await this.$login()) {
-					this.itemsss = ev;
-					this.indexdas = index
-					this.pinglun_list = []
-					if (ev.pl) {
-						this.pinglun_list = ev.pl
-						this.pinglun_list.forEach(item => {
-							item["checked"] = false
-						})
-					}
-					if (!this.dianzhansssss && !this.showComment) {
-						this.video[index].showComment = true
-						return this.showComment = true;
+			pinglunshuju() {
+				this.$api.videopl({
+					id: this.mmkm.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.pinglun_list = [...data.data.data.status]
+					} else {
+						this.pinglun_list = []
 					}
 					this.showComment = true;
-					this.dianzhansssss = false
+				})
+			},
+			// 点击视频评论触发
+			async pinglunaa(ev, index) {
+				if (await this.$login()) {
+					this.mmkm = ev
+					this.pinglunshuju()
+					// this.itemsss = ev;
+					// this.indexdas = index
+					// this.pinglun_list = []
+					// if (ev.pl) {
+					// 	this.pinglun_list = [...ev.pl]
+					// 	this.pinglun_list.forEach(item => {
+					// 		item["checked"] = false
+					// 	})
+					// }
+					// if (!this.dianzhansssss && !this.showComment) {
+					// 	this.video[index].showComment = true
+					// 	return this.showComment = true;
+					// }
+					// this.showComment = true;
+					// this.dianzhansssss = false
 				}
 			},
 			navgepage(item) {
@@ -714,9 +733,6 @@
 				uni.navigateTo({
 					url: "../pagesD/regDesigner/regDesigner"
 				})
-			},
-			pinglun() {
-				this.showComment = true;
 			},
 			async dianzhan(ev) {
 				if (await this.$login()) {
@@ -897,7 +913,8 @@
 						data.data.data.status.data.forEach(item => {
 							item["iszan"] = false
 							item["isfollow"] = false
-							item["showComment"] = this.showComment
+							// item["showComment"] = this.showComment
+							// item["showComment"] = false
 							item["isimg"] = true
 							if (item.zans) {
 								item.iszan = true
@@ -907,10 +924,10 @@
 							}
 							item.video = this.$imgs(item.video)
 							item.videos = this.$imgs(item.videos)
-							console.log(item);
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]
+						// this.video = [...aa]
 					}
 					uni.stopPullDownRefresh();
 				})
@@ -943,7 +960,6 @@
 					this.getstate()
 				}
 			},
-
 			getstate() {
 				this.$api.despro({
 					user_id: uni.getStorageSync("user_info").id
@@ -956,7 +972,6 @@
 					}
 				})
 			},
-
 			lookcont() {
 				this.$api.desmyuser({
 					user_id: uni.getStorageSync("user_info").id,
@@ -970,7 +985,6 @@
 				})
 			},
 		}
-
 	}
 </script>
 

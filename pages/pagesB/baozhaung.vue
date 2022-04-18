@@ -52,8 +52,8 @@
 					提交报装
 				</view>
 			</view>
-			<u-heigth />
 		</view>
+		<u-heigth />
 	</view>
 </template>
 

@@ -338,7 +338,7 @@
 						content: ""
 					}
 				],
-				current: 0,
+				current: 3,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -525,6 +525,7 @@
 			},
 			// 切换选项，签约区县
 			changeTokens(index, indexs) {
+				console.log(index, indexs);
 				this.datalist[index].forEach(item => {
 					item.active = indexs
 				})
@@ -670,8 +671,8 @@
 			},
 			// 楼盘签约
 			async changeTokens2(item) {
-				console.log(item);
 				this.lickc = []
+				console.log(item);
 				if (await this.$login()) {
 					this.loupanid = item.id
 					item.check = false

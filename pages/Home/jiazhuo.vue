@@ -31,8 +31,8 @@
 			</view>
 		</view>
 		<view class="home">
-			<u-video :scrollTop="scrollTop" v-if="video.length != 0" @play="bofang" @ended="ended" :vlist="video" @collection="collection"
-				@pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
+			<u-video :scrollTop="scrollTop" v-if="video.length != 0" @play="bofang" @ended="ended" :vlist="video"
+				@collection="collection" @pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
 			<u-empty v-else></u-empty>
 		</view>
 		<view class="">
@@ -94,7 +94,8 @@
 				dsaa: {},
 				indexdas: "",
 				pages: 1,
-				scrollTop:0
+				scrollTop: 0,
+				mmkm: {}
 			};
 		},
 		onLoad(ev) {
@@ -143,18 +144,21 @@
 			},
 			async pinglunaa(ev, index) {
 				if (await this.$login()) {
-					this.dianzhansssss = true
-					this.indexdas = index
-					this.pinglun_list = []
-					if (ev.pl) {
-						this.pinglun_list = ev.pl
-						this.pinglun_list.forEach(item => {
-							item["checked"] = false
-						})
+					this.mmkm = ev
+					this.pinglunshuju()
+				}
+			},
+			pinglunshuju() {
+				this.$api.videopl({
+					id: this.mmkm.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.pinglun_list = [...data.data.data.status]
+					} else {
+						this.pinglun_list = []
 					}
 					this.showComment = true;
-					this.itemsss = ev;
-				}
+				})
 			},
 			pingjia(item) {
 				this.dsaa = item
@@ -182,7 +186,6 @@
 							}
 							item.video = this.$imgs(item.video)
 							item.videos = this.$imgs(item.videos)
-							console.log(item.videos);
 							aa.push(item)
 						})
 						this.video = [...this.video, ...aa]
@@ -236,18 +239,17 @@
 				this.current = ev
 			},
 			chang(text, pla) {
-
 				if (pla == "发表评论请文明用语") {
 					this.$api.indexpl({
 						userid: uni.getStorageSync("user_info").id,
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.alls()
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",
@@ -263,11 +265,11 @@
 						content: text,
 						image: "#",
 						state: 1,
-						id: this.itemsss.id
+						id: this.mmkm.id
 					}).then(data => {
 						if (data.data.code == 1) {
-
-							this.alls()
+							this.pinglunshuju()
+							this.mmkm.plnum++
 						} else {
 							uni.showToast({
 								title: "评论失败",

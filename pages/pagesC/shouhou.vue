@@ -35,7 +35,7 @@
 				<view class="">
 					常用理由
 				</view>
-				<view class="">
+				<view class="sdadsa">
 					{{qwer||""}}
 				</view>
 			</view>
@@ -243,6 +243,14 @@
 </script>
 
 <style lang="scss" scoped>
+	.sdadsa {
+		border-radius: 20rpx;
+		border: 1px solid #007399;
+		padding: 10rpx 20rpx;
+		background: #007399;
+		color: #fff;
+	}
+
 	.yuan {
 		width: 50rpx;
 		height: 50rpx;

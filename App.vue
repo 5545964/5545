@@ -3,16 +3,13 @@
 	export default {
 		onLaunch(ev) {
 			uni.setStorageSync("yanzheng", true)
+			uni.setStorageSync("evevevev", JSON.stringify(ev))
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
 				if (uni.getStorageSync("user_info")) {
 					this.$api.ewmjoin({
 						user_id: uni.getStorageSync("user_info").id,
 						pid: ev.query.uid
-					}).then(data => {
-						if (data.data.code == 1) {
-							uni.removeStorageSync('yaoqinguid')
-						}
 					})
 				}
 			}

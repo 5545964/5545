@@ -699,7 +699,7 @@
 					} else {
 						uni.showToast({
 							title: data.data.msg,
-							icon: "success"
+							icon: "none"
 						})
 					}
 				})
@@ -723,7 +723,7 @@
 								uni.showToast({
 									title: data.data.msg,
 									duration: 1000,
-									icon: "success"
+									icon: "none"
 								});
 								if (data.data.code == 1) {
 									that.allsss()
@@ -808,7 +808,7 @@
 							uni.showToast({
 								title: data.data.msg,
 								duration: 1000,
-								icon: "success",
+								icon: "none",
 							});
 						}
 					});
