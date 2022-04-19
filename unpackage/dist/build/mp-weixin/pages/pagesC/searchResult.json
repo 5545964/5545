@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-adata": "/uview-ui/components/u-adata/u-adata",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth"
+  }
+}

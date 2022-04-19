@@ -21,7 +21,7 @@
 							￥
 						</view>
 						<view class="mony dasize">
-							{{canprice||""}}
+							{{canprice||"0.00"}}
 						</view>
 					</view>
 					<view class="mony xiaosize" style="font-size:24rpx;text-align: center;margin-top: 20rpx;">
@@ -65,7 +65,7 @@
 					</view>
 				</view>
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
-					<view class="vdfdd" v-if="item.money == 1 && item.px == 1">
+					<view class="vdfdd" v-if="item.money == 0 || item.money == 1 && item.px == 1">
 						<view class="win">
 							{{item.order_id||""}}
 						</view>
@@ -196,6 +196,7 @@
 				],
 				monList: [],
 				title: "我的佣金",
+				zongjia: 0
 			};
 		},
 		onLoad(ev) {
@@ -234,26 +235,12 @@
 			},
 			wodeteam() {
 				uni.navigateTo({
-					url: "../pagesA/gongju11?shejishi=1"
+					url: "../pagesA/gongju11?shejishi=" + this.isshejishiss + "&title=我的团队"
 				})
 			},
 			getdata() {
 				// 1是设计师
 				this.monList = []
-				if (this.isshejishiss == 1) {
-					this.$api.desorders({
-						id: uni.getStorageSync("des_info").id
-					}).then(data => {
-						if (data.data.code == 1) {
-							data.data.data.status.forEach(item => {
-								item["order_id"] = item.orderid
-								item["cjprice"] = item.price
-								item.price = 0
-							})
-							this.monList = [...this.monList, ...data.data.data.status]
-						}
-					})
-				}
 				this.$api.mysub({
 					type: this.isshejishiss,
 					user_id: uni.getStorageSync("user_info").id
@@ -261,10 +248,16 @@
 					if (data.data.code == 1) {
 						this.monList = [...this.monList, ...data.data.data.status]
 						this.allprice = data.data.data.all.toFixed(2);
-						this.canprice = data.data.data.can.toFixed(2);
+						// this.canprice = data.data.data.can.toFixed(2);
 						uni.setStorageSync("monList", this.monList)
 					} else {
 						uni.setStorageSync("monList", [])
+					}
+				})
+				
+				this.monList.forEach(item => {
+					if (item.money == 0 || item.money == 1 && item.px == 1) {
+						this.canprice = this.canprice + Number(item.price)
 					}
 				})
 			},

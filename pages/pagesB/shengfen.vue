@@ -160,8 +160,8 @@
 				this.isdes = 1
 				aa = "1"
 			}
-			let vv = uni.getStorageSync("xieyi")
-			vv.forEach(item => {
+			let bb = uni.getStorageSync("xieyi")
+			bb.forEach(item => {
 				if (item.state === aa) {
 					this.xieyi.push(item)
 				}
@@ -173,9 +173,9 @@
 			}
 			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
 				if (this.isdes == 0) {
-					this.usershengfen = uni.getStorageSync("user_info").bbs.id
+					this.usershengfen = uni.getStorageSync("user_info").bbs.id || 0
 				} else {
-					this.usershengfen = uni.getStorageSync("des_info").bbs.id
+					this.usershengfen = uni.getStorageSync("des_info").bbs.id || 0
 				}
 			}
 			this.getdata()
@@ -322,10 +322,16 @@
 					id: this.id,
 					user_id: uni.getStorageSync("user_info").id
 				}).then(res => {
-					if (res.data.code == 400) {
-						uni.navigateTo({
-							url: "./redsuccess?level=" + this.id + "&name=" + this.name
+					if (res.data.code == 1) {
+						uni.showToast({
+							title: res.data.msg,
+							icon: "none"
 						})
+						setTimeout(() => {
+							uni.navigateTo({
+								url: "./redsuccess?level=" + this.id + "&name=" + this.name
+							})
+						}, 1000)
 					}
 					if (res.data.code == 200) {
 						let that = this;
