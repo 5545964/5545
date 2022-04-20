@@ -109,6 +109,7 @@
 				if (this.shejishi == 0) {
 					this.$api.myteam({
 						user_id:uni.getStorageSync("user_info").id,
+						// user_id:5,
 						state: index
 					}).then(data => {
 						if (data.data.code == 1) {
@@ -122,7 +123,8 @@
 					})
 				} else {
 					this.$api.desmyteam({
-						user_id: uni.getStorageSync("user_info").id,
+						user_id:uni.getStorageSync("user_info").id,
+						// user_id:5,
 						state: index
 					}).then(data => {
 						if (data.data.code == 1) {

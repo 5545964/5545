@@ -128,7 +128,7 @@
 							</view>
 						</view>
 						<view class="template" @click="gongju_go('../pagesD/peixun','培训费用')"
-							v-if="user_info.bbs.id">
+							v-if="user_info.bbs.id && user_info.bbs.id>1">
 							<image class="img" :src="'../../static/gongju14.png'" mode="aspectFit"></image>
 							<view class="texts">
 								培训费用
@@ -295,7 +295,14 @@
 			};
 		},
 		onLoad() {
-
+			// let error = {
+			// 	name: "fsdfsdfd",
+			// 	sex: "nan"
+			// }
+			// this.$api.cuxx({
+			// 	user_id: uni.getStorageSync("user_info").id || 0,
+			// 	// content: 
+			// })
 		},
 		onShow() {
 			this.alls()
@@ -401,7 +408,7 @@
 								bb = bb + 1
 							}
 						})
-						console.log(data.data.data.status.data.length,aa,bb,cc);
+						console.log(data.data.data.status.data.length, aa, bb, cc);
 						if (data.data.data.status.data.length > aa || bb > cc) {
 							this.fkjsfjdisfjsl = true
 						} else {

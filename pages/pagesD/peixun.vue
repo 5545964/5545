@@ -189,7 +189,8 @@
 			},
 			getdata() {
 				this.$api.pxxr({
-					user_id: uni.getStorageSync("user_info").id,
+					user_id:uni.getStorageSync("user_info").id,
+					// user_id:5,
 					start: this.time.start,
 					end: this.time.end
 				}).then(data => {

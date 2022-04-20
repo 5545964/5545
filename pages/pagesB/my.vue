@@ -323,7 +323,7 @@
 					}];
 				}
 				this.list[1].inp = this.desinfo.nickname;
-				this.list[2].inp = this.desinfo.myself;
+				this.list[2].inp = this.desinfo.bh;
 				this.list[3].inp = this.desinfo.username;
 				this.list[4].inp = this.desinfo.bbs.type;
 				this.list[5].inp = this.desinfo.wechat;

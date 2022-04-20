@@ -247,8 +247,9 @@
 				this.$api.banner().then(data => {
 					if (data.data.code == 1) {
 						let aa = [];
+						let time = Date.parse(new Date()) / 1000
 						data.data.data.status.forEach(item => {
-							// item.image = this.$imgPath + item.image
+							// && item.endtime > time
 							if (item.position == 1) {
 								item.video = this.$imgs(item.video)
 								aa.push(item)

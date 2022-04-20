@@ -163,7 +163,7 @@
 			},
 			submit() {
 				if (this.code == "" || this.idcard == "" || this.address == "" || this.emal == "" || this.phone == "" ||
-					this.addressxq == "" || this.level == "") {
+					this.addressxq == "" || this.level == "" || this.name == "" || this.sex == "") {
 					return uni.showToast({
 						title: "请检查资料",
 						icon: "none"

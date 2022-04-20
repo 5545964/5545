@@ -57,6 +57,10 @@
 						<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
 							报装评价
 						</view>
+						<view class="button" v-if="items.state == 16&&items.bz==1"
+							@click="lookdetails(items)">
+							查看安装详情
+						</view>
 					</view>
 				</view>
 			</view>

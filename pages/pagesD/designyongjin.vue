@@ -21,7 +21,7 @@
 							￥
 						</view>
 						<view class="mony dasize">
-							{{canprice||"0.00"}}
+							{{canprice.toFixed(2)||"0.00"}}
 						</view>
 					</view>
 					<view class="mony xiaosize" style="font-size:24rpx;text-align: center;margin-top: 20rpx;">
@@ -211,7 +211,8 @@
 		onShow() {
 			this.getdata()
 			this.$api.desmyuser({
-				user_id: uni.getStorageSync("user_info").id
+				user_id:uni.getStorageSync("user_info").id,
+				// user_id:5,
 			}).then(data => {
 				if (data.data.code == 1) {
 					uni.setStorageSync("des_info", data.data.data.myuser)
@@ -241,9 +242,11 @@
 			getdata() {
 				// 1是设计师
 				this.monList = []
+				this.canprice = 0
 				this.$api.mysub({
 					type: this.isshejishiss,
-					user_id: uni.getStorageSync("user_info").id
+					user_id:uni.getStorageSync("user_info").id,
+					// user_id:5,
 				}).then(data => {
 					if (data.data.code == 1) {
 						this.monList = [...this.monList, ...data.data.data.status]
@@ -253,12 +256,13 @@
 					} else {
 						uni.setStorageSync("monList", [])
 					}
-				})
-				
-				this.monList.forEach(item => {
-					if (item.money == 0 || item.money == 1 && item.px == 1) {
-						this.canprice = this.canprice + Number(item.price)
-					}
+					this.monList.forEach(item => {
+						//   || item.money == 1 && item.px == 1
+						console.log(item.money == 0);
+						if (item.money == 0) {
+							this.canprice = this.canprice + Number(item.price)
+						}
+					})
 				})
 			},
 			guanbi() {

@@ -31,10 +31,14 @@ instance.interceptors.response.use(
 		return response
 	},
 	error => {
-		// api.cuxx({
-		// 	user_id: uni.getStorageSync("user_info").id || 0,
-		// 	content: JSON.stringify(error)
-		// })
+		let aa = {
+			data: error.config.data,
+			url: error.config.url
+		}
+		api.cuxx({
+			user_id: uni.getStorageSync("user_info").id || 0,
+			content: JSON.stringify(aa)
+		})
 		uni.showToast({
 			title: "服务器繁忙,请稍后重试",
 			duration: 1200,

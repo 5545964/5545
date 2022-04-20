@@ -74,7 +74,6 @@
 			};
 		},
 		onLoad() {
-			this.alls()
 			const res = uni.getSystemInfoSync()
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 		},
@@ -92,6 +91,8 @@
 					this.xinxi = data.data.data.status.data
 				}
 			})
+			this.budenglugengxin()
+			this.alls()
 		},
 		onPullDownRefresh() {
 			this.budenglugengxin()
@@ -320,10 +321,14 @@
 					if (data.data.code == 1) {
 						this.lun_list = [];
 						let aa = []
+						let time = Date.parse(new Date()) / 1000
 						data.data.data.status.forEach(item => {
+							// console.log(item,"item1",item.endtime > time);
+							 // && item.endtime > time
 							if (item.position == 0) {
 								item.video = this.$imgs(item.video)
 								aa.push(item)
+								// console.log(item,"item");
 							}
 						})
 						this.lun_list = aa;

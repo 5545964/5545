@@ -60,10 +60,12 @@
 				if (data.data.code == 1) {
 					this.lun_list = [];
 					let aa = []
+					let time = Date.parse(new Date()) / 1000
 					data.data.data.status.forEach(item => {
-						item.image = this.$imgPath + item.image
-						if (item.position == 2) {
+						// && item.endtime > time
+						if (item.position == 2 ) {
 							item.video = this.$imgs(item.video)
+							item.image = this.$imgs(item.image)
 							aa.push(item)
 						}
 					})

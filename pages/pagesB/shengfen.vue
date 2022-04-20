@@ -149,6 +149,7 @@
 				isdes: 0,
 				usershengfen: "",
 				types: "",
+				mlml: 0, //0销售员1是设计师
 			};
 		},
 		onLoad(ev) {
@@ -159,6 +160,7 @@
 			if (ev.isdes) {
 				this.isdes = 1
 				aa = "1"
+				this.mlml = 1
 			}
 			let bb = uni.getStorageSync("xieyi")
 			bb.forEach(item => {
@@ -174,7 +176,10 @@
 			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
 				if (this.isdes == 0) {
 					this.usershengfen = uni.getStorageSync("user_info").bbs.id || 0
-				} else {
+				}
+			}
+			if (uni.getStorageSync("des_info").bbs != '' && uni.getStorageSync("des_info").bbs != null) {
+				if (this.isdes != 0) {
 					this.usershengfen = uni.getStorageSync("des_info").bbs.id || 0
 				}
 			}
@@ -320,18 +325,21 @@
 			topay() {
 				this.$api.buylevel({
 					id: this.id,
-					user_id: uni.getStorageSync("user_info").id
+					user_id: uni.getStorageSync("user_info").id,
+					level: this.mlml
 				}).then(res => {
 					if (res.data.code == 1) {
 						uni.showToast({
 							title: res.data.msg,
 							icon: "none"
 						})
-						setTimeout(() => {
-							uni.navigateTo({
-								url: "./redsuccess?level=" + this.id + "&name=" + this.name
-							})
-						}, 1000)
+						if (this.mlml != 1) {
+							setTimeout(() => {
+								uni.navigateTo({
+									url: "./redsuccess?level=" + this.id + "&name=" + this.name
+								})
+							}, 1000)
+						}
 					}
 					if (res.data.code == 200) {
 						let that = this;
@@ -344,15 +352,21 @@
 							success: function(res) {
 								uni.showToast({
 									title: "购买" + that.types + "成功",
-									icon: "success"
+									icon: "none"
 								})
+								// that.$refs.uToast.show({
+								// 	title: "购买" + that.types + "成功",
+								// 	type: 'default'
+								// })
 								uni.setStorageSync("yanzheng", true)
-								setTimeout(() => {
-									uni.navigateTo({
-										url: "./redsuccess?level=" + that.id +
-											"&name=" + that.name
-									})
-								}, 1000)
+								if (that.mlml != 1) {
+									setTimeout(() => {
+										uni.navigateTo({
+											url: "./redsuccess?level=" + that.id +
+												"&name=" + that.name
+										})
+									}, 1000)
+								}
 							},
 							fail: function(err) {
 								uni.showToast({

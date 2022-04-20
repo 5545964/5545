@@ -22,7 +22,7 @@
 				<view :class="index%2==0? 'drop_item1':'drop_item'" v-for="(item,index) in dropList" :key="item.id">
 					<!-- <u-input v-if="index == 0" @click="open()" input-align="left" :disabled="true" v-model="item.value"
 						:placeholder="item.name" type="text" /> -->
-					<view v-if="index == 0" @click="open()">
+					<view v-if="index == 0" @click="open()" style="height:100%;width:100%;line-height:105rpx;">
 						{{item.name||""}}
 					</view>
 					<u-input v-else @blur="fcun" v-model="item.value" input-align="left" :placeholder="item.name"
@@ -301,7 +301,7 @@
 				this.sheng = e.province.label;
 				this.shi = e.city.label;
 				this.qu = e.area.label
-				uni.setStorageSync("chengshi", [this.sheng, this.shi,this.qu])
+				uni.setStorageSync("chengshi", [this.sheng, this.shi, this.qu])
 				this.shengshiqu = e.province.label + e.city.label + e.area.label;
 				this.dropList[0].name = this.shengshiqu
 				this.dropList[0].value = this.shengshiqu
