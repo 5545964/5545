@@ -33,9 +33,9 @@
 				</view>
 			</view>
 			<view class="">
-				<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
+				<!-- <u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 				<swiper :duration="500" :style="'height:'+heigth+'px;'" :circular="true" :current="current"
-					@change="lun_change">
+					:disable-touch="true" @change="lun_change">
 					<swiper-item v-for="(item,index) in list" :key="index">
 						<scroll-view scroll-y="true" :style="'height:'+heigth+'px;'">
 							<view class="swiper-item" v-for="(items,indexs) in userList" :key="indexs">
@@ -43,7 +43,8 @@
 									<image class="img" :src="items.users.avatar" mode="aspectFit"></image>
 									<view class="">
 										<view class="name">
-											<text v-if="items.users.username != ''">{{items.users.username||""}}</text><text
+											<text
+												v-if="items.users.username != ''">{{items.users.username||""}}</text><text
 												v-else>未知昵称</text>
 										</view>
 										<view class="text">
@@ -61,8 +62,28 @@
 							</view>
 						</scroll-view>
 					</swiper-item>
-
-				</swiper>
+				</swiper> -->
+				<view class="swiper-item" v-for="(items,indexs) in userList" :key="indexs">
+					<view class="cet">
+						<image class="img" :src="items.users.avatar" mode="aspectFit"></image>
+						<view class="">
+							<view class="name">
+								<text v-if="items.users.username != ''">{{items.users.username||""}}</text><text
+									v-else>未知昵称</text>
+							</view>
+							<view class="text">
+								<text v-if="items.users.mobile != ''">{{items.users.mobile||""}}</text><text
+									v-else>无</text>
+							</view>
+						</view>
+					</view>
+					<view v-if="current == 1" class="mony">
+						人数：<text v-if="items.son != ''">{{items.son||""}}</text><text v-else>0</text>
+					</view>
+					<view class="mony">
+						￥<text v-if="items.moneys != ''">{{items.moneys||""}}</text><text v-else>0</text>
+					</view>
+				</view>
 			</view>
 		</view>
 		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
@@ -106,10 +127,11 @@
 			// 我的团队 
 			getdata(index) {
 				this.userList = []
+				this.mony = []
 				if (this.shejishi == 0) {
 					this.$api.myteam({
 						user_id:uni.getStorageSync("user_info").id,
-						// user_id:5,
+						// user_id: 5,
 						state: index
 					}).then(data => {
 						if (data.data.code == 1) {
@@ -118,13 +140,16 @@
 							})
 							this.userList = data.data.data.status
 							this.man_num = data.data.data.count
-							this.mony = data.data.data.sum
+							data.data.data.forEach(item => {
+								this.mony = this.mony + Number(item.moneys)
+							})
+							// this.mony = data.data.data.sum
 						}
 					})
 				} else {
 					this.$api.desmyteam({
 						user_id:uni.getStorageSync("user_info").id,
-						// user_id:5,
+						// user_id: 5,
 						state: index
 					}).then(data => {
 						if (data.data.code == 1) {

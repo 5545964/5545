@@ -119,6 +119,9 @@
 					<view class="resest" @click="lookcont" style="margin-top: 250rpx;">
 						查看电子合同
 					</view>
+					<view class="resest" @click="gkgk()" style="margin-top: 50rpx;">
+						切换设计师
+					</view>
 				</view>
 			</view>
 			<!-- 招募令 -->
@@ -428,6 +431,11 @@
 
 		},
 		methods: {
+			gkgk(){
+				uni.navigateTo({
+					url: "../pagesD/designPage/designPage",
+				})
+			},
 			changes(index) {
 				this.currents = index
 			},

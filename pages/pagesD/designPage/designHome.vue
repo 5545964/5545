@@ -56,7 +56,7 @@
 				</view>
 			</view>
 		</view>
-		<u-kehu></u-kehu>
+		<u-kehu url="../../Home/booking/AppointmentDesign"></u-kehu>
 	</view>
 </template>
 

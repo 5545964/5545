@@ -197,8 +197,8 @@
 		</view>
 		<view style="height: 110rpx;"></view>
 		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
-		<view class="annius">
-			<view class="anniu">
+		<view class="annius" v-if="lklklklk">
+			<view class="anniu" v-if="tigongfuwu">
 				<view class="button" @click="annui(0)" v-if="data_list.state == 0">
 					取消订单
 				</view>
@@ -251,6 +251,14 @@
 					报装评价
 				</view>
 			</view>
+			<view class="anniu" v-else>
+				<view class="button" @click="tigongfuwus(0)">
+					不提供服务
+				</view>
+				<view class="button" @click="tigongfuwus(1)">
+					提供服务
+				</view>
+			</view>
 			<u-heigth />
 		</view>
 		<view class="">
@@ -272,16 +280,16 @@
 							电话
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aphone"
-								placeholder="请填写快递单号" type="number" />
+							<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
+								v-model="bzxq.aphone" placeholder="请填写快递单号" type="number" />
 						</view>
 						<view v-if="bzxq.abh" class="">
 							<view class="">
 								安装人员编号
 							</view>
 							<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-								<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.abh"
-									placeholder="请填写快递单号" type="number" />
+								<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
+									v-model="bzxq.abh" placeholder="请填写快递单号" type="number" />
 							</view>
 						</view>
 						<view class="">
@@ -371,7 +379,8 @@
 					<view class="yanzhengma">
 						<view class="cet" style="justify-content: space-around;width: 100%;">
 							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
 							</view>
 							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
@@ -483,11 +492,13 @@
 </template>
 
 <script>
-	// import dayjs from 'dayjs'
-	// dayjs.extend(require('dayjs/plugin/duration'));
 	export default {
 		data() {
 			return {
+				lklklklk: false,
+				tigongfuwu: true,
+				qitaren: {},
+				qitarenfasle: "",
 				quxiaoshouhou: false,
 				dinshiqi: "",
 				shoujihao: uni.getStorageSync("user_info").mobile,
@@ -533,18 +544,46 @@
 				img_list: [],
 				order_idsssss: "",
 				daojishi: "",
+				fwid: 0,
+				opop:{}
 			}
 		},
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title;
 			}
+			this.opop = ev
 			this.order_idsssss = ev.order_id
+			// if (ev.qitarenfasle) {
+			// 	this.qitaren = {
+			// 		user_id: ev.qitarenfasle,
+			// 		id: this.order_idsssss
+			// 	}
+			// 	let pp = {
+			// 		user_id: ev.qitarenfasle,
+			// 		users_id: uni.getStorageSync("user_info").id,
+			// 		id: ev.id
+			// 	}
+			// 	this.$api.tgfw(pp).then(data => {
+			// 		if (data.data.code == 0) {
+			// 			this.lklklklk = false
+			// 		}else{
+			// 			this.fwid = data.data.data.status.id
+			// 			this.lklklklk = true
+			// 		}
+			// 	})
+			// 	this.tigongfuwu = false
+			// } else {
+			this.qitaren = {
+				user_id: ev.qitarenfasle,
+				id: this.order_idsssss
+			}
+			// 	this.tigongfuwu = true
+			// }
 
 		},
 		onShow() {
 			this.allsss()
-			let aa = uni.getStorageSync("xieyi")
 			// // 已安装3
 			// yianzhaungkaiguan: true,
 			// yianzhaungxieyi: [],
@@ -554,7 +593,7 @@
 			// // 确认收货2
 			// querenqianshoukaiguan: true,
 			// querenqianshouxieyi: [],
-
+			let aa = uni.getStorageSync("xieyi")
 			if (aa) {
 				this.yiwanchengxieyi = [];
 				this.yianzhaungxieyi = [];
@@ -601,6 +640,22 @@
 			}
 		},
 		methods: {
+			tigongfuwus(ev) {
+				this.$api.fwsure({
+					user_id: uni.getStorageSync("user_info").id,
+					choice: ev,
+					id: this.fwid
+				}).then(data => {
+					uni.showToast({
+						title: data.data.msg,
+						icon: "none"
+					})
+					if (data.data.code == 1) {
+						this.lklklklk = false
+						// uni.navigateBack(-1)
+					}
+				})
+			},
 			shouhoou(ev) {
 				if (ev == 1) {
 					this.$api.xqsh({
@@ -837,24 +892,47 @@
 			},
 			// 初始化数据
 			allsss() {
-				this.$api.myorder({
-					user_id: uni.getStorageSync("user_info").id,
-					id: this.order_idsssss
-				}).then(data => {
+				this.$api.myorder(this.qitaren).then(data => {
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
 							if (item.orderid == this.order_idsssss) {
 								this.data_list = item;
 								if (this.data_list.paytime) {
-									this.data_list.paytime = this.$u.timeFormat(this.data_list.paytime, 'yyyy-mm-dd hh:MM:ss')
+									this.data_list.paytime = this.$u.timeFormat(this.data_list.paytime,
+										'yyyy-mm-dd hh:MM:ss')
 								}
 								if (this.data_list.image) {
 									let img = this.data_list.image;
 									this.img_list = img.split(",")
 								}
 								this.countDown()
+								let pp = {
+									users_id: uni.getStorageSync("user_info").id,
+									id: this.data_list.id
+								}
+								this.$api.tgfw(pp).then(data => {
+									if (data.data.code == 0) {
+										this.lklklklk = false
+									} else {
+										this.tigongfuwu = false
+										this.fwid = data.data.data.status.id
+										this.lklklklk = true
+										
+									}
+								})
 							}
 						})
+						console.log(this.data_list, JSON.stringify(this.data_list) === '{}');
+						if (JSON.stringify(this.data_list) === '{}') {
+							uni.showToast({
+								title: "暂无订单",
+								duration: 1000,
+								icon: "none"
+							})
+							setTimeout(() => {
+								uni.navigateBack(-1)
+							}, 1000)
+						}
 					}
 				})
 			},

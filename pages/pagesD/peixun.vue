@@ -25,7 +25,7 @@
 				</view>
 				<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 					<view class="dsdxcxvxs">
-						{{$u.timeFormat(datas, 'yyyy-mm-dd')}}
+						{{$u.timeFormat(datas, 'yyyy-mm')}}
 					</view>
 					<u-icon name="arrow-down"></u-icon>
 				</view>
@@ -94,7 +94,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-timeSelect ref="myPicker" :datas="datas" @submit="handleSubmit" :start-year="2000" :end-year="2500" />
+		<u-timeSelects ref="myPicker" :datas="datas" @submit="handleSubmit" :start-year="2000" :end-year="2500" />
 		<u-kehu url="../Home/booking/AppointmentDesign" />
 	</view>
 </template>
@@ -118,7 +118,13 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
-			this.time = this.times(new Date(this.datas))
+			let aa = this.$u.timeFormat(this.datas, 'yyyy-mm')
+			let firstDay = new Date(aa.substr(0, aa.length - 3), aa.substr(5) - 1, 1);
+			let lastDay = new Date(aa.substr(0, aa.length - 3), aa.substr(5), 0);
+			this.time = {
+				start: Date.parse(firstDay) / 1000,
+				end: Date.parse(lastDay) / 1000
+			}
 			this.getdata()
 		},
 		methods: {
@@ -136,32 +142,15 @@
 				this.$refs.myPicker.show();
 			},
 			handleSubmit(e) {
-				let aa = e.year + "-" + e.month + "-" + e.day
-				this.datas = Date.parse(new Date(aa).toString())
-				this.time = this.times(new Date(aa))
+				let aa = e.year + "-" + e.month
+				this.datas = aa
+				let firstDay = new Date(e.year, e.month - 1, 1);
+				let lastDay = new Date(e.year, e.month, 0);
+				this.time = {
+					start: Date.parse(firstDay) / 1000,
+					end: Date.parse(lastDay) / 1000
+				}
 				this.getdata()
-			},
-			times(data) {
-				data.setDate(1);
-				data.setHours(0);
-				data.setSeconds(0);
-				data.setMinutes(0);
-				var data1 = new Date();
-				if (data.getMonth() == 11) {
-					data1.setMonth(0)
-				} else {
-					data1.setMonth(data.getMonth() + 1)
-				}
-				data1.setDate(1);
-				data1.setHours(0);
-				data1.setSeconds(0);
-				data1.setMinutes(0);
-				let start = (data.getTime() / 1000).toFixed(0)
-				let end = ((data1.getTime() / 1000) - 1).toFixed(0)
-				return {
-					start,
-					end
-				}
 			},
 			tongyi() {
 				let aa = []
@@ -170,12 +159,17 @@
 				})
 				this.$api.pxsq({
 					user_id: uni.getStorageSync("user_info").id,
+					// user_id: 5,
 					id: aa,
 					image: this.imgList
 				}).then(data => {
 					if (data.data.code == 1) {
 						this.show = false
 					}
+					uni.showToast({
+						title: data.data.msg,
+						icon: "none"
+					})
 				})
 			},
 			asdfg(ev) {
@@ -189,8 +183,8 @@
 			},
 			getdata() {
 				this.$api.pxxr({
-					user_id:uni.getStorageSync("user_info").id,
-					// user_id:5,
+					user_id: uni.getStorageSync("user_info").id,
+					// user_id: 5,
 					start: this.time.start,
 					end: this.time.end
 				}).then(data => {

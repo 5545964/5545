@@ -381,12 +381,15 @@
 			if (ev.titit) {
 				this.current = 4
 			}
+			this.allls()
 		},
 		onShow() {
-			this.active = 0
-			this.active0 = 0
-			this.active1 = 0
-			this.active2 = 0
+			this.xuanzhe = ""
+			this.columns = []
+			this.current = 0
+			// this.active0 = 0
+			// this.active1 = 0
+			// this.active2 = 0
 			this.user_infos = uni.getStorageSync("user_info")
 			uni.setStorageSync("idid", 0)
 			this.idid = 0
@@ -602,12 +605,12 @@
 						this.xieyi = [...cc]
 						this.yuedu = true
 					} else {
-						if (this.user_infos.bbs.id == 3) {
+						if (this.user_infos.bbs.id == 3 && index != 0) {
 							let text = ""
 							if (this.datalist[index][indexs].did == this.user_infos.id) {
 								text = "此区域已被您签约"
 							} else {
-								text = "此区域已被其他美居会员签约"
+								text = "此区域已被其他美居会员签约,请选择其他区域"
 							}
 							this.$refs.uToast.show({
 								title: text,
@@ -673,6 +676,31 @@
 					}
 				})
 			},
+			allls() {
+				// 咨询中心
+				this.$api.pots({
+					limit: 1000
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.data.forEach(item => {
+							item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
+						})
+						this.xinxi = data.data.data.status.data
+						uni.stopPullDownRefresh();
+					}
+				})
+				// 前三项
+				for (let i in this.lists) {
+					this.$api.bydadout({
+						state: this.lists[i].id
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.lists[i].content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
+								.imgsss);
+						}
+					})
+				}
+			},
 			alls() {
 				// 用户信息
 				this.$api.myuser({
@@ -698,29 +726,6 @@
 						uni.stopPullDownRefresh();
 					}
 				})
-				// 咨询中心
-				this.$api.pots({
-					limit: 1000
-				}).then(data => {
-					if (data.data.code == 1) {
-						data.data.data.status.data.forEach(item => {
-							item.content = item.content.replace(/\<img src=\"/gi, this.imgsss);
-						})
-						this.xinxi = data.data.data.status.data
-						uni.stopPullDownRefresh();
-					}
-				})
-				// 前三项
-				for (let i in this.lists) {
-					this.$api.bydadout({
-						state: this.lists[i].id
-					}).then(data => {
-						if (data.data.code == 1) {
-							this.lists[i].content = data.data.data.status[0].content.replace(/\<img src=\"/gi, this
-								.imgsss);
-						}
-					})
-				}
 			},
 			klkl(ev, index) {
 				// 0是D,1是B
@@ -816,7 +821,6 @@
 											} else {
 												this.idid = 1
 											}
-											console.log("desdesidid", this.idid);
 											uni.setStorageSync("idid", this.idid)
 											this.idids = 1
 											this.klkl(item.id, 0)

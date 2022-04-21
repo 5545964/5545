@@ -33,12 +33,12 @@
 							placeholder="请输入手机号码" />
 					</view>
 				</view>
-				<view class="inputs" @click="xuanzhe">
+				<view class="inputs" >
 					<view class="cxz">
 						地区信息
 					</view>
-					<view class="asd dhdh">
-						<u-input v-model="mnmn" style="width: 100%;height: 100%;" :inputAlign="'left'" :disabled="true"
+					<view class="asd dhdh" @click="xuanzhe">
+						<u-input v-model="mnmn" style="width: 100%;height: 100%;" :inputAlign="'left'"
 							type="text" placeholder="请选择地址" />
 						<image class="img" src="../../static/dinwei.png" mode="aspectFit"></image>
 					</view>
@@ -240,7 +240,7 @@
 			border-radius: 10rpx;
 
 			.img {
-				margin-right: 40rpx;
+				margin: 0 40rpx;
 				width: 30rpx;
 				height: 40rpx;
 			}

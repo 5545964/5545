@@ -26,8 +26,14 @@
 				<view class="">
 					性别
 				</view>
-				<input style="text-align: right;" v-model="sex" type="text" value="" placeholder="请输入性别" />
+				<u-radio-group v-model="value" @change="radioGroupChange" activeColor="#007399">
+					<u-radio v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+						{{item.name}}
+					</u-radio>
+				</u-radio-group>
+				<!-- <input style="text-align: right;" v-model="sex" type="text" value="" placeholder="请输入性别" /> -->
 			</view>
+
 			<view class="write_item">
 				<view class="">
 					手机号
@@ -94,9 +100,26 @@
 			if (aa) {
 				this.phone = aa.mobile
 			}
+			let bb = uni.getStorageSync("shengfen")
+			if (bb != null) {
+				this.user = bb
+				this.names = this.user.name
+				if(this.user.sex == 0){
+					this.sex = "男"
+					this.value = "男"
+				}else{
+					this.value = "女"
+					this.sex = "女"
+				}
+				this.idcard = this.user.idcart
+				this.emal = this.user.email
+				this.address = this.user.address
+				this.addressxq = this.user.addressxq
+			}
 		},
 		data() {
 			return {
+				user: "",
 				sex: "",
 				names: "",
 				name: "",
@@ -111,9 +134,22 @@
 				show: false,
 				title: "注册销售员",
 				timea: 0,
+				list: [{
+						name: '男',
+						disabled: false
+					},
+					{
+						name: '女',
+						disabled: false
+					}
+				],
+				value: 'orange',
 			};
 		},
 		methods: {
+			radioGroupChange(e) {
+				this.sex = e
+			},
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({

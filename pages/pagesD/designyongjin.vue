@@ -45,7 +45,7 @@
 					</view>
 					<view class="dasdsdadsxcxzas" @click="openDatetimePicker">
 						<view class="dsdxcxvxs">
-							{{datas||""}}
+							{{$u.timeFormat(datas, 'yyyy-mm')}}
 						</view>
 						<u-icon name="arrow-down"></u-icon>
 					</view>
@@ -64,8 +64,25 @@
 						佣金收益
 					</view>
 				</view>
+				<!-- <view class="jhfjkdhfk" v-else>
+					<view class="wins">
+						提佣时间
+					</view>
+					<view class="win">
+						提佣金额
+					</view>
+					<view class="win">
+						提佣方式
+					</view>
+					<view class="win">
+						提佣进度
+					</view>
+					<view class="win">
+						关联订单
+					</view>
+				</view> -->
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
-					<view class="vdfdd" v-if="item.money == 0 || item.money == 1 && item.px == 1">
+					<view class="vdfdd" v-if="item.money == 0 && isshejishiss == 0">
 						<view class="win">
 							{{item.order_id||""}}
 						</view>
@@ -93,9 +110,43 @@
 							{{item.price||0}}
 						</view>
 					</view>
+					<view class="vdfdd" v-else>
+						<view class="win">
+							{{item.orderid||""}}
+						</view>
+						<view class="win">
+							<block v-if="item.statess == null">
+								<text v-if="item.states == 0">待付设计定金</text>
+								<text v-if="item.states == 1">已付设计定金</text>
+								<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
+							</block>
+							
+							
+							<block v-if="item.statess != null">
+								<text v-if="item.statess.state >= 0 && item.statess.state <4">已下单付款</text>
+								<text v-if="item.statess.state >= 4">订单完成</text>
+							</block>
+							
+							
+
+							<block v-if="item.tixian != 1">
+								<text v-if="item.sq == 0">佣金未申请</text>
+								<text v-if="item.sq == 1">佣金申请中</text>
+							</block>
+							<text v-if="item.tixian == 1">佣金申请成功</text>
+							
+							
+						</view>
+						<view class="win">
+							{{item.dipro.cjprice||0}}
+						</view>
+						<view class="win">
+							{{item.dipro.price||0}}
+						</view>
+					</view>
 				</view>
 			</view>
-			<view class="hahahahaxczxc" v-show="current == 1">
+			<!-- <view class="hahahahaxczxc" v-show="current == 1">
 				<view class="ccxv" style="margin-top: 40rpx;">
 					<view class="text">
 						选择时间
@@ -147,11 +198,10 @@
 						</view>
 					</view>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<u-heigth />
-		<u-timeSelect ref="myPicker" @submit="handleSubmit" :start-year="2000" :end-year="2500">
-		</u-timeSelect>
+		<u-timeSelects ref="myPicker" :datas="datas" @submit="handleSubmit" :start-year="2000" :end-year="2500" />
 		<u-popup border-radius="10" v-model="show" mode="center">
 			<view class="tanchu">
 				<view class="top">
@@ -165,6 +215,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-toast ref="uToast" />
 		<u-kehu url="../Home/booking/AppointmentDesign" :po_hei="100"></u-kehu>
 	</view>
 </template>
@@ -173,11 +224,11 @@
 	export default {
 		data() {
 			return {
+				sjes: true,
 				isshejishiss: 0,
-				allprice: 0,
 				canprice: 0,
 				show: false,
-				datas: new Date().toISOString().slice(0, 10),
+				datas: Date.parse(new Date()),
 				lists: [{
 						name: "直接佣金"
 					},
@@ -196,7 +247,8 @@
 				],
 				monList: [],
 				title: "我的佣金",
-				zongjia: 0
+				zongjia: 0,
+				time: {}
 			};
 		},
 		onLoad(ev) {
@@ -206,13 +258,18 @@
 			if (ev.isshejishi) {
 				this.isshejishiss = 1;
 			}
-
 		},
 		onShow() {
+			let aa = this.$u.timeFormat(this.datas, 'yyyy-mm')
+			let firstDay = new Date(aa.substr(0, aa.length - 3), aa.substr(5) - 1, 1);
+			let lastDay = new Date(aa.substr(0, aa.length - 3), aa.substr(5), 0);
+			this.time = {
+				start: Date.parse(firstDay) / 1000,
+				end: Date.parse(lastDay) / 1000
+			}
 			this.getdata()
 			this.$api.desmyuser({
-				user_id:uni.getStorageSync("user_info").id,
-				// user_id:5,
+				user_id: uni.getStorageSync("user_info").id,
 			}).then(data => {
 				if (data.data.code == 1) {
 					uni.setStorageSync("des_info", data.data.data.myuser)
@@ -221,18 +278,18 @@
 		},
 		methods: {
 			goods(ev) {
+				console.log(ev);
 				if (ev.sex) {
 					uni.setStorageSync("des_order", ev)
 					uni.navigateTo({
 						url: "./shejishixiangqing?isdes=1"
 					})
 				} else {
-					uni.showToast({
-						title: "此订单不能查看详情!",
-						icon: "error"
-					})
+					uni.navigateTo({
+						url: "../pagesA/goods_data?order_id=" + ev.order_id + "&qitarenfasle=" + ev.user_id +
+							"&id=" + ev.id
+					});
 				}
-
 			},
 			wodeteam() {
 				uni.navigateTo({
@@ -240,30 +297,47 @@
 				})
 			},
 			getdata() {
-				// 1是设计师
-				this.monList = []
 				this.canprice = 0
-				this.$api.mysub({
-					type: this.isshejishiss,
-					user_id:uni.getStorageSync("user_info").id,
-					// user_id:5,
-				}).then(data => {
-					if (data.data.code == 1) {
-						this.monList = [...this.monList, ...data.data.data.status]
-						this.allprice = data.data.data.all.toFixed(2);
-						// this.canprice = data.data.data.can.toFixed(2);
-						uni.setStorageSync("monList", this.monList)
-					} else {
-						uni.setStorageSync("monList", [])
-					}
-					this.monList.forEach(item => {
-						//   || item.money == 1 && item.px == 1
-						console.log(item.money == 0);
-						if (item.money == 0) {
-							this.canprice = this.canprice + Number(item.price)
+				// 1是设计师
+				if (this.isshejishiss == 0) {
+					this.$api.mysub({
+						type: this.isshejishiss,
+						user_id: uni.getStorageSync("user_info").id,
+						start: this.time.start,
+						end: this.time.end
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.monList = [...data.data.data.status]
+							data.data.data.status.forEach(item => {
+								if (item.money == 0) {
+									this.canprice = this.canprice + Number(item.price)
+								}
+							})
+						} else {
+							this.monList = []
+							this.canprice = 0
+							uni.setStorageSync("monList", [])
 						}
 					})
-				})
+				} else {
+					this.$api.desorders({
+						id: uni.getStorageSync("des_info").id
+					}).then(data => {
+						if (data.data.code == 1) {
+							data.data.data.status.forEach(item => {
+								if (item.dipro.length != 0) {
+									this.canprice = this.canprice + Number(item.dipro.price)
+								}
+								if (item.image != null) {
+									item["simage"] = item.image.split(",")[0]
+								}
+							})
+
+							this.monList = [...data.data.data.status]
+							uni.setStorageSync("monList", this.monList)
+						}
+					})
+				}
 			},
 			guanbi() {
 				this.show = false
@@ -280,7 +354,15 @@
 				this.$refs.myPicker.show();
 			},
 			handleSubmit(e) {
-				this.datas = `${e.year}-${e.month}-${e.day}`;
+				let aa = e.year + "-" + e.month
+				this.datas = aa
+				let firstDay = new Date(e.year, e.month - 1, 1);
+				let lastDay = new Date(e.year, e.month, 0);
+				this.time = {
+					start: Date.parse(firstDay) / 1000,
+					end: Date.parse(lastDay) / 1000
+				}
+				this.getdata()
 			},
 			changes(index) {
 				this.currents = index;

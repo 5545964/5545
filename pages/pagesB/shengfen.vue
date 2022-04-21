@@ -40,7 +40,7 @@
 			</swiper>
 			<u-empty v-else></u-empty>
 		</view>
-		<view class="boyyty cet" v-if="usershengfen < id">
+		<view class="boyyty cet" v-if="usershengfen < id && pd==0">
 			<!-- <view class="boyyty cet"> -->
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
 				￥{{jiage||""}}升级
@@ -115,6 +115,7 @@
 				</view>
 			</view>
 		</u-popup>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -150,6 +151,7 @@
 				usershengfen: "",
 				types: "",
 				mlml: 0, //0销售员1是设计师
+				pd: 0
 			};
 		},
 		onLoad(ev) {
@@ -350,14 +352,14 @@
 							signType: res.data.data.signType, //签名算法，暂支持 MD5。
 							paySign: res.data.data.paySign, //签名
 							success: function(res) {
-								uni.showToast({
-									title: "购买" + that.types + "成功",
-									icon: "none"
-								})
-								// that.$refs.uToast.show({
+								// uni.showToast({
 								// 	title: "购买" + that.types + "成功",
-								// 	type: 'default'
+								// 	icon: "none"
 								// })
+								that.$refs.uToast.show({
+									title: "购买" + that.types + "成功",
+									type: 'default'
+								})
 								uni.setStorageSync("yanzheng", true)
 								if (that.mlml != 1) {
 									setTimeout(() => {
@@ -393,8 +395,10 @@
 							this.jiage = "免费"
 						}
 						this.id = this.list[0].id
+						this.pd = this.list[0].pd
 						this.types = this.list[0].type
 						this.name = this.list[0].type
+						uni.setStorageSync("shengfen", data.data.data.user)
 						setTimeout(() => {
 							this.gaodu(0)
 						}, 500)
@@ -417,6 +421,7 @@
 					this.jiage = "免费"
 				}
 				this.id = this.list[ev.detail.current].id;
+				this.pd = this.list[ev.detail.current].pd;
 				this.types = this.list[ev.detail.current].type;
 				this.name = this.list[ev.detail.current].name;
 				this.gaodu(ev.detail.current)

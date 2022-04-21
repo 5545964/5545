@@ -14,7 +14,6 @@
 			</u-navbar>
 		</view>
 		<view v-if="isyuyue != 0">
-			<!-- <view> -->
 			<view class="xunhuan" style="padding: 30rpx;">
 				<view class="dshk">
 					设计进度
@@ -27,8 +26,12 @@
 							<!-- 等待平台审核 -->
 						</view>
 					</view>
+					<view v-if="state == 0&&states == 1">
+						<view class="cxz">
+							定金已支付，等待设计师接单
+						</view>
+					</view>
 					<view v-if="state == 1&&states == 1">
-						<!-- <view> -->
 						<view class="cxz">
 							定金已支付，等待设计师设计完成
 						</view>
@@ -40,7 +43,6 @@
 						</view>
 					</view>
 					<view style="padding: 30rpx 0;" v-if="states == 0 && mony !='0.00'">
-						<!-- <view style="padding: 30rpx 0;"> -->
 						<view class="cxz" style="text-align: center;">
 							您的预约申请已通过审核!
 						</view>
@@ -287,7 +289,7 @@
 		<view class="annui" v-if="isyuyue == 0" @click="tijiao">
 			提交预约
 		</view>
-		<u-heigth/>
+		<u-heigth />
 		<view>
 			<u-select v-model="nianning" mode="single-column" :list="nianlist" @confirm="confirm"></u-select>
 			<u-toast ref="uToast" />
@@ -856,15 +858,17 @@
 			xunhuan(ev) {
 				this.poplist.forEach((item, index) => {
 					if (index == ev) {
-						this.poplist[ev].check = true;
-						this.sel_list = this.poplist[ev].name;
-					} else {
-						this.poplist[index].check = false;
+						this.poplist[ev].check = !this.poplist[ev].check;
+						this.sel_list = this.sel_list + this.poplist[ev].name + ",";
 					}
+					// else {
+					// 	this.poplist[index].check = false;
+					// }
 				})
 			},
 
 			change() {
+				this.sel_list = this.sel_list.substr(0, this.sel_list.length - 1);
 				this.data_list[this.chuanzhi.obj] = this.sel_list;
 				this.baochun()
 				this.popshow = false;
@@ -1000,6 +1004,7 @@
 			},
 
 			open(ev) {
+				this.sel_list = ""
 				if (ev.obj == "style") {
 					this.poplist = [];
 					this.poplist = [...this.stylessss]

@@ -427,7 +427,7 @@
 			}
 			return {
 				title: this.alls.name,
-				imageUrl:this.list[0],
+				imageUrl: this.list[0],
 				path: '/pages/pagesC/Shopping?shopid=' + this.shopid + "&uid=" + uni.getStorageSync("user_info").id +
 					"&level=" + aa
 			}

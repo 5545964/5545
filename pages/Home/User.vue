@@ -195,7 +195,7 @@
 					</view>
 				</view>
 				<view class="top_d" @click="changeDesign">
-					切换设计师
+					{{qeihuan}}
 				</view>
 			</view>
 			<u-kehu :navis="false"></u-kehu>
@@ -209,6 +209,7 @@
 	export default {
 		data() {
 			return {
+				qeihuan: "切换设计师",
 				zhanleixin: false,
 				showssss: false,
 				fkjsfjdisfjsl: false,
@@ -292,6 +293,9 @@
 					},
 				],
 				des_user: "",
+				mobanid: [
+					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU',
+				],
 			};
 		},
 		onLoad() {
@@ -337,9 +341,11 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						uni.setStorageSync("des_info", data.data.data.myuser)
+						this.qeihuan = "切换设计师"
 						this.des_user = data.data.data.myuser
 						uni.stopPullDownRefresh();
 					} else {
+						this.qeihuan = "成为设计师"
 						uni.setStorageSync("des_info", {})
 					}
 				})
@@ -520,9 +526,23 @@
 			},
 			async gongju_go(ev, title) {
 				if (await this.$login()) {
-					uni.navigateTo({
-						url: ev + "?title=" + title
-					})
+					if (ev == "../pagesD/designyongjin") {
+						let that = this
+						uni.requestSubscribeMessage({
+							provider: 'weixin',
+							tmplIds: that.mobanid,
+							complete: function(e) {
+								uni.navigateTo({
+									url: ev + "?title=" + title
+								})
+							}
+						});
+					} else {
+						uni.navigateTo({
+							url: ev + "?title=" + title
+						})
+					}
+
 				}
 			}
 		}

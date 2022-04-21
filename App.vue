@@ -2,6 +2,7 @@
 	import logs from '@/utils/islogin.js'
 	export default {
 		onLaunch(ev) {
+			console.log(ev, "onLaunch");
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("evevevev", JSON.stringify(ev))
 			if (ev.query.uid) {
@@ -50,9 +51,28 @@
 					uni.setStorageSync("showssss", data.data.data.edit)
 				}
 			})
-			
+
 		},
-		onShow() {
+		onShow(ev) {
+			if (ev.query.uid) {
+				uni.setStorageSync("yaoqinguid", ev.query.uid)
+				if (uni.getStorageSync("user_info")) {
+					this.$api.ewmjoin({
+						user_id: uni.getStorageSync("user_info").id,
+						pid: ev.query.uid
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.removeStorageSync('yaoqinguid')
+						}
+					})
+				}
+			}
+			if (ev.query.level) {
+				if (ev.query.level === "undefined") {
+					ev.query.level = 0
+				}
+				uni.setStorageSync("yaoqinglevel", ev.query.level)
+			}
 			if (true) {
 				clearInterval(uni.getStorageSync("setInterval", aa))
 				let aa = setInterval(() => {
@@ -80,16 +100,16 @@
 							}
 						}
 					})
-					this.$api.tgfw(aa).then(data => {
-						if (data.data.code == 1) {
-							if (uni.getStorageSync("yanzheng")) {
-								uni.reLaunch({
-									url: "/pages/pagesB/tanchuangfuwu?status=" + JSON.stringify(
-										data.data.data.status)
-								})
-							}
-						}
-					})
+					// this.$api.tgfw(aa).then(data => {
+					// 	if (data.data.code == 1) {
+					// 		if (uni.getStorageSync("yanzheng")) {
+					// 			uni.reLaunch({
+					// 				url: "/pages/pagesB/tanchuangfuwu?status=" + JSON.stringify(
+					// 					data.data.data.status)
+					// 			})
+					// 		}
+					// 	}
+					// })
 				}, 10000)
 				uni.setStorageSync("setInterval", aa)
 			}
