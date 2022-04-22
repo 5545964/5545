@@ -291,6 +291,7 @@
 				shengqings: "",
 				shengqing: false,
 				user_infos: "",
+				des_infos: "",
 				mm: [],
 				zhuangtai: 0,
 				xuanzhe: "",
@@ -394,6 +395,7 @@
 			// this.active1 = 0
 			// this.active2 = 0
 			this.user_infos = uni.getStorageSync("user_info")
+			this.des_infos = uni.getStorageSync("des_info")
 			uni.setStorageSync("idid", 0)
 			this.idid = 0
 			this.alls()
@@ -579,10 +581,13 @@
 			},
 			// 切换选项，签约区县
 			changeTokens(index, indexs) {
+				console.log(index, indexs);
 				this.datalist[index].forEach(item => {
 					item.active = indexs
 				})
+				 // && this.user_infos.bbs.id != 3
 				if (this.datalist[index][indexs].address) {
+					
 					this.changeTokens2(this.datalist[index][indexs])
 				} else {
 
@@ -613,7 +618,12 @@
 							if (this.datalist[index][indexs].did == this.user_infos.id) {
 								text = "此区域已被您签约"
 							} else {
-								text = "此区域已被其他美居会员签约,请选择其他区域"
+								if (index == 2) {
+									text ="您不能签约楼盘，请选择区域"
+								} else{
+									text = "此区域已被其他美居会员签约,请选择其他区域"
+								}
+								
 							}
 							this.$refs.uToast.show({
 								title: text,

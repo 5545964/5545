@@ -145,6 +145,8 @@
 				img: this.$imgPath,
 				user_info: {},
 				desinfo: {},
+				time: {},
+				datas: Date.parse(new Date()),
 				gongju_list: [
 					// {
 					// 	name: "我的团队",
@@ -183,6 +185,13 @@
 			};
 		},
 		created() {
+			let aa = this.$u.timeFormat(this.datas, 'yyyy-mm')
+			let firstDay = new Date(aa.substr(0, aa.length - 3), aa.substr(5) - 1, 1);
+			let lastDay = new Date(aa.substr(0, aa.length - 3), aa.substr(5), 0);
+			this.time = {
+				start: Date.parse(firstDay) / 1000,
+				end: Date.parse(lastDay) / 1000
+			}
 			this.dkahdjash()
 		},
 		methods: {
@@ -204,7 +213,9 @@
 					}
 				})
 				this.$api.desorders({
-					id: uni.getStorageSync("des_info").id
+					id: uni.getStorageSync("des_info").id,
+						start: this.time.start,
+						end: this.time.end
 				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = this.num_list
