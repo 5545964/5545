@@ -429,6 +429,10 @@ export default {
 	videopl(params = {}) {
 		return request.post("/api/bydindex/videopl", params);
 	},
+	sendsvr(params = {}) {
+		return request.post("/api/ems/sendsvr", params);
+	},
+	
 
 
 

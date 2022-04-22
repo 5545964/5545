@@ -630,7 +630,7 @@
 					cartids = 0
 				}
 				if (this.address != '') {
-					console.log(this.tijiaozjia);
+
 					this.$api.cartpay({
 						cuponsid: this.cuponsid,
 						swj: this.swj,

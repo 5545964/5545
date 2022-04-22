@@ -142,7 +142,7 @@
 			},
 			getdata() {
 				let time = new Date().getTime()
-				console.log(time);
+
 				this.$api.mycupon({
 					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {

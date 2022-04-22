@@ -278,7 +278,7 @@
 		},
 		methods: {
 			goods(ev) {
-				console.log(ev);
+
 				if (ev.sex) {
 					uni.setStorageSync("des_order", ev)
 					uni.navigateTo({
@@ -308,6 +308,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							this.monList = [...data.data.data.status]
+							uni.setStorageSync("monList", this.monList)
 							data.data.data.status.forEach(item => {
 								if (item.money == 0) {
 									this.canprice = this.canprice + Number(item.price)
@@ -335,6 +336,10 @@
 
 							this.monList = [...data.data.data.status]
 							uni.setStorageSync("monList", this.monList)
+						} else {
+							this.monList = []
+							this.canprice = 0
+							uni.setStorageSync("monList", [])
 						}
 					})
 				}
@@ -346,6 +351,7 @@
 				this.show = !this.show;
 			},
 			tixian() {
+				uni.setStorageSync("delta",2)
 				uni.navigateTo({
 					url: "../pagesA/tixian"
 				})

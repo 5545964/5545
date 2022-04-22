@@ -97,6 +97,7 @@
 			</scroll-view>
 		</view>
 		<u-heigth />
+		<u-toast ref="uToast" />
 		<!-- 底部 -->
 		<view class="flag_foot">
 			<button class="reset" open-type="contact">咨询客服</button>
@@ -311,14 +312,27 @@
 			},
 			async goVR(ev) {
 				if (await this.$login()) {
-					console.log(ev.url.split('https://720.3vjia.com/'));
-					this.$api.vrnews({
+					this.$api.sendsvr({
 						user_id: uni.getStorageSync("user_info").id,
-						news: ev.url.split('https://720.3vjia.com/')[1]
+						code: ev.url.split('https://720.3vjia.com/')[1],
+						mobile: uni.getStorageSync("user_info").mobile,
+					}).then(data => {
+						if (data.data.code == 1) {
+							this.$refs.uToast.show({
+								title: "购买请打开手机专属VR链接",
+								duration: 2000,
+								type:"warning",
+								url:"/pages/Home/URL/URL?url=" + ev.url
+							})
+							// setTimeout(() => {
+							// 	uni.navigateTo({
+							// 		url: "../Home/URL/URL?url=" + ev.url
+							// 	})
+							// }, 2000)
+						}
+
 					})
-					uni.navigateTo({
-						url: "../Home/URL/URL?url=" + ev.url
-					})
+
 					// let that = this;
 					// uni.requestSubscribeMessage({
 					// 	provider: 'weixin',
@@ -519,7 +533,7 @@
 							resolve();
 						})
 						this.arr = [...aa]
-						console.log(this.arr);
+
 					}).exec()
 				})
 

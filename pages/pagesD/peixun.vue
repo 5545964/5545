@@ -111,7 +111,10 @@
 				imgList: [],
 				action: this.$shangchuan + '/api/byd_user/addpostspic',
 				formData: {},
-				time: {}
+				time: {},
+				mobanid: [
+					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU',
+				],
 			};
 		},
 		onLoad(ev) {
@@ -127,11 +130,21 @@
 			}
 			this.getdata()
 		},
+		onShow() {
+			this.$api.myuser({
+				user_id: uni.getStorageSync("user_info").id || 0
+			}).then(data => {
+				if (data.data.code == 1) {
+					uni.setStorageSync("user_info", data.data.data.myuser)
+					uni.stopPullDownRefresh();
+				}
+			})
+		},
 		methods: {
 			tixians(ev) {
 				let aa = []
 				this.monLists.forEach(item => {
-					console.log(item.tixian, ev);
+
 					if (item.tixian == ev) {
 						aa.push(item)
 					}
@@ -159,7 +172,6 @@
 				})
 				this.$api.pxsq({
 					user_id: uni.getStorageSync("user_info").id,
-					// user_id: 5,
 					id: aa,
 					image: this.imgList
 				}).then(data => {
@@ -179,12 +191,77 @@
 				this.imgList.splice(index, 1)
 			},
 			peiun() {
-				this.show = true
+				let that = this
+				uni.requestSubscribeMessage({
+					provider: 'weixin',
+					tmplIds: that.mobanid,
+					complete: function(e) {
+						that.peiunshi()
+					}
+				});
+			},
+			peiunshi() {
+				// 智慧型查询是否签约
+				this.$api.querysuccess({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					// 成功
+					if (data.data.code == 200) {
+						if (uni.getStorageSync("user_info").rw == 0) {
+							this.rw()
+						} else {
+							this.show = true
+						}
+					}
+					// 未签约
+					if (data.data.code == 1) {
+						this.$api.contract({
+							user_id: uni.getStorageSync("user_info").id
+						}).then(data => {
+							uni.setStorageSync("bbghb", data.data.data.data)
+							if (data.data.code == 1) {
+								uni.navigateTo({
+									url: "../Home/URL/URL?url=0"
+								})
+							}
+						})
+						return
+					}
+					if (uni.getStorageSync("user_info").freelance_id != 0) {
+						return this.show = true;
+					}
+					//为实名认证
+					if (data.data.code == 0) {
+						uni.showToast({
+							title: data.data.data.data,
+							icon: "error",
+							duration: 1000
+						})
+						uni.setStorageSync("delta", 1)
+						setTimeout(() => {
+							uni.navigateTo({
+								url: "../pagesA/shengfen"
+							})
+						}, 1000)
+						return
+					}
+				})
+				// this.show = true
+			},
+			rw() {
+				this.$api.gettask({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code != 1) {
+						this.rw()
+					} else {
+						this.show = true
+					}
+				})
 			},
 			getdata() {
 				this.$api.pxxr({
 					user_id: uni.getStorageSync("user_info").id,
-					// user_id: 5,
 					start: this.time.start,
 					end: this.time.end
 				}).then(data => {

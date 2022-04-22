@@ -1,8 +1,6 @@
 <script>
-	import logs from '@/utils/islogin.js'
 	export default {
 		onLaunch(ev) {
-			console.log(ev, "onLaunch");
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("evevevev", JSON.stringify(ev))
 			if (ev.query.uid) {

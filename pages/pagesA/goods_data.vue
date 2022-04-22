@@ -545,15 +545,27 @@
 				order_idsssss: "",
 				daojishi: "",
 				fwid: 0,
-				opop:{}
+				opop: {}
 			}
 		},
 		onLoad(ev) {
+
 			if (ev.title) {
 				this.title = ev.title;
 			}
 			this.opop = ev
 			this.order_idsssss = ev.order_id
+			if (ev.qitarenfasle) {
+				this.qitaren = {
+					user_id: ev.qitarenfasle,
+					id: this.order_idsssss
+				}
+			} else {
+				this.qitaren = {
+					user_id: uni.getStorageSync("user_info").id,
+					id: this.order_idsssss
+				}
+			}
 			// if (ev.qitarenfasle) {
 			// 	this.qitaren = {
 			// 		user_id: ev.qitarenfasle,
@@ -574,10 +586,7 @@
 			// 	})
 			// 	this.tigongfuwu = false
 			// } else {
-			this.qitaren = {
-				user_id: ev.qitarenfasle,
-				id: this.order_idsssss
-			}
+
 			// 	this.tigongfuwu = true
 			// }
 
@@ -906,6 +915,10 @@
 									this.img_list = img.split(",")
 								}
 								this.countDown()
+
+
+
+
 								let pp = {
 									users_id: uni.getStorageSync("user_info").id,
 									id: this.data_list.id
@@ -917,12 +930,14 @@
 										this.tigongfuwu = false
 										this.fwid = data.data.data.status.id
 										this.lklklklk = true
-										
+
 									}
 								})
+
+
+
 							}
 						})
-						console.log(this.data_list, JSON.stringify(this.data_list) === '{}');
 						if (JSON.stringify(this.data_list) === '{}') {
 							uni.showToast({
 								title: "暂无订单",

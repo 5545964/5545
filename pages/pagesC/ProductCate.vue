@@ -289,7 +289,7 @@
 			},
 			// 点击左边的栏目切换
 			async swichMenu(index) {
-				console.log(index, this.cateList[index]);
+
 				this.current = index;
 				uni.setStorageSync("canpingindex", index)
 				if (this.cateList[index].id == 31 || this.cateList[index].id == 32 || this.cateList[index].id == 33) {

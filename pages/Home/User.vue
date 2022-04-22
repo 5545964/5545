@@ -414,7 +414,7 @@
 								bb = bb + 1
 							}
 						})
-						console.log(data.data.data.status.data.length, aa, bb, cc);
+
 						if (data.data.data.status.data.length > aa || bb > cc) {
 							this.fkjsfjdisfjsl = true
 						} else {

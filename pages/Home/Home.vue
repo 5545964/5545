@@ -79,7 +79,6 @@
 		},
 		onShow() {
 			uni.setStorageSync("yanzheng", true)
-			this.budenglugengxin()
 			uni.setStorageSync("shouzhi", 0)
 			this.$api.pots({
 				limit: 1000
@@ -100,6 +99,7 @@
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
+
 		},
 		methods: {
 			budenglugengxin() {
@@ -135,16 +135,6 @@
 						})
 					}
 				})
-				// this.$api.agreements().then(data => {
-				// 	if (data.data.code == 1) {
-				// 		data.data.data.status.forEach(item => {
-				// 			item["check"] = false
-				// 		})
-				// 		uni.setStorageSync("xieyi", data.data.data.status)
-				// 	} else {
-				// 		uni.setStorageSync("xieyi", [])
-				// 	}
-				// })
 				this.$api.mymake({
 					user_id: uni.getStorageSync("user_info").id,
 					limit: 1000
@@ -323,12 +313,12 @@
 						let aa = []
 						let time = Date.parse(new Date()) / 1000
 						data.data.data.status.forEach(item => {
-							// console.log(item,"item1",item.endtime > time);
+
 							 // && item.endtime > time
 							if (item.position == 0) {
 								item.video = this.$imgs(item.video)
 								aa.push(item)
-								// console.log(item,"item");
+
 							}
 						})
 						this.lun_list = aa;

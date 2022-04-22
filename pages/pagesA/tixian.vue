@@ -137,9 +137,11 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
+
 		},
 		onShow() {
 			let data = uni.getStorageSync("monList")
+
 			if (data.length != 0) {
 				data.forEach(item => {
 					item["checked"] = false
@@ -147,10 +149,17 @@
 				})
 				this.datas = [...data]
 			}
-			let userid = uni.getStorageSync("user_info").id
+			this.$api.myuser({
+				user_id: uni.getStorageSync("user_info").id || 0
+			}).then(data => {
+				if (data.data.code == 1) {
+					uni.setStorageSync("user_info", data.data.data.myuser)
+					uni.stopPullDownRefresh();
+				}
+			})
 			// 智慧型查询是否签约
 			this.$api.querysuccess({
-				user_id: userid
+				user_id: uni.getStorageSync("user_info").id
 			}).then(data => {
 				// 成功
 				if (data.data.code == 200) {
@@ -166,11 +175,14 @@
 
 					return
 				}
+				if (uni.getStorageSync("user_info").freelance_id != 0) {
+					return
+				}
 				//为实名认证
 				if (data.data.code == 0) {
 					this.tiao = false
 					uni.showToast({
-						title: "您还未实名认证",
+						title: data.data.data.data,
 						icon: "error",
 						duration: 1000
 					})
@@ -197,18 +209,19 @@
 				})
 			},
 			rw() {
-				let userid = uni.getStorageSync("user_info").id
 				this.$api.gettask({
-					user_id: userid
+					user_id: uni.getStorageSync("user_info").id
 				}).then(data => {
 					if (data.data.code != 1) {
 						this.rw()
-					} 
+					}
 				})
 			},
 			god(ev) {
+
 				uni.navigateTo({
-					url: "./goods_data?order_id=" + ev.order_id
+					url: "./goods_data?order_id=" + ev.order_id + "&qitarenfasle=" + ev.user_id +
+						"&id=" + ev.id
 				})
 			},
 			shengfen() {

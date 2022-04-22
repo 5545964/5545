@@ -148,7 +148,7 @@
 						return Math.random() - 0.5;
 					});
 					this.tuijian = [];
-					console.log(data.data.data.status);
+
 					data.data.data.status.forEach((item, index) => {
 						if (index <= 1) {
 							this.tuijian.push({

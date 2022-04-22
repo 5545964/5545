@@ -62,7 +62,7 @@
 		},
 		methods: {
 			kan(ev) {
-				console.log(ev);
+
 				if (ev.content != "" && ev.content != null) {
 					uni.setStorageSync("fuwenbeng", ev.content)
 				} else {

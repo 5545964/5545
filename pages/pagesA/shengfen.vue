@@ -213,6 +213,9 @@
 							user_id: user_id
 						}).then(data => {
 							if (data.data.code == 1) {
+								
+								
+								
 								// 上传身份证正面
 								this.$api.userupload({
 									user_id: user_id,
@@ -220,6 +223,10 @@
 									type: 0
 								}).then(data => {
 									if (data.data.code == 1) {
+										
+										
+										
+										
 										// 请上传身份证背面
 										this.$api.userupload({
 											user_id: user_id,
@@ -227,6 +234,11 @@
 											type: 1
 										}).then(data => {
 											if (data.data.code == 1) {
+												
+												
+												
+												
+												
 												// 上传银行卡信息
 												this.$api.zhxmy({
 													userid: user_id,
@@ -235,6 +247,9 @@
 													idcardnum: this.card_id,
 													realname: this.name
 												}).then(data => {
+													
+													
+													
 													uni.hideLoading();
 													if (data.data.code == 1) {
 														this.dsada()
@@ -280,7 +295,9 @@
 			back(ev) {
 				switch (ev) {
 					case 0:
-						uni.navigateBack(-1)
+						uni.navigateBack({
+							delta:uni.getStorageSync("delta")
+						})
 						break;
 					case 1:
 						uni.reLaunch({
