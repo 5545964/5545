@@ -250,7 +250,7 @@
 						let time = Date.parse(new Date()) / 1000
 						data.data.data.status.forEach(item => {
 							// && item.endtime > time
-							if (item.position == 1) {
+							if (item.position == 1&& item.endtime > time) {
 								item.video = this.$imgs(item.video)
 								aa.push(item)
 							}

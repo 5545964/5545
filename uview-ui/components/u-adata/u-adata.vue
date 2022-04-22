@@ -159,12 +159,12 @@
 	}
 
 	.gghGG {
-		overflow: hidden;
-		/*超出的部分隐藏起来。*/
-		white-space: nowrap;
-		/*不显示的地方用省略号...代替*/
-		text-overflow: ellipsis;
-		/* 支持 IE */
+		// overflow: hidden;
+		// /*超出的部分隐藏起来。*/
+		// white-space: nowrap;
+		// /*不显示的地方用省略号...代替*/
+		// text-overflow: ellipsis;
+		// /* 支持 IE */
 	}
 
 	.ssj {

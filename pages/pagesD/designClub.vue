@@ -837,9 +837,9 @@
 					}
 				}
 				that.$api.buylevel({
-					// id: that.allssssss[that.diandedijige].id,
 					id: aa,
-					user_id: uni.getStorageSync("user_info").id
+					user_id: uni.getStorageSync("user_info").id,
+					level: 1
 				}).then(res => {
 					if (res.data.code == 400) {
 						that.toReg()

@@ -308,6 +308,9 @@
 				xieyi: [],
 				keyword: "",
 				heigth: 0,
+				mobanid: [
+					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU',
+				],
 				list: [{
 						id: 0,
 						name: '品牌故事',
@@ -750,6 +753,7 @@
 			},
 			// 楼盘签约
 			async changeTokens2(item) {
+				console.log(item);
 				this.lickc = []
 				this.shenghebut = true;
 				if (await this.$login()) {
@@ -825,6 +829,7 @@
 											this.idids = 1
 											this.klkl(item.id, 0)
 											this.yuedu = true
+											console.log(133123213213);
 											return
 										}
 									}
@@ -868,6 +873,13 @@
 										}
 									}
 
+								} else {
+									if (aa.bbs.id == 3) {
+										this.$refs.uToast.show({
+											title: '您不能签约楼盘',
+											type: 'default'
+										})
+									}
 								}
 							}
 						} else if (data.data.code == 1) {
@@ -890,7 +902,14 @@
 							}
 							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
 							this.shenghe = true;
-							// 拒绝
+						} else if (data.data.code == 3) {
+							if (this.idid == 1) {
+								this.mnmn = "美居独家设计权"
+							} else {
+								this.mnmn = "美居独家经营权"
+							}
+							this.nmnm = "楼盘已被申请，请选择其他楼盘"
+							this.shenghe = true;
 						}
 						if (aa.des == 4) {
 							if (this.idid == 1) {
@@ -1043,7 +1062,18 @@
 				this.current = index.detail.current;
 			},
 			change(index) {
-				this.current = index;
+				if (index == 3) {
+					let that = this
+					uni.requestSubscribeMessage({
+						provider: 'weixin',
+						tmplIds: that.mobanid,
+						complete: function(e) {
+							that.current = index;
+						}
+					});
+				} else {
+					this.current = index;
+				}
 			}
 		}
 	}

@@ -431,7 +431,7 @@
 
 		},
 		methods: {
-			gkgk(){
+			gkgk() {
 				uni.navigateTo({
 					url: "../pagesD/designPage/designPage",
 				})
@@ -845,7 +845,8 @@
 				}
 				that.$api.buylevel({
 					id: aa,
-					user_id: uni.getStorageSync("user_info").id
+					user_id: uni.getStorageSync("user_info").id,
+					level: 1
 				}).then(res => {
 					if (res.data.code == 400) {
 						that.toReg()

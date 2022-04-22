@@ -503,9 +503,17 @@
 				// 	// async 		
 				// }
 				if (await this.$login()) {
-					uni.navigateTo({
-						url: "../pagesB/shengfen"
-					})
+					let that = this
+					uni.requestSubscribeMessage({
+						provider: 'weixin',
+						tmplIds: that.mobanid,
+						complete: function(e) {
+							uni.navigateTo({
+								url: "../pagesB/shengfen"
+							})
+						}
+					});
+
 				}
 
 			},
@@ -526,7 +534,8 @@
 			},
 			async gongju_go(ev, title) {
 				if (await this.$login()) {
-					if (ev == "../pagesD/designyongjin") {
+
+					if (ev == "../pagesD/designyongjin" || ev == "../pagesD/peixun") {
 						let that = this
 						uni.requestSubscribeMessage({
 							provider: 'weixin',

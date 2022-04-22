@@ -19,26 +19,20 @@
 					设计进度
 				</view>
 				<view class="dadsda">
-					<view v-if="state == 0  && mony =='0.00'">
-						<!-- <view> -->
-						<view class="cxz">
-							已提交成功，等待我们联系！
-							<!-- 等待平台审核 -->
-						</view>
+					<view class="cxz" v-if="state == 0  && mony =='0.00'">
+						已提交成功，等待我们联系！
 					</view>
-					<view v-if="state == 0&&states == 1">
-						<view class="cxz">
-							定金已支付，等待设计师接单
-						</view>
+					<view class="cxz" v-if="state == 0&&states == 1">
+						定金已支付，等待设计师接单
 					</view>
-					<view v-if="state == 1&&states == 1">
-						<view class="cxz">
-							定金已支付，等待设计师设计完成
-						</view>
+					<view class="cxz" v-if="state == 1&&states == 1">
+						定金已支付，等待设计师设计完成
 					</view>
-					<view v-if="state == 2&&states==1&&fans.wstate">
-						<!-- <view> -->
-						<view class="cxz">
+					<view v-if="fans.statess.state">
+						<view class="cxz" v-if="fans.statess.state >0 && fans.statess.state <3">
+							已下单付款
+						</view>
+						<view class="cxz" v-if="fans.statess.state  >= 3 && fans.state == 2">
 							您的预约已完成
 						</view>
 					</view>
@@ -161,7 +155,7 @@
 							{{items.name||""}}
 						</view>
 						<view class="asd" style="width: 65%;">
-							<u-input v-model="data_list[items.obj]" @click="address(items)" type="text" :disabled="true"
+							<u-input v-model="data_list[items.obj]" @click="address(items)" type="text"
 								:placeholder="items.text" />
 						</view>
 					</view>

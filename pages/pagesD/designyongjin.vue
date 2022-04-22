@@ -123,8 +123,8 @@
 							
 							
 							<block v-if="item.statess != null">
-								<text v-if="item.statess.state >= 0 && item.statess.state <4">已下单付款</text>
-								<text v-if="item.statess.state >= 4">订单完成</text>
+								<text v-if="item.statess.state >= 0 && item.statess.state <3">已下单付款</text>
+								<text v-if="item.statess.state >= 3">订单完成</text>
 							</block>
 							
 							
@@ -322,11 +322,13 @@
 					})
 				} else {
 					this.$api.desorders({
-						id: uni.getStorageSync("des_info").id
+						id: uni.getStorageSync("des_info").id,
+						start: this.time.start,
+						end: this.time.end
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach(item => {
-								if (item.dipro.length != 0) {
+								if (item.dipro) {
 									this.canprice = this.canprice + Number(item.dipro.price)
 								}
 								if (item.image != null) {
@@ -335,6 +337,7 @@
 							})
 
 							this.monList = [...data.data.data.status]
+							console.log(this.monList,"this.monList");
 							uni.setStorageSync("monList", this.monList)
 						} else {
 							this.monList = []

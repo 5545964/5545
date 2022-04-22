@@ -51,7 +51,7 @@
 		<!-- 上传封面 -->
 		<view class="upload_des" style="margin-bottom: 20rpx;">
 			<view class="upload_title">
-				上传封面
+				上传封面<text style="font-size:26rpx;color: #999999;">（335x420）</text>
 			</view>
 			<view class="allimg">
 				<!-- <view class="" style="position: relative;" v-if="fenmian !=''">
@@ -69,7 +69,7 @@
 		<!-- 上传详情轮播图 -->
 		<view class="upload_des" style="margin-bottom: 20rpx;">
 			<view class="upload_title">
-				上传详情轮播图
+				上传详情轮播图<text style="font-size:26rpx;color: #999999;">（750x450）</text>
 			</view>
 			<view class="allimg">
 				<!-- <view class="" v-for="(item,index) in imgList" :key="index" style="position: relative;">
@@ -87,7 +87,7 @@
 		<!-- 上传VR -->
 		<view class="upload_des" style="margin-bottom: 20rpx;">
 			<view class="upload_title">
-				上传VR封面
+				上传VR封面<text style="font-size:26rpx;color: #999999;">（750x450）</text>
 			</view>
 			<view class="allimg">
 				<u-upload style="margin: 10rpx;" :fileList="vr_fenleiimgs" @on-uploaded="vr_uploaded($event)"
@@ -108,7 +108,7 @@
 		<!-- 上传期旗舰套系相关视频 -->
 		<view class="upload_des" style="margin-bottom: 20rpx;">
 			<view class="upload_title">
-				上传期旗舰套系相关视频
+				上传期旗舰套系相关视频（750x450）
 			</view>
 			<view class="allimg" style="position: relative;">
 				<image v-if="videoList !=''" src="../../static/icon_close_ico.png" @click="sanchuvideo()"

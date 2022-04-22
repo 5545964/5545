@@ -40,8 +40,16 @@
 			</swiper>
 			<u-empty v-else></u-empty>
 		</view>
+		<!-- {{usershengfen}}usershengfen{{id}}id{{pd}}pd -->
+		<view class="boyyty cet" v-if="pd==1">
+			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
+				申请提交，请等待审核
+			</view>
+			<view class="tetx" @click="topay" v-else>
+				申请提交，请等待审核
+			</view>
+		</view>
 		<view class="boyyty cet" v-if="usershengfen < id && pd==0">
-			<!-- <view class="boyyty cet"> -->
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
 				￥{{jiage||""}}升级
 			</view>
@@ -420,7 +428,20 @@
 				if (this.list[ev.detail.current].money == "0.00") {
 					this.jiage = "免费"
 				}
-				this.id = this.list[ev.detail.current].id;
+				if (this.isdes == 1) {
+					if (this.list[ev.detail.current].id == 5) {
+						this.id = 1;
+					}
+					if (this.list[ev.detail.current].id == 3) {
+						this.id = 2;
+					}
+					if (this.list[ev.detail.current].id == 4) {
+						this.id = 3;
+					}
+				} else {
+					this.id = this.list[ev.detail.current].id;
+				}
+
 				this.pd = this.list[ev.detail.current].pd;
 				this.types = this.list[ev.detail.current].type;
 				this.name = this.list[ev.detail.current].name;

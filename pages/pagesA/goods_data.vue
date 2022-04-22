@@ -142,7 +142,10 @@
 				<view class="kfosjd">
 					<view class="dmskajd">订单编号：</view>
 					<view class="djkshfk">{{data_list.orderid||""}}</view>
-
+				</view>
+				<view class="kfosjd" v-if="data_list.yyid">
+					<view class="dmskajd">预约编号：</view>
+					<view class="djkshfk">{{data_list.yyid||""}}</view>
 				</view>
 				<view class="kfosjd">
 					<view class="dmskajd">创建时间：</view>

@@ -68,6 +68,8 @@
 									</view>
 								</view>
 								<view class="anniu">
+									
+									
 									<!-- 待支付 -->
 									<view class="button" @click="annui(0, items)" v-if="items.state == 0">
 										取消订单
@@ -87,6 +89,9 @@
 										确认签收
 									</view>
 
+
+
+
 									<view class="button" @click="annui(7, items)"
 										v-if="items.state == 3 || items.state == 4 || items.states == 2">
 										申请售后
@@ -96,10 +101,15 @@
 										取消售后
 									</view>
 
+
+
 									<view class="button" @click="kuaidiwo(items)"
 										v-if="items.states === 1 && items.sqexpressorder ==0">
 										填写快递单号
 									</view>
+									
+									
+									
 									<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 										取消退款
 									</view>
@@ -736,7 +746,7 @@
 			// 初始化数据
 			allsss() {
 				this.$api.myorder({
-					user_id: uni.getStorageSync("user_info").id,
+					user_id: uni.getStorageSync("user_info").id
 				}).then((data) => {
 					this.list.forEach((item, index) => {
 						item.data_list = [];
