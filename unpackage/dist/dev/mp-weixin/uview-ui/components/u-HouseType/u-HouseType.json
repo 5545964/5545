@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-video": "/uview-ui/components/u-video/u-video",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-pinglun": "/uview-ui/components/u-pinglun/u-pinglun",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

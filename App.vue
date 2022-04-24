@@ -71,7 +71,7 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-			if (true) {
+			if (false) {
 				clearInterval(uni.getStorageSync("setInterval", aa))
 				let aa = setInterval(() => {
 					let aa = {

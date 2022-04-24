@@ -63,7 +63,7 @@
 			</view>
 			<view class="dawdad" v-show="current ==1">
 				<view class="top" v-for="(item,index) in datas" :key="index">
-					<view class="" v-if="item.money==currents&&item.type==current">
+					<view class="" v-if="item.money==currents&&item.type==current&&item.state==1">
 						<view class="top-top">
 							<view class="cet">
 								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"

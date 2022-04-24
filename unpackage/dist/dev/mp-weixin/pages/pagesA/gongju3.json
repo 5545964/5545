@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "我的足迹",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-cart": "/uview-ui/components/u-cart/u-cart",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth",
+    "u-time-select": "/uview-ui/components/u-timeSelect/u-timeSelect"
+  }
+}
