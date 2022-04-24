@@ -65,8 +65,14 @@
 						</view>
 					</view>
 				</view>
-				<view class="daddasda" @click="peiun(item)">
-					申请提现
+				<view class="daddasda">
+					<view class="kklklk">
+						<view>共{{monList.length}}单</view>
+						<view>总计：{{money}}元</view>
+					</view>
+					<view class="kklklk vvbv" @click="peiun(item)">
+						申请提现
+					</view>
 				</view>
 			</view>
 		</view>
@@ -112,6 +118,7 @@
 				action: this.$shangchuan + '/api/byd_user/addpostspic',
 				formData: {},
 				time: {},
+				money: 0,
 				mobanid: [
 					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU',
 				],
@@ -131,6 +138,7 @@
 			this.getdata()
 		},
 		onShow() {
+			this.money = 0
 			this.$api.myuser({
 				user_id: uni.getStorageSync("user_info").id || 0
 			}).then(data => {
@@ -266,6 +274,10 @@
 					end: this.time.end
 				}).then(data => {
 					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							this.money = this.money + Number(item.price)
+						})
+						this.money
 						this.monList = [...data.data.data.status]
 						this.monLists = [...data.data.data.status]
 					} else {
@@ -292,16 +304,26 @@
 </script>
 
 <style lang="scss" scoped>
-	.daddasda {
-		margin: 80rpx 30rpx 30rpx 30rpx;
-		height: 80rpx;
-		line-height: 80rpx;
-		text-align: center;
+	.vvbv {
 		background: #007399;
+		color: #FFFFFF;
+	}
+
+	.kklklk {
 		border-radius: 10rpx;
 		font-size: 30rpx;
 		font-weight: 400;
-		color: #FFFFFF;
+		margin: 0 30rpx;
+		padding: 10rpx 20rpx;
+	}
+
+	.daddasda {
+		background: #fff;
+		margin-top: 40rpx;
+		padding: 20rpx 0;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.ccxv {

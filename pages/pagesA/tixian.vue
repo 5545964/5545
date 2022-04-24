@@ -157,8 +157,7 @@
 					uni.stopPullDownRefresh();
 				}
 			})
-			if (uni.getStorageSync("user_info").freelance_id != null && uni.getStorageSync("user_info").freelance_id !=
-				"") {
+			if (uni.getStorageSync("user_info").freelance_id != "0") {
 				return this.tiao = true
 			}
 			// 智慧型查询是否签约
