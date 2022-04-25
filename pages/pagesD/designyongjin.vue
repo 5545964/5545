@@ -328,7 +328,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach(item => {
-								if (item.dipro) {
+								if (item.dipro.length!=0) {
 									this.canprice = this.canprice + Number(item.dipro.price)
 								}
 								if (item.image != null) {

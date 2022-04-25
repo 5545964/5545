@@ -107,6 +107,8 @@
 				uni.createSelectorQuery().in(this).select('#navbar').boundingClientRect(data => {
 					uni.setStorageSync("navbarheigth", data.height)
 				}).exec();
+
+
 				this.$api.shopcart({
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
@@ -135,33 +137,39 @@
 						})
 					}
 				})
-				this.$api.mymake({
-					user_id: uni.getStorageSync("user_info").id,
-					limit: 1000
-				}).then(data => {
-					if (data.data.code == 1) {
-						let bb = 0
-						data.data.data.status.data.forEach(item => {
-							if (item.state == "1") {
-								bb = bb + 1
-							}
-						})
-						uni.setStorageSync("yuyuejilunum", data.data.data.status.data.length)
-						uni.setStorageSync("yuyuele", bb)
+				if (uni.getStorageSync("user_info_login") == 1) {
+					if(uni.getStorageSync("user_info")){
+						uni.setStorageSync("user_info_login",2)
 					}
-				})
-				this.$api.letter({
-					user_id: uni.getStorageSync("user_info").id
-				}).then(data => {
-					if (data.data.code == 1) {
-						uni.setStorageSync("letter", data.data.data.status.length)
-					}
-				})
-				this.$api.activtz().then(data => {
-					if (data.data.code == 1) {
-						uni.setStorageSync("activtz", data.data.data.status.length)
-					}
-				})
+					this.$api.mymake({
+						user_id: uni.getStorageSync("user_info").id,
+						limit: 1000
+					}).then(data => {
+						if (data.data.code == 1) {
+							let bb = 0
+							data.data.data.status.data.forEach(item => {
+								if (item.state == "1") {
+									bb = bb + 1
+								}
+							})
+							uni.setStorageSync("yuyuejilunum", data.data.data.status.data.length)
+							uni.setStorageSync("yuyuele", bb)
+						}
+					})
+					this.$api.letter({
+						user_id: uni.getStorageSync("user_info").id
+					}).then(data => {
+						if (data.data.code == 1) {
+							uni.setStorageSync("letter", data.data.data.status.length)
+						}
+					})
+					this.$api.activtz().then(data => {
+						if (data.data.code == 1) {
+							uni.setStorageSync("activtz", data.data.data.status.length)
+						}
+					})
+				}
+
 			},
 			denglu() {
 				this.budenglugengxin()

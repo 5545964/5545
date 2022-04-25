@@ -36,6 +36,7 @@
 										@search="like()">
 									</u-search>
 								</view>
+								
 								<view
 									style="width: 100%;text-align: center;height: 60rpx;line-height: 60rpx;display: flex;align-items: center;justify-content: center;"
 									@click="show = true">
@@ -45,6 +46,7 @@
 									<image src="../../static/icon_home_sanjiao.png"
 										style="width: 30rpx;height: 20rpx;margin-left: 20rpx;" />
 								</view>
+								
 								<view style="height: 30rpx;width: 100%;" />
 								<view style="height: 100%;">
 									<!-- <view class="papapa" v-if="lickc.length!=0"
@@ -751,7 +753,8 @@
 						return
 					}
 					if (this.user_infos.bbs.id == 3 && item.address) {
-						return this.$refs.uToast.show({
+						return ;
+						this.$refs.uToast.show({
 							title: '您不能签约楼盘',
 							type: 'default'
 						})
@@ -829,7 +832,7 @@
 						} else if (data.data.code == 8) {
 							this.qianyue = "美居独家经营权申请已通过"
 							this.klklkl = 0
-							this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
+							this.huxing = "您的申请已通过！"//，请及时上传对应楼盘方案及户型攻略。
 							this.yuedus = true;
 						} else if (data.data.code == 9) {
 							this.mnmn = "美居独家经营权申请被拒绝"

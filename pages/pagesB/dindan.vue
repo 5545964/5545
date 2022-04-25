@@ -68,8 +68,8 @@
 									</view>
 								</view>
 								<view class="anniu">
-									
-									
+
+
 									<!-- 待支付 -->
 									<view class="button" @click="annui(0, items)" v-if="items.state == 0">
 										取消订单
@@ -107,20 +107,21 @@
 										v-if="items.states === 1 && items.sqexpressorder ==0">
 										填写快递单号
 									</view>
-									
-									
-									
+
+
+
 									<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 										取消退款
 									</view>
 									<view class="button" @click="delorder(items)"
-										v-if="items.state == 9 || items.state == 4 || items.state == 17 || items.states == 3 ||items.state == 6">
+										v-if="items.state == 9 || items.state == 17 || items.states == 3 ||items.state == 6">
 										删除订单
 									</view>
 									<view class="button" v-if="items.state == 8">
 										已申请退款
 									</view>
-									<view class="button" v-if="items.state == 3 || items.states == 2"
+									<view class="button"
+										v-if="items.state == 4 || items.state == 3 || items.states == 2"
 										@click="baozhaung(items)">
 										是否安装
 									</view>
@@ -131,7 +132,7 @@
 										@click="lookdetails(items)">
 										查看安装详情
 									</view>
-									<view class="button" @click="baozhuangpngji(0, items)" v-if="items.state == 17">
+									<view class="button" @click="baozhuangpngji(0, items)" v-if="items.state == 3">
 										立即评价
 									</view>
 									<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
@@ -473,7 +474,7 @@
 				// this.current = 6
 			})
 			uni.$on("yuwancheng", () => {
-				this.current = 5
+				this.current = 3
 			})
 			this.title = ev.title;
 			if (ev.current) {
@@ -689,6 +690,7 @@
 							title: "收货成功",
 							icon: "none",
 						});
+						this.baozhuangshow = !this.baozhuangshow
 						this.allsss();
 						this.current = 3
 					}
@@ -762,6 +764,9 @@
 									this.list[2].data_list.push(item);
 									break;
 								case "3":
+									this.list[3].data_list.push(item);
+									break;
+								case "4":
 									this.list[3].data_list.push(item);
 									break;
 								case "16":
@@ -840,9 +845,11 @@
 						this.hahahaxuanzhe = item;
 						break;
 					case 1:
+
 						this.$api.orderpay({
 							prepay_id: item.id,
 							id: item.id,
+							dingjin: item.deposit
 						}).then((res) => {
 							if (res.data.code == 200) {
 								let that = this;
@@ -889,6 +896,7 @@
 						//4确认收货
 					case 4:
 						this.order_id = item.id
+						this.mnbv = item
 						this.shows = true;
 						break;
 					case 5:

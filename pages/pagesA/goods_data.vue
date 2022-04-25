@@ -232,13 +232,13 @@
 					取消退款
 				</view>
 				<view class="button" @click="delorder()"
-					v-if="data_list.state == 9 || data_list.state == 4 || data_list.state == 17 || data_list.states == 3">
+					v-if="data_list.state == 9 || data_list.state == 17 || data_list.states == 3">
 					删除订单
 				</view>
 				<view class="button" v-if="data_list.state == 8">
 					已申请退款
 				</view>
-				<view class="button" v-if="data_list.state == 3 || data_list.states == 2" @click="baozhaung()">
+				<view class="button" v-if="data_list.state == 4 || data_list.state == 3 || data_list.states == 2" @click="baozhaung()">
 					是否安装
 				</view>
 				<view class="button" v-if="data_list.state == 16" @click="jiesubaozhaung()">
@@ -247,10 +247,10 @@
 				<view class="button" v-if="data_list.state == 16&&data_list.bz==1" @click="lookdetails()">
 					查看安装详情
 				</view>
-				<view class="button" @click="baozhuangpngji(0, items)" v-if="items.state == 17">
+				<view class="button" @click="baozhuangpngji(0)" v-if="data_list.state == 3">
 					立即评价
 				</view>
-				<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
+				<view class="button" @click="baozhuangpngji(1)" v-if="data_list.state == 17">
 					报装评价
 				</view>
 			</view>
@@ -498,7 +498,8 @@
 	export default {
 		data() {
 			return {
-				lklklklk: false,
+				fdsa: false,
+				lklklklk: true,
 				tigongfuwu: true,
 				qitaren: {},
 				qitarenfasle: "",
@@ -552,7 +553,6 @@
 			}
 		},
 		onLoad(ev) {
-
 			if (ev.title) {
 				this.title = ev.title;
 			}
@@ -563,36 +563,14 @@
 					user_id: ev.qitarenfasle,
 					id: this.order_idsssss
 				}
+				this.fdsa = true
 			} else {
 				this.qitaren = {
 					user_id: uni.getStorageSync("user_info").id,
 					id: this.order_idsssss
 				}
+				this.fdsa = false
 			}
-			// if (ev.qitarenfasle) {
-			// 	this.qitaren = {
-			// 		user_id: ev.qitarenfasle,
-			// 		id: this.order_idsssss
-			// 	}
-			// 	let pp = {
-			// 		user_id: ev.qitarenfasle,
-			// 		users_id: uni.getStorageSync("user_info").id,
-			// 		id: ev.id
-			// 	}
-			// 	this.$api.tgfw(pp).then(data => {
-			// 		if (data.data.code == 0) {
-			// 			this.lklklklk = false
-			// 		}else{
-			// 			this.fwid = data.data.data.status.id
-			// 			this.lklklklk = true
-			// 		}
-			// 	})
-			// 	this.tigongfuwu = false
-			// } else {
-
-			// 	this.tigongfuwu = true
-			// }
-
 		},
 		onShow() {
 			this.allsss()
@@ -686,9 +664,9 @@
 					this.quxiaoshouhou = false
 				}
 			},
-			baozhuangpngji(okj, ev) {
+			baozhuangpngji(okj) {
 				this.pingjiaok = okj
-				this.annui(6, ev)
+				this.annui(6)
 			},
 			// 切换协议内容
 			dakaishouji(ev) {
@@ -808,6 +786,7 @@
 							title: "收货成功",
 							icon: "none",
 						});
+						this.$emit("lianxu",this.data_list.orderid)
 						uni.navigateBack(-1)
 					}
 				})
@@ -922,20 +901,26 @@
 
 
 
-								let pp = {
-									users_id: uni.getStorageSync("user_info").id,
-									id: this.data_list.id
-								}
-								this.$api.tgfw(pp).then(data => {
-									if (data.data.code == 0) {
-										this.lklklklk = false
-									} else {
-										this.tigongfuwu = false
-										this.fwid = data.data.data.status.id
-										this.lklklklk = true
-
+								if (this.fdsa) {
+									let pp = {
+										users_id: uni.getStorageSync("user_info").id,
+										id: this.data_list.id
 									}
-								})
+									this.$api.tgfw(pp).then(data => {
+										if (data.data.code == 0) {
+											this.lklklklk = false
+										} else {
+											this.tigongfuwu = false
+											this.fwid = data.data.data.status.id
+											this.lklklklk = true
+
+										}
+									})
+								}
+
+
+
+
 
 
 
@@ -1063,6 +1048,7 @@
 						this.$api.orderpay({
 							prepay_id: this.data_list.id,
 							id: this.data_list.id,
+							dingjin: this.data_list.deposit
 						}).then((res) => {
 							if (res.data.code == 200) {
 								let that = this;

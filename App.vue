@@ -1,6 +1,7 @@
 <script>
 	export default {
 		onLaunch(ev) {
+			uni.setStorageSync("user_info_login",1)
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("evevevev", JSON.stringify(ev))
 			if (ev.query.uid) {
@@ -23,7 +24,11 @@
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
-					uni.setStorageSync("xieyi", data.data.data.status)
+					if (process.env.NODE_ENV === 'production') {
+						uni.setStorageSync("xieyi", data.data.data.status)
+					} else {
+						uni.setStorageSync("xieyi", [])
+					}
 				} else {
 					uni.setStorageSync("xieyi", [])
 				}
@@ -71,7 +76,7 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-			if (false) {
+			if (true) {
 				clearInterval(uni.getStorageSync("setInterval", aa))
 				let aa = setInterval(() => {
 					let aa = {
@@ -98,16 +103,6 @@
 							}
 						}
 					})
-					// this.$api.tgfw(aa).then(data => {
-					// 	if (data.data.code == 1) {
-					// 		if (uni.getStorageSync("yanzheng")) {
-					// 			uni.reLaunch({
-					// 				url: "/pages/pagesB/tanchuangfuwu?status=" + JSON.stringify(
-					// 					data.data.data.status)
-					// 			})
-					// 		}
-					// 	}
-					// })
 				}, 10000)
 				uni.setStorageSync("setInterval", aa)
 			}

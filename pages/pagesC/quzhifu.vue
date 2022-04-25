@@ -645,7 +645,8 @@
 						specidsize: specidsizes,
 						specid: specids,
 						price: this.tijiaozjia.toFixed(2),
-						dzg: this.dzg
+						dzg: this.dzg,
+						dj:this.dinjing
 					}).then(res => {
 						if (res.data.code == 200) {
 							this.orderid = res.data.orderid

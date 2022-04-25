@@ -18,9 +18,11 @@
 				:is-scroll="false" :current="current" @change="change"></u-tabs>
 			<u-tabs :inactive-color="'#999999'" :bold="false" :list="lists" :weizhi="false" :is-scroll="false"
 				:current="currents" @change="changes"></u-tabs>
-			<view class="dawdad" v-show="current ==0">
+			<!-- 采购佣金 -->
+			<view class="dawdad" v-if="current ==0">
 				<view class="top" v-for="(item,index) in datas" :key="index">
-					<view class="" v-if="item.money==currents&&item.type==current">
+					<!-- <view class="" v-if="item.money==currents&&item.type==current&&item.state==1"> -->
+					<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
 						<view class="top-top">
 							<view class="cet">
 								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
@@ -52,25 +54,25 @@
 						</view>
 					</view>
 				</view>
-				<view style="margin-top: 110rpx;">
-
-				</view>
+				<view style="margin-top: 110rpx;" />
 				<view class="bottomssss cet" v-show="currents == 0">
 					<view class="dasdasdxzxcx">
 						提交申请
 					</view>
 				</view>
 			</view>
-			<view class="dawdad" v-show="current ==1">
+			<!-- 推荐佣金 -->
+			<view class="dawdad" v-if="current ==1">
 				<view class="top" v-for="(item,index) in datas" :key="index">
-					<view class="" v-if="item.money==currents&&item.type==current&&item.state==1">
+					<!-- <view class="" v-if="item.money==currents&&item.type==current"> -->
+					<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
 						<view class="top-top">
 							<view class="cet">
 								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
 									v-show="currents == 0">
 								</view>
 								<view class="cdscdf">
-									2021-08-09 14:25:25
+									{{item.createtime||""}}
 								</view>
 							</view>
 						</view>
@@ -88,10 +90,7 @@
 						</view>
 					</view>
 				</view>
-				<view style="margin-top: 110rpx;">
-
-				</view>
-
+				<view style="margin-top: 110rpx;" />
 			</view>
 		</view>
 		<view class="bottomssss cet" v-show="currents == 0">
@@ -269,9 +268,11 @@
 			xuanzhe(ev) {
 				this.datas[ev].checked = !this.datas[ev].checked;
 			},
+			// 推荐佣金
 			changes(index) {
 				this.currents = index;
 			},
+			// 采购佣金
 			change(index) {
 				this.currents = 0;
 				this.current = index;
