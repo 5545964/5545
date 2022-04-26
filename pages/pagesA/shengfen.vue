@@ -277,7 +277,7 @@
 							} else {
 								uni.hideLoading();
 								this.$refs.uToast.show({
-									title: "请修改信息重试!"
+									title: data.data.data.data+",请修改信息重试!"
 								})
 								this.yinghangka == ""
 								this.kaihuhang == ""

@@ -140,8 +140,8 @@
 							})
 							this.userList = data.data.data.status
 							this.man_num = data.data.data.count
-							data.data.data.forEach(item => {
-								this.mony = this.mony + Number(item.moneys)
+							data.data.data.status.forEach(item => {
+								this.mony = Number(this.mony) + Number(item.moneys)
 							})
 							// this.mony = data.data.data.sum
 						}

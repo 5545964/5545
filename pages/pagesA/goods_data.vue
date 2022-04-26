@@ -238,7 +238,7 @@
 				<view class="button" v-if="data_list.state == 8">
 					已申请退款
 				</view>
-				<view class="button" v-if="data_list.state == 4 || data_list.state == 3 || data_list.states == 2" @click="baozhaung()">
+				<view class="button" v-if="data_list.state == 4 || data_list.state == 3 || data_list.states == 2 && data_list.cl == 0" @click="baozhaung()">
 					是否安装
 				</view>
 				<view class="button" v-if="data_list.state == 16" @click="jiesubaozhaung()">
@@ -469,7 +469,7 @@
 					<view class="cets"> 是否需要安装？</view>
 					<view class="xian"> </view>
 					<view class="bottoms">
-						<view class="sdasas" @click="baozhuangshow = false"> 否 </view>
+						<view class="sdasas" @click="fou()"> 否 </view>
 						<view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
 						<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view>
 					</view>
@@ -630,6 +630,13 @@
 			}
 		},
 		methods: {
+			fou(){
+				this.$api.successloading({
+					orderid: this.data_list.orderid
+				}).then(data => {
+					this.baozhuangshow = false
+				})
+			},
 			tigongfuwus(ev) {
 				this.$api.fwsure({
 					user_id: uni.getStorageSync("user_info").id,
@@ -769,7 +776,7 @@
 			// 去报装
 			shifouanzhuangdsadas() {
 				this.baozhuangshow = false
-				uni.setStorageSync("baozhaung", this.mnbv.shop)
+				uni.setStorageSync("baozhaung", this.data_list.shop)
 				uni.navigateTo({
 					url: "../pagesB/baozhaung?orderid=" + this.mnbv.orderid + "&tiao=2"
 				})
@@ -786,8 +793,9 @@
 							title: "收货成功",
 							icon: "none",
 						});
-						this.$emit("lianxu",this.data_list.orderid)
-						uni.navigateBack(-1)
+						this.allsss()
+						this.baozhuangshow = !this.baozhuangshow
+						// uni.navigateBack(-1)
 					}
 				})
 			},

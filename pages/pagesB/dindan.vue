@@ -121,7 +121,7 @@
 										已申请退款
 									</view>
 									<view class="button"
-										v-if="items.state == 4 || items.state == 3 || items.states == 2"
+										v-if="items.state == 4 || items.state == 3 || items.states == 2 && items.cl == 0"
 										@click="baozhaung(items)">
 										是否安装
 									</view>
@@ -352,7 +352,7 @@
 					<view class="cets"> 是否需要安装？</view>
 					<view class="xian"> </view>
 					<view class="bottoms">
-						<view class="sdasas" @click="baozhuangshow = false"> 否 </view>
+						<view class="sdasas" @click="fou()"> 否 </view>
 						<view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
 						<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view>
 					</view>
@@ -550,6 +550,13 @@
 			}
 		},
 		methods: {
+			fou(){
+				this.$api.successloading({
+					orderid: this.mnbv.orderid
+				}).then(data => {
+					this.baozhuangshow = false
+				})
+			},
 			shouhoou(ev) {
 				if (ev == 1) {
 					this.$api.xqsh({

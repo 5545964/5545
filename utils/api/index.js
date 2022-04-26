@@ -9,6 +9,9 @@ export default {
 	mapstation(params = {}) {
 		return request.post("/api/bydshop/mapstation", params);
 	},
+	fou(params = {}) {
+		return request.post("/api/bydshop/fou", params);
+	},
 	tjsq(params = {}) {
 		return request.post("/api/bydidentity/tjsq", params);
 	},

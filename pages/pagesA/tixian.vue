@@ -174,17 +174,13 @@
 				// 未签约
 				if (data.data.code == 1) {
 					this.tiao = false
-
-					return
-				}
-				if (uni.getStorageSync("user_info").freelance_id != 0) {
 					return
 				}
 				//为实名认证
 				if (data.data.code == 0) {
 					this.tiao = false
 					uni.showToast({
-						title: data.data.data.data,
+						title: "您未实名认证！",
 						icon: "error",
 						duration: 1000
 					})

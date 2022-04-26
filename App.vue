@@ -1,7 +1,8 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			uni.setStorageSync("user_info_login",1)
+			console.log(ev);
+			uni.setStorageSync("user_info_login", 1)
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("evevevev", JSON.stringify(ev))
 			if (ev.query.uid) {
@@ -24,11 +25,8 @@
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
-					if (process.env.NODE_ENV === 'production') {
-						uni.setStorageSync("xieyi", data.data.data.status)
-					} else {
-						uni.setStorageSync("xieyi", [])
-					}
+					uni.setStorageSync("xieyi", data.data.data.status)
+					// uni.setStorageSync("xieyi", [])
 				} else {
 					uni.setStorageSync("xieyi", [])
 				}

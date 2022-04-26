@@ -241,7 +241,7 @@
 					//为实名认证
 					if (data.data.code == 0) {
 						uni.showToast({
-							title: data.data.data.data,
+							title: "您未实名认证！",
 							icon: "error",
 							duration: 1000
 						})

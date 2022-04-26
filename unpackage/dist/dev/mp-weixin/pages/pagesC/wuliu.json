@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-time-line": "/uview-ui/components/u-time-line/u-time-line",
+    "u-time-line-item": "/uview-ui/components/u-time-line-item/u-time-line-item",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth"
+  }
+}

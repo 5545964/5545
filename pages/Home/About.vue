@@ -36,7 +36,7 @@
 										@search="like()">
 									</u-search>
 								</view>
-								
+
 								<view
 									style="width: 100%;text-align: center;height: 60rpx;line-height: 60rpx;display: flex;align-items: center;justify-content: center;"
 									@click="show = true">
@@ -46,7 +46,7 @@
 									<image src="../../static/icon_home_sanjiao.png"
 										style="width: 30rpx;height: 20rpx;margin-left: 20rpx;" />
 								</view>
-								
+
 								<view style="height: 30rpx;width: 100%;" />
 								<view style="height: 100%;">
 									<!-- <view class="papapa" v-if="lickc.length!=0"
@@ -407,18 +407,21 @@
 				shenghebuts: true, //重新申请按钮
 				Bsan: false,
 				shenghebutvv: true, //重新申请按钮
+				diyici: 1
 			};
 		},
 		onLoad(ev) {
 			if (ev.titit) {
 				this.current = 4
 			}
+			this.columns = []
+			this.xuanzhe = ""
 			this.allls()
 		},
 		onShow() {
 			this.xuanzhe = ""
 			this.columns = []
-			this.current = 3
+			this.current = 0
 			this.user_infos = uni.getStorageSync("user_info")
 			this.des_infos = uni.getStorageSync("des_info")
 			this.idid = 0
@@ -736,6 +739,7 @@
 			},
 			// 楼盘签约
 			async changeTokens2(item) {
+				console.log(item);
 				// this.idid = 0
 				this.lickc = []
 				this.shenghebut = true;
@@ -753,7 +757,7 @@
 						return
 					}
 					if (this.user_infos.bbs.id == 3 && item.address) {
-						return ;
+						return;
 						this.$refs.uToast.show({
 							title: '您不能签约楼盘',
 							type: 'default'
@@ -768,12 +772,12 @@
 
 					// 有设计师就切换身份
 					if (item.address) {
-						if (aa.des == 4) {
-							if (this.idid == 1) {
-								this.idid = 0
-							} else {
-								this.idid = 1
-							}
+						if (aa.des == 4 && item.diyici == 1) {
+							item.diyici++
+							// if (this.idid == 1) {
+							// 	this.idid = 0
+							// } else {							}
+							this.idid = 1
 						}
 					} else {
 						this.idid = 2
@@ -804,23 +808,33 @@
 						}
 
 						if (data.data.code == 0) {
-
+							if (this.idid == 1) {
+								this.mnmn = "美居独家设计权申请正在审核"
+							} else {
+								this.mnmn = "美居独家经营权申请正在审核"
+							}
+							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
+							this.shenghe = true;
 						} else if (data.data.code == 1) {
+							item.diyici = 1
 							this.idids = 1
 							this.klkl(item.id, 0)
 							this.yuedu = true
 						} else if (data.data.code == 3) {
+							this.idid = 0
 							this.qianyue = "美居独家设计权申请已通过"
 							this.klklkl = 1
 							this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
 							this.yuedus = true;
 						} else if (data.data.code == 4) {
+							this.idid = 1
 							this.mnmn = "美居独家设计权申请被拒绝"
 							this.nmnm = data.data.data
 							this.shenghe = true;
 							this.shenghebut = false;
 							this.shenghebuts = false;
 						} else if (data.data.code == 5) {
+							this.idid = 1
 							this.shengqing = this.tanchaung.names
 							this.shengqings = true
 						} else if (data.data.code == 6) {
@@ -832,7 +846,7 @@
 						} else if (data.data.code == 8) {
 							this.qianyue = "美居独家经营权申请已通过"
 							this.klklkl = 0
-							this.huxing = "您的申请已通过！"//，请及时上传对应楼盘方案及户型攻略。
+							this.huxing = "您的申请已通过！" //，请及时上传对应楼盘方案及户型攻略。
 							this.yuedus = true;
 						} else if (data.data.code == 9) {
 							this.mnmn = "美居独家经营权申请被拒绝"
@@ -1061,6 +1075,7 @@
 							item["names"] = item.title
 							item["active"] = 0
 							item["quxian"] = false
+							item["diyici"] = 1
 						})
 						this.datalist0 = [...this.datalist]
 						this.datalist0[index] = [...data.data.data.status]
@@ -1112,7 +1127,7 @@
 							item["label"] = item.title
 							item["active"] = 0
 						})
-						this.columns = data.data.data.status
+						this.columns = [...data.data.data.status]
 						this.xuanzhe = this.columns[0].title
 						this.mao(this.columns[0].id, 0, 0)
 						uni.stopPullDownRefresh();

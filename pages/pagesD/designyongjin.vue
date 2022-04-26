@@ -82,70 +82,86 @@
 					</view>
 				</view> -->
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
-					<view class="vdfdd" v-if="item.money == 0 && isshejishiss == 0">
-						<view class="win">
-							{{item.order_id||""}}
-						</view>
-						<view class="win">
-							<block v-if="item.statess == null">
-								<text v-if="item.states == 0">待付设计定金</text>
-								<text v-if="item.states == 1">已付设计定金</text>
-								<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
-							</block>
-							<block v-if="item.statess != null">
-								<text v-if="item.statess.state >= 0 && item.statess.state <4">已下单付款</text>
-								<text v-if="item.statess.state >= 4">订单完成</text>
-							</block>
+					<!-- B端 -->
+					<view v-if="isshejishiss == 0">
+						<view class="vdfdd" v-if="item.money == 0">
+							<view class="win">
+								{{item.order_id||""}}
+							</view>
+							<view class="win">
+								<block v-if="item.statess == null">
+									<text v-if="item.states == 0">待付设计定金</text>
+									<text v-if="item.states == 1">已付设计定金</text>
+									<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
+								</block>
+								<block v-if="item.statess != null">
+									<text v-if="item.statess.state >= 0 && item.statess.state <4">已下单付款</text>
+									<text v-if="item.statess.state >= 4">订单完成</text>
+								</block>
 
-							<block v-if="item.tixian != 1">
-								<text v-if="item.sq == 0">佣金未申请</text>
-								<text v-if="item.sq == 1">佣金申请中</text>
-							</block>
-							<text v-if="item.tixian == 1">佣金申请成功</text>
-						</view>
-						<view class="win">
-							{{item.cjprice||0}}
-						</view>
-						<view class="win">
-							{{item.price||0}}
+								<block v-if="item.tixian != 1">
+									<text v-if="item.sq == 0">佣金未申请</text>
+									<text v-if="item.sq == 1">佣金申请中</text>
+								</block>
+								<text v-if="item.tixian == 1">佣金申请成功</text>
+							</view>
+							<view class="win">
+								{{item.cjprice||0}}
+							</view>
+							<view class="win">
+								{{item.price||0}}
+							</view>
 						</view>
 					</view>
-					<view class="vdfdd" v-else>
-						<view class="win">
-							{{item.orderid||""}}
-						</view>
-						<view class="win">
-							<block v-if="item.statess == null">
-								<text v-if="item.states == 0">待付设计定金</text>
-								<text v-if="item.states == 1">已付设计定金</text>
-								<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
-							</block>
-							
-							
-							<block v-if="item.statess != null">
-								<text v-if="item.statess.state >= 0 && item.statess.state <3">已下单付款</text>
-								<text v-if="item.statess.state >= 3">订单完成</text>
-							</block>
-							
-							
 
-							<block v-if="item.tixian != 1">
-								<text v-if="item.sq == 0">佣金未申请</text>
-								<text v-if="item.sq == 1">佣金申请中</text>
-							</block>
-							<text v-if="item.tixian == 1">佣金申请成功</text>
-							
-							
+
+					<!-- D端 -->
+					<view v-if="isshejishiss == 1">
+						<view class="vdfdd">
+							<view class="win">
+								{{item.orderid||""}}
+							</view>
+							<view class="win">
+								<block v-if="item.statess == null">
+									<text v-if="item.states == 0">待付设计定金</text>
+									<text v-if="item.states == 1">已付设计定金</text>
+									<!-- <text v-if="item.states == 1 && item.jdtime !=''">设计中</text> -->
+								</block>
+
+
+								<block v-if="item.statess != null">
+									<text v-if="item.statess.state >= 0 && item.statess.state <3">已下单付款</text>
+									<text v-if="item.statess.state >= 3">订单完成</text>
+								</block>
+
+
+
+								<block v-if="item.tixian != 1">
+									<text v-if="item.sq == 0">佣金未申请</text>
+									<text v-if="item.sq == 1">佣金申请中</text>
+								</block>
+								<text v-if="item.tixian == 1">佣金提现成功</text>
+
+
+							</view>
+							<view class="win">
+								{{item.dipro.cjprice||0}}
+							</view>
+							<view class="win">
+								{{item.dipro.price||0}}
+							</view>
 						</view>
-						<view class="win">
-							{{item.dipro.cjprice||0}}
-						</view>
-						<view class="win">
-							{{item.dipro.price||0}}
-						</view>
+
 					</view>
+
 				</view>
 			</view>
+
+
+
+
+
+
 			<!-- <view class="hahahahaxczxc" v-show="current == 1">
 				<view class="ccxv" style="margin-top: 40rpx;">
 					<view class="text">
@@ -199,6 +215,11 @@
 					</view>
 				</view>
 			</view> -->
+
+
+
+
+
 		</view>
 		<u-heigth />
 		<u-timeSelects ref="myPicker" :datas="datas" @submit="handleSubmit" :start-year="2000" :end-year="2500" />
@@ -298,7 +319,6 @@
 			},
 			getdata() {
 				this.canprice = 0
-				// 1是设计师
 				if (this.isshejishiss == 0) {
 					this.$api.mysub({
 						type: this.isshejishiss,
@@ -320,6 +340,7 @@
 							uni.setStorageSync("monList", [])
 						}
 					})
+					// 1是设计师
 				} else {
 					this.$api.desorders({
 						id: uni.getStorageSync("des_info").id,
@@ -328,7 +349,7 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach(item => {
-								if (item.dipro.length!=0) {
+								if (item.dipro.length != 0) {
 									this.canprice = this.canprice + Number(item.dipro.price)
 								}
 								if (item.image != null) {
@@ -337,7 +358,7 @@
 							})
 
 							this.monList = [...data.data.data.status]
-							console.log(this.monList,"this.monList");
+							console.log(this.monList, "this.monList");
 							uni.setStorageSync("monList", this.monList)
 						} else {
 							this.monList = []
@@ -354,7 +375,7 @@
 				this.show = !this.show;
 			},
 			tixian() {
-				uni.setStorageSync("delta",2)
+				uni.setStorageSync("delta", 2)
 				uni.navigateTo({
 					url: "../pagesA/tixian"
 				})

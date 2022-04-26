@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "限时抢购",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-adata": "/uview-ui/components/u-adata/u-adata",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth"
+  }
+}
