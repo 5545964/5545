@@ -103,7 +103,7 @@
 									<text v-if="item.sq == 0">佣金未申请</text>
 									<text v-if="item.sq == 1">佣金申请中</text>
 								</block>
-								<text v-if="item.tixian == 1">佣金申请成功</text>
+								<text v-if="item.tixian == 1">佣金提现成功</text>
 							</view>
 							<view class="win">
 								{{item.cjprice||0}}
