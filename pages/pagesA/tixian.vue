@@ -21,38 +21,73 @@
 			<!-- 采购佣金 -->
 			<view class="dawdad" v-if="current ==0">
 				<view class="top" v-for="(item,index) in datas" :key="index">
-					<!-- <view class="" v-if="item.money==currents&&item.type==current&&item.state==1"> -->
-					<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
-						<view class="top-top">
-							<view class="cet">
-								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
-									v-show="currents == 0">
+					<view v-if="dispro==0">
+						<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
+							<view class="top-top">
+								<view class="cet">
+									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
+										v-show="currents == 0">
+									</view>
+									<view class="cdscdf">
+										{{item.createtime||""}}
+									</view>
 								</view>
-								<view class="cdscdf">
-									{{item.createtime||""}}
+								<view class="rigtt" @click="god(item)">
+									<view class="text">
+										查看订单详情
+									</view>
+									<image class="img" src="../../static/icon_shop_hsmore.png" mode="aspectFit"></image>
 								</view>
 							</view>
-							<view class="rigtt" @click="god(item)">
+							<view class="top-bottom" @click="god(item)">
 								<view class="text">
-									查看订单详情
+									订单编号：{{item.order_id||""}}
 								</view>
-								<image class="img" src="../../static/icon_shop_hsmore.png" mode="aspectFit"></image>
 							</view>
-						</view>
-						<view class="top-bottom" @click="god(item)">
-							<view class="text">
-								订单编号：{{item.order_id||""}}
-							</view>
-						</view>
-						<view class="top-bottom" @click="god(item)">
-							<view class="text">
-								订单价格：￥{{item.cjprice||""}}
-							</view>
-							<view class="text">
-								可提佣金：￥{{item.price||""}}
+							<view class="top-bottom" @click="god(item)">
+								<view class="text">
+									订单价格：￥{{item.cjprice||""}}
+								</view>
+								<view class="text">
+									可提佣金：￥{{item.price||""}}
+								</view>
 							</view>
 						</view>
 					</view>
+					<view v-else>
+						<view v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1">
+							<view class="top-top">
+								<view class="cet">
+									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
+										v-show="currents == 0">
+									</view>
+									<view class="cdscdf">
+										{{item.createtime||""}}
+									</view>
+								</view>
+								<view class="rigtt" @click="god(item)">
+									<view class="text">
+										查看订单详情
+									</view>
+									<image class="img" src="../../static/icon_shop_hsmore.png" mode="aspectFit"></image>
+								</view>
+							</view>
+							<view class="top-bottom" @click="god(item)">
+								<view class="text">
+									订单编号：{{item.dipro.order_id||""}}
+								</view>
+							</view>
+							<view class="top-bottom" @click="god(item)">
+								<view class="text">
+									订单价格：￥{{item.dipro.cjprice||""}}
+								</view>
+								<view class="text">
+									可提佣金：￥{{item.dipro.price||""}}
+								</view>
+							</view>
+						</view>
+					</view>
+
 				</view>
 				<view style="margin-top: 110rpx;" />
 				<view class="bottomssss cet" v-show="currents == 0">
@@ -61,34 +96,69 @@
 					</view>
 				</view>
 			</view>
+
+
+
+
+
 			<!-- 推荐佣金 -->
 			<view class="dawdad" v-if="current ==1">
 				<view class="top" v-for="(item,index) in datas" :key="index">
-					<!-- <view class="" v-if="item.money==currents&&item.type==current"> -->
-					<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
-						<view class="top-top">
-							<view class="cet">
-								<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
-									v-show="currents == 0">
-								</view>
-								<view class="cdscdf">
-									{{item.createtime||""}}
-								</view>
-							</view>
-						</view>
-						<view class="top-bottom">
-							<view class="">
-								<view class="text">
-									获得佣金：￥{{item.cjprice||""}}
+					<view v-if="dispro==0">
+						<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
+							<view class="top-top">
+								<view class="cet">
+									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
+										v-show="currents == 0">
+									</view>
+									<view class="cdscdf">
+										{{item.createtime||""}}
+									</view>
 								</view>
 							</view>
-							<view class="">
-								<view class="text">
-									可提佣金：￥{{item.price||""}}
+							<view class="top-bottom">
+								<view class="">
+									<view class="text">
+										获得佣金：￥{{item.cjprice||""}}
+									</view>
+								</view>
+								<view class="">
+									<view class="text">
+										可提佣金：￥{{item.price||""}}
+									</view>
 								</view>
 							</view>
 						</view>
 					</view>
+					<view v-else>
+						<view class=""
+							v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1">
+							<view class="top-top">
+								<view class="cet">
+									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
+										v-show="currents == 0">
+									</view>
+									<view class="cdscdf">
+										{{item.createtime||""}}
+									</view>
+								</view>
+							</view>
+							<view class="top-bottom">
+								<view class="">
+									<view class="text">
+										获得佣金：￥{{item.dipro.cjprice||""}}
+									</view>
+								</view>
+								<view class="">
+									<view class="text">
+										可提佣金：￥{{item.dipro.price||""}}
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+
+
 				</view>
 				<view style="margin-top: 110rpx;" />
 			</view>
@@ -110,6 +180,7 @@
 	export default {
 		data() {
 			return {
+				dispro: 0,
 				yinghangka: false,
 				datas: [],
 				current: 0,
@@ -135,6 +206,9 @@
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title;
+			}
+			if (ev.isshejishiss) {
+				this.dispro = ev.isshejishiss
 			}
 
 		},
@@ -216,21 +290,39 @@
 				})
 			},
 			god(ev) {
+				console.log(ev);
+				if (this.dispro == 0) {
+					uni.navigateTo({
+						url: "./goods_data?order_id=" + ev.order_id + "&qitarenfasle=" + ev.user_id +
+							"&id=" + ev.id
+					})
+				} else {
+					uni.setStorageSync("des_order", ev)
+					uni.navigateTo({
+						url: "../pagesD/shejishixiangqing?isdes=1"
+					})
+				}
 
-				uni.navigateTo({
-					url: "./goods_data?order_id=" + ev.order_id + "&qitarenfasle=" + ev.user_id +
-						"&id=" + ev.id
-				})
 			},
 			shengfen() {
 				if (uni.getStorageSync("user_info").freelance_id != null && uni.getStorageSync("user_info").freelance_id !=
 					'') {
 					let aa = []
-					this.datas.forEach(item => {
-						if (item.checked) {
-							aa.push(item.id)
-						}
-					})
+					if (this.dispro == 0) {
+						this.datas.forEach(item => {
+							if (item.checked) {
+								aa.push(item.id)
+							}
+						})
+					} else {
+						this.datas.forEach(item => {
+							if (item.checked) {
+								aa.push(item.dipro.id)
+							}
+						})
+
+					}
+
 					if (aa.length >= 1) {
 						this.$api.sqty({
 							userid: uni.getStorageSync("user_info").id,

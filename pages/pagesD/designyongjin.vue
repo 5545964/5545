@@ -131,16 +131,16 @@
 
 								<block v-if="item.statess != null">
 									<text v-if="item.statess.state >= 0 && item.statess.state <3">已下单付款</text>
-									<text v-if="item.statess.state >= 3">订单完成</text>
+									<!-- <text v-if="item.statess.state >= 3">订单完成</text> -->
 								</block>
 
 
 
-								<block v-if="item.tixian != 1">
-									<text v-if="item.sq == 0">佣金未申请</text>
-									<text v-if="item.sq == 1">佣金申请中</text>
+								<block v-if="item.dipro.tixian != 1">
+									<text v-if="item.dipro.sq == 0">佣金未申请</text>
+									<text v-if="item.dipro.sq == 1">佣金申请中</text>
 								</block>
-								<text v-if="item.tixian == 1">佣金提现成功</text>
+								<text v-if="item.dipro.tixian == 1">佣金提现成功</text>
 
 
 							</view>
@@ -299,7 +299,7 @@
 		},
 		methods: {
 			goods(ev) {
-
+				console.log(ev);
 				if (ev.sex) {
 					uni.setStorageSync("des_order", ev)
 					uni.navigateTo({
@@ -343,22 +343,23 @@
 					// 1是设计师
 				} else {
 					this.$api.desorders({
-						id: uni.getStorageSync("des_info").id,
+						id: uni.getStorageSync("user_info").id,
 						start: this.time.start,
 						end: this.time.end
 					}).then(data => {
 						if (data.data.code == 1) {
 							data.data.data.status.forEach(item => {
-								if (item.dipro.length != 0) {
-									this.canprice = this.canprice + Number(item.dipro.price)
+								if (item.dipro != null) {
+									if (item.dipro.length != 0 && item.dipro != null) {
+										this.canprice = this.canprice + Number(item.dipro.price)
+									}
+
 								}
 								if (item.image != null) {
 									item["simage"] = item.image.split(",")[0]
 								}
 							})
-
 							this.monList = [...data.data.data.status]
-							console.log(this.monList, "this.monList");
 							uni.setStorageSync("monList", this.monList)
 						} else {
 							this.monList = []
@@ -377,7 +378,7 @@
 			tixian() {
 				uni.setStorageSync("delta", 2)
 				uni.navigateTo({
-					url: "../pagesA/tixian"
+					url: "../pagesA/tixian?isshejishiss="+this.isshejishiss
 				})
 			},
 			openDatetimePicker() {

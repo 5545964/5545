@@ -319,6 +319,10 @@
 	export default {
 		data() {
 			return {
+				mobanid: [
+					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU',
+					'auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'
+				],
 				code: "",
 				niannum: 0,
 				nianlist: [],
@@ -885,7 +889,7 @@
 							if (data.data.code == 1) {
 								let that = this;
 								uni.requestSubscribeMessage({
-									tmplIds: ['auLnrnvAYh0neKlgtVQ5OEDvbppe0KEF8lXVVC0tLZU'],
+									tmplIds: that.mobanid,
 									complete: function(res) {
 										that.data_list["user_id"] = uni.getStorageSync("user_info")
 											.id;

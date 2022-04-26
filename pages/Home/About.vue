@@ -783,6 +783,8 @@
 						this.idid = 2
 					}
 
+
+
 					uni.setStorageSync("idid", this.idid)
 					this.$api.mapstation({
 						user_id: aa.id,
@@ -806,8 +808,8 @@
 							console.log("------------------------------------");
 							console.log("------------------------------------");
 						}
-
-						if (data.data.code == 0) {
+						if (false) {
+						} else if (data.data.code == 0) {
 							if (this.idid == 1) {
 								this.mnmn = "美居独家设计权申请正在审核"
 							} else {
@@ -838,7 +840,7 @@
 							this.shengqing = this.tanchaung.names
 							this.shengqings = true
 						} else if (data.data.code == 6) {
-
+							console.log("");
 						} else if (data.data.code == 7) {
 							this.mnmn = "美居独家经营权申请正在审核"
 							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
@@ -874,8 +876,20 @@
 								this.yuedu = true
 								return
 							}
+							if (item.sign_bid != 0 || item.sign_did != 0) {
+								// B2,D2签约楼盘状态
+								if (aa.bbs.id != 1 && aa.bbs.id != 3) {
+									this.qianyue = "该楼盘已被签约"
+									if (item.sign_bid == aa.id || item.sign_did == aa.id) {
+										this.huxing = "该楼盘已被您签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+									} else {
+										this.huxing = "该楼盘已被其他人签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+									}
+									this.yuedus = true;
+								}
+							}
 						} else if (data.data.code == 11) {
-
+							console.log("");
 						} else if (data.data.code == 12) {
 							let text = "此区域已被您签约"
 							this.$refs.uToast.show({

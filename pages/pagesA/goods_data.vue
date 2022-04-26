@@ -199,7 +199,6 @@
 			</view>
 		</view>
 		<view style="height: 110rpx;"></view>
-		<u-kehu po_hei="100" url="../Home/booking/AppointmentDesign"></u-kehu>
 		<view class="annius" v-if="lklklklk">
 			<view class="anniu" v-if="tigongfuwu">
 				<view class="button" @click="annui(0)" v-if="data_list.state == 0">
