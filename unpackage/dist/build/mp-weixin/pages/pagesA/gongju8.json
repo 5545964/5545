@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "站内信息",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth"
+  }
+}
