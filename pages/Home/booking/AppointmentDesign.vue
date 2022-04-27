@@ -26,7 +26,7 @@
 						定金已支付，等待设计师接单
 					</view>
 					<view class="cxz" v-if="state == 1&&states == 1">
-						定金已支付，等待设计师设计完成
+						定金已支付，等待设计师设计完成<!-- ？ -->
 					</view>
 					<view v-if="fans.statess.state">
 						<view class="cxz" v-if="fans.statess.state >0 && fans.statess.state <3">
@@ -70,12 +70,12 @@
 							{{fans.desbh.bh||""}}
 						</view>
 					</view>
-					<view v-if="fans.xsbh.bh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
+					<view v-if="fans.xsbh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">
 						<view class="cxz">
 							美居会员编号
 						</view>
 						<view class="cxz">
-							{{fans.xsbh.bh||""}}
+							{{fans.xsbh||""}}
 						</view>
 					</view>
 					<view v-if="fans.userbh" style="display: flex;justify-content: space-between;padding: 20rpx 0;">

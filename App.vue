@@ -20,17 +20,7 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-			this.$api.agreements().then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						item["check"] = false
-					})
-					uni.setStorageSync("xieyi", data.data.data.status)
-					// uni.setStorageSync("xieyi", [])
-				} else {
-					uni.setStorageSync("xieyi", [])
-				}
-			})
+			
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					let aa = []
@@ -74,6 +64,17 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
+			this.$api.agreements().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					uni.setStorageSync("xieyi", data.data.data.status)
+					// uni.setStorageSync("xieyi", [])
+				} else {
+					uni.setStorageSync("xieyi", [])
+				}
+			})
 			if (true) {
 				clearInterval(uni.getStorageSync("setInterval", aa))
 				let aa = setInterval(() => {

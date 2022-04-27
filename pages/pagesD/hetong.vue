@@ -64,8 +64,10 @@
 			kan(ev) {
 
 				if (ev.content != "" && ev.content != null) {
+					console.log(111);
 					uni.setStorageSync("fuwenbeng", ev.content)
 				} else {
+					console.log(22222);
 					uni.setStorageSync("fuwenbeng", ev.ag.content)
 				}
 				uni.navigateTo({

@@ -169,7 +169,8 @@
 						"navigationBarTitleText": "安装评价",
 						"enablePullDownRefresh": false,
 						"navigationStyle": "custom",
-						"navigationBarTextStyle": "black"
+						"navigationBarTextStyle": "black",
+						"onReachBottomDistance": 400
 					}
 				},
 				{

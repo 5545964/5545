@@ -55,7 +55,7 @@
 						</view>
 					</view>
 					<view v-else>
-						<view v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1">
+						<view v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1&&item.statess.state >= 3">
 							<view class="top-top">
 								<view class="cet">
 									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
@@ -89,12 +89,12 @@
 					</view>
 
 				</view>
-				<view style="margin-top: 110rpx;" />
+				<!-- <view style="margin-top: 110rpx;" />
 				<view class="bottomssss cet" v-show="currents == 0">
 					<view class="dasdasdxzxcx">
 						提交申请
 					</view>
-				</view>
+				</view> -->
 			</view>
 
 
@@ -132,7 +132,7 @@
 					</view>
 					<view v-else>
 						<view class=""
-							v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1">
+							v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1&&item.statess.state >= 3">
 							<view class="top-top">
 								<view class="cet">
 									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
@@ -157,21 +157,27 @@
 							</view>
 						</view>
 					</view>
-
-
 				</view>
-				<view style="margin-top: 110rpx;" />
 			</view>
 		</view>
+		<view style="margin-top: 40rpx;" />
 		<view class="bottomssss cet" v-show="currents == 0">
-			<view class="dasdasdxzxcx" v-if="tiao" @click="shengfen">
-				提交申请
+			<view style="width: 100%;" v-if="tiao" @click="shengfen">
+				<view class="daddasda">
+					<view class="kklklk">
+						<view>共{{zjgeshi}}单</view>
+						<view>总计：{{zjmoney.toFixed(2)}}元</view>
+					</view>
+					<view class="kklklk vvbv">
+						申请提现
+					</view>
+				</view>
 			</view>
 			<view class="dasdasdxzxcx" @click="qianyue" v-else>
 				去签约
 			</view>
-			<u-heigth />
 		</view>
+		<u-heigth />
 		<u-kehu url="../Home/booking/AppointmentDesign" :po_hei="100"></u-kehu>
 	</view>
 </template>
@@ -180,6 +186,8 @@
 	export default {
 		data() {
 			return {
+				zjmoney:0,
+				zjgeshi:0,
 				dispro: 0,
 				yinghangka: false,
 				datas: [],
@@ -355,6 +363,14 @@
 			},
 			xuanzhe(ev) {
 				this.datas[ev].checked = !this.datas[ev].checked;
+				this.zjgeshi = 0
+				this.zjmoney = 0
+				this.datas.forEach(item=>{
+					if(item.checked){
+						this.zjgeshi = this.zjgeshi+1
+						this.zjmoney = this.zjmoney+Number(item.price)
+					}
+				})
 			},
 			// 推荐佣金
 			changes(index) {
@@ -383,6 +399,26 @@
 </script>
 
 <style lang="scss" scoped>
+	.vvbv {
+		background: #007399;
+		color: #FFFFFF;
+	}
+
+	.kklklk {
+		border-radius: 10rpx;
+		font-size: 30rpx;
+		font-weight: 400;
+		margin: 0 30rpx;
+		padding: 10rpx 20rpx;
+	}
+
+	.daddasda {
+		background: #fff;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.bottomssss {
 		position: fixed;
 		bottom: 0;
@@ -390,6 +426,17 @@
 		right: 0;
 		height: 110rpx;
 		background: #FFFFFF;
+
+		.dasdasdxzxcxs {
+			height: 70rpx;
+			line-height: 70rpx;
+			text-align: center;
+			background: #007399;
+			border-radius: 35rpx;
+			font-size: 26rpx;
+			font-weight: 400;
+			color: #FFFFFF;
+		}
 
 		.dasdasdxzxcx {
 			width: 600rpx;

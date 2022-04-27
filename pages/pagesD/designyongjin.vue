@@ -82,6 +82,7 @@
 					</view>
 				</view> -->
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
+					
 					<!-- B端 -->
 					<view v-if="isshejishiss == 0">
 						<view class="vdfdd" v-if="item.money == 0">
@@ -101,7 +102,7 @@
 
 								<block v-if="item.tixian != 1">
 									<text v-if="item.sq == 0">佣金未申请</text>
-									<text v-if="item.sq == 1">佣金申请中</text>
+									<text v-if="item.sq == 1"> 佣金申请成功</text>
 								</block>
 								<text v-if="item.tixian == 1">佣金提现成功</text>
 							</view>
@@ -136,9 +137,9 @@
 
 
 
-								<block v-if="item.dipro.tixian != 1">
+								<block v-if="item.dipro.tixian != 1 && item.statess.state>=3">
 									<text v-if="item.dipro.sq == 0">佣金未申请</text>
-									<text v-if="item.dipro.sq == 1">佣金申请中</text>
+									<text v-if="item.dipro.sq == 1"> 佣金申请成功</text>
 								</block>
 								<text v-if="item.dipro.tixian == 1">佣金提现成功</text>
 
@@ -378,7 +379,7 @@
 			tixian() {
 				uni.setStorageSync("delta", 2)
 				uni.navigateTo({
-					url: "../pagesA/tixian?isshejishiss="+this.isshejishiss
+					url: "../pagesA/tixian?isshejishiss=" + this.isshejishiss
 				})
 			},
 			openDatetimePicker() {

@@ -99,14 +99,14 @@
 					我们的服务。
 				</view>
 				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
+					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi"
 						:key="index">
-						<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
+						<view style="display:flex;justify-content: flex-end;align-items:center;">
 							<view class="yuan" @click="hahaha(item)">
 								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 							</view>
 						</view>
-						<view style="width:70%;padding: 0 10rpx;">
+						<view style="padding: 0 10rpx;">
 							<view class="mingcheng" @click="fuwenben(item)">
 								《{{item.name||""}}》
 							</view>
@@ -172,17 +172,13 @@
 				aa = "1"
 				this.mlml = 1
 			}
-			let bb = uni.getStorageSync("xieyi")
-			bb.forEach(item => {
-				if (item.state === aa) {
-					this.xieyi.push(item)
-				}
-			})
-			if (this.xieyi.length > 0) {
-				this.buyanzheng = true
-			} else {
-				this.buyanzheng = false
-			}
+			// this.xieyi = uni.getStorageSync("xieyi")
+			// let bb = uni.getStorageSync("xieyi")
+			// bb.forEach(item => {
+			// 	if (item.state === aa) {
+			// 		this.xieyi.push(item)
+			// 	}
+			// })
 			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
 				if (this.isdes == 0) {
 					this.usershengfen = uni.getStorageSync("user_info").bbs.id || 0
@@ -203,9 +199,51 @@
 			},
 		},
 		methods: {
-			//
-			//
-			//
+			xieyis(ev) {
+				console.log(ev,"B,D等级");
+				let bb = ""
+				let kk = []
+				let cc = uni.getStorageSync("xieyi")
+				if (this.isdes == 1) {
+					// 1 = D1注册
+					// 10 = D2注册
+					// 11 = D3注册
+					if (ev == 1) {
+						bb = 1
+					}
+					if (ev == 2) {
+						bb = 10
+					}
+					if (ev == 3) {
+						bb = 11
+					}
+				} else {
+					// 0 = B1注册
+					// 8 = B2注册
+					// 9 = B3注册
+					if (ev == 1) {
+						bb = 0
+					}
+					if (ev == 2) {
+						bb = 8
+					}
+					if (ev == 3) {
+						bb = 9
+					}
+				}
+				cc.forEach(item => {
+					if (item.state == bb) {
+						kk.push(item)
+					}
+				})
+				this.xieyi = [...kk]
+				if (this.xieyi.length > 0) {
+					this.buyanzheng = true
+				} else {
+					this.buyanzheng = false
+				}
+				console.log(this.buyanzheng);
+			},
 			hahaha(item) {
 				item.check = !item.check
 			},
@@ -398,6 +436,28 @@
 							item["name"] = item.type.split("（")[0]
 						})
 						this.list = [...data.data.data.status]
+
+						if (this.isdes == 1) {
+							if (this.list[0].id == 5) {
+								this.xieyis(1)
+							}
+							if (this.list[0].id == 3) {
+								this.xieyis(2)
+							}
+							if (this.list[0].id == 4) {
+								this.xieyis(3)
+							}
+						} else {
+							this.xieyis(this.list[0].id)
+						}
+
+
+
+
+
+
+
+
 						this.jiage = this.list[0].money + "元";
 						if (this.list[0].money == "0.00") {
 							this.jiage = "免费"
@@ -441,7 +501,7 @@
 				} else {
 					this.id = this.list[ev.detail.current].id;
 				}
-
+				this.xieyis(this.id)
 				this.pd = this.list[ev.detail.current].pd;
 				this.types = this.list[ev.detail.current].type;
 				this.name = this.list[ev.detail.current].name;

@@ -318,12 +318,12 @@
 						mobile: uni.getStorageSync("user_info").mobile,
 					}).then(data => {
 						if (data.data.code == 1) {
-							this.$refs.uToast.show({
-								title: "购买请打开手机专属VR链接",
-								duration: 2000,
-								type:"warning",
-								url:"/pages/Home/URL/URL?url=" + ev.url
-							})
+							// this.$refs.uToast.show({
+							// 	title: "购买请打开手机专属VR链接",
+							// 	duration: 2000,
+							// 	type:"warning",
+							// 	url:"/pages/Home/URL/URL?url=" + ev.url
+							// })
 							// setTimeout(() => {
 							// 	uni.navigateTo({
 							// 		url: "../Home/URL/URL?url=" + ev.url

@@ -114,6 +114,9 @@ export default {
 	deleorder(params = {}) {
 		return request.post("/api/bydshop/deleorder", params);
 	},
+	mypl(params = {}) {
+		return request.post("/api/bydshop/mypl", params);
+	},
 	activtz(params = {}) {
 		return request.post("/api/byd_user/activtz", params);
 	},

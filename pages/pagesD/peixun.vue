@@ -68,7 +68,7 @@
 				<view class="daddasda">
 					<view class="kklklk">
 						<view>共{{monList.length}}单</view>
-						<view>总计：{{money}}元</view>
+						<view>总计：{{money.toFixed(2)}}元</view>
 					</view>
 					<view class="kklklk vvbv" @click="peiun(item)">
 						申请提现

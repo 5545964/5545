@@ -135,13 +135,13 @@
 							</view>
 						</view>
 
-						<view class="template" @click="gongju_go('../pagesA/gongju6','安装评价')">
+						<view class="template" @click="gongju_go('../pagesA/gongju6?title=1','安装评价')">
 							<image class="img" :src="'../../static/gongju6.png'" mode="aspectFit"></image>
 							<view class="texts">
 								安装评价
 							</view>
 						</view>
-						<view class="template" @click="gongju_go('../pagesA/gongju7','产品评价')">
+						<view class="template" @click="gongju_go('../pagesA/gongju6?title=0','产品评价')">
 							<image class="img" :src="'../../static/gongju7.png'" mode="aspectFit"></image>
 							<view class="texts">
 								产品评价
