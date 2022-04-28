@@ -190,12 +190,7 @@
 					服务协议和隐私政策
 				</view>
 				<view class="textss">
-					感谢您使用宝芸邸，我们会严格
-					按照法律规定存储和使用您的个人
-					信息。您可以阅读以下几项条款了
-					解详细信息。如您同意，请勾选以
-					下几项条款并点击”同意”开始接受
-					我们的服务。
+					感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下几项条款了解详细信息。如您同意，请勾选以下几项条款并点击”同意”开始接受我们的服务。
 				</view>
 				<view style="padding:20rpx 0;">
 					<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
