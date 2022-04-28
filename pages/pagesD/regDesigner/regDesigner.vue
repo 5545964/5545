@@ -117,7 +117,7 @@
 				formData: {},
 				action: "",
 				show: false,
-				title: "注册设计师",
+				title: "注册设计师合伙人",
 				inpList: [{
 						id: 0,
 						name: "姓名",

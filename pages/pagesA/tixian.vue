@@ -338,7 +338,7 @@
 						}).then(data => {
 							if (data.data.code == 1) {
 								let list = {
-									title: "提佣成功",
+									title: "提佣申请成功",
 									text: "你的提佣申请已成功",
 									botton: "我知道了",
 									navbar: "提佣成功"

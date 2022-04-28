@@ -96,6 +96,9 @@
 		onLoad(ev) {
 			this.level = ev.level
 			this.name = ev.name
+			if(ev.mlml ==1){
+				this.title = "注册设计师合伙人"
+			}
 			let aa = uni.getStorageSync("user_info")
 			if (aa) {
 				this.phone = aa.mobile
@@ -132,7 +135,7 @@
 				huoqu: '获取验证码',
 				phone: "",
 				show: false,
-				title: "注册销售员",
+				title: "注册美居合伙人",
 				timea: 0,
 				list: [{
 						name: '男',

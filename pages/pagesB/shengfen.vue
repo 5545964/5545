@@ -40,7 +40,6 @@
 			</swiper>
 			<u-empty v-else></u-empty>
 		</view>
-		<!-- {{usershengfen}}usershengfen{{id}}id{{pd}}pd -->
 		<view class="boyyty cet" v-if="pd==1">
 			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
 				申请提交，请等待审核
@@ -94,8 +93,7 @@
 					感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下几项条款了解详细信息。如您同意，请勾选以下几项条款并点击”同意”开始接受我们的服务。
 				</view>
 				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi"
-						:key="index">
+					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
 						<view style="display:flex;justify-content: flex-end;align-items:center;">
 							<view class="yuan" @click="hahaha(item)">
 								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
@@ -181,7 +179,15 @@
 			}
 			if (uni.getStorageSync("des_info").bbs != '' && uni.getStorageSync("des_info").bbs != null) {
 				if (this.isdes != 0) {
-					this.usershengfen = uni.getStorageSync("des_info").bbs.id || 0
+					if (uni.getStorageSync("des_info").bbs.id == 5) {
+						this.usershengfen = 1
+					}
+					if (uni.getStorageSync("des_info").bbs.id == 3) {
+						this.usershengfen = 2
+					}
+					if (uni.getStorageSync("des_info").bbs.id == 4) {
+						this.usershengfen = 3
+					}
 				}
 			}
 			this.getdata()
@@ -195,7 +201,7 @@
 		},
 		methods: {
 			xieyis(ev) {
-				console.log(ev,"B,D等级");
+				console.log(ev, "B,D等级");
 				let bb = ""
 				let kk = []
 				let cc = uni.getStorageSync("xieyi")
@@ -376,13 +382,12 @@
 							title: res.data.msg,
 							icon: "none"
 						})
-						if (this.mlml != 1) {
+						if (this.mlml != 1) {						}
 							setTimeout(() => {
 								uni.navigateTo({
-									url: "./redsuccess?level=" + this.id + "&name=" + this.name
+									url: "./redsuccess?level=" + this.id + "&name=" + this.name+"&mlml="+this.mlml
 								})
 							}, 1000)
-						}
 					}
 					if (res.data.code == 200) {
 						let that = this;
@@ -435,15 +440,19 @@
 						if (this.isdes == 1) {
 							if (this.list[0].id == 5) {
 								this.xieyis(1)
+								this.id = 1
 							}
 							if (this.list[0].id == 3) {
 								this.xieyis(2)
+								this.id = 2
 							}
 							if (this.list[0].id == 4) {
 								this.xieyis(3)
+								this.id = 3
 							}
 						} else {
 							this.xieyis(this.list[0].id)
+							this.id = this.list[0].id
 						}
 
 
@@ -457,7 +466,7 @@
 						if (this.list[0].money == "0.00") {
 							this.jiage = "免费"
 						}
-						this.id = this.list[0].id
+						console.log("this.list[0].id",this.list[0].id);
 						this.pd = this.list[0].pd
 						this.types = this.list[0].type
 						this.name = this.list[0].type

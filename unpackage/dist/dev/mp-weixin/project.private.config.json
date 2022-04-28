@@ -16,6 +16,20 @@
                     "name": "",
                     "pathName": "pages/pagesB/tanchuang",
                     "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/Home/Home",
+                    "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/Home/User",
+                    "query": "",
                     "scene": null,
                     "launchMode": "default"
                 }
