@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App'
-import store from './store'
 
 
 Vue.config.productionTip = false
@@ -42,8 +41,7 @@ Vue.prototype.$shangchuan = "https://bao.scwushen.com/index.php"
 
 
 const app = new Vue({
-	...App,
-	store
+	...App
 })
 
 app.$mount()

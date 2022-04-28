@@ -615,6 +615,9 @@
 					this.datalist.splice(item, 1)
 				})
 				this.mao(data.id, index + 1, indexs)
+				if (this.user_infos.bbs.typesk == "yiji" && index == 0) {
+					return
+				}
 				this.changeTokens2(data)
 
 
@@ -747,14 +750,14 @@
 					this.loupanid = item.id
 					item.check = false
 					this.tanchaung = item
-					// 判断会员
+					// // 判断会员
 					let aa = this.user_infos
+
 					if (!aa.bbs.id && aa.des == 0) {
 						this.qianyue = "您还不是设计师或美居会员"
 						this.huxing = "点击前往成为美居设计师或美居会员"
 						this.cduan = true
 						this.yuedus = true
-						return
 					}
 					if (this.user_infos.bbs.id == 3 && item.address) {
 						return;
@@ -808,8 +811,7 @@
 							console.log("------------------------------------");
 							console.log("------------------------------------");
 						}
-						if (false) {
-						} else if (data.data.code == 0) {
+						if (false) {} else if (data.data.code == 0) {
 							if (this.idid == 1) {
 								this.mnmn = "美居独家设计权申请正在审核"
 							} else {
