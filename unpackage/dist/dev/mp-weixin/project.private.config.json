@@ -30,6 +30,13 @@
                     "name": "",
                     "pathName": "pages/Home/User",
                     "query": "",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "pages/pagesD/designyongjin",
+                    "query": "title=321321",
                     "scene": null,
                     "launchMode": "default"
                 }
