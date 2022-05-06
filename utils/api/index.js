@@ -437,16 +437,5 @@ export default {
 	},
 	sendsvr(params = {}) {
 		return request.post("/api/ems/sendsvr", params);
-	},
-	
-
-
-
-
-
-
-
-
-
-
+	}
 }
