@@ -31,22 +31,23 @@ instance.interceptors.response.use(
 		return response
 	},
 	error => {
-		let aa = {
-			data: error.config.data,
-			url: error.config.url
+		let bb = error.config.url.split("/")
+		if (bb[bb.length - 1] != "cuxx") {
+			// console.log(error.config.url,error.config.data);
+			let aa = {
+				data: error.config.data,
+				url: error.config.url
+			}
+			api.cuxx({
+				user_id: uni.getStorageSync("user_info").id || 0,
+				content: JSON.stringify(aa)
+			})
 		}
-		api.cuxx({
-			user_id: uni.getStorageSync("user_info").id || 0,
-			content: JSON.stringify(aa)
-		})
 		uni.showToast({
 			title: "服务器繁忙,请稍后重试",
 			duration: 1200,
 			icon: "none"
 		})
-		setTimeout(() => {
-			// uni.navigateBack(-1)
-		}, 1000)
 		return Promise.reject(error)
 	}
 )
