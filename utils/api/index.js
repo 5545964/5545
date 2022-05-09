@@ -437,5 +437,13 @@ export default {
 	},
 	sendsvr(params = {}) {
 		return request.post("/api/ems/sendsvr", params);
+	},
+	sorcemx(params = {}) {
+		return request.post("/api/byd_user/sorcemx", params);
+	},
+	scoregoods(params = {}) {
+		return request.post("/api/bydshop/scoregoods", params);
 	}
+	
+	
 }

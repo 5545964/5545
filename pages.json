@@ -363,6 +363,24 @@
 						"navigationStyle": "custom"
 					}
 
+				}, {
+					"path": "jifenshangcheng",
+					"style": {
+						"navigationBarTitleText": "积分商城",
+						"enablePullDownRefresh": false,
+						"onReachBottomDistance": 400,
+						"navigationStyle": "custom"
+					}
+
+				}, {
+					"path": "myjifen",
+					"style": {
+						"navigationBarTitleText": "我的积分",
+						"enablePullDownRefresh": false,
+						"onReachBottomDistance": 400,
+						"navigationStyle": "custom"
+					}
+
 				}
 			]
 		},

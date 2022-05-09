@@ -3,11 +3,13 @@
 		<view class="datas">
 			<view class="dsaada" v-if="index%2==0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					<image :lazy-load="true" v-if="item.image != ''" :src="imgPath+'/index/index/show?url='+item.image+'&width=335&height=350'" mode="widthFix"></image>
-					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
-						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
-						@play="playing" :src="item.video" controls></video>
-						<!-- imgPath+ -->
+					<image :lazy-load="true" v-if="item.image != ''"
+						:src="imgPath+'/index/index/show?url='+item.image+'&width=335&height=350'" mode="widthFix">
+					</image>
+					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
+						:play-strategy="1" :title="item.title" :id="'video'+item.id" v-else @play="playing"
+						:src="item.video" controls></video>
+					<!-- imgPath+ -->
 				</view>
 				<view class="cet">
 					<view class="ssj gghGG">
@@ -20,6 +22,14 @@
 					</view>
 					<view class="cxzcxz">
 						秒杀
+					</view>
+				</view>
+				<view class="llkl" v-if="item.jifen">
+					<view class="fgfg">
+						{{item.xc_price}}
+					</view>
+					<view class="fgfgs">
+						￥{{item.cb_price}}
 					</view>
 				</view>
 			</view>
@@ -27,12 +37,14 @@
 		<view class="datas">
 			<view class="dsaada" v-if="index%2!=0" v-for="(item,index) in list" :key="index" @click="xuanzhong(item)">
 				<view class="img">
-					
-					<image :lazy-load="true" v-if="item.image != ''" :src="imgPath+'/index/index/show?url='+item.image+'&width=335&height=350'" mode="widthFix"></image>
-					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false"
-						codec="software" :play-strategy="1" :title="item.title" :id="'video'+item.id" v-else
-						@play="playing" :src="item.video" controls></video>
-						<!-- imgPath+ -->
+
+					<image :lazy-load="true" v-if="item.image != ''"
+						:src="imgPath+'/index/index/show?url='+item.image+'&width=335&height=350'" mode="widthFix">
+					</image>
+					<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
+						:play-strategy="1" :title="item.title" :id="'video'+item.id" v-else @play="playing"
+						:src="item.video" controls></video>
+					<!-- imgPath+ -->
 				</view>
 				<view class="cet">
 					<view class="ssj gghGG">
@@ -45,6 +57,14 @@
 					</view>
 					<view class="cxzcxz">
 						秒杀
+					</view>
+				</view>
+				<view class="llkl" v-if="item.jifen">
+					<view class="fgfg">
+						{{item.xc_price}}
+					</view>
+					<view class="fgfgs">
+						￥{{item.cb_price}}
 					</view>
 				</view>
 			</view>
@@ -95,6 +115,13 @@
 </script>
 
 <style lang="scss" scoped>
+	.llkl {
+		padding: 20rpx 30rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
 	.cxzcxz {
 		margin: 20rpx 0;
 		width: fit-content;
@@ -110,6 +137,14 @@
 		font-size: 30rpx;
 		font-weight: 400;
 		color: #E11915;
+	}
+
+	.fgfgs {
+		font-size: 20rpx;
+		font-weight: 400;
+		text-decoration: line-through;
+		color: #999999;
+		line-height: 30rpx;
 	}
 
 	.xccxcc {

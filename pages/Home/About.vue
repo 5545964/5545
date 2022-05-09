@@ -918,6 +918,12 @@
 							})
 							this.xieyi = [...cc]
 							this.yuedu = true
+						} else if (data.data.code == 20) {
+							let text = "此区域已被别人签约"
+							this.$refs.uToast.show({
+								title: text,
+								type: 'default'
+							})
 						}
 
 

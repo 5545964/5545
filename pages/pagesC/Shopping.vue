@@ -41,9 +41,17 @@
 					</view>
 				</view>
 				<view class="cet" style="justify-content: space-between;margin-top: 30rpx;">
-					<view class="cet" style="justify-content: space-between;">
+					<view class="cet" style="justify-content: space-between;" v-if="jifen==0">
 						<view class="mony">
 							￥{{xiaoshoujiage||0}}
+						</view>
+						<view class="monys">
+							￥{{alls.cb_price||0}}
+						</view>
+					</view>
+					<view class="cet" style="justify-content: space-between;" v-else>
+						<view class="mony">
+							{{xiaoshoujiage||0}}积分
 						</view>
 						<view class="monys">
 							￥{{alls.cb_price||0}}
@@ -61,23 +69,11 @@
 					发货
 				</view>
 				<view class="cet" style="margin: 0 40rpx;">
-					<!-- <view class="yunfei">
-						{{shifa||""}}
-					</view>
-					<view class="yunfei">
-						至
-					</view>
-					<view class="yunfei">
-						{{shouhuo||""}}
-					</view>
-					<view class="shu">
-					</view> -->
 					<view class="yunfei">
 						运费：<text v-if="alls.yf != 0">{{alls.yf||""}}</text><text v-else>包邮</text>
 					</view>
 				</view>
 			</view>
-			<!-- <image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode="aspectFit"></image> -->
 		</view>
 		<view class="duo" @click="open(1)">
 			<view class="cet">
@@ -101,15 +97,11 @@
 					保障
 				</view>
 				<view class="cet" style="margin: 0 40rpx;">
-					<!-- <view class="yunfei" v-for="(item,index) in baozhang" :key="index">
-						{{item||""}}<text v-if="index < baozhang.length - 1"> · </text>
-					</view> -->
 					<view class="yunfei">
 						{{alls.bz||""}}
 					</view>
 				</view>
 			</view>
-			<!-- <image class="backimg" src="../../static/icon_shop_huiseyoufan.png" mode="aspectFit"></image> -->
 		</view>
 		<view class="pinglun">
 			<view class="pingluns">
@@ -173,8 +165,6 @@
 					<image style="height: 600rpx;" :src="img+item" mode="widthFix"></image>
 				</view>
 			</view>
-
-
 		</view>
 		<view style="height: 110rpx;margin-top: 20rpx;"></view>
 		<view class="kjshfjsdk">
@@ -189,7 +179,7 @@
 							收藏
 						</view>
 					</view>
-					<view class="cat" @click="gocart">
+					<view class="cat" @click="gocart" v-if="jifen==0">
 						<view class="cart-num" v-if="cart_num != 0">
 							{{cart_num||""}}
 						</view>
@@ -200,7 +190,7 @@
 					</view>
 				</view>
 				<view class="cet">
-					<view class="add" @click="addcarts(0)">
+					<view class="add" @click="addcarts(0)" v-if="jifen==0">
 						加入购物车
 					</view>
 					<view class="shop" @click="addcarts(1)">
@@ -219,19 +209,6 @@
 			<view class="klks">请选择地区</view>
 			<view class="bjhk">
 				<u-tabs :list="diqu" :weizhi="false"></u-tabs>
-				<!-- <view v-for="(item,index) in xuanzhes" :key="index">
-					<view class="xuanzhe">
-						<view :class="[xuanzhed==index?'dashfdshf':'xuanzhe_q']">
-							{{item.title||""}}
-						</view>
-					</view>
-					<view class="cxczc">
-						<view class="daasdzxcxzcz" v-for="(items,indexs) in item.list" :key="indexs"
-							@click="tan(indexs)">
-							{{items.title||""}}
-						</view>
-					</view>
-				</view> -->
 			</view>
 		</u-popup>
 		<!-- 选择规格 -->
@@ -245,22 +222,15 @@
 							style="font-size: 35rpx;font-weight: 800;color: #FF4B3C;overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
 							{{alls.name||""}}{{'-'+alls.son[isSize].spections||''}}
 						</view>
-						<view class="" style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;">
+						<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;"
+							v-if="jifen==0">
 							￥{{alls.son[isSize].xc_price||"请选择"}}
+						</view>
+						<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;" v-else>
+							{{alls.son[isSize].xc_price||"请选择"}}
 						</view>
 					</view>
 				</view>
-				<!-- <view class="">
-					<view class="" style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
-						颜色
-					</view>
-					<view class="color_ul">
-						<view :class="isType==item.id?'color_li':'.color_li1'" @click="chooseType(item)"
-							v-for="item in typeArr" :key="item.id">
-							{{item.spections||""}}
-						</view>
-					</view>
-				</view> -->
 				<view class="">
 					<view class="" style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
 						规格
@@ -357,45 +327,6 @@
 				baozhang: ['官方正品', '正品保障', '售后无忧'],
 				guige: "",
 				xuanzhed: 0,
-				xuanzhes: [{
-					title: "请选择",
-					list: [{
-							id: 0,
-							title: "四川省",
-							data: ["川一", '川二', '川三', '川四', '川五', '川六']
-						},
-						{
-							id: 0,
-							title: "四川省1",
-							data: ["川一1", '川二1', '川三1', '川四1', '川五1', '川六1']
-						},
-						{
-							id: 0,
-							title: "四川省2",
-							data: ["川一2", '川二2', '川三2', '川四2', '川五2', '川六2']
-						},
-						{
-							id: 0,
-							title: "四川省3",
-							data: ["川一3", '川二3', '川三3', '川四3', '川五3', '川六3']
-						},
-						{
-							id: 0,
-							title: "四川省4",
-							data: ["川一4", '川二4', '川三4', '川四4', '川五4', '川六4']
-						},
-						{
-							id: 0,
-							title: "四川省5",
-							data: ["川一5", '川二5', '川三5', '川四5', '川五5', '川六5']
-						},
-						{
-							id: 0,
-							title: "四川省6",
-							data: ["川一6", '川二6', '川三6', '川四6', '川五6', '川六6']
-						}
-					]
-				}],
 				show: [false, false, false],
 				shifa: "广东广州",
 				shouhuo: "四川成都",
@@ -407,7 +338,8 @@
 				pinglun_list: [],
 				isSize: 0, //规格
 				sc: false, //收藏
-				img: this.$imgPath
+				img: this.$imgPath,
+				jifen: 0
 			};
 		},
 		onLoad(ev) {
@@ -416,6 +348,9 @@
 			// 商品id
 			if (ev.orderid) {
 				this.orderid = ev.orderid
+			}
+			if (ev.jifen) {
+				this.jifen = ev.jifen
 			}
 			this.GoodsdataAlls();
 		},
@@ -686,6 +621,9 @@
 			goodstuijian(ev) {
 				this.shopid = ev.alls.id;
 				this.GoodsdataAlls();
+				uni.pageScrollTo({
+					scrollTop: 0
+				})
 			},
 			//评论回调
 			chang() {

@@ -166,8 +166,6 @@
 								我的报装
 							</view>
 						</view>
-
-
 						<!-- <view class="template" @click="gongju_go('../pagesA/gongju11','我的团队')"
 							v-if="user_info.bbs.id">
 							<image class="img" :src="'../../static/gongju11.png'" mode="aspectFit"></image>
@@ -175,9 +173,6 @@
 								我的团队
 							</view>
 						</view> -->
-
-
-
 						<view class="template" @click="gongju_go('../pagesA/gongju12','预约设计')">
 							<image class="img" :src="'../../static/gongju12.png'" mode="aspectFit"></image>
 							<view class="texts">
@@ -191,6 +186,18 @@
 								我的协议
 							</view>
 							<view class="dsalhdkjahjad" v-if="false"></view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesB/myjifen','我的积分')">
+							<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
+							<view class="texts">
+								我的积分
+							</view>
+						</view>
+						<view class="template" @click="gongju_go('../pagesB/jifenshangcheng','积分商城')">
+							<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
+							<view class="texts">
+								积分商城
+							</view>
 						</view>
 					</view>
 				</view>
@@ -297,16 +304,6 @@
 					'qFe_Sxyot4g5R2qJhpo5ECIp6TvRjYFY3g-WIVAgjXU',
 				],
 			};
-		},
-		onLoad() {
-			// let error = {
-			// 	name: "fsdfsdfd",
-			// 	sex: "nan"
-			// }
-			// this.$api.cuxx({
-			// 	user_id: uni.getStorageSync("user_info").id || 0,
-			// 	// content: 
-			// })
 		},
 		onShow() {
 			this.alls()
