@@ -11,7 +11,7 @@
 						{{userinfo.mpname||""}}
 					</view>
 					<view class="name" style="font-size:15px;margin-bottom:30rpx;" v-if="userinfo.bbs.id">
-						{{userinfo.bbs.type||""}}
+						{{userinfo.bbs.mpname||""}}
 					</view>
 					<view class="name" style="font-size:15px;margin-bottom:30rpx;" v-else>
 						{{userinfo.mpzc||""}}
@@ -38,9 +38,10 @@
 					</view>
 				</scroll-view>
 			</view>
-			<view style="padding: 30rpx;background-color: #FFFFFF;" v-html="cardinfo.content">
-			</view>
-			<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==1">
+			<!-- <view style="padding: 30rpx;background-color: #FFFFFF;" v-html="cardinfo.content">
+			</view> -->
+			<u-parse :html="cardinfo.content"></u-parse>
+			<view style="padding: 30rpx;background-color: #FFFFFF;" v-if="state==0">
 				<u-swiper height="400" :effect3d="true" img-mode="aspectFit" @click="goss" :list="imgList"></u-swiper>
 			</view>
 		</view>
@@ -123,9 +124,8 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
-			this.state = 1
 			if (ev.state) {
-				this.state = ev.state;
+				this.state = 1;
 			}
 			this.getcard()
 
@@ -133,9 +133,10 @@
 			this.rinima.push(this.userinfo.mobile)
 			this.rinima.push(this.userinfo.email)
 			this.rinima.push(this.userinfo.wechat)
-			// this.rinima.push(this.userinfo.qq)
-			// this.rinima.push("")
 			this.rinima.push("导航到我的公司！")
+
+
+
 			this.$api.setcategory().then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.forEach(item => {
@@ -149,13 +150,15 @@
 					})
 				}
 			})
+
+
+
 			this.$api.indexcontent().then(data => {
 				if (data.data.code == 1) {
 					data.data.data.status.sort(function() {
 						return Math.random() - 0.5;
 					});
 					this.tuijian = [];
-
 					data.data.data.status.forEach((item, index) => {
 						if (index <= 1) {
 							this.tuijian.push({
@@ -171,18 +174,21 @@
 					this.data_list = []
 				}
 			})
-			this.$api.ewm({
-				id: uni.getStorageSync("user_info").id,
-				level: uni.getStorageSync("des_info").bbs.id || 0
-			}).then(data => {
-				if (data.data.code == 1) {
-					this.ewmsrc = data.data.data.status
-					if (data.data.data.status.longitude && data.data.data.status.latitude) {
-						this.longitude = data.data.data.status.longitude
-						this.latitude = data.data.data.status.latitude
+
+
+			if (this.userinfo.bewm != "") {
+				this.ewmsrc = this.userinfo.bewm
+			} else {
+				this.$api.ewm({
+					id: this.userinfo.id,
+					level: this.state
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.ewmsrc = data.data.data.status
 					}
-				}
-			})
+				})
+			}
+
 		},
 		methods: {
 			kan(ev) {

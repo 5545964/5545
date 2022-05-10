@@ -891,7 +891,10 @@
 								}
 							}
 						} else if (data.data.code == 11) {
-							console.log("");
+							this.$refs.uToast.show({
+								title: data.data.msg,
+								type: 'default'
+							})
 						} else if (data.data.code == 12) {
 							let text = "此区域已被您签约"
 							this.$refs.uToast.show({
