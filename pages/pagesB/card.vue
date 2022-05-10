@@ -4,11 +4,17 @@
 			<view class="top" :style="'background-image: url('+backsss+')'">
 				<image class="img" src="../../static/login.png" mode="aspectFit"></image>
 				<view class="tops">
-					<view class="name pad">
+					<view class="name pad" v-if="userinfo.bbs.id">
 						{{userinfo.username||""}}
 					</view>
-					<view class="name" style="font-size:15px;margin-bottom:30rpx;">
+					<view class="name pad" v-else>
+						{{userinfo.mpname||""}}
+					</view>
+					<view class="name" style="font-size:15px;margin-bottom:30rpx;" v-if="userinfo.bbs.id">
 						{{userinfo.bbs.type||""}}
+					</view>
+					<view class="name" style="font-size:15px;margin-bottom:30rpx;" v-else>
+						{{userinfo.mpzc||""}}
 					</view>
 					<view class="text pad">
 						{{userinfo.biaoti||"设计师买手整装平台"}}
@@ -48,7 +54,8 @@
 				<image class="img" src="../../static/icon_me_shouye.png" mode="aspectFit"></image>
 			</view>
 		</view>
-		<view class="works" style="display:flex;flex-flow:column;justify-content:center;align-items: center;margin-bottom: 60rpx;">
+		<view class="works"
+			style="display:flex;flex-flow:column;justify-content:center;align-items: center;margin-bottom: 60rpx;">
 			<view class="title">
 				<view class="name">
 					小程序二维码
@@ -383,6 +390,7 @@
 	.navbar {
 		height: 1rpx;
 		overflow: hidden;
+
 		.navbar_top {
 			border: 1px solid #FFFFFF;
 			overflow: hidden;

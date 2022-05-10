@@ -57,7 +57,7 @@
 							￥{{alls.cb_price||0}}
 						</view>
 					</view>
-					<view class="yue">
+					<view class="yue" v-if="jifen==0">
 						月销{{alls.xl||0}}
 					</view>
 				</view>
@@ -103,7 +103,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="pinglun">
+		<view class="pinglun" v-if="jifen==0">
 			<view class="pingluns">
 				最新评价
 			</view>
@@ -147,7 +147,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="tuijian">
+		<view class="tuijian" v-if="jifen==0">
 			<view class="text">
 				热门推荐搭配
 			</view>
@@ -167,7 +167,7 @@
 			</view>
 		</view>
 		<view style="height: 110rpx;margin-top: 20rpx;"></view>
-		<view class="kjshfjsdk">
+		<view class="kjshfjsdk" v-if="jifen==0">
 			<view class="tijiao">
 				<view class="cet">
 					<view class="" @click="soucang">
@@ -179,7 +179,7 @@
 							收藏
 						</view>
 					</view>
-					<view class="cat" @click="gocart" v-if="jifen==0">
+					<view class="cat" @click="gocart">
 						<view class="cart-num" v-if="cart_num != 0">
 							{{cart_num||""}}
 						</view>
@@ -190,7 +190,7 @@
 					</view>
 				</view>
 				<view class="cet">
-					<view class="add" @click="addcarts(0)" v-if="jifen==0">
+					<view class="add" @click="addcarts(0)">
 						加入购物车
 					</view>
 					<view class="shop" @click="addcarts(1)">
@@ -198,114 +198,156 @@
 					</view>
 				</view>
 			</view>
-			<view :style="'height: '+height+'rpx;background-color: #FFFFFF;'">
-
-			</view>
+			<view :style="'height: '+height+'rpx;background-color: #FFFFFF;'" />
 		</view>
-		<u-pinglun :show="showComment" :huifu="huifu" @chang="chang" :imgurl="img" :pinglun_list="pinglun_list"
-			@guanbi="chang">
-		</u-pinglun>
-		<u-popup v-model="show[0]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="klks">请选择地区</view>
-			<view class="bjhk">
-				<u-tabs :list="diqu" :weizhi="false"></u-tabs>
+		<view class="kjshfjsdk" v-else>
+			<view class="tijiao" style="justify-content: space-around;">
+				<view class="cet">
+					<button style="margin:0;padding:0 10px;background: #fff;" open-type="contact">
+						<view class="img" style="margin-bottom:15rpx;">
+							<image src="../../static/messgs.png" mode="aspectFit" />
+						</view>
+						<view class="text">
+							客服
+						</view>
+					</button>
+				</view>
+				<view class="cet" @click="addcarts(1)">
+					<view class="jifen">
+						立即兑换
+					</view>
+				</view>
 			</view>
-		</u-popup>
-		<!-- 选择规格 -->
-		<u-popup v-model="show[1]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="produce_all">
-				<view class="top_img">
-					<image :src="list[0]" style="width: 140rpx;height: 140rpx;margin-right: 20rpx;" mode="aspectFit">
-					</image>
-					<view style="width: 70%;">
-						<view
-							style="font-size: 35rpx;font-weight: 800;color: #FF4B3C;overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
-							{{alls.name||""}}{{'-'+alls.son[isSize].spections||''}}
+			<view :style="'height: '+height+'rpx;background-color: #FFFFFF;'" />
+		</view>
+
+		<view>
+			<u-pinglun :show="showComment" :huifu="huifu" @chang="chang" :imgurl="img" :pinglun_list="pinglun_list"
+				@guanbi="chang">
+			</u-pinglun>
+			<u-popup v-model="show[0]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+				<view class="klks">请选择地区</view>
+				<view class="bjhk">
+					<u-tabs :list="diqu" :weizhi="false"></u-tabs>
+				</view>
+			</u-popup>
+			<!-- 选择规格 -->
+			<u-popup v-model="show[1]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+				<view class="produce_all">
+					<view class="top_img">
+						<image :src="list[0]" style="width: 140rpx;height: 140rpx;margin-right: 20rpx;"
+							mode="aspectFit">
+						</image>
+						<view style="width: 70%;">
+							<view
+								style="font-size: 35rpx;font-weight: 800;color: #FF4B3C;overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
+								{{alls.name||""}}{{'-'+alls.son[isSize].spections||''}}
+							</view>
+							<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;"
+								v-if="jifen==0">
+								￥{{alls.son[isSize].xc_price||"请选择"}}
+							</view>
+							<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;" v-else>
+								{{alls.son[isSize].xc_price||"请选择"}}
+							</view>
 						</view>
-						<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;"
-							v-if="jifen==0">
-							￥{{alls.son[isSize].xc_price||"请选择"}}
+					</view>
+					<view class="">
+						<view class="" style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
+							规格
 						</view>
-						<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;" v-else>
-							{{alls.son[isSize].xc_price||"请选择"}}
+						<view class="color_ul">
+							<view :class="isSize==index?'color_li':'.color_li1'" @click="chooseSize(index)"
+								v-for="(item,index) in alls.son" :key="item.id">
+								{{item.spections||""}}
+							</view>
+						</view>
+					</view>
+					<view
+						style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 150rpx;margin-top: 20rpx;">
+						<view style="font-size: 24rpx;font-weight: 800;">
+							数量
+						</view>
+						<view class="num_add">
+							<view class="add_btn" @click="minus">
+								-
+							</view>
+							<view class="num_view">
+								{{value||""}}
+							</view>
+							<view class="add_btn" @click="add">
+								+
+							</view>
 						</view>
 					</view>
 				</view>
+				<view class="kjshfjsdk" v-if="jifen==0">
+					<view class="tijiao">
+						<view class="cet">
+							<view class="" @click="soucang">
+								<view class="img">
+									<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode="aspectFit">
+									</image>
+									<image v-else src="../../static/icon_shop_shoucang.png" mode="aspectFit"></image>
+								</view>
+								<view class="text">
+									收藏
+								</view>
+							</view>
+							<view class="cat" @click="gocart">
+								<view class="cart-num" v-if="cart_num != 0">
+									{{cart_num||""}}
+								</view>
+								<image class="img" src="../../static/icon_shop_gouwuche.png" mode="aspectFit"></image>
+								<view class="text">
+									购物车
+								</view>
+							</view>
+						</view>
+						<view class="cet">
+							<view class="add" @click="addresss(0)">
+								加入购物车
+							</view>
+							<view class="shop" @click="addresss(1)">
+								立即购买
+							</view>
+						</view>
+					</view>
+					<view :style="'height: '+height+'rpx;background-color: #FFFFFF;'" />
+				</view>
+				<view class="kjshfjsdk" v-else>
+					<view class="tijiao" style="justify-content: space-around;">
+						<view class="cet">
+							<button style="margin:0;padding:0 10px;background: #fff;" open-type="contact">
+								<view class="img" style="margin-bottom:15rpx;">
+									<image src="../../static/messgs.png" mode="aspectFit" />
+								</view>
+								<view class="text">
+									客服
+								</view>
+							</button>
+						</view>
+						<view class="cet" @click="yuyue()">
+							<view class="jifen">
+								立即兑换
+							</view>
+						</view>
+					</view>
+					<view :style="'height: '+height+'rpx;background-color: #FFFFFF;'" />
+				</view>
+			</u-popup>
+			<u-popup v-model="show[2]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+				<view class="klks">保障</view>
 				<view class="">
-					<view class="" style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
-						规格
-					</view>
-					<view class="color_ul">
-						<view :class="isSize==index?'color_li':'.color_li1'" @click="chooseSize(index)"
-							v-for="(item,index) in alls.son" :key="item.id">
-							{{item.spections||""}}
-						</view>
-					</view>
-				</view>
-				<view
-					style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 150rpx;margin-top: 20rpx;">
-					<view style="font-size: 24rpx;font-weight: 800;">
-						数量
-					</view>
-					<view class="num_add">
-						<view class="add_btn" @click="minus">
-							-
-						</view>
-						<view class="num_view">
-							{{value||""}}
-						</view>
-						<view class="add_btn" @click="add">
-							+
-						</view>
-					</view>
-				</view>
-			</view>
-			<view class="kjshfjsdk">
-				<view class="tijiao">
-					<view class="cet">
-						<view class="" @click="soucang">
-							<view class="img">
-								<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode="aspectFit"></image>
-								<image v-else src="../../static/icon_shop_shoucang.png" mode="aspectFit"></image>
-							</view>
-							<view class="text">
-								收藏
-							</view>
-						</view>
-						<view class="cat" @click="gocart">
-							<view class="cart-num" v-if="cart_num != 0">
-								{{cart_num||""}}
-							</view>
-							<image class="img" src="../../static/icon_shop_gouwuche.png" mode="aspectFit"></image>
-							<view class="text">
-								购物车
-							</view>
-						</view>
-					</view>
-					<view class="cet">
-						<view class="add" @click="addresss(0)">
-							加入购物车
-						</view>
-						<view class="shop" @click="addresss(1)">
-							立即购买
-						</view>
-					</view>
-				</view>
-				<view :style="'height: '+height+'rpx;background-color: #FFFFFF;'">
 
 				</view>
-			</view>
-		</u-popup>
-		<u-popup v-model="show[2]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
-			<view class="klks">保障</view>
-			<view class="">
+				<view class="clos">
+					关闭
+				</view>
+			</u-popup>
+			<u-kehu url="../Home/booking/AppointmentDesign" v-if="jifen==0"></u-kehu>
+		</view>
 
-			</view>
-			<view class="clos">
-				关闭
-			</view>
-		</u-popup>
-		<u-kehu url="../Home/booking/AppointmentDesign"></u-kehu>
 	</view>
 </template>
 
@@ -368,8 +410,22 @@
 			}
 		},
 		methods: {
+			yuyue() {
+				let aa = [{
+					simage: this.alls.simage,
+					name: this.alls.name,
+					num: this.value,
+					xc_price: this.alls.son[this.isSize].xc_price,
+					shopid: this.alls.id,
+					specid: this.alls.son[this.isSize].id,
+					specidsize: this.alls.son[this.isSize].spections,
+				}]
+				console.log(aa);
+				uni.navigateTo({
+					url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) + "&yf=" + this.alls.yf +"&jifen=1"
+				})
+			},
 			kansss(ev) {
-
 				let that = this;
 				uni.previewImage({
 					urls: this.list,
@@ -519,14 +575,8 @@
 			},
 			chooseSize(item) {
 				this.isSize = item;
-
-
 				this.xiaoshoujiage = this.alls.son[item].xc_price
 			},
-			// chooseType(item) {
-			// 	this.type = item.spections
-			// 	this.isType = item.id
-			// },
 			//全部数据
 			GoodsdataAlls() {
 				let aaaaa = 0
@@ -679,7 +729,21 @@
 </script>
 
 <style lang="scss" scoped>
+	.jifen {
+		width: 534rpx;
+		height: 70rpx;
+		text-align: center;
+		line-height: 70rpx;
+		background: #E6F1F5;
+		border: 1rpx solid #007399;
+		border-radius: 35rpx;
+		font-size: 26rpx;
+		font-weight: 400;
+		color: #007399;
+	}
+
 	.data_shop {
+		margin-top: 20rpx;
 		background-color: #FFFFFF;
 
 		.bai {

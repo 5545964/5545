@@ -74,17 +74,34 @@
 						<view class="name">
 							{{itemc.name||""}}
 						</view>
-						<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
-							class="fsdfsfs fdsds">￥{{(itemc.num* itemc.sonprice).toFixed(2)||""}}</text>
+						<!-- <text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+							class="fsdfsfs fdsds">￥{{(itemc.num* itemc.sonprice).toFixed(2)||""}}</text> -->
+						<view v-if="jifen==0">
+							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+								class="fsdfsfs fdsds">￥{{(itemc.num* itemc.sonprice).toFixed(2)||""}}</text>
+						</view>
+						<view v-else>
+							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+								class="fsdfsfs fdsds">{{(itemc.num* itemc.sonprice).toFixed(2)||""}}积分</text>
+						</view>
 					</view>
 				</view>
 				<view style="">
 					<view class="text kfhkjsdh">
-						<view class="">
+						<view v-if="jifen==0">
 							商品总价：
 						</view>
-						<view class="red">
+						<view v-else>
+							商品所需总积分：
+						</view>
+						<!-- <view class="red">
 							￥{{data_list.price||""}}
+						</view> -->
+						<view class="red" v-if="jifen==0">
+							￥{{data_list.price||""}}
+						</view>
+						<view class="red" v-else>
+							{{data_list.price||""}}积分
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
@@ -120,7 +137,7 @@
 				<view style="height: 2rpx;background: #F6F6F6;">
 
 				</view>
-				<view class="kfhkjsdh">
+				<view class="kfhkjsdh" v-if="jifen==0">
 					<view class="text">
 						总金额：<text class="reds">￥{{data_list.price||""}}</text>
 					</view>
@@ -199,7 +216,7 @@
 			</view>
 		</view>
 		<view style="height: 110rpx;"></view>
-		<view class="annius" v-if="lklklklk">
+		<view class="annius" v-if="lklklklk && jifen==0">
 			<view class="anniu" v-if="tigongfuwu">
 				<view class="button" @click="annui(0)" v-if="data_list.state == 0">
 					取消订单
@@ -237,7 +254,9 @@
 				<view class="button" v-if="data_list.state == 8">
 					已申请退款
 				</view>
-				<view class="button" v-if="data_list.state == 4 || data_list.state == 3 || data_list.states == 2 && data_list.cl == 0" @click="baozhaung()">
+				<view class="button"
+					v-if="data_list.state == 4 || data_list.state == 3 || data_list.states == 2 && data_list.cl == 0"
+					@click="baozhaung()">
 					是否安装
 				</view>
 				<view class="button" v-if="data_list.state == 16" @click="jiesubaozhaung()">
@@ -492,6 +511,7 @@
 	export default {
 		data() {
 			return {
+				jifen: 0,
 				fdsa: false,
 				lklklklk: true,
 				tigongfuwu: true,
@@ -549,6 +569,9 @@
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title;
+			}
+			if (ev.jifen) {
+				this.jifen = ev.jifen;
 			}
 			this.opop = ev
 			this.order_idsssss = ev.order_id
@@ -624,8 +647,8 @@
 			}
 		},
 		methods: {
-			fou(){
-				this.$api.successloading({
+			fou() {
+				this.$api.fou({
 					orderid: this.data_list.orderid
 				}).then(data => {
 					this.baozhuangshow = false

@@ -13,7 +13,7 @@
 				</view>
 			</u-navbar>
 		</view>
-		<u-adata :list="list" @click="go_shop" :height="0"></u-adata>
+		<u-adata :list="list" @click="go_shop" :height="30"></u-adata>
 	</view>
 </template>
 

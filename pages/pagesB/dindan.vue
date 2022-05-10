@@ -67,9 +67,7 @@
 										已支付￥{{ items.price ||""}}
 									</view>
 								</view>
-								<view class="anniu">
-
-
+								<view class="anniu" v-if="jifen==0">
 									<!-- 待支付 -->
 									<view class="button" @click="annui(0, items)" v-if="items.state == 0">
 										取消订单
@@ -88,10 +86,6 @@
 									<view class="button" @click="annui(4, items)" v-if="items.state == 2">
 										确认签收
 									</view>
-
-
-
-
 									<view class="button" @click="annui(7, items)"
 										v-if="items.state == 3 || items.state == 4 || items.states == 2">
 										申请售后
@@ -100,16 +94,10 @@
 										v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
 										取消售后
 									</view>
-
-
-
 									<view class="button" @click="kuaidiwo(items)"
 										v-if="items.states === 1 && items.sqexpressorder ==0">
 										填写快递单号
 									</view>
-
-
-
 									<view class="button" @click="annui(2, items)" v-if="items.state == 5">
 										取消退款
 									</view>
@@ -137,6 +125,23 @@
 									</view>
 									<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
 										报装评价
+									</view>
+								</view>
+								<view class="anniu" v-else>
+									<!-- 待支付 -->
+									<view class="button" @click="jfquxiao(items)" v-if="items.state == 1">
+										取消订单
+									</view>
+									<!-- 待收货 -->
+									<view class="button" @click="annui(3, items)" v-if="items.state == 2">
+										查看物流
+									</view>
+									<view class="button" @click="jfquerenshouhuo(items)" v-if="items.state == 2">
+										确认签收
+									</view>
+									<view class="button" @click="delorder(items)"
+										v-if="items.state == 9 || items.state == 4">
+										删除订单
 									</view>
 								</view>
 							</view>
@@ -303,8 +308,7 @@
 						感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下几项条款了解详细信息。如您同意，请勾选以下几项条款并点击”同意”开始接受我们的服务。
 					</view>
 					<view style="padding:20rpx 0;">
-						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi"
-							:key="index">
+						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
 							<view style="display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
@@ -376,6 +380,7 @@
 	export default {
 		data() {
 			return {
+				jifen: 0,
 				shouhouitem: "",
 				quxiaoshouhou: false,
 				shoujihao: uni.getStorageSync("user_info").mobile,
@@ -465,6 +470,39 @@
 			};
 		},
 		onLoad(ev) {
+			if (ev.jifen) {
+				this.jifen = ev.jifen;
+				this.lists = [{
+						name: "全部",
+					},
+					{
+						name: "待发货",
+					},
+					{
+						name: "待收货",
+					},
+					{
+						name: "已完成",
+					},
+				]
+				this.list = [{
+						status: "all",
+						data_list: [],
+					},
+					{
+						status: 1,
+						data_list: [],
+					},
+					{
+						status: 2,
+						data_list: [],
+					},
+					{
+						status: 3,
+						data_list: [],
+					}
+				]
+			}
 			uni.$on("number", () => {
 				// this.current = 6
 			})
@@ -475,17 +513,15 @@
 			if (ev.current) {
 				this.current = ev.current;
 			}
-			this.$api.orderset().then(data => {
-				if (data.data.code == 1) {
-					this.time = data.data.data.status.ordertime
-				}
-			})
+			// this.$api.orderset().then(data => {
+			// 	if (data.data.code == 1) {
+			// 		this.time = data.data.data.status.ordertime
+			// 	}
+			// })
 		},
 		onShow() {
 			this.system();
 			this.allsss();
-
-
 			let aa = uni.getStorageSync("xieyi")
 			// // 已安装3
 			// yianzhaungkaiguan: true,
@@ -545,8 +581,23 @@
 			}
 		},
 		methods: {
-			fou(){
-				this.$api.successloading({
+			//积分确认收货
+			jfquerenshouhuo(ev) {
+				this.$api.sureorder({
+					id: ev.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.showToast({
+							title: "收货成功",
+							icon: "none",
+						});
+						this.allsss();
+						this.current = 3
+					}
+				})
+			},
+			fou() {
+				this.$api.fou({
 					orderid: this.mnbv.orderid
 				}).then(data => {
 					this.baozhuangshow = false
@@ -756,37 +807,69 @@
 						item.data_list = [];
 					});
 					if (data.data.code == 1) {
-						this.list[0].data_list = data.data.data.status;
-						data.data.data.status.forEach((item) => {
-							switch (item.state) {
-								case "1":
-									this.list[1].data_list.push(item);
-									break;
-								case "2":
-									this.list[2].data_list.push(item);
-									break;
-								case "3":
-									this.list[3].data_list.push(item);
-									break;
-								case "4":
-									this.list[3].data_list.push(item);
-									break;
-								case "16":
-									this.list[4].data_list.push(item);
-									break;
-								case "17":
-									this.list[5].data_list.push(item);
-									break;
-								default:
+						if (this.jifen == 0) {
+							data.data.data.status.forEach((item, index) => {
+								if (item.score == 0) {
+									this.list[0].data_list.push(item);
+								}
+							});
+							data.data.data.status.forEach((item) => {
+								if (item.score == 0) {
+									switch (item.state) {
+										case "1":
+											this.list[1].data_list.push(item);
+											break;
+										case "2":
+											this.list[2].data_list.push(item);
+											break;
+										case "3":
+											this.list[3].data_list.push(item);
+											break;
+										case "4":
+											this.list[3].data_list.push(item);
+											break;
+										case "16":
+											this.list[4].data_list.push(item);
+											break;
+										case "17":
+											this.list[5].data_list.push(item);
+											break;
+										default:
+									}
+								}
+							});
+						} else {
+							if (data.data.code == 1) {
+								data.data.data.status.forEach((item, index) => {
+									if (item.score == 1) {
+										this.list[0].data_list.push(item);
+									}
+								});
+								data.data.data.status.forEach((item) => {
+									if (item.score == 1) {
+										switch (item.state) {
+											case "1":
+												this.list[1].data_list.push(item);
+												break;
+											case "2":
+												this.list[2].data_list.push(item);
+												break;
+											case "4":
+												this.list[3].data_list.push(item);
+												break;
+											default:
+										}
+									}
+								});
 							}
-						});
+						}
 					}
 				});
 			},
 			//订单详情
 			goods(ev) {
 				uni.navigateTo({
-					url: "../pagesA/goods_data?order_id=" + ev.orderid,
+					url: "../pagesA/goods_data?order_id=" + ev.orderid + "&jifen=1"
 				});
 			},
 			//退款
@@ -805,6 +888,29 @@
 					})
 				}
 				this.showa = false;
+			},
+			// 积分取消订单
+			jfquxiao(ev) {
+				console.log(ev);
+				this.$api.orderdzf({
+					id: ev.id
+				}).then((data) => {
+					if (data.data.code == 1) {
+						uni.showToast({
+							title: "订单取消成功",
+							duration: 1000,
+							icon: "success",
+						});
+						this.current = 0
+						this.allsss();
+					} else {
+						uni.showToast({
+							title: data.data.msg,
+							duration: 1000,
+							icon: "none",
+						});
+					}
+				});
 			},
 			// 取消订单
 			xuanzhe(ev) {

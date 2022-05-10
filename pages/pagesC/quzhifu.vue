@@ -47,9 +47,13 @@
 						<view class="name" style="margin: 20rpx 0;">
 							规格：{{itemc.specidsize||""}}
 						</view>
-						<view class="">
+						<view v-if="jifen==0">
 							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
 								class="fsdfsfs fdsds">￥{{itemc.xc_price * itemc.num||""}}</text>
+						</view>
+						<view v-else>
+							<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
+								class="fsdfsfs fdsds">{{itemc.xc_price * itemc.num||""}}积分</text>
 						</view>
 					</view>
 				</view>
@@ -58,8 +62,11 @@
 						<view class="">
 							商品总价：
 						</view>
-						<view class="red">
+						<view class="red" v-if="jifen==0">
 							￥{{zjia||""}}
+						</view>
+						<view class="red" v-else>
+							{{zjia||""}}积分
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
@@ -70,7 +77,7 @@
 							共{{znum||""}}件
 						</view>
 					</view>
-					<view class="text kfhkjsdh" v-if="dinjing != 0">
+					<view class="text kfhkjsdh" v-if="dinjing != 0 && jifen==0">
 						<view class="">
 							定金
 						</view>
@@ -89,7 +96,7 @@
 							包邮
 						</view>
 					</view>
-					<view class="text kfhkjsdh" @click="youhuijuan">
+					<view class="text kfhkjsdh" @click="youhuijuan" v-if="jifen==0">
 						<view class="">
 							优惠券
 						</view>
@@ -106,10 +113,8 @@
 						</view>
 					</view>
 				</view>
-				<view style="height: 2rpx;background: #F6F6F6;">
-
-				</view>
-				<view class="text kfhkjsdh">
+				<view style="height: 2rpx;background: #F6F6F6;" />
+				<view class="text kfhkjsdh" v-if="jifen==0">
 					<view class="">
 						总金额：<text class="red">￥{{zjia||""}}</text>
 					</view>
@@ -133,9 +138,12 @@
 		<u-kehu style="position: relative;z-index: 10000;" url="../Home/booking/AppointmentDesign"></u-kehu>
 		<view class="annius">
 			<view class="anniu">
-				<view class="">
+				<view v-if="jifen==0">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
 						class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text>
+				</view>
+				<view v-else>
+					<text class="heji">合计:<text class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text></text>积分
 				</view>
 				<view v-if="buyanzheng" class="button" @click="xianshi">
 					提交订单
@@ -143,19 +151,10 @@
 				<view v-else class="button" @click="yuyuesss = true">
 					提交订单
 				</view>
+
+
 			</view>
 		</view>
-		<!-- <view class="annius">
-			<view class="anniu">
-				<view class="">
-					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
-						class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text>
-				</view>
-				<view class="button" @click="annui()">
-					提交订单
-				</view>
-			</view>
-		</view> -->
 		<!-- 手机验证 -->
 		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
 			<view class="yueduwo">
@@ -335,11 +334,30 @@
 				orderid: "",
 				iscartid: true,
 				dzg: 0,
-				xieyiid: []
+				xieyiid: [],
+				jifen: 0
 			};
 		},
 		onLoad(ev) {
 			let that = this;
+			if (ev.jifen) {
+				that.jifen = ev.jifen
+			}
+			if (ev.yf) {
+				that.yf = ev.yf;
+			}
+			if (ev.jifen) {
+				that.jifen = ev.jifen
+			}
+			if (ev.iscartid) {
+				that.iscartid = false;
+			}
+			if (ev.title) {
+				that.title = ev.title;
+			}
+
+
+
 			if (uni.getStorageSync("address")) {
 				that.alls_address = uni.getStorageSync("address");
 				that.address = that.alls_address.title + that.alls_address.address
@@ -352,12 +370,13 @@
 				that.address_name = data.username
 				that.address_phone = data.phone
 			})
-			if (ev.yf) {
-				that.yf = ev.yf;
-			}
-			if (ev.iscartid) {
-				that.iscartid = false;
-			}
+			uni.$on('youhuijuan', function(data) {
+				that.youhuijuan_num = 1
+				that.youhuijuanjine = data.cupons.yh_price
+				that.cuponsid = data.coupons_id
+				that.tijiaozjia = Number(that.tijiaozjia) - Number(data.cupons.yh_price)
+			})
+
 			if (ev.goodsdata) {
 				let aa = JSON.parse(ev.goodsdata)
 				let arr = []
@@ -370,7 +389,7 @@
 				that.zjia = that.zjia.toFixed(2)
 				that.cartid = arr.join(",")
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
-				if (that.goodsdata[0].swj == 1) {
+				if (that.goodsdata[0].swj == 1 && that.jifen == 0) {
 					that.swj = 1;
 					that.swjorderid = that.goodsdata[0].orderid;
 					that.$api.dingj({
@@ -385,43 +404,49 @@
 					})
 				}
 			}
-			if (ev.title) {
-				that.title = ev.title;
-			}
-			let aa = uni.getStorageSync("xieyi")
-			aa.forEach(item => {
-				if (item.state == 4) {
-					that.xieyi.push(item)
-					that.xieyiid.push(item.id)
+			if (that.jifen == 0) {
+				let aa = uni.getStorageSync("xieyi")
+				aa.forEach(item => {
+					if (item.state == 4) {
+						that.xieyi.push(item)
+						that.xieyiid.push(item.id)
+					}
+				})
+				if (that.xieyi.length > 0) {
+					that.buyanzheng = true
+				} else {
+					that.buyanzheng = false
 				}
-			})
-			if (that.xieyi.length > 0) {
-				that.buyanzheng = true
-			} else {
-				that.buyanzheng = false
-			}
-			uni.$on('youhuijuan', function(data) {
-				that.youhuijuan_num = 1
-				that.youhuijuanjine = data.cupons.yh_price
-				that.cuponsid = data.coupons_id
-				that.tijiaozjia = Number(that.tijiaozjia) - Number(data.cupons.yh_price)
-			})
-			let time = new Date().getTime()
-			let yy = that.zjia - that.dinjing
-			that.$api.mycupon({
-				user_id: uni.getStorageSync("user_info").id
-			}).then(data => {
-				if (data.data.code == 1) {
-					data.data.data.status.forEach(item => {
-						if (item.usetime == null && time < item.cupons.endtime * 1000 && item.state ==
-							0) {
-							if (Number(item.cupons.cb_price) < yy) {
-								that.nengyong = 1
+				let time = new Date().getTime()
+				let yy = that.zjia - that.dinjing
+				that.$api.mycupon({
+					user_id: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.forEach(item => {
+							if (item.usetime == null && time < item.cupons.endtime * 1000 && item.state ==
+								0) {
+								if (Number(item.cupons.cb_price) < yy) {
+									that.nengyong = 1
+								}
 							}
-						}
-					})
+						})
+					}
+				})
+			} else {
+				let aa = uni.getStorageSync("xieyi")
+				aa.forEach(item => {
+					if (item.state == 14) {
+						that.xieyi.push(item)
+						that.xieyiid.push(item.id)
+					}
+				})
+				if (that.xieyi.length > 0) {
+					that.buyanzheng = true
+				} else {
+					that.buyanzheng = false
 				}
-			})
+			}
 		},
 		methods: {
 			goyouhuijuan() {
@@ -431,7 +456,6 @@
 			},
 			// 同意协议
 			bjnm() {
-				// if (this.buyanzheng) {
 				let mm = 0
 				let aa = []
 				this.xieyi.forEach(item => {
@@ -454,11 +478,6 @@
 				})
 				this.shoujiyanzheng = false;
 				this.yuedu = false
-				// }
-				this.xieyiid.forEach(item => {
-
-				})
-
 				this.yuedu = false
 				this.yuyuesss = true
 			},
@@ -609,7 +628,6 @@
 			},
 			annui() {
 				this.yuyuesss = false
-
 				let shopids = []
 				let specidsizes = []
 				let specids = []
@@ -620,73 +638,105 @@
 					specids.push(item.specid)
 					cartids.push(item.id)
 				})
-
 				if (this.iscartid) {
 					cartids = 0
 				}
 				if (this.address != '') {
+					if (this.jifen == 0) {
+						this.$api.cartpay({
+							cuponsid: this.cuponsid,
+							swj: this.swj,
+							orderid: this.swjorderid,
+							content: this.value,
+							shopid: shopids,
+							cartid: cartids,
+							user_id: uni.getStorageSync("user_info").id,
+							num: [this.znum],
+							addressid: this.alls_address.id,
+							type: 0,
+							specidsize: specidsizes,
+							specid: specids,
+							price: this.tijiaozjia.toFixed(2),
+							dzg: this.dzg,
+							dj: this.dinjing
+						}).then(res => {
+							if (res.data.code == 200) {
+								this.orderid = res.data.orderid
+								let that = this;
+								//购物车数量
+								this.$api.shopcart({
+									id: uni.getStorageSync("user_info").id
+								}).then(data => {
+									let aa = 0
+									if (data.data.code == 1) {
 
-					this.$api.cartpay({
-						cuponsid: this.cuponsid,
-						swj: this.swj,
-						orderid: this.swjorderid,
-						content: this.value,
-						shopid: shopids,
-						cartid: cartids,
-						user_id: uni.getStorageSync("user_info").id,
-						num: [this.znum],
-						addressid: this.alls_address.id,
-						type: 0,
-						specidsize: specidsizes,
-						specid: specids,
-						price: this.tijiaozjia.toFixed(2),
-						dzg: this.dzg,
-						dj:this.dinjing
-					}).then(res => {
-						if (res.data.code == 200) {
-							this.orderid = res.data.orderid
-							let that = this;
-							//购物车数量
-							this.$api.shopcart({
-								id: uni.getStorageSync("user_info").id
-							}).then(data => {
-								let aa = 0
-								if (data.data.code == 1) {
+										data.data.data.status.forEach(item => {
+											aa = aa + 1
+										})
+									}
+									if (aa >= 99) {
+										aa = "..."
+									}
+									uni.setStorageSync("cart_num", aa)
+								})
+								uni.requestPayment({
+									timeStamp: res.data.data.timeStamp, //当前的时间
+									nonceStr: res.data.data.nonceStr, //随机字符串
+									package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
+									signType: res.data.data.signType, //签名算法，暂支持 MD5。
+									paySign: res.data.data.paySign, //签名
+									success: function(res) {
+										that.goss()
+									},
+									fail: function(err) {
+										uni.showToast({
+											title: "支付失败",
+											icon: "none"
+										})
 
-									data.data.data.status.forEach(item => {
-										aa = aa + 1
-									})
-								}
-								if (aa >= 99) {
-									aa = "..."
-								}
-								uni.setStorageSync("cart_num", aa)
-							})
-							uni.requestPayment({
-								timeStamp: res.data.data.timeStamp, //当前的时间
-								nonceStr: res.data.data.nonceStr, //随机字符串
-								package: res.data.data.package, //统一下单接口返回的 prepay_id 参数值
-								signType: res.data.data.signType, //签名算法，暂支持 MD5。
-								paySign: res.data.data.paySign, //签名
-								success: function(res) {
-									that.goss()
-								},
-								fail: function(err) {
-									uni.showToast({
-										title: "支付失败",
-										icon: "none"
-									})
-
-								}
-							})
-						} else {
+									}
+								})
+							} else {
+								uni.showToast({
+									title: res.data.msg,
+									duration: 1000,
+									icon: "none"
+								})
+							}
+						})
+					} else {
+						this.$api.shoppay({
+							cuponsid: this.cuponsid,
+							swj: this.swj,
+							orderid: this.swjorderid,
+							content: this.value,
+							shopid: shopids,
+							cartid: cartids,
+							user_id: uni.getStorageSync("user_info").id,
+							num: [this.znum],
+							addressid: this.alls_address.id,
+							type: 0,
+							specidsize: specidsizes,
+							specid: specids,
+							price: this.tijiaozjia.toFixed(2),
+							dzg: this.dzg,
+							dj: this.dinjing
+						}).then(data => {
 							uni.showToast({
-								title: res.data.msg,
-								duration: 1000,
-								icon: "none"
+								title: data.data.msg,
+								icon: "success",
+								duration: 1000
 							})
-						}
-					})
+							if (data.data.code == 1) {
+								setTimeout(() => {
+									uni.switchTab({
+										url: "/pages/Home/User"
+									})
+								}, 1000);
+
+							}
+						})
+					}
 				} else {
 					uni.showToast({
 						title: "请选择地址",

@@ -443,7 +443,11 @@ export default {
 	},
 	scoregoods(params = {}) {
 		return request.post("/api/bydshop/scoregoods", params);
+	},
+	shoppay(params = {}) {
+		return request.post("/api/bydshop/shoppay", params);
 	}
-	
-	
+
+
+
 }

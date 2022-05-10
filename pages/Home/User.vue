@@ -24,14 +24,32 @@
 					</view>
 				</view>
 			</view>
+			<view class="kuangwo" v-if="user_info.jifen">
+				<view class="kuangkuang" @click="gongju_go('../pagesB/myjifen','我的积分')">
+					<view class="ghgh">
+						我的积分
+					</view>
+					<view style="margin-top:20rpx;">
+						<text class="ghghs">{{user_info.score||0}}</text><text class="ghghss">分</text>
+					</view>
+				</view>
+				<view class="kuangkuang" @click="gongju_go('../pagesA/gongju4','我的优惠券')">
+					<view class="ghgh">
+						可用优惠券
+					</view>
+					<view style="margin-top:20rpx;">
+						<text class="ghghs">{{user_info.coupnum||0}}</text><text class="ghghss">张</text>
+					</view>
+				</view>
+			</view>
 			<view class="hahaha">
-				<view class="cet" @click="gos(0)" v-if="user_info.bbs.id">
+				<view class="cet" @click="gos(0)" v-if="user_info.bbs.id || user_info.switch==1">
 					<image class="imgs" src="../../static/icon_me_mingpian.png" mode="aspectFit"></image>
 					<view class="text">
 						电子名片
 					</view>
 				</view>
-				<view class="xian" v-if="user_info.bbs.id"></view>
+				<view class="xian" v-if="user_info.bbs.id || user_info.switch==1"></view>
 				<view class="cet" @click="gos(1)" v-if="user_info.bbs != 0 && user_info !='' && user_info.bbs !=null">
 					<image class="imgd" src="../../static/icon_me_erweima.png" mode="aspectFit"></image>
 					<view class="text">
@@ -186,18 +204,6 @@
 								我的协议
 							</view>
 							<view class="dsalhdkjahjad" v-if="false"></view>
-						</view>
-						<view class="template" @click="gongju_go('../pagesB/myjifen','我的积分')">
-							<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
-							<view class="texts">
-								我的积分
-							</view>
-						</view>
-						<view class="template" @click="gongju_go('../pagesB/jifenshangcheng','积分商城')">
-							<image class="img" :src="'../../static/gongju13.png'" mode="aspectFit"></image>
-							<view class="texts">
-								积分商城
-							</view>
 						</view>
 					</view>
 				</view>
@@ -530,8 +536,8 @@
 
 			},
 			async gongju_go(ev, title) {
+				console.log(ev, title);
 				if (await this.$login()) {
-
 					if (ev == "../pagesD/designyongjin" || ev == "../pagesD/peixun") {
 						let that = this
 						uni.requestSubscribeMessage({
@@ -556,6 +562,38 @@
 </script>
 
 <style lang="scss" scoped>
+	.ghgh {
+		font-size: 24rpx;
+		font-weight: bold;
+		color: #333333;
+	}
+
+	.ghghs {
+		font-size: 48rpx;
+		font-weight: 400;
+		color: #007399;
+	}
+
+	.ghghss {
+		font-size: 20rpx;
+		font-weight: 400;
+		color: #333333;
+	}
+
+	.kuangwo {
+		margin: 30rpx;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.kuangkuang {
+		padding: 30rpx 40rpx;
+		width: 46%;
+		background: #FFFFFF;
+		box-shadow: 0 0 22rpx 0 rgba(65, 68, 98, 0.2);
+		border-radius: 12rpx;
+	}
+
 	.top {
 		padding: 20rpx 30rpx;
 

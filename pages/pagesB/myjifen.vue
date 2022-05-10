@@ -4,26 +4,29 @@
 			<view class="top" :style="'background-image: url('+backsss+')'">
 				<view style="text-align:center;margin-top:88rpx;">
 					<view class="text">
-						{{user_info.score}}
+						{{user_info.score||""}}
 					</view>
 					<view class="fen">
 						可用积分
 					</view>
+					<view class="fen" style="margin-top: 30rpx;">
+						总积分：{{user_info.allscore||0}}
+					</view>
 				</view>
 			</view>
 			<view class="yuan">
-				<view class="" @click="go()">
+				<view class="" @click="go(0)">
 					<view class="cet">
-						<image class="img" src="../../static/gongju13.png" />
+						<image class="img" src="../../static/shopji.png" />
 					</view>
 					<view class="mmlm">
 						积分商城
 					</view>
 				</view>
 				<view class="xian" />
-				<view class="">
+				<view class="" @click="go(1)">
 					<view class="cet">
-						<image class="img" src="../../static/gongju13.png" />
+						<image class="img" src="../../static/jilu.png" />
 					</view>
 					<view class="mmlm">
 						兑换记录
@@ -54,7 +57,7 @@
 					<view class="xhi">
 						<view class="">
 							<view class="goumai">
-								{{item.name}}
+								{{item.name||""}}
 							</view>
 							<view class="time">
 								{{$u.timeFormat(item.createtime, 'yyyy-mm-dd')}}
@@ -62,7 +65,7 @@
 						</view>
 						<view class="qian">
 							<text v-if="item.state==0">+</text><text v-else>-</text> <text
-								style="font-size: 36rpx;">{{item.price}}</text>
+								style="font-size: 36rpx;">{{item.price||""}}</text>
 						</view>
 					</view>
 					<view class="xianxian" />
@@ -112,15 +115,22 @@
 					user_id: this.user_info.id
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.list = [...this.list,...data.data.data.status.data]
-						this.beilist = [...this.beilist,...data.data.data.status.data]
+						this.list = [...this.list, ...data.data.data.status.data]
+						this.beilist = [...this.beilist, ...data.data.data.status.data]
 					}
 				})
 			},
-			go() {
-				uni.navigateTo({
-					url: "./jifenshangcheng"
-				})
+			go(ev) {
+				if (ev == 0) {
+					uni.navigateTo({
+						url: "./jifenshangcheng"
+					})
+				} else {
+					uni.navigateTo({
+						url: "./dindan?jifen=1&title=积分商城"
+					})
+				}
+
 			},
 			gai(ev) {
 				this.count = ev
@@ -246,7 +256,7 @@
 
 		.yuan {
 			padding: 30rpx;
-			margin: -64rpx 30rpx 30rpx 30rpx;
+			margin: -100rpx 30rpx 30rpx 30rpx;
 			background: #FFFFFF;
 			box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.2);
 			border-radius: 20rpx;
@@ -275,7 +285,7 @@
 		}
 
 		.top {
-			height: 500rpx;
+			height: 530rpx;
 			background-size: cover;
 			background-repeat: no-repeat;
 			padding: 30rpx;
