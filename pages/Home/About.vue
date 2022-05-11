@@ -417,18 +417,25 @@
 			this.columns = []
 			this.xuanzhe = ""
 			this.allls()
+			this.alls()
 		},
 		onShow() {
-			this.xuanzhe = ""
-			this.columns = []
-			this.current = 0
+			// this.xuanzhe = ""
+			// this.columns = []
+			// this.current = 0
+			
+			
 			this.user_infos = uni.getStorageSync("user_info")
 			this.des_infos = uni.getStorageSync("des_info")
 			this.idid = 0
 			uni.setStorageSync("idid", this.idid)
-			this.alls()
-			this.shenghebuts = true
-			this.Bsan = false
+			
+			
+			
+			// this.alls()
+			// this.shenghebuts = true
+			// this.Bsan = false
+			
 			const res = uni.getSystemInfoSync();
 			this.heigth = res.windowHeight;
 		},
@@ -532,20 +539,34 @@
 						sole_type: 2,
 						cate: 1
 					}).then(data => {
-						if (data.data.code == 1) {
-							this.Bsan = false
-							this.shenghebutvv = true
-							this.$refs.uToast.show({
-								title: '区域申请成功，请留意系统消息查看审核结果。',
-								type: 'default'
-							})
-						} else {
+						// if (data.data.code == 1) {
+						// 	this.Bsan = false
+						// 	this.shenghebutvv = true
+						// 	this.$refs.uToast.show({
+						// 		title: '区域申请成功，请留意系统消息查看审核结果。',
+						// 		type: 'default',
+						// 		duration: "1000"
+						// 	})
+						// } else {
+						// 	this.$refs.uToast.show({
+						// 		title: data.data.msg,
+						// 		type: 'default',
+						// 		duration: "1000"
+						// 	})
+						// }
+						// this.yuedu = false
+						this.yuedu = false
+						setTimeout(() => {
 							this.$refs.uToast.show({
 								title: data.data.msg,
-								type: 'default'
+								type: 'default',
+								duration: "3000"
 							})
-						}
-						this.yuedu = false
+							if (data.data.code == 1) {
+								this.Bsan = false
+								this.shenghebutvv = true
+							}
+						}, 10);
 					})
 					return
 				}
@@ -570,18 +591,28 @@
 						sole_type: this.idids,
 						cate: 0
 					}).then(data => {
-						if (data.data.code == 1) {
-							this.$refs.uToast.show({
-								title: '楼盘申请成功，请留意系统消息查看审核结果。',
-								type: 'default'
-							})
-						} else {
+						// if (data.data.code == 1) {
+						// 	this.$refs.uToast.show({
+						// 		title: '楼盘申请成功，请留意系统消息查看审核结果。',
+						// 		type: 'default',
+						// 		duration: "1000"
+						// 	})
+						// } else {
+						// 	this.$refs.uToast.show({
+						// 		title: data.data.msg,
+						// 		type: 'default',
+						// 		duration: "1000"
+						// 	})
+						// }
+						// this.yuedu = false
+						this.yuedu = false
+						setTimeout(() => {
 							this.$refs.uToast.show({
 								title: data.data.msg,
-								type: 'default'
+								type: 'default',
+								duration: "3000"
 							})
-						}
-						this.yuedu = false
+						}, 10);
 					})
 				} else {
 					uni.showToast({
@@ -633,7 +664,8 @@
 						} else {
 							return this.$refs.uToast.show({
 								title: '您不能签约楼盘',
-								type: 'default'
+								type: 'default',
+								duration: "1000"
 							})
 						}
 					} else {
@@ -662,7 +694,8 @@
 									let text = "此区域已被其他美居会员签约,请选择其他区域"
 									this.$refs.uToast.show({
 										title: text,
-										type: 'default'
+										type: 'default',
+										duration: "1000"
 									})
 								}
 
@@ -707,7 +740,8 @@
 										let text = "此区域已被其他美居会员签约,请选择其他区域"
 										this.$refs.uToast.show({
 											title: text,
-											type: 'default'
+											type: 'default',
+											duration: "1000"
 										})
 									}
 								}
@@ -724,7 +758,8 @@
 									}
 									this.$refs.uToast.show({
 										title: text,
-										type: 'default'
+										type: 'default',
+										duration: "1000"
 									})
 								}
 							}
@@ -763,7 +798,8 @@
 						return;
 						this.$refs.uToast.show({
 							title: '您不能签约楼盘',
-							type: 'default'
+							type: 'default',
+							duration: "1000"
 						})
 					}
 					if (this.user_infos.bbs.id == 3 && item.level < 3) {
@@ -785,9 +821,6 @@
 					} else {
 						this.idid = 2
 					}
-
-
-
 					uni.setStorageSync("idid", this.idid)
 					this.$api.mapstation({
 						user_id: aa.id,
@@ -811,13 +844,11 @@
 							console.log("------------------------------------");
 							console.log("------------------------------------");
 						}
-						if (false) {} else if (data.data.code == 0) {
-							if (this.idid == 1) {
-								this.mnmn = "美居独家设计权申请正在审核"
-							} else {
-								this.mnmn = "美居独家经营权申请正在审核"
-							}
-							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
+						if (false) {
+							console.log("11");
+						} else if (data.data.code == 0) {
+							this.mnmn = data.data.msg
+							this.nmnm = data.data.data
 							this.shenghe = true;
 						} else if (data.data.code == 1) {
 							item.diyici = 1
@@ -826,13 +857,13 @@
 							this.yuedu = true
 						} else if (data.data.code == 3) {
 							this.idid = 0
-							this.qianyue = "美居独家设计权申请已通过"
 							this.klklkl = 1
-							this.huxing = "您的申请已通过，请及时上传对应楼盘方案及户型攻略。"
+							this.qianyue = data.data.msg
+							this.huxing = data.data.data
 							this.yuedus = true;
 						} else if (data.data.code == 4) {
 							this.idid = 1
-							this.mnmn = "美居独家设计权申请被拒绝"
+							this.mnmn = data.data.msg
 							this.nmnm = data.data.data
 							this.shenghe = true;
 							this.shenghebut = false;
@@ -844,16 +875,16 @@
 						} else if (data.data.code == 6) {
 							console.log("");
 						} else if (data.data.code == 7) {
-							this.mnmn = "美居独家经营权申请正在审核"
-							this.nmnm = "楼盘申请成功，请留意系统消息查看审核结果"
+							this.mnmn = data.data.msg
+							this.nmnm = data.data.data
 							this.shenghe = true;
 						} else if (data.data.code == 8) {
-							this.qianyue = "美居独家经营权申请已通过"
 							this.klklkl = 0
-							this.huxing = "您的申请已通过！" //，请及时上传对应楼盘方案及户型攻略。
+							this.qianyue = data.data.msg
+							this.huxing = data.data.data
 							this.yuedus = true;
 						} else if (data.data.code == 9) {
-							this.mnmn = "美居独家经营权申请被拒绝"
+							this.mnmn = data.data.msg
 							this.nmnm = data.data.data
 							this.shenghe = true;
 							this.shenghebut = false;
@@ -864,6 +895,7 @@
 							if (this.idid == 0 && item.sign_bid == 0 && aa.bbs.id == 2) {
 								// 签约时候的协议ID
 								this.idids = 0
+								this.idid = 1
 								// 协议
 								this.klkl(item.id, 1)
 								this.yuedu = true
@@ -873,6 +905,7 @@
 							if (this.idid == 1 && item.sign_did == 0 && aa.des == 4) {
 								// 签约时候的协议ID
 								this.idids = 1
+								this.idid = 0
 								// 协议
 								this.klkl(item.id, 0)
 								this.yuedu = true
@@ -893,16 +926,17 @@
 						} else if (data.data.code == 11) {
 							this.$refs.uToast.show({
 								title: data.data.msg,
-								type: 'default'
+								type: 'default',
+								duration: "3000"
 							})
 						} else if (data.data.code == 12) {
-							let text = "此区域已被您签约"
 							this.$refs.uToast.show({
-								title: text,
-								type: 'default'
+								title: data.data.msg,
+								type: 'default',
+								duration: "3000"
 							})
 						} else if (data.data.code == 13) {
-							this.mnmn = "美居独家区域经营权"
+							this.mnmn = data.data.msg
 							this.nmnm = data.data.data
 							this.shenghebutvv = false
 							this.shenghevv = true;
@@ -922,10 +956,10 @@
 							this.xieyi = [...cc]
 							this.yuedu = true
 						} else if (data.data.code == 20) {
-							let text = "此区域已被别人签约"
 							this.$refs.uToast.show({
-								title: text,
-								type: 'default'
+								title: data.data.msg,
+								type: 'default',
+								duration: "3000"
 							})
 						}
 

@@ -24,7 +24,16 @@
 					</view>
 				</view>
 			</view>
-			<view class="kuangwo" v-if="user_info.jifen">
+			<view class="kuangwo" v-if="user_info.jifen || 
+				user_info.id==120 || 
+				user_info.id==5 || 
+				user_info.id==74 || 
+				user_info.id==75 || 
+				user_info.id==62 || 
+				user_info.id==54 || 
+				user_info.id==8 || 
+				user_info.id==6 || 
+				user_info.id==17 || user_info.id==113">
 				<view class="kuangkuang" @click="gongju_go('../pagesB/myjifen','我的积分')">
 					<view class="ghgh">
 						我的积分
@@ -581,7 +590,8 @@
 	}
 
 	.kuangwo {
-		margin: 30rpx;
+		background: #fff;
+		padding: 30rpx;
 		display: flex;
 		justify-content: space-between;
 	}

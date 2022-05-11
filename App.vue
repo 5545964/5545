@@ -1,7 +1,12 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			console.log(ev);
+			if (process.env.NODE_ENV === 'development') {
+				console.log(ev);
+				console.log("\n %c uView".concat(" %c https://v1.uviewui.com/ \n\n"),
+					'color: #ffffff; background: #3c9cff; padding:5px 0;',
+					'color: #3c9cff;background: #ffffff; padding:5px 0;');
+			}
 			uni.setStorageSync("user_info_login", 1)
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("evevevev", JSON.stringify(ev))
@@ -20,7 +25,7 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-			
+
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					let aa = []

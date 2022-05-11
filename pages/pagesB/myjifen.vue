@@ -1,5 +1,18 @@
 <template>
 	<view style="background-color: #ffffff;">
+		<view class="navbarssss" v-if="!navber">
+			<u-navbar :is-back="false" :title="title">
+				<view class="navbar_top">
+					<view class="dsds cet" @click="back(0)">
+						<image class="fanhui" src="@/static/icon_navigation_fanhui.png" mode="aspectFit"></image>
+					</view>
+					<view class="hang"></view>
+					<view class="dsds cet" @click="back(1)">
+						<image class="souye" src="@/static/icon_navigation_house.png" mode="aspectFit"></image>
+					</view>
+				</view>
+			</u-navbar>
+		</view>
 		<view class="home">
 			<view class="top" :style="'background-image: url('+backsss+')'">
 				<view style="text-align:center;margin-top:88rpx;">
@@ -72,7 +85,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="navbar">
+		<view class="navbar" v-if="navber">
 			<u-navbar :is-back="false" title-color="#FFFFFF" :title="title" :background="background">
 				<view class="navbar_top">
 					<view class="dsds cet" @click="back(0)">
@@ -98,7 +111,9 @@
 				list: [],
 				user_info: uni.getStorageSync("user_info"),
 				beilist: [],
-				pages: 1
+				pages: 1,
+				navber: true,
+				uniup: uni.upx2px(530)
 			};
 		},
 		onLoad(ev) {
@@ -107,6 +122,13 @@
 		onReachBottom() {
 			this.pages++
 			this.all()
+		},
+		onPageScroll(ev) {
+			if (ev.scrollTop >= this.uniup) {
+				this.navber = false
+			} else {
+				this.navber = true
+			}
 		},
 		methods: {
 			all() {
@@ -327,6 +349,40 @@
 				width: 2rpx;
 				height: 26rpx;
 				background-color: #FFFFFF;
+			}
+
+			.fanhui {
+				width: 12rpx;
+				height: 22rpx;
+			}
+
+			.souye {
+				width: 26rpx;
+				height: 24rpx;
+			}
+		}
+	}
+
+	.navbarssss {
+		.navbar_top {
+			border: 1px solid #e5e5e5;
+			overflow: hidden;
+			width: 166rpx;
+			height: 60rpx;
+			border-radius: 30rpx;
+			margin-left: 30rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+
+			.dsds {
+				padding: 20rpx;
+			}
+
+			.hang {
+				width: 2rpx;
+				height: 26rpx;
+				background-color: #e5e5e5;
 			}
 
 			.fanhui {

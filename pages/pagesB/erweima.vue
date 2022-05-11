@@ -34,6 +34,7 @@
 				title: "二维码",
 				level: "",
 				ewmsrc: "",
+				type: 0, //B0,D1
 			};
 		},
 		onLoad(ev) {
@@ -42,32 +43,33 @@
 			}
 			if (ev.level) {
 				this.level = uni.getStorageSync("des_info").bbs.id || 0
-			}else{
+				this.type = 1
+			} else {
 				this.level = uni.getStorageSync("user_info").bbs.id || 0
+				this.type = 0
 			}
 			this.getewm()
 		},
 		methods: {
 			kan(ev) {
 				uni.previewImage({
-					urls:[ev] ,
+					urls: [ev],
 					longPressActions: {
 						itemList: ['发送给朋友', '保存图片', '收藏'],
-						success: function(data) {
-						},
-						fail: function(err) {
-						}
+						success: function(data) {},
+						fail: function(err) {}
 					}
 				});
 			},
 			// 获取二维码
 			getewm() {
-				if(this.level ==""){
-					this.level ==0
+				if (this.level == "") {
+					this.level == 0
 				}
 				this.$api.ewm({
 					id: uni.getStorageSync("user_info").id,
-					level: this.level
+					level: this.level,
+					type: this.type
 				}).then(data => {
 
 					if (data.data.code == 1) {
