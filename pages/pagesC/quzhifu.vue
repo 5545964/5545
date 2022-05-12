@@ -724,7 +724,7 @@
 						}).then(data => {
 							uni.showToast({
 								title: data.data.msg,
-								icon: "success",
+								icon: "none",
 								duration: 1000
 							})
 							if (data.data.code == 1) {

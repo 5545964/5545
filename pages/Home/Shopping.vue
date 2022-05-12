@@ -6,11 +6,12 @@
 				<swiper style="height: 300rpx;width: 100%;" @change="gaizhi" :indicator-dots="true" :circular="true"
 					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index">
-						<view  style="border-radius: 20rpx;height: 100%;">
+						<view style="border-radius: 20rpx;height: 100%;">
 							<video :enable-play-gesture="true" :page-gesture="true" :http-cache="false" codec="software"
 								:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
 								v-if="item.video !=null && item.video != ''" :src="item.video"></video>
-							<image :lazy-load="true" v-if="item.image !=''" @click="lunbochang" :src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'" mode="aspectFit"></image>
+							<image :lazy-load="true" v-if="item.image !=''" @click="lunbochang"
+								:src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'"></image>
 						</view>
 					</swiper-item>
 				</swiper>
@@ -19,8 +20,8 @@
 			<view class="shop_cls">
 				<view class="shop_cls_item" v-for="item in clsList" :key="item.id" @click="topage(item)"
 					v-if="item.switch == 1">
-					<image :lazy-load="true" :src="imgurl + item.image" style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;"
-						mode="aspectFit">
+					<image :lazy-load="true" :src="imgurl + item.image"
+						style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;" mode="aspectFit">
 					</image>
 					<view class="">
 						{{item.title||""}}
@@ -49,7 +50,8 @@
 		</view>
 		<view class="shopcar" :style="'left: '+bianright+'rpx;top: '+bianheigth+'rpx;'" @touchend="end"
 			@touchmove.stop="move" @click="tocar">
-			<image :lazy-load="true" src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;" mode="aspectFit"></image>
+			<image :lazy-load="true" src="../../static/icon_car_ico.png" style="width: 42rpx;height: 42rpx;"
+				mode="aspectFit"></image>
 			购物车
 			<view class="cart-num" v-if="cart_num !=0 && cart_num">
 				{{cart_num||""}}
@@ -250,7 +252,7 @@
 						let time = Date.parse(new Date()) / 1000
 						data.data.data.status.forEach(item => {
 							// && item.endtime > time
-							if (item.position == 1&& item.endtime > time) {
+							if (item.position == 1 && item.endtime > time) {
 								item.video = this.$imgs(item.video)
 								aa.push(item)
 							}

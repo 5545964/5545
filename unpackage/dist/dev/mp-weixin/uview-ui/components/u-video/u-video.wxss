@@ -1,0 +1,33 @@
+.hahahaaa.data-v-385956f0 {
+  background-color: #FFFFFF;
+  margin-bottom: 40rpx;
+  padding: 30rpx;
+}
+.vide.data-v-385956f0 {
+  width: 100%;
+  border-radius: 20rpx;
+}
+.dasdxz.data-v-385956f0 {
+  display: flex;
+  align-items: center;
+}
+.dadas.data-v-385956f0 {
+  margin-top: 30rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.text.data-v-385956f0 {
+  margin-left: 5rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #666666;
+}
+.img.data-v-385956f0 {
+  width: 40rpx;
+  height: 40rpx;
+}
+.home.data-v-385956f0 {
+  padding: 20rpx 0;
+}
+

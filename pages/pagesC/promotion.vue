@@ -25,7 +25,7 @@
 						<view style="border-radius: 20rpx;height: 100%;">
 							<video :page-gesture="true" id="video" @play="bofang" @pause="pause" @ended="ended"
 								v-if="item.video !=null && item.video != ''" :src="item.video"></video>
-							<image v-if="item.image !=''" @click="lunbochang" :src="item.image" mode="aspectFit">
+							<image v-if="item.image !=''" @click="lunbochang" :src="item.image">
 							</image>
 						</view>
 					</swiper-item>

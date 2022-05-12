@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "个人资料编辑",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-upload": "/uview-ui/components/u-upload/u-upload",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-city-select": "/uview-ui/components/u-city-select/u-city-select"
+  }
+}

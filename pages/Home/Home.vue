@@ -27,8 +27,7 @@
 								:play-strategy="1" id="video" @play="bofang" @pause="pause" @ended="ended"
 								v-if="item.video !=null && item.video != ''" :src="item.video" />
 							<image v-if="item.image !=''" @click="lunbochang"
-								:src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'"
-								mode="widthFix" />
+								:src="imgurl+'/index/index/show?url='+item.image+'&width=750&height=300'" />
 						</view>
 					</swiper-item>
 				</swiper>
@@ -138,8 +137,8 @@
 					}
 				})
 				if (uni.getStorageSync("user_info_login") == 1) {
-					if(uni.getStorageSync("user_info")){
-						uni.setStorageSync("user_info_login",2)
+					if (uni.getStorageSync("user_info")) {
+						uni.setStorageSync("user_info_login", 2)
 					}
 					this.$api.mymake({
 						user_id: uni.getStorageSync("user_info").id,
