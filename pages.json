@@ -32,7 +32,7 @@
 			"path": "pages/Home/About",
 			"style": {
 				"navigationBarTitleText": "关于宝芸邸",
-				"enablePullDownRefresh": false,
+				"enablePullDownRefresh": true,
 				"navigationBarTextStyle": "black"
 			}
 		},
@@ -516,7 +516,7 @@
 				{
 					"path": "fuwenben",
 					"style": {
-						"navigationBarTitleText": "富文本",
+						"navigationBarTitleText": "",
 						"enablePullDownRefresh": false,
 						"navigationStyle": "custom",
 						"navigationBarTextStyle": "black"
