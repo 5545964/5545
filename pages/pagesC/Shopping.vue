@@ -235,8 +235,8 @@
 			<u-popup v-model="show[1]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 				<view class="produce_all">
 					<view class="top_img">
-						<image :src="list[0]" style="width: 140rpx;height: 140rpx;margin-right: 20rpx;"
-							mode="aspectFit">
+						<image :src="alls.son[isSize].image || list[0]"
+							style="width: 140rpx;height: 140rpx;margin-right: 20rpx;" mode="aspectFit">
 						</image>
 						<view style="width: 70%;">
 							<view
@@ -422,7 +422,8 @@
 				}]
 				console.log(aa);
 				uni.navigateTo({
-					url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) + "&yf=" + this.alls.yf +"&jifen=1"
+					url: "./quzhifu?goodsid=" + this.alls.id + "&goodsdata=" + JSON.stringify(aa) + "&yf=" + this
+						.alls.yf + "&jifen=1"
 				})
 			},
 			kansss(ev) {
@@ -593,6 +594,9 @@
 						this.alls = {};
 						this.list = [];
 						this.pinglun_list = [];
+						data.data.data.status[0].son.forEach(item => {
+							item.image = this.$imgs(item.image)
+						})
 						this.alls = data.data.data.status[0];
 						this.xiaoshoujiage = this.alls.xc_price
 						if (Object.prototype.toString.call(this.alls.follow) === '[object Object]') {
@@ -614,8 +618,8 @@
 						image.forEach(item => {
 							this.list.push(this.$imgPath + item)
 						})
+						// 评论数据处理
 						if (data.data.data.status[0].pll != '') {
-							// 评论数据处理
 							if (Array.isArray(data.data.data.status[0].pll)) {
 								this.pinglun_list.push(data.data.data.status[0].pll)
 							} else {
