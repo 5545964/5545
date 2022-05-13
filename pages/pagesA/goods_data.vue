@@ -216,7 +216,6 @@
 			</view>
 		</view>
 		<view style="height: 110rpx;"></view>
-		{{lklklklk}}qqqq{{jifen}}wwww{{tigongfuwu}}eeee
 		<view class="annius" v-if="lklklklk && jifen==0">
 			<view class="anniu" v-if="tigongfuwu">
 				<view class="button" @click="annui(0)" v-if="data_list.state == 0">
