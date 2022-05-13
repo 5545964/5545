@@ -140,17 +140,24 @@
 			<view class="anniu">
 				<view v-if="jifen==0">
 					<text class="heji">合计:<text style="color: #DB0E1E;">￥</text></text><text
-						class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text>
+						class="hejimony">{{tijiaozjia.toFixed(2)||0}}</text>
 				</view>
 				<view v-else>
-					<text class="heji">合计:<text class="hejimony">{{tijiaozjia.toFixed(2)||""}}</text></text>积分
+					<text class="heji">合计:<text class="hejimony">{{tijiaozjia||0}}</text></text>积分
 				</view>
-				<view v-if="buyanzheng" class="button" @click="xianshi">
+				<view v-if="jifen==0">
+					<view v-if="buyanzheng" class="button" @click="xianshi">
+						提交订单
+					</view>
+					<view v-else class="button" @click="yuyuesss = true">
+						提交订单
+					</view>
+				</view>
+				<view v-else class="button" @click="annui()">
 					提交订单
 				</view>
-				<view v-else class="button" @click="yuyuesss = true">
-					提交订单
-				</view>
+
+
 
 
 			</view>
@@ -386,8 +393,9 @@
 					that.znum = that.znum + item.num
 					arr.push(item.id)
 				})
-				that.zjia = that.zjia.toFixed(2)
-				that.cartid = arr.join(",")
+				if (this.jifen == 0) {
+					that.zjia = that.zjia.toFixed(2)
+				}
 				that.tijiaozjia = Number(that.zjia) + Number(that.yf)
 				if (that.goodsdata[0].swj == 1 && that.jifen == 0) {
 					that.swj = 1;
@@ -483,6 +491,7 @@
 			},
 			// 预约定制柜设计师
 			yuyueyuyue(ev) {
+				console.log(ev, 1111111);
 				this.yuedu = false
 				this.dzg = ev
 				this.annui()
@@ -735,7 +744,7 @@
 								})
 							} else {
 								uni.showToast({
-									title: "积分不足，您当前只有"+uni.getStorageSync("user_info").score+"积分",
+									title: "积分不足，您当前只有" + uni.getStorageSync("user_info").score + "积分",
 									icon: "none",
 									duration: 2000
 								})
