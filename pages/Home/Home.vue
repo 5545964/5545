@@ -122,7 +122,7 @@
 					}
 					uni.setStorageSync("cart_num", aa)
 				})
-
+				// 默认地址
 				this.$api.addressshow({
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
@@ -130,8 +130,7 @@
 						data.data.data.status.forEach(item => {
 							if (item.auto == 1) {
 								uni.setStorageSync("address", item)
-							} else {
-								uni.removeStorageSync("address")
+								uni.stopPullDownRefresh();
 							}
 						})
 					}

@@ -509,24 +509,27 @@
 					if (data.data.code == 1) {
 						let aa = [0, 0, 0, 0, 0]
 						data.data.data.status.forEach((item) => {
-							switch (item.state) {
-								case "1":
-									aa[0] += 1
-									break;
-								case "2":
-									aa[1] += 1
-									break;
-								case "3":
-									aa[2] += 1
-									break;
-								case "16":
-									aa[3] += 1
-									break;
-								case "17":
-									aa[4] += 1
-									break;
-								default:
+							if (item.score == 0) {
+								switch (item.state) {
+									case "1":
+										aa[0] += 1
+										break;
+									case "2":
+										aa[1] += 1
+										break;
+									case "3":
+										aa[2] += 1
+										break;
+									case "16":
+										aa[3] += 1
+										break;
+									case "17":
+										aa[4] += 1
+										break;
+									default:
+								}
 							}
+
 						});
 						this.num_list = [...aa]
 					} else {
