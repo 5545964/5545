@@ -348,7 +348,16 @@
 			<u-popup width="640" :closeable="true" border-radius="10" v-model="baozhuangshow" mode="center">
 				<view class="popup">
 					<view class="top"> 提示 </view>
-					<view class="cets"> 是否需要安装？</view>
+					<view class="cets">
+
+						<view class="">
+							是否需要安装？
+						</view>
+						<view style="font-size:24rpx;margin-top:40rpx;">
+							温馨提示：商品购买积分在7天后发放
+						</view>
+
+					</view>
 					<view class="xian"> </view>
 					<view class="bottoms">
 						<view class="sdasas" @click="fou()"> 否 </view>
@@ -869,7 +878,7 @@
 			//订单详情
 			goods(ev) {
 				uni.navigateTo({
-					url: "../pagesA/goods_data?order_id=" + ev.orderid + "&jifen=1"
+					url: "../pagesA/goods_data?order_id=" + ev.orderid + "&jifen=" + this.jifen
 				});
 			},
 			//退款
