@@ -241,7 +241,7 @@
 						<view style="width: 70%;">
 							<view
 								style="font-size: 35rpx;font-weight: 800;color: #FF4B3C;overflow: hidden; white-space: nowrap;text-overflow: ellipsis;">
-								{{alls.name||""}}{{'-'+alls.son[isSize].spections||''}}
+								{{alls.son[isSize].spections||''}}-{{alls.name||""}}
 							</view>
 							<view style="font-size: 44rpx;font-weight: 800;color: #FF4B3C;margin-top: 20rpx;"
 								v-if="jifen==0">
