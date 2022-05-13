@@ -722,18 +722,23 @@
 							dzg: this.dzg,
 							dj: this.dinjing
 						}).then(data => {
-							uni.showToast({
-								title: data.data.msg,
-								icon: "none",
-								duration: 1000
-							})
 							if (data.data.code == 1) {
 								setTimeout(() => {
 									uni.switchTab({
 										url: "/pages/Home/User"
 									})
 								}, 1000);
-
+								uni.showToast({
+									title: data.data.msg,
+									icon: "none",
+									duration: 2000
+								})
+							} else {
+								uni.showToast({
+									title: "积分不足，您当前只有"+uni.getStorageSync("user_info").score+"积分",
+									icon: "none",
+									duration: 2000
+								})
 							}
 						})
 					}

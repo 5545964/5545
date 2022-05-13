@@ -231,6 +231,7 @@
 	export default {
 		data() {
 			return {
+				qiangzhishuaxin: 0, //刷新6次强制刷新
 				qeihuan: "切换设计师",
 				zhanleixin: false,
 				showssss: false,
@@ -321,11 +322,54 @@
 			};
 		},
 		onShow() {
+			this.qiangzhishuaxin = 0
 			this.alls()
 			this.showssss = uni.getStorageSync("showssss")
 		},
 		onPullDownRefresh() {
-			this.alls()
+			this.qiangzhishuaxin++
+			if (this.qiangzhishuaxin > uni.getStorageSync("sx")) {
+				uni.clearStorageSync()
+				setTimeout(() => {
+					this.$api.indexbar().then(data => {
+						if (data.data.code == 1) {
+							let aa = []
+							data.data.data.status.forEach(item => {
+								aa.push({
+									pagePath: item.url.url,
+									iconPath: this.$imgPath + item.fimage,
+									selectedIconPath: this.$imgPath + item.image,
+									text: item.title
+								})
+							})
+							uni.setStorageSync("tabber", aa)
+							uni.setStorageSync("edits", data.data.data.edits)
+							uni.setStorageSync("sx", data.data.data.sx)
+							uni.setStorageSync("kehu", data.data.data.kefu)
+							if (uni.getStorageSync("user_info")) {
+								uni.setStorageSync("showssss", false)
+								return
+							}
+							uni.setStorageSync("showssss", data.data.data.edit)
+						}
+					})
+					this.$api.agreements().then(data => {
+						if (data.data.code == 1) {
+							data.data.data.status.forEach(item => {
+								item["check"] = false
+							})
+							uni.setStorageSync("xieyi", data.data.data.status)
+						} else {
+							uni.setStorageSync("xieyi", [])
+						}
+					})
+				}, 100);
+				uni.reLaunch({
+					url: "/pages/Home/start"
+				})
+			} else {
+				this.alls()
+			}
 		},
 		methods: {
 			kan(ev) {

@@ -17,7 +17,7 @@
 			<view class="top" :style="'background-image: url('+backsss+')'">
 				<view style="text-align:center;margin-top:88rpx;">
 					<view class="text">
-						{{user_info.score||""}}
+						{{user_info.score||0}}
 					</view>
 					<view class="fen">
 						可用积分

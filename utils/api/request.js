@@ -9,12 +9,14 @@ const instance = ajax.create({
 		}
 	}
 })
-const token = uni.getStorageSync("token").token;
+const token = uni.getStorageSync("token") || 0;
 instance.interceptors.request.use(
 	config => {
-		if (token != "") {
-			config.header["token"] = token
+		//模拟用户
+		if (false && config.data.user_id) {
+			config.data.user_id = 5
 		}
+		config.header["token"] = token.token
 		return config
 	},
 	error => {

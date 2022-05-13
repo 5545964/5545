@@ -42,16 +42,17 @@
 			</view>
 			<!-- 设计列表 -->
 			<view class="design_list">
-				<view class="card" style="position: relative;" v-for="(item,index) in desinger.zp"
-					 :key="index">
-					<image @click="todetails(item)" :src="imgtitle+item.simage" style="border-radius: 20rpx;" mode="aspectFit"></image>
+				<view class="card" style="position: relative;" v-for="(item,index) in desinger.zp" :key="index">
+					<image @click="todetails(item)" :src="imgtitle+item.simage" style="border-radius: 20rpx;"
+						mode="aspectFit"></image>
 					<view @click="todetails(item)" class="gghGG" style="margin-top: 24rpx;">
 						{{item.name||""}}
 					</view>
 					<image v-if="!aaa" @click="sanchu(item)" class="imgss" src="../../../static/icon_close_ico.png"
 						mode="aspectFit"></image>
 				</view>
-				<view class="daddasdass" v-if="desinger.zp.length!=0" @click="aaa = !aaa">
+				<!-- desinger.zp.length!=0 -->
+				<view class="daddasdass" v-if="guanli" @click="aaa = !aaa">
 					<text v-if="aaa">管理作品</text><text v-else>完成</text>
 				</view>
 			</view>
@@ -64,6 +65,7 @@
 	export default {
 		data() {
 			return {
+				guanli: false,
 				aaa: true,
 				imgtitle: this.$imgPath,
 				desinger: {},
@@ -111,11 +113,12 @@
 						this.list_s[2].num = this.desinger.zy
 						this.list_s[1].num = this.desinger.yj
 						this.list_s[0].num = this.desinger.cy
-						
-						if(this.desinger.zp.length == 0){
+						if (this.desinger.zp.length == 0) {
 							this.aaa = false
-						}else{
+							this.guanli = false
+						} else {
 							this.aaa = true
+							this.guanli = true
 						}
 						this.$api.desmyuser({
 							user_id
@@ -162,7 +165,7 @@
 				});
 			},
 			todetails(item) {
-				uni.setStorageSync("fdklfjdsfjsfhks",item)
+				uni.setStorageSync("fdklfjdsfjsfhks", item)
 				uni.navigateTo({
 					url: "../../pagesC/DesignDetail"
 				})

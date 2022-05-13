@@ -39,6 +39,7 @@
 					})
 					uni.setStorageSync("tabber", aa)
 					uni.setStorageSync("edits", data.data.data.edits)
+					uni.setStorageSync("sx", data.data.data.sx)
 					uni.setStorageSync("kehu", data.data.data.kefu)
 					if (uni.getStorageSync("user_info")) {
 						uni.setStorageSync("showssss", false)
