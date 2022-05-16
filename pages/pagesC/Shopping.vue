@@ -345,6 +345,7 @@
 					关闭
 				</view>
 			</u-popup>
+			<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 			<u-kehu url="../Home/booking/AppointmentDesign" v-if="jifen==0"></u-kehu>
 		</view>
 
@@ -355,6 +356,7 @@
 	export default {
 		data() {
 			return {
+				scrollTop: 0,
 				orderid: 0,
 				height: uni.getStorageSync("bottomheigth"),
 				cart_num: uni.getStorageSync("cart_num"),
@@ -383,6 +385,9 @@
 				img: this.$imgPath,
 				jifen: 0
 			};
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		},
 		onLoad(ev) {
 			// 商品id

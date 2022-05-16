@@ -264,6 +264,7 @@
 					</view>
 				</view>
 			</u-popup>
+			<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 		</view>
 	</view>
 </template>
@@ -272,6 +273,7 @@
 	export default {
 		data() {
 			return {
+				scrollTops: 0,
 				edit: true,
 				mmmmmm: "",
 				dasdsdas: this.$imgPath,

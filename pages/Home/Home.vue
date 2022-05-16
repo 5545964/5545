@@ -98,7 +98,6 @@
 		},
 		onPageScroll(e) {
 			this.scrollTop = e.scrollTop;
-
 		},
 		methods: {
 			budenglugengxin() {

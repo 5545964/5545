@@ -26,6 +26,7 @@
 		<view v-if="current==2">
 			<u-HouseType :scrollTop="scrollTop" :pages="pages" @pageA="pageA" @pageB="pageB"></u-HouseType>
 		</view>
+		<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 		<u-heigth />
 	</view>
 </template>

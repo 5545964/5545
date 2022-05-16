@@ -59,6 +59,7 @@
 			<u-pinglun :show="showComment" @zipingjia="pingjia" @fupingjia="pingjia" @chang="chang"
 				:pinglun_list="pinglun_list" @guanbi="guanbi"></u-pinglun>
 		</view>
+		<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 		<u-heigth />
 	</view>
 </template>

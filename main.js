@@ -28,17 +28,14 @@ Vue.prototype.$shangchuan = "http://bao.scwushen.com/index.php"
 
 Vue.prototype.$imgs = function(url) {
 	if (url == "" || url == null) {
-		console.log(url, "url1");
 		return url
 	}
 	if (url.includes("https")) {
-		console.log(url, "url2");
 		return url
 	} else {
 		if (url.includes("uploads")) {
 			url = "https://bao.scwushen.com" + url
 		}
-		console.log(url, "url3");
 		return url
 	}
 }

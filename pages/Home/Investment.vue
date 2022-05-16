@@ -275,6 +275,7 @@
 					</view>
 				</view>
 			</u-popup>
+			<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 		</view>
 		<u-dianji></u-dianji>
 	</view>
