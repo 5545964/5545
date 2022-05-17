@@ -382,12 +382,13 @@
 							title: res.data.msg,
 							icon: "none"
 						})
-						if (this.mlml != 1) {						}
-							setTimeout(() => {
-								uni.navigateTo({
-									url: "./redsuccess?level=" + this.id + "&name=" + this.name+"&mlml="+this.mlml
-								})
-							}, 1000)
+						if (this.mlml != 1) {}
+						setTimeout(() => {
+							uni.navigateTo({
+								url: "./redsuccess?level=" + this.id + "&name=" + this.name +
+									"&mlml=" + this.mlml
+							})
+						}, 1000)
 					}
 					if (res.data.code == 200) {
 						let that = this;
@@ -454,19 +455,11 @@
 							this.xieyis(this.list[0].id)
 							this.id = this.list[0].id
 						}
-
-
-
-
-
-
-
-
 						this.jiage = this.list[0].money + "元";
 						if (this.list[0].money == "0.00") {
 							this.jiage = "免费"
 						}
-						console.log("this.list[0].id",this.list[0].id);
+						console.log("this.list[0].id", this.list[0].id);
 						this.pd = this.list[0].pd
 						this.types = this.list[0].type
 						this.name = this.list[0].type

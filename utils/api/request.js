@@ -35,7 +35,6 @@ instance.interceptors.response.use(
 	error => {
 		let bb = error.config.url.split("/")
 		if (bb[bb.length - 1] != "cuxx") {
-			// console.log(error.config.url,error.config.data);
 			let aa = {
 				data: error.config.data,
 				url: error.config.url
