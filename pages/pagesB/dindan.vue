@@ -54,17 +54,27 @@
 										<view class="name">
 											{{ itemc.name ||""}}
 										</view>
-										<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text
-											class="fsdfsfs fdsds">￥{{itemc.sonprice||""}}</text>
+										<text class="fdsds">共{{itemc.num||""}}件 合计：</text><text v-if="jifen==0"
+											class="fsdfsfs fdsds">￥{{itemc.sonprice||""}}</text><text v-else
+											class="fsdfsfs fdsds">{{itemc.sonprice||""}}</text>
 									</view>
 								</view>
-								<view class="kfhkjsdh" @click="goods(items)">
+								<view class="kfhkjsdh" @click="goods(items)" v-if="jifen==0">
 									<view class="text">
 										总金额：<text class="reds">￥{{ items.price ||""}}</text>
 									</view>
 									<view class="status" v-show="items.state == 0"> 未支付 </view>
 									<view class="status" v-show="items.state != 0 && items.state != 9">
 										已支付￥{{ items.price ||""}}
+									</view>
+								</view>
+								<view class="kfhkjsdh" @click="goods(items)" v-else>
+									<view class="text">
+										总积分：<text class="reds">{{ items.price ||""}}</text>
+									</view>
+									<view class="status" v-show="items.state == 0"> 未支付 </view>
+									<view class="status" v-show="items.state != 0 && items.state != 9">
+										已支付积分{{ items.price ||""}}
 									</view>
 								</view>
 								<view class="anniu" v-if="jifen==0">
@@ -848,29 +858,27 @@
 								}
 							});
 						} else {
-							if (data.data.code == 1) {
-								data.data.data.status.forEach((item, index) => {
-									if (item.score == 1) {
-										this.list[0].data_list.push(item);
+							data.data.data.status.forEach((item, index) => {
+								if (item.score == 1) {
+									this.list[0].data_list.push(item);
+								}
+							});
+							data.data.data.status.forEach((item) => {
+								if (item.score == 1) {
+									switch (item.state) {
+										case "1":
+											this.list[1].data_list.push(item);
+											break;
+										case "2":
+											this.list[2].data_list.push(item);
+											break;
+										case "4":
+											this.list[3].data_list.push(item);
+											break;
+										default:
 									}
-								});
-								data.data.data.status.forEach((item) => {
-									if (item.score == 1) {
-										switch (item.state) {
-											case "1":
-												this.list[1].data_list.push(item);
-												break;
-											case "2":
-												this.list[2].data_list.push(item);
-												break;
-											case "4":
-												this.list[3].data_list.push(item);
-												break;
-											default:
-										}
-									}
-								});
-							}
+								}
+							});
 						}
 					}
 				});

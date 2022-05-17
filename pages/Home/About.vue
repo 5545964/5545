@@ -529,7 +529,8 @@
 						this.$api.userag({
 							userid: uni.getStorageSync("user_info").id,
 							agid: item.id,
-							title: item.name
+							title: item.name,
+							lpid: this.loupanid
 						})
 					})
 					this.$api.tjsq({
@@ -616,7 +617,7 @@
 			},
 			// 楼盘签约
 			async changeTokens2(item) {
-				console.log(item, this.idid);
+				// console.log(item, this.idid);
 				this.lickc = []
 				this.shenghebut = true;
 				if (await this.$login()) {

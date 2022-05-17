@@ -57,6 +57,7 @@
 				{{cart_num||""}}
 			</view>
 		</view>
+		<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>
 		<u-dianji></u-dianji>
 	</view>
 </template>
@@ -65,6 +66,7 @@
 	export default {
 		data() {
 			return {
+				scrollTop: 0,
 				videoContext: "",
 				autoplay: true,
 				imgurl: this.$imgPath,
@@ -102,6 +104,9 @@
 				imgsss: '<img src=\"' + this.$imgPath,
 				xinxi: []
 			};
+		},
+		onPageScroll(e) {
+			this.scrollTop = e.scrollTop;
 		},
 		onLoad() {
 			this.alls()
