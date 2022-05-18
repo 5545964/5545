@@ -27,7 +27,7 @@
 			<view class="kuangwo" v-if="user_info.jifen">
 				<view class="kuangkuang" @click="gongju_go('../pagesB/myjifen','我的积分')">
 					<view class="ghgh">
-						我的积分
+						积分兑换
 					</view>
 					<view style="margin-top:20rpx;">
 						<text class="ghghs">{{user_info.score||0}}</text><text class="ghghss">分</text>

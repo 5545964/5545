@@ -288,9 +288,9 @@
 			<u-select v-model="nianning" mode="single-column" :list="nianlist" @confirm="confirm"></u-select>
 			<u-toast ref="uToast" />
 			<u-picker mode="time" v-model="shijianshow" @confirm="zhishizhege"></u-picker>
-			<u-popup v-model="popshow" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
+			<u-popup v-model="popshow" @close="guan" mode="bottom" length="900" :closeable="true" border-radius="8">
 				<view class="klks">{{chuanzhi.name||""}}</view>
-				<view class="mids">
+				<view class="mids" style="height:800rpx;overflow: scroll;">
 					<view class="type_list">
 						<view class="dkjshkdsf" v-for="(item,index) in poplist" :key="index">
 							<image style="width: 120rpx;height: 120rpx;" v-if="item.image!=''" @click="kan1(item.image)"
@@ -1323,7 +1323,7 @@
 		.type_list {
 			display: flex;
 			align-items: center;
-			justify-content: end;
+			justify-content: flex-start;
 			flex-wrap: wrap;
 		}
 

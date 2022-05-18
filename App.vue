@@ -51,6 +51,7 @@
 
 		},
 		onShow(ev) {
+			console.log(ev);
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
 				if (uni.getStorageSync("user_info")) {

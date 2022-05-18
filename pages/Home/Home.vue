@@ -72,11 +72,11 @@
 				xinxi: []
 			};
 		},
-		onLoad() {
+		onLoad(ev) {
 			const res = uni.getSystemInfoSync()
 			uni.setStorageSync("bottomheigth", res.safeAreaInsets.bottom)
 		},
-		onShow() {
+		onShow(ev) {
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("shouzhi", 0)
 			this.$api.pots({
@@ -199,13 +199,14 @@
 				this.gosss(aa)
 			},
 			gosss(ev) {
+				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
 						if (ev.head != "") {
 							this.linkOthers(ev.head)
 						} else {
 							uni.previewImage({
-								urls: [ev.image],
+								urls: [this.imgurl+ev.image],
 								longPressActions: {
 									itemList: ['发送给朋友', '保存图片', '收藏'],
 									success: function(data) {},

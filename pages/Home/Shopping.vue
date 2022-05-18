@@ -178,10 +178,22 @@
 				this.autoplay = false
 			},
 			gosss(ev) {
+				console.log(ev);
 				switch (Number(ev.link)) {
 					case 0:
-
-						this.linkOthers(ev.head)
+						if (ev.head != "") {
+							this.linkOthers(ev.head)
+						} else {
+							uni.previewImage({
+								urls: [this.imgurl + ev.image],
+								longPressActions: {
+									itemList: ['发送给朋友', '保存图片', '收藏'],
+									success: function(data) {},
+									fail: function(err) {}
+								}
+							});
+						}
+						// this.linkOthers(ev.head)
 						break;
 					case 1:
 
