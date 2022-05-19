@@ -93,33 +93,6 @@
 
 <script>
 	export default {
-		onLoad(ev) {
-			this.level = ev.level
-			this.name = ev.name
-			if(ev.mlml ==1){
-				this.title = "注册设计师合伙人"
-			}
-			let aa = uni.getStorageSync("user_info")
-			if (aa) {
-				this.phone = aa.mobile
-			}
-			let bb = uni.getStorageSync("shengfen")
-			if (bb != null) {
-				this.user = bb
-				this.names = this.user.name
-				if(this.user.sex == 0){
-					this.sex = "男"
-					this.value = "男"
-				}else{
-					this.value = "女"
-					this.sex = "女"
-				}
-				this.idcard = this.user.idcart
-				this.emal = this.user.email
-				this.address = this.user.address
-				this.addressxq = this.user.addressxq
-			}
-		},
 		data() {
 			return {
 				user: "",
@@ -147,7 +120,36 @@
 					}
 				],
 				value: 'orange',
+				des: 0
 			};
+		},
+		onLoad(ev) {
+			this.level = ev.level
+			this.name = ev.name
+			if (ev.mlml == 1) {
+				this.des = 1
+				this.title = "注册设计师合伙人"
+			}
+			let aa = uni.getStorageSync("user_info")
+			if (aa) {
+				this.phone = aa.mobile
+			}
+			let bb = uni.getStorageSync("shengfen")
+			if (bb != null) {
+				this.user = bb
+				this.names = this.user.name
+				if (this.user.sex == 0) {
+					this.sex = "男"
+					this.value = "男"
+				} else {
+					this.value = "女"
+					this.sex = "女"
+				}
+				this.idcard = this.user.idcart
+				this.emal = this.user.email
+				this.address = this.user.address
+				this.addressxq = this.user.addressxq
+			}
 		},
 		methods: {
 			radioGroupChange(e) {
@@ -213,31 +215,34 @@
 					yzm: this.code
 				}).then(data => {
 					if (data.data.code == 1) {
-						this.$api.sqb({
-							user_id: uni.getStorageSync("user_info").id,
-							idcart: this.idcard,
-							address: this.address,
-							email: this.emal,
-							mobile: this.phone,
-							level: this.level,
-							levelname: this.name,
-							addressxq: this.addressxq,
-							name: this.names,
-							sex: this.sex
-						}).then(data => {
-							uni.showToast({
-								title: data.data.msg,
-								duration: 1000,
-								icon: "none"
+						if(this.des == 0){
+							this.$api.sqb({
+								user_id: uni.getStorageSync("user_info").id,
+								idcart: this.idcard,
+								address: this.address,
+								email: this.emal,
+								mobile: this.phone,
+								level: this.level,
+								levelname: this.name,
+								addressxq: this.addressxq,
+								name: this.names,
+								sex: this.sex
+							}).then(data => {
+								uni.showToast({
+									title: data.data.msg,
+									duration: 1000,
+									icon: "none"
+								})
+								if (data.data.code == 1) {
+									setTimeout(() => {
+										uni.reLaunch({
+											url: "/pages/Home/User"
+										})
+									}, 1000)
+								}
 							})
-							if (data.data.code == 1) {
-								setTimeout(() => {
-									uni.reLaunch({
-										url: "/pages/Home/User"
-									})
-								}, 1000)
-							}
-						})
+						}
+						
 					} else {
 						uni.showToast({
 							title: "验证码错误",

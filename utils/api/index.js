@@ -446,7 +446,11 @@ export default {
 	},
 	shoppay(params = {}) {
 		return request.post("/api/bydshop/shoppay", params);
+	},
+	idlikelp(params = {}) {
+		return request.post("/api/bydidentity/likelp", params);
 	}
+	
 
 
 

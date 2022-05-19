@@ -4,21 +4,19 @@
 			<view class="seath">
 				<u-search bg-color="#F2F2F2" @search="seach_go" v-model="keyword"></u-search>
 			</view>
-			<!-- 选择分类 -->
 			<view class="choose">
 				<view class=""
 					style="display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
-					<view :class="index%2==0? 'drop_item1':'drop_item'" @click="showSelect(index)"
-						v-for="(item,index) in dropList" :key="index">
+					<view :class="index%2==0? 'drop_item1':'drop_item'" @click="showSelect(item.id)"
+						v-for="(item,index) in dropList" :key="item.id">
 						{{item.name}}
 						<image src="../../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;"
-							mode="aspectFit">
-						</image>
+							mode="aspectFit" />
 					</view>
 				</view>
 			</view>
 		</view>
-		<u-select v-model="show" :label-name="labelName" @confirm="confirm" :list="options2"></u-select>
+		<u-select v-model="show" :label-name="labelName" @confirm="confirm" :list="options"></u-select>
 		<view class="design_list">
 			<view class="" v-for="(item,index) in lou_list" :key="index">
 				<u-design-card :list="item" />
@@ -40,72 +38,71 @@
 			return {
 				pagess: 1,
 				show: false,
-				labelName: "sf",
+				labelName: "", //自定义属性名
 				lou_list: [],
-				lou_lists: [],
-				keyword: "",
+				lou_lists: [], //楼盘数据备份
+				keyword: "", //搜索
 				dropList: [{
 						id: 0,
 						name: "选择省份",
-						name1: "省份",
-						keys: "sf",
-						save: [],
+						saixuanname: "",
+						seachname: "省份",
+						keys: "sf"
 					},
 					{
 						id: 1,
 						name: "选择城市",
-						name1: "城市",
-						keys: "city",
-						save: [],
+						saixuanname: "",
+						seachname: "城市",
+						keys: "city"
 					},
 					{
 						id: 2,
 						name: "选择区县",
-						name1: "区县",
-						keys: "county",
-						save: [],
+						saixuanname: "",
+						seachname: "区县",
+						keys: "county"
 					},
 					{
 						id: 3,
 						name: "选择楼盘",
-						name1: "楼盘",
-						keys: "loupan",
-						save: [],
+						saixuanname: "",
+						seachname: "楼盘",
+						keys: "loupan"
 					},
 					{
 						id: 4,
 						name: "选择户型",
-						name1: "户型",
-						keys: "huxin",
-						save: [],
+						saixuanname: "",
+						seachname: "户型",
+						keys: "huxin"
 					},
 					{
 						id: 5,
 						name: "选择楼层",
-						name1: "楼层",
-						keys: "lc",
-						save: [],
+						saixuanname: "",
+						seachname: "楼层",
+						keys: "lc"
 					},
 					{
 						id: 6,
 						name: "选择栋号",
-						name1: "栋号",
-						keys: "dh",
-						save: [],
+						saixuanname: "",
+						seachname: "栋号",
+						keys: "dh"
 					},
 					{
 						id: 7,
 						name: "选择期数",
-						name1: "期数",
-						keys: "qs",
-						save: [],
+						saixuanname: "",
+						seachname: "期数",
+						keys: "qs"
 					}
 				],
-				options1: [],
-				options2: [],
-				arrs: [],
-				selindex: 0,
-				sousuosuo: true
+				options: [], //弹出数据
+				arrs: [], //筛选列表
+				selindex: 0, //选的第几个
+				sousuosuo: true //滚动加载
 			};
 		},
 		mounted() {
@@ -160,32 +157,39 @@
 							item.dh = item.dh + "栋"
 							item.qs = item.qs + "期"
 						})
-						this.options1 = data.data.data.status
 						this.arrs = data.data.data.status
-						// this.options2=data.data.data.status
-						// this.deletesame()
 					}
 				})
 			},
 			// 选项回调
 			confirm(e) {
 				this.dropList[this.selindex].name = e[0].label
-				let aa = []
-				if (this.selindex == 0) {
-					this.lou_list = this.lou_lists
-				}
-				this.lou_list.forEach(item => {
-					if (item[this.labelName] == e[0].label) {
-						aa.push(item)
+				this.dropList[this.selindex].saixuanname = e[0].label
+				this.$api.idlikelp({
+					sf: this.dropList[0].saixuanname,
+					city: this.dropList[1].saixuanname,
+					county: this.dropList[2].saixuanname,
+					loupan: this.dropList[3].saixuanname,
+					huxin: this.dropList[4].saixuanname,
+					lc: this.dropList[5].saixuanname,
+					dh: this.dropList[6].saixuanname,
+					qs: this.dropList[7].saixuanname
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.lou_list = data.data.data.status
+					} else {
+						this.lou_list = []
+						uni.showToast({
+							title: data.data.msg,
+							icon: "none"
+						})
 					}
 				})
-				this.lou_list = aa
 			},
 			// 搜索
 			seach_go() {
 				this.dropList.forEach((item, index) => {
-					item.name = "选择" + item.name1
-					item.save = []
+					item.name = "选择" + item.seachname
 				})
 				this.$api.loupanlike({
 					name: this.keyword
@@ -205,74 +209,74 @@
 			},
 			// 选择
 			showSelect(index) {
-				console.log(index);
 				let key = ""
+				let arr = []
+				// 点的第几个
+				this.selindex = index
+				// 弹出自定义属性名称
+				this.labelName = this.dropList[index].keys
+				// 没选择上一个直接结束
 				if (index > 0) {
 					key = this.dropList[index - 1].name
 					if (this.dropList[index - 1].name.indexOf("选择") != -1) {
 						return
 					}
 				}
-				let arr = []
+				// 点的第一个,初始化数据
 				if (index == 0) {
 					key = 1
 					this.sousuosuo = true
 					this.lou_list = this.lou_lists
 				}
-				this.labelName = this.dropList[index].keys
 				this.deletesame(key, index)
-				this.show = true
-				this.selindex = index
 			},
 			// 去重
-			deletesame(keyb, indexs) {
-				if (this.dropList[indexs].save.length != 0) {
-					this.options2 = this.dropList[indexs].save
-					this.dropList.forEach((item, index) => {
-						if (index > indexs) {
-							if (item.name.indexOf("选择") == -1) {
-								item.name = "选择" + item.name1
-								item.save = []
-							}
-						}
-					})
-					return
-				}
-				let key = this.labelName
+			deletesame(key, index) {
 				let keys = ""
-				if (indexs > 0) {
-					keys = this.dropList[indexs - 1].keys
-				}
 				let arr = []
-				this.arrs = this.options1
-				this.arrs.forEach((item, index) => {
-					if (indexs > 0) {
-						if (this.arrs[index][`${keys}`] == this.dropList[indexs - 1].name) {
+				let mm = []
+				// 选择之后的选项还原
+				this.dropList.forEach((item, indexs) => {
+					if (indexs > index) {
+						if (item.name.indexOf("选择") == -1) {
+							item.name = "选择" + item.seachname
+							item.saixuanname = ""
+						}
+					}
+				})
+				// 获取下一项的keys				
+				if (index > 0) {
+					keys = this.dropList[index - 1].keys
+				}
+				// 找出下一个选项
+				this.arrs.forEach((item, indexs) => {
+					if (index > 0) {
+						if (this.arrs[indexs][`${keys}`] == this.dropList[index - 1].name) {
 							arr.push(item)
 						}
 					}
-					if (keyb == 1) {
+					if (key == 1) {
 						arr.push(item)
 					}
 				})
-				this.arrs = arr
-				let mm = []
 				// 渲染的数据
 				for (let i = 0; i < arr.length; i++) {
-					if (i > 0 && arr[i][`${key}`] == arr[i - 1][`${key}`]) {
+					if (i > 0 && arr[i][`${this.labelName}`] == arr[i - 1][`${this.labelName}`]) {
 						continue
 					} else {
 						mm.push(arr[i])
 					}
 				}
-				console.log(mm[0][this.labelName], this.labelName);
-				this.options2 = this.unique(mm) //
-				this.dropList[indexs].save = this.options2
+				// 去重
+				this.options = this.unique(mm)
+				this.sousuosuo = false
+				this.show = true
 			},
+			// 去重
 			unique(arr) {
 				for (var i = 0; i < arr.length; i++) {
 					for (var j = i + 1; j < arr.length; j++) {
-						if (arr[i][this.labelName] == arr[j][this.labelName]) { //第一个等同于第二个，splice方法删除第二个
+						if (arr[i][this.labelName] == arr[j][this.labelName]) {
 							arr.splice(j, 1);
 							j--;
 						}

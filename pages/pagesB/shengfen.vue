@@ -18,7 +18,8 @@
 				身份选择
 			</view>
 			<swiper v-if="list.length != 0" indicator-active-color="#D8AE5F" indicator-color="#000000"
-				:style="'height: '+hei+'px;'" @change="lunbo" :indicator-dots="true" :circular="true" :duration="500">
+				:style="'height: '+hei+'px;'" @change="lunbo" :indicator-dots="true" :current="current" :circular="true"
+				:duration="500">
 				<swiper-item v-for="(item,index) in list" :key="index">
 					<view :id="'id'+ index" class="fdsfhks">
 						<view class="fdjlkfsjd">
@@ -41,10 +42,13 @@
 			<u-empty v-else></u-empty>
 		</view>
 		<view class="boyyty cet" v-if="pd==1">
-			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
+			<!-- <view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
 				申请提交，请等待审核
 			</view>
 			<view class="tetx" @click="topay" v-else>
+				申请提交，请等待审核
+			</view> -->
+			<view class="tetx">
 				申请提交，请等待审核
 			</view>
 		</view>
@@ -116,6 +120,29 @@
 				</view>
 			</view>
 		</u-popup>
+		<!-- 驳回原因 -->
+		<u-popup width="500" border-radius="30" v-model="bohui" mode="center">
+			<view class="yueduwo">
+				<view class="text">
+					驳回原因
+				</view>
+				<view class="textss" style="padding:30rpx;" v-if="mlml==0">
+					{{bohuidata.bhly}}
+				</view>
+				<view class="textss" style="padding:30rpx;" v-else>
+					{{bohuidata.bhnew}}
+				</view>
+
+				<view class="anniusss">
+					<view class="hkhnij" @click="bohui=false">
+						取消
+					</view>
+					<view class="hkhnij jjhgj" @click="chongxin">
+						重新申请
+					</view>
+				</view>
+			</view>
+		</u-popup>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -124,6 +151,9 @@
 	export default {
 		data() {
 			return {
+				current: 0,
+				bohuidata: {},
+				bohui: false,
 				//
 				//
 				//
@@ -165,13 +195,6 @@
 				aa = "1"
 				this.mlml = 1
 			}
-			// this.xieyi = uni.getStorageSync("xieyi")
-			// let bb = uni.getStorageSync("xieyi")
-			// bb.forEach(item => {
-			// 	if (item.state === aa) {
-			// 		this.xieyi.push(item)
-			// 	}
-			// })
 			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
 				if (this.isdes == 0) {
 					this.usershengfen = uni.getStorageSync("user_info").bbs.id || 0
@@ -200,6 +223,17 @@
 			},
 		},
 		methods: {
+
+			chongxin() {
+				this.bohui = false
+				setTimeout(() => {
+					if (this.buyanzheng) {
+						this.shoujiyanzheng = true
+					} else {
+						this.topay()
+					}
+				}, 100);
+			},
 			xieyis(ev) {
 				console.log(ev, "B,D等级");
 				let bb = ""
@@ -382,12 +416,27 @@
 							title: res.data.msg,
 							icon: "none"
 						})
-						if (this.mlml != 1) {}
 						setTimeout(() => {
-							uni.navigateTo({
-								url: "./redsuccess?level=" + this.id + "&name=" + this.name +
-									"&mlml=" + this.mlml
-							})
+							if (this.mlml == 0) {
+								uni.navigateTo({
+									url: "./redsuccess?level=" + this.id + "&name=" + this.name +
+										"&mlml=" + this.mlml
+								})
+							} else {
+								console.log(this.id);
+								let aa = 0
+								if (this.id == 2) {
+									aa = 3
+								} else if (this.id == 3) {
+									aa = 4
+								} else if (this.id == 1) {
+									aa = 5
+								}
+								uni.navigateTo({
+									url: "../pagesD/regDesigner/regDesigner?nageid=" + aa
+								})
+							}
+
 						}, 1000)
 					}
 					if (res.data.code == 200) {
@@ -438,7 +487,7 @@
 						})
 						this.list = [...data.data.data.status]
 
-						if (this.isdes == 1) {
+						if (this.mlml == 1) {
 							if (this.list[0].id == 5) {
 								this.xieyis(1)
 								this.id = 1
@@ -463,6 +512,23 @@
 						this.pd = this.list[0].pd
 						this.types = this.list[0].type
 						this.name = this.list[0].type
+						this.bohuidata = data.data.data.user
+						if (this.bohuidata.state == 2) {
+							this.bohui = true
+							setTimeout(() => {
+								if (this.mlml == 0) {
+									this.current = this.bohuidata.level - 1
+								} else {
+									if (this.bohuidata.level == 3) {
+										this.current = 0
+									} else if (this.bohuidata.level == 4) {
+										this.current = 1
+									} else if (this.bohuidata.level == 5) {
+										this.current = 2
+									}
+								}
+							}, 100);
+						}
 						uni.setStorageSync("shengfen", data.data.data.user)
 						setTimeout(() => {
 							this.gaodu(0)
@@ -481,11 +547,12 @@
 				}
 			},
 			lunbo(ev) {
+				console.log(ev.detail.current);
 				this.jiage = this.list[ev.detail.current].money + "元";
 				if (this.list[ev.detail.current].money == "0.00") {
 					this.jiage = "免费"
 				}
-				if (this.isdes == 1) {
+				if (this.mlml == 1) {
 					if (this.list[ev.detail.current].id == 5) {
 						this.id = 1;
 					}
