@@ -31,9 +31,7 @@
 						{{item.name}}
 					</u-radio>
 				</u-radio-group>
-				<!-- <input style="text-align: right;" v-model="sex" type="text" value="" placeholder="请输入性别" /> -->
 			</view>
-
 			<view class="write_item">
 				<view class="">
 					手机号
@@ -119,7 +117,7 @@
 						disabled: false
 					}
 				],
-				value: 'orange',
+				value: '',
 				des: 0
 			};
 		},
@@ -139,11 +137,11 @@
 				this.user = bb
 				this.names = this.user.name
 				if (this.user.sex == 0) {
-					this.sex = "男"
+					this.sex = 0
 					this.value = "男"
-				} else {
+				} else if (this.user.sex == 1) {
+					this.sex = 1
 					this.value = "女"
-					this.sex = "女"
 				}
 				this.idcard = this.user.idcart
 				this.emal = this.user.email
@@ -152,8 +150,13 @@
 			}
 		},
 		methods: {
-			radioGroupChange(e) {
-				this.sex = e
+			radioGroupChange(ev) {
+				if (ev == "男") {
+					this.sex = "0";
+				} else {
+					this.sex = "1";
+				}
+				this.value = ev
 			},
 			go_code() {
 				if (this.timea == 0) {
@@ -204,7 +207,7 @@
 			},
 			submit() {
 				if (this.code == "" || this.idcard == "" || this.address == "" || this.emal == "" || this.phone == "" ||
-					this.addressxq == "" || this.level == "" || this.name == "" || this.sex == "") {
+					this.addressxq == "" || this.level == "" || this.name == "" || this.sex === "") {
 					return uni.showToast({
 						title: "请检查资料",
 						icon: "none"
@@ -215,7 +218,7 @@
 					yzm: this.code
 				}).then(data => {
 					if (data.data.code == 1) {
-						if(this.des == 0){
+						if (this.des == 0) {
 							this.$api.sqb({
 								user_id: uni.getStorageSync("user_info").id,
 								idcart: this.idcard,
@@ -242,7 +245,7 @@
 								}
 							})
 						}
-						
+
 					} else {
 						uni.showToast({
 							title: "验证码错误",

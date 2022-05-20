@@ -8,7 +8,6 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 
 
-// uploads/20220518/b3e5fcf6950318229cc046a5532e368d.png
 
 import uView from 'uview-ui'
 Vue.use(uView);

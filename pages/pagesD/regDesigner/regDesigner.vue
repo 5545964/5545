@@ -17,15 +17,25 @@
 		<!-- 填写基础资料 -->
 		<view class="write_msg">
 			<block v-for="item in inpList" :key="item.id">
-				<view class="write_item" v-if="item.aa != 'phone'">
+				<view class="write_item" v-if="item.aa != 'phone' &&item.aa != 'sex'">
 					<view class="">
 						{{item.name||""}}
 					</view>
-					<input v-if="item.id!=4" style="text-align: right;" v-model="item.text" type="text" value=""
+					<input v-if="item.id!=5" style="text-align: right;" v-model="item.text" type="text" value=""
 						:placeholder="item.placeholder" />
-					<view class="" @click="show=true" v-if="item.id==4" style="text-align: right;">
+					<view class="" @click="show=true" v-if="item.id==5" style="text-align: right;">
 						{{item.text||"请选择地区"}}
 					</view>
+				</view>
+				<view class="write_item" v-if="item.aa == 'sex'">
+					<view class="">
+						{{item.name||""}}
+					</view>
+					<u-radio-group v-model="value" @change="radioGroupChange" activeColor="#007399">
+						<u-radio v-for="(item, index) in list" :key="index" :name="item.name" :disabled="item.disabled">
+							{{item.name}}
+						</u-radio>
+					</u-radio-group>
 				</view>
 				<view class="write_item" v-if="item.aa == 'phone'">
 					<view class="">
@@ -82,17 +92,23 @@
 			} else {
 				this.ididiidid = uni.getStorageSync("level")
 			}
-			this.inpList[2].text = uni.getStorageSync("user_info").mobile
+			this.inpList[3].text = uni.getStorageSync("user_info").mobile
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
 			// 驳回后修改信息
 			let info = uni.getStorageSync("inpList");
 			if (info) {
-				this.inpList[0].text = info[0].text;
-				this.inpList[1].text = info[1].text;
-				this.inpList[2].text = info[2].text;
-				this.inpList[3].text = info[3].text;
-				this.inpList[4].text = info[4].text;
-				this.inpList[5].text = info[5].text;
+				this.inpList[0].text = info[0].text;//姓名
+				this.inpList[1].text = info[1].text;//性别
+				this.inpList[2].text = info[2].text;//身份证号码
+				this.inpList[3].text = info[3].text;//手机号码
+				this.inpList[4].text = info[4].text;//电子邮箱
+				this.inpList[5].text = info[5].text;//所在地区
+				this.inpList[6].text = info[6].text;//详细地址
+				if (info[1].text == 0) {
+					this.value = "男"
+				} else {
+					this.value = "女"
+				}
 			}
 			// 驳回后修改照片
 			let info_img = uni.getStorageSync("upimgs");
@@ -108,6 +124,7 @@
 		},
 		data() {
 			return {
+				value: "",
 				ididiidid: 0,
 				huoqu: '获取验证码',
 				time: 0,
@@ -127,34 +144,41 @@
 					},
 					{
 						id: 1,
+						name: "性别",
+						placeholder: "街道、小区门牌等详细地址",
+						text: "",
+						aa: "sex"
+					},
+					{
+						id: 2,
 						name: "身份证号码",
 						placeholder: "请输入您的身份证号码",
 						text: "",
 						aa: ""
 					},
 					{
-						id: 2,
+						id: 3,
 						name: "手机号码",
 						placeholder: "请输入您的手机号码",
 						text: "",
 						aa: "phone"
 					},
 					{
-						id: 3,
+						id: 4,
 						name: "电子邮箱",
 						placeholder: "请输入您的电子邮箱",
 						text: "",
 						aa: ""
 					},
 					{
-						id: 4,
+						id: 5,
 						name: "所在地区",
 						placeholder: "请选择您的所在地区",
 						text: "请选择您的所在地区",
 						aa: ""
 					},
 					{
-						id: 5,
+						id: 6,
 						name: "详细地址",
 						placeholder: "街道、小区门牌等详细地址",
 						text: "",
@@ -163,14 +187,31 @@
 				],
 				imgList: [],
 				upimgs: [],
-				timea: 0
+				timea: 0,
+				list: [{
+						name: '男',
+						disabled: false
+					},
+					{
+						name: '女',
+						disabled: false
+					}
+				],
 			};
 		},
 		methods: {
+			radioGroupChange(ev) {
+				this.value = ev
+				if (ev == "男") {
+					this.inpList[1].text = "0";
+				} else {
+					this.inpList[1].text = "1";
+				}
+			},
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
-						phone: this.inpList[2].text,
+						phone: this.inpList[3].text,
 						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
@@ -202,7 +243,7 @@
 				this.upimgs.push(ev.data.status)
 			},
 			cityChange(e) {
-				this.inpList[4].text = e.province.label + e.city.label + e.area.label;
+				this.inpList[5].text = e.province.label + e.city.label + e.area.label;
 			},
 			back(ev) {
 				switch (ev) {
@@ -228,9 +269,10 @@
 				if (this.code != "") {
 					// 验证验证码
 					this.$api.emsyzphone({
-						phone: this.inpList[2].text,
+						phone: this.inpList[3].text,
 						yzm: this.code
 					}).then(data => {
+						console.log(this.inpList);
 						if (data.data.code == 1) {
 							this.submits()
 						} else {
@@ -254,7 +296,7 @@
 				//检查资料是否填完
 				let bb = []
 				this.inpList.forEach(item => {
-					if (item.text == '') {
+					if (item.text === '') {
 						return false
 					} else {
 						bb.push("1")
@@ -267,12 +309,13 @@
 						this.$api.adddes({
 							user_id: uni.getStorageSync("user_info").id,
 							username: this.inpList[0].text,
-							idcart: this.inpList[1].text,
-							address: this.inpList[4].text,
-							email: this.inpList[3].text,
-							mobile: this.inpList[2].text,
+							idcart: this.inpList[2].text,
+							address: this.inpList[5].text,
+							email: this.inpList[4].text,
+							mobile: this.inpList[3].text,
 							desimage: this.upimgs,
-							addressxq: this.inpList[5].text,
+							addressxq: this.inpList[6].text,
+							sex: this.inpList[1].text,
 							level: this.ididiidid
 						}).then(data => {
 							if (data.data.code == 1) {

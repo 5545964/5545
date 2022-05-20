@@ -1,7 +1,13 @@
 import ajax from "./u-ajax/js_sdk/"
 import api from '@/utils/api'
+let CSbaseURL = ""
+if (process.env.NODE_ENV === 'production') {
+	CSbaseURL = "https://bao.scwushen.com/index.php"
+} else {
+	CSbaseURL = "https://tbao.scwushen.com/index.php"
+}
 const instance = ajax.create({
-	baseURL: "https://bao.scwushen.com/index.php",
+	baseURL: CSbaseURL,
 	timeout: 60000,
 	header: {
 		post: {
@@ -14,7 +20,7 @@ instance.interceptors.request.use(
 	config => {
 		//模拟用户
 		if (false) {
-			config.data.user_id = 5
+			config.data.user_id = ""
 		}
 		config.header["token"] = token.token
 		return config

@@ -42,12 +42,6 @@
 			<u-empty v-else></u-empty>
 		</view>
 		<view class="boyyty cet" v-if="pd==1">
-			<!-- <view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
-				申请提交，请等待审核
-			</view>
-			<view class="tetx" @click="topay" v-else>
-				申请提交，请等待审核
-			</view> -->
 			<view class="tetx">
 				申请提交，请等待审核
 			</view>
@@ -223,7 +217,6 @@
 			},
 		},
 		methods: {
-
 			chongxin() {
 				this.bohui = false
 				setTimeout(() => {
@@ -239,7 +232,7 @@
 				let bb = ""
 				let kk = []
 				let cc = uni.getStorageSync("xieyi")
-				if (this.isdes == 1) {
+				if (this.mlml == 1) {
 					// 1 = D1注册
 					// 10 = D2注册
 					// 11 = D3注册
@@ -277,7 +270,6 @@
 				} else {
 					this.buyanzheng = false
 				}
-				console.log(this.buyanzheng);
 			},
 			hahaha(item) {
 				item.check = !item.check
