@@ -40,7 +40,7 @@
 		</view>
 		<!-- <u-cdata :list="list.shop"></u-cdata> -->
 		<view v-for="(item,index) in list.shop" :key="index">
-			<view class="" v-if="item.content">
+			<view  v-if="item.content">
 				<image class="imgs" :src="item.content" mode="widthFix"></image>
 			</view>
 		</view>

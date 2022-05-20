@@ -30,7 +30,7 @@
 							</view>
 						</view>
 						<view class="right">
-							<view class="">
+							<view>
 								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price||""}}</text>
 							</view>
 							<view class="dsjhbd">
@@ -56,14 +56,14 @@
 							</view>
 						</view>
 						<view class="right">
-							<view class="">
+							<view>
 								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price||""}}</text>
 							</view>
 							<view class="dsjhbd">
 								满{{item.cupons.cb_price||""}}可用
 							</view>
 							<view class="img">
-								<image class="" src="../../static/icon_me_used.png" mode="aspectFit"></image>
+								<image src="../../static/icon_me_used.png" mode="aspectFit"></image>
 							</view>
 						</view>
 					</view>
@@ -85,14 +85,14 @@
 							</view>
 						</view>
 						<view class="right">
-							<view class="">
+							<view>
 								<text class="dnsjbd">￥</text><text class="djdh">{{item.cupons.yh_price||""}}</text>
 							</view>
 							<view class="dsjhbd">
 								满{{item.cupons.cb_price||""}}可用
 							</view>
 							<view class="img">
-								<image class="" src="../../static/icon_me_invalid.png" mode="aspectFit"></image>
+								<image src="../../static/icon_me_invalid.png" mode="aspectFit"></image>
 							</view>
 						</view>
 					</view>

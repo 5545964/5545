@@ -25,7 +25,7 @@
 			</view>
 		</view>
 		<view class="kan">
-			<view class="">
+			<view>
 				<view class="number">
 					{{desinfo.look||0}}
 				</view>
@@ -33,7 +33,7 @@
 					客户浏览量
 				</view>
 			</view>
-			<view class="">
+			<view>
 				<view class="number">
 					{{desinfo.plcount||0}}
 				</view>
@@ -41,7 +41,7 @@
 					客户评价留言
 				</view>
 			</view>
-			<view class="">
+			<view>
 				<view class="number">
 					{{desinfo.zan||0}}
 				</view>
@@ -49,7 +49,7 @@
 					客户点赞
 				</view>
 			</view>
-			<view class="">
+			<view>
 				<view class="number">
 					{{desinfo.follow||0}}
 				</view>
@@ -97,7 +97,7 @@
 						<view class="cart-num" v-if="index <=1 && num_list[index] != 0">
 							{{num_list[index]||""}}
 						</view>
-						<view class="">
+						<view >
 							<view style="width: max-content;margin: 0 auto;">
 								<image class="img" :src="'../../static/des'+index+'.png'" mode="aspectFit"></image>
 							</view>
@@ -214,8 +214,8 @@
 				})
 				this.$api.desorders({
 					id: uni.getStorageSync("des_info").id,
-						start: this.time.start,
-						end: this.time.end
+					start: this.time.start,
+					end: this.time.end
 				}).then(data => {
 					if (data.data.code == 1) {
 						let aa = this.num_list

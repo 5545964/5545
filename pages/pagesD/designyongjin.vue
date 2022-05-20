@@ -82,7 +82,7 @@
 					</view>
 				</view> -->
 				<view class="czcxczcxc" v-for="(item,index) in monList" :key="index" @click="goods(item)">
-					
+
 					<!-- B端 -->
 					<view v-if="isshejishiss == 0">
 						<view class="vdfdd" v-if="item.money == 0">
@@ -207,7 +207,7 @@
 							完成
 						</view>
 						<view class="win cet">
-							<view class="">
+							<view >
 								查看订单
 							</view>
 							<image style="width: 10rpx;height: 16rpx;margin-left: 10rpx;"

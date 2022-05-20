@@ -25,7 +25,7 @@
 						<scroll-view :style="'height: '+height+'px;'" scroll-y="true">
 							<view class="swiper-item" v-if="current==0||items.state==current"
 								v-for="(items,indexs) in list" :key="indexs">
-								<view class="">
+								<view>
 									<view class="top" @click="goods(items)">
 										<view class="status" v-show="items.states.state == 0"> 待付款 </view>
 										<view class="status" v-show="items.states.state == 1"> 待发货 </view>
@@ -53,7 +53,7 @@
 										</view>
 									</view>
 									<view class="centre" @click="goods(items)">
-										<view class="">
+										<view>
 											<image class="img" :src="imgtitle+items.simage" mode="aspectFit"></image>
 										</view>
 										<view style="margin-left: 30rpx;">

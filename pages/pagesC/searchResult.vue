@@ -22,8 +22,8 @@
 			</view>
 		</view>
 		<!-- 商品 -->
-		<view class="">
-			<view class="">
+		<view>
+			<view>
 				<u-adata @click="toproduct()" :list="data_list"></u-adata>
 			</view>
 		</view>
@@ -45,10 +45,10 @@
 			};
 		},
 		methods: {
-			toproduct(ev){
+			toproduct(ev) {
 				uni.navigateTo({
 					// url: "../pagesC/Shopping
-					url:"./Shopping?shopid=" + ev.id
+					url: "./Shopping?shopid=" + ev.id
 				})
 			},
 			// 搜索商品

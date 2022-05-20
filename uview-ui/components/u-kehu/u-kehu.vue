@@ -1,7 +1,7 @@
 <template>
 	<view class="" style="position: absolute;z-index: 3;">
 		<view class="" v-if="kehu">
-			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.stop="move"
+			<view class="djsa cet" id="yuan" @touchend="end" @touchmove.prevent="move"
 				:style="'top: '+bianheigth+'rpx;left: '+bianright+'rpx;'">
 				<view style="width: 100%;" @click="click">
 					<view class="dad" style="margin-top:-14rpx;">
@@ -14,7 +14,7 @@
 			</view>
 		</view>
 		<view class="" v-if="edits">
-			<view class="djsa cet" id="yuan" @touchend="ends" @touchmove.stop="moves"
+			<view class="djsa cet" id="yuan" @touchend="ends" @touchmove.prevent="moves"
 				:style="'top: '+bianheigths+'rpx;left: '+bianrights+'rpx;'">
 				<view class="" @click="xianshiqianggou">
 					<view class="cet">

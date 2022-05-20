@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view>
 		<!-- 导航 -->
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
@@ -15,13 +15,13 @@
 			</u-navbar>
 		</view>
 		<view class="huadong">
-			<view class="" v-if="yuyuecarList.length != 0">
+			<view v-if="yuyuecarList.length != 0">
 				预约订单
 			</view>
-			<view  v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
+			<view v-if="yuyuecarList.length != 0" v-for="(item,shopIndex) in yuyuecarList" :key="shopIndex"
 				class="car-list" @touchstart="drawStarts" @touchmove="drawMoves" @touchend="drawEnds"
 				:data-index="shopIndex" :style="'right:'+item.right+'px'">
-				<view @click="toshopdetail(item)"class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
+				<view @click="toshopdetail(item)" class="list" :class="{ 'aaaaaaaaaa': item.right == 0 }">
 					<view class="btn centerboth" v-if="item.selected==true" @click.stop="selThiss(shopIndex)">
 						<text class="iconfont car-sel"></text>
 					</view>
@@ -52,7 +52,7 @@
 					<view class="remove" @click="delDatas(item,shopIndex)">删除</view>
 				</view>
 			</view>
-			<view class="" v-if="carList.length != 0">
+			<view v-if="carList.length != 0">
 				普通商品
 			</view>
 			<view v-if="carList.length != 0" v-for="(item,shopIndex) in carList" :key="shopIndex" class="car-list"
@@ -103,7 +103,7 @@
 					@click="sanchu">删除</text>
 			</view>
 			<view class="foot_right">
-				<view class="">
+				<view>
 					<view class="all_price">
 						合计：<text style="color: #E11915;">￥{{allAmount.toFixed(2)||""}}</text>
 					</view>
@@ -146,10 +146,10 @@
 		},
 		methods: {
 			// 跳转商品详情
-			toshopdetail(item){
+			toshopdetail(item) {
 
 				uni.navigateTo({
-					url:"./Shopping?shopid="+item.shopid
+					url: "./Shopping?shopid=" + item.shopid
 				})
 			},
 			allsss() {
@@ -201,11 +201,11 @@
 
 					}
 				})
-				if(aa.length == 0){
+				if (aa.length == 0) {
 					this.yuyuecarList.forEach(item => {
 						if (item.selected) {
 							aa.push(item.id)
-					
+
 						}
 					})
 				}

@@ -32,7 +32,7 @@
 							<view class="dasdsadsxzcz">
 								{{item.type||""}}特权：
 							</view>
-							<view class="" v-html="item.content">
+							<view v-html="item.content">
 
 							</view>
 						</view>

@@ -59,7 +59,7 @@
 			</view>
 		</view>
 		<!-- 设计师 -->
-		<view class="" style="margin-top: 20rpx;">
+		<view  style="margin-top: 20rpx;">
 			<u-designDet :info="des" :disabled="disabled" @click="guanzhu" @dianzhan="dianzhan" @qushejishi="topage"
 				@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 		</view>
@@ -76,14 +76,14 @@
 				</view>
 			</view>
 			<view class="design_list">
-				<view class="" v-for="(item,index) in tuijian" :key="index" v-if="index<=3">
+				<view  v-for="(item,index) in tuijian" :key="index" v-if="index<=3">
 					<u-design-card :list="item" />
 				</view>
 			</view>
 		</view>
 		<!-- 预约作品 -->
 		<view class="design_foot">
-			<view class="">
+			<view >
 				已有3399人咨询
 			</view>
 			<view class="yuyue" @click="yuyue">

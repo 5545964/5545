@@ -28,7 +28,7 @@
 				</view>
 			</view>
 			<view class="yuan">
-				<view class="" @click="go(0)">
+				<view @click="go(0)">
 					<view class="cet">
 						<image class="img" src="../../static/shopji.png" />
 					</view>
@@ -37,7 +37,7 @@
 					</view>
 				</view>
 				<view class="xian" />
-				<view class="" @click="go(1)">
+				<view @click="go(1)">
 					<view class="cet">
 						<image class="img" src="../../static/jilu.png" />
 					</view>
@@ -68,7 +68,7 @@
 			<view style="margin: 0 30rpx;">
 				<view v-for="(item,index) in list" :key="index">
 					<view class="xhi">
-						<view class="">
+						<view>
 							<view class="goumai">
 								{{item.name||""}}
 							</view>

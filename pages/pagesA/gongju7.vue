@@ -15,10 +15,10 @@
 		</view>
 		<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		<view class="home">
-			<view class="" v-if="current == 0">
-					<u-empty></u-empty>
+			<view v-if="current == 0">
+				<u-empty></u-empty>
 			</view>
-			<view class="" v-if="current == 1">
+			<view v-if="current == 1">
 				<u-empty></u-empty>
 			</view>
 		</view>

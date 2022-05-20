@@ -83,7 +83,7 @@
 							</view>
 							<!-- <image v-if="index == list.length-1" class="fdkgkfmkjskjfjkgdbj"
 								src="../../static/icon_me_fenge.png" mode="aspectFit"></image> -->
-							<view class="">
+							<view>
 								<view style="width: max-content;margin: 0 auto;">
 									<image class="img" :src="'../../static/status'+index+'.png'" mode="aspectFit">
 									</image>

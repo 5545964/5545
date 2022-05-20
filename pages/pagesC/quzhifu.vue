@@ -37,10 +37,10 @@
 			<!-- 商品 -->
 			<view class="swiper-item">
 				<view class="centre" v-for="(itemc,indexc) in goodsdata" :key="indexc">
-					<view class="">
+					<view>
 						<image class="img" :src="img+itemc.simage" mode="aspectFit"></image>
 					</view>
-					<view class="" style="margin-left:20rpx;">
+					<view style="margin-left:20rpx;">
 						<view class="name">
 							{{itemc.name||""}}
 						</view>
@@ -59,7 +59,7 @@
 				</view>
 				<view style="">
 					<view class="text kfhkjsdh">
-						<view class="">
+						<view>
 							商品总价：
 						</view>
 						<view class="red" v-if="jifen==0">
@@ -70,7 +70,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
-						<view class="">
+						<view>
 							数量
 						</view>
 						<view class="reds">
@@ -78,7 +78,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh" v-if="dinjing != 0 && jifen==0">
-						<view class="">
+						<view>
 							定金
 						</view>
 						<view class="red">
@@ -86,7 +86,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
-						<view class="">
+						<view>
 							运费
 						</view>
 						<view class="red" v-if="yf != 0">
@@ -97,7 +97,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh" @click="youhuijuan" v-if="jifen==0">
-						<view class="">
+						<view>
 							优惠券
 						</view>
 						<view class="cet">
@@ -115,7 +115,7 @@
 				</view>
 				<view style="height: 2rpx;background: #F6F6F6;" />
 				<view class="text kfhkjsdh" v-if="jifen==0">
-					<view class="">
+					<view>
 						总金额：<text class="red">￥{{zjia||""}}</text>
 					</view>
 					<view class="red">

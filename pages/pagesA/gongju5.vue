@@ -15,7 +15,7 @@
 		</view>
 		<view class="home">
 			<view class="back">
-				<view class="">
+				<view>
 					<view class="dads">
 						<view class="mony xiaosize">
 							￥
@@ -43,7 +43,7 @@
 			</view>
 			<view style="background-color: #FFFFFF;height: 180rpx;"></view>
 			<view class="center">
-				<view class="">
+				<view>
 					<view class="text">
 						总佣金(元)
 					</view>
@@ -51,7 +51,7 @@
 						￥{{allprice||""}}
 					</view>
 				</view>
-				<view class="">
+				<view>
 					<view class="text">
 						可提佣金(元)
 					</view>
@@ -60,7 +60,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="">
+			<view>
 				<u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 			</view>
 			<view class="hahahahaxczxc" v-show="current == 0">
@@ -160,7 +160,7 @@
 							完成
 						</view>
 						<view class="win cet">
-							<view class="">
+							<view>
 								查看订单
 							</view>
 							<image style="width: 10rpx;height: 16rpx;margin-left: 10rpx;"
@@ -171,7 +171,7 @@
 			</view>
 		</view>
 		<u-heigth />
-		<view class="">
+		<view>
 			<u-timeSelect ref="myPicker" @submit="handleSubmit" :start-year="2000" :end-year="2500">
 			</u-timeSelect>
 			<u-popup border-radius="10" v-model="show" mode="center">

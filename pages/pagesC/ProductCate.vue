@@ -59,7 +59,7 @@
 							<view class="item-container" v-for="item3 in item1.neirong" :key='item3.id'
 								@click="goshop(item3)">
 								<view class="right_view">
-									<view class="">
+									<view>
 										<image
 											:src="imgtilte+'/index/index/show?url='+item3.simage+'&width=180&height=180'"
 											style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
@@ -70,7 +70,7 @@
 											{{item3.name||""}}
 										</view>
 										<view class="right_bottom">
-											<view class="" style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
+											<view style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
 												￥{{item3.xc_price||0}}
 											</view>
 										</view>
@@ -79,7 +79,7 @@
 							</view>
 						</u-collapse-item>
 					</u-collapse>
-				    <u-empty text="暂无商品" mode="data" v-else/>
+					<u-empty text="暂无商品" mode="data" v-else />
 				</view>
 			</scroll-view>
 			<scroll-view v-if="mmok == 1" style="width: 76%;height: 100%;" scroll-y class="right-box">
@@ -88,7 +88,7 @@
 			<scroll-view v-if="mmok == 2" style="width: 76%;height: 100%;" scroll-y class="right-box">
 				<view class="item-container" v-for="item3 in destaoxi" :key='item3.id' @click="go_youhuijuan(item3)">
 					<view class="right_view">
-						<view class="">
+						<view>
 							<image :src="imgtilte+'/index/index/show?url='+item3.simage+'&width=180&height=180'"
 								style="width: 180rpx;height: 180rpx;margin-right: 20rpx;" mode="aspectFit">
 							</image>
@@ -98,7 +98,7 @@
 								{{item3.name||""}}
 							</view>
 							<view class="right_bottom">
-								<view class="" style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
+								<view style="font-size: 30rpx;color: #FF4B3C;font-weight: 800;">
 									￥{{item3.price||0||""}}
 								</view>
 							</view>

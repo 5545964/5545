@@ -15,19 +15,19 @@
 			</u-navbar>
 		</view>
 		<!-- 切换 -->
-		<view class="">
+		<view>
 			<u-tabss :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 				@change="change"></u-tabss>
 		</view>
 		<!-- 热门栏目 -->
-		<view class="" style="height: 100%;" v-if="current==12">
+		<view style="height: 100%;" v-if="current==12">
 			<u-video :scrollTop="scrollTop" v-if="video.length != 0" :vlist="video" @collection="collection"
 				@pinglun="pinglunaa" @dianzhan="dianzhan">
 			</u-video>
 			<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 		</view>
 		<!-- 设计大咖 -->
-		<view class="" style="height: 100%;" v-if="current==13">
+		<view style="height: 100%;" v-if="current==13">
 			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
 		<!-- 整装设计师 -->
@@ -45,13 +45,13 @@
 						style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="" style="position: relative;z-index: 2;" v-if="designerList.length !=0">
+			<view style="position: relative;z-index: 2;" v-if="designerList.length !=0">
 				<u-club @navgate="navgepage" :rows="designerList"></u-club>
 			</view>
 			<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
 		</view>
 		<!-- 定制家具设计师 -->
-		<view class="" style="height: 100%;" v-if="current==15">
+		<view style="height: 100%;" v-if="current==15">
 			<u-empty text="数据更新中，敬请期待！"></u-empty>
 		</view>
 		<!-- 成为设计师 -->
@@ -99,11 +99,11 @@
 			<!-- 驳回 -->
 			<view class="reject" v-if="state==2">
 				<image src="../../static/icon_me_reject.png" class="imgrej" mode="aspectFit"></image>
-				<view class="">
+				<view>
 					你的申请已驳回
 				</view>
 				<view class="reason">
-					<view class="">
+					<view>
 						驳回原因：
 					</view>
 					<view class="reason_text">
@@ -117,14 +117,14 @@
 			<!-- 审核中 -->
 			<view class="reject" v-if="state==0">
 				<image src="../../static/icon_me_review.png" class="imgrej" mode="aspectFit"></image>
-				<view class="">
+				<view>
 					你的资料平台正在加紧审核中，请留意站内信或电话
 				</view>
 			</view>
 			<!-- 审核成功 -->
 			<view class="reject" v-if="state==1">
 				<image src="../../static/icon_me_success.png" class="imgrej" mode="aspectFit"></image>
-				<view class="">
+				<view>
 					恭喜你，你已成为设计师
 				</view>
 				<view class="resest" @click="lookcont" style="margin-top: 250rpx;">
@@ -154,12 +154,12 @@
 				</view>
 			</view>
 		</view>
-		<view class="">
+		<view>
 			<!-- 合同弹窗 -->
 			<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
 				<view class="contract_main">
 					<!-- 合同pdf -->
-					<view class="" style="height: 700rpx; width: 100%;">
+					<view style="height: 700rpx; width: 100%;">
 						<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
 							<image style="width: 100%;" :src="tupianwo" mode="widthFix">
 							</image>

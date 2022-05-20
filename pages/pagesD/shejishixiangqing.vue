@@ -38,7 +38,7 @@
 						</view>
 						<view class="asd">
 							<view v-show="items.list.length != 0">
-								<view class="" v-for="(itemc,indexc) in items.list" :key="indexc">
+								<view v-for="(itemc,indexc) in items.list" :key="indexc">
 									<view class="czccxz" v-if="itemc.sex">
 										<view style="width: 25%;">
 											成员{{indexc+1||""}}
@@ -576,6 +576,7 @@
 		align-items: center;
 		padding-bottom: 20rpx;
 	}
+
 	.bngh {
 		position: fixed;
 		display: flex;

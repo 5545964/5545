@@ -18,7 +18,7 @@
 		<!-- <button type="default" @click="selectImg">1234</button>
 		<button type="default" @click="gossss">456</button> -->
 		<view class="choose">
-			<view class="" style="display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
+			<view style="display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
 				<view :class="index%2==0? 'drop_item1':'drop_item'" v-for="(item,index) in dropList" :key="item.id">
 					<!-- <u-input v-if="index == 0" @click="open()" input-align="left" :disabled="true" v-model="item.value"
 						:placeholder="item.name" type="text" /> -->
@@ -54,7 +54,7 @@
 				上传封面<text style="font-size:26rpx;color: #999999;">（335x420）</text>
 			</view>
 			<view class="allimg">
-				<!-- <view class="" style="position: relative;" v-if="fenmian !=''">
+				<!-- <view  style="position: relative;" v-if="fenmian !=''">
 					<image :src="fenmian" class="imgs" mode="aspectFit"></image>
 					<image src="../../static/icon_close_ico.png" @click="sanchufenmian()" class="closeImg" mode="aspectFit">
 					</image>
@@ -72,7 +72,7 @@
 				上传详情轮播图<text style="font-size:26rpx;color: #999999;">（750x450）</text>
 			</view>
 			<view class="allimg">
-				<!-- <view class="" v-for="(item,index) in imgList" :key="index" style="position: relative;">
+				<!-- <view  v-for="(item,index) in imgList" :key="index" style="position: relative;">
 					<image :src="item" class="imgs" mode="aspectFit"></image>
 					<image src="../../static/icon_close_ico.png" @click="deleteimg(index)" class="closeImg" mode="aspectFit">
 					</image>
@@ -95,7 +95,7 @@
 					:header="header" :form-data="formData" :name="namess" size-type="compressed">
 				</u-upload>
 			</view>
-			<view class="" style="display: flex;justify-content: space-between;align-items: center;">
+			<view style="display: flex;justify-content: space-between;align-items: center;">
 				<view class="upload_title">
 					上传VR链接
 				</view>
@@ -120,7 +120,7 @@
 				</image>
 			</view>
 		</view>
-		<view class="" style="height: 110rpx;">
+		<view style="height: 110rpx;">
 		</view>
 		<!-- 底部提交按钮 -->
 		<view class="foot_reg">

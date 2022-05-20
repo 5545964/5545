@@ -23,7 +23,7 @@
 					<image :lazy-load="true" :src="imgurl + item.image"
 						style="width: 90rpx;height: 90rpx;margin-bottom: 16rpx;" mode="aspectFit">
 					</image>
-					<view class="">
+					<view>
 						{{item.title||""}}
 					</view>
 				</view>
@@ -42,8 +42,8 @@
 						style="width: 10rpx;height: 18rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="">
-				<view class="">
+			<view>
+				<view>
 					<u-adata @click="toproduct($event,index)" :list="item.data_list"></u-adata>
 				</view>
 			</view>

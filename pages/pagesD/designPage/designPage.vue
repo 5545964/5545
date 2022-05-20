@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<view class="" v-if="current==0">
+		<view v-if="current==0">
 			<DesignHome />
 		</view>
-		<view class="" v-if="current==1">
+		<view v-if="current==1">
 			<DesignMine />
 		</view>
 		<u-tabbar v-model="current" @change="change" :list="list"></u-tabbar>

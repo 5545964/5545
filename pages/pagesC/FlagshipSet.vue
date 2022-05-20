@@ -15,14 +15,14 @@
 			</u-navbar>
 		</view>
 		<view>
-			<view class="">
+			<view >
 				<u-tabs :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 					@change="change"></u-tabs>
 			</view>
 			<view class="card_list" v-if="data_list != 0">
 				<view class="card" v-for="(item,index) in data_list" :key="index" @click="topage(item)">
 					<image :src="img+item.simage" style="width: 690rpx;height: 350rpx;" mode=""></image>
-					<view class="" style="margin-top: 24rpx;">
+					<view  style="margin-top: 24rpx;">
 						{{item.name||""}}
 					</view>
 				</view>

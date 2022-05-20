@@ -13,12 +13,12 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view class="">
+		<view>
 			<image src="../../static/shop_dingbu_bg.png" style="height: 240rpx;" mode="aspectFit"></image>
 		</view>
 		<!-- 轮播 -->
 		<view class="lun_main">
-			<view class="">
+			<view>
 				<swiper @change="gaizhi" style="width: 100%;height: 300rpx;" :indicator-dots="true" :circular="true"
 					:autoplay="autoplay" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in lun_list" :key="index" style="border-radius: 20rpx;">
@@ -31,7 +31,7 @@
 					</swiper-item>
 				</swiper>
 			</view>
-			<view class="" style="padding-top: 100rpx;">
+			<view style="padding-top: 100rpx;">
 				<view class="last">
 					最后疯抢
 				</view>
@@ -43,10 +43,10 @@
 			</view>
 		</view>
 		<!-- 商品列表 -->
-		<view class="">
+		<view>
 			<u-adata :list="data_list" @click="goshop"></u-adata>
 		</view>
-		<view class="" style="height: 20rpx;">
+		<view style="height: 20rpx;">
 
 		</view>
 		<u-heigth />

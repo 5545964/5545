@@ -67,10 +67,10 @@
 
 				</view>
 				<view class="centre" v-for="(itemc,indexc) in data_list.shop" :key="indexc" @click="product(itemc)">
-					<view class="">
+					<view>
 						<image class="img" :src="img+itemc.simage" mode="aspectFit"></image>
 					</view>
-					<view class="" style="margin-left: 20rpx;">
+					<view style="margin-left: 20rpx;">
 						<view class="name">
 							{{itemc.name||""}}
 						</view>
@@ -105,7 +105,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
-						<view class="">
+						<view>
 							数量
 						</view>
 						<view class="reds">
@@ -113,7 +113,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh">
-						<view class="">
+						<view>
 							运费
 						</view>
 						<view class="red">
@@ -122,7 +122,7 @@
 						</view>
 					</view>
 					<view class="text kfhkjsdh" v-if="data_list.yh_price != 0">
-						<view class="">
+						<view>
 							优惠券
 						</view>
 						<view class="cet">
@@ -282,7 +282,7 @@
 			</view>
 			<u-heigth />
 		</view>
-		<view class="">
+		<view>
 			<!-- 查看安装详情 -->
 			<u-popup width="500" border-radius="30" v-model="anzhuang" mode="center">
 				<view class="yueduwo">
@@ -290,22 +290,22 @@
 						安装详情
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view class="">
+						<view>
 							姓名
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
 								placeholder="请填写快递公司" />
 						</view>
-						<view class="">
+						<view>
 							电话
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
 								v-model="bzxq.aphone" placeholder="请填写快递单号" type="number" />
 						</view>
-						<view v-if="bzxq.abh" class="">
-							<view class="">
+						<view v-if="bzxq.abh">
+							<view>
 								安装人员编号
 							</view>
 							<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -313,7 +313,7 @@
 									v-model="bzxq.abh" placeholder="请填写快递单号" type="number" />
 							</view>
 						</view>
-						<view class="">
+						<view>
 							预计上门时间
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -338,14 +338,14 @@
 						填写快递单号
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view class="">
+						<view>
 							快递公司
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
 								placeholder="请填写快递公司" />
 						</view>
-						<view class="">
+						<view>
 							快递单号
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -480,7 +480,7 @@
 				<view class="popup">
 					<view class="top"> 提示 </view>
 					<view class="cets">
-						<view class="">
+						<view>
 							是否需要安装？
 						</view>
 						<view style="font-size:24rpx;margin-top:40rpx;">

@@ -14,13 +14,13 @@
 			</u-navbar>
 		</view>
 		<view class="home">
-			<view class="" v-if="state == 0">
-				<view class="" v-if="alls_item.yyid">
-				<!-- <view class=""> -->
+			<view v-if="state == 0">
+				<view v-if="alls_item.yyid">
+					<!-- <view > -->
 					<view class="dsjax">
 						<image style="width: 76rpx;height: 76rpx;border-radius: 50%;margin-right: 25rpx;" :src="imgh">
 						</image>
-						<view class="">
+						<view>
 							<view class="name">
 								{{nameh||""}}
 							</view>
@@ -30,47 +30,47 @@
 						</view>
 					</view>
 					<view class="mdsjfoi">
-						<view class="" @click="dianzhanwo(0)">
+						<view @click="dianzhanwo(0)">
 							<view class="cet">
 								<image v-if="chuangyi" style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhans.png"></image>
 								<image v-else style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhan.png"></image>
 							</view>
-							<view class="">
+							<view>
 								创意度
 							</view>
 						</view>
-						<view class="" @click="dianzhanwo(1)">
+						<view @click="dianzhanwo(1)">
 							<view class="cet">
 								<image v-if="zhuanye" style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhans.png"></image>
 								<image v-else style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhan.png"></image>
 							</view>
-							<view class="">
+							<view>
 								专业度
 							</view>
 						</view>
-						<view class="" @click="dianzhanwo(2)">
+						<view @click="dianzhanwo(2)">
 							<view class="cet">
 								<image v-if="chengdan" style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhans.png"></image>
 								<image v-else style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhan.png"></image>
 							</view>
-							<view class="">
+							<view>
 								成单率
 							</view>
 						</view>
-						<view class="" @click="dianzhanwo(3)">
+						<view @click="dianzhanwo(3)">
 							<view class="cet">
 								<image v-if="manyi" style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhans.png"></image>
 								<image v-else style="width: 48rpx;height: 53rpx;margin-bottom: 20rpx;"
 									src="../../static/dianzhan.png"></image>
 							</view>
-							<view class="">
+							<view>
 								满意度
 							</view>
 						</view>

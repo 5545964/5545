@@ -97,7 +97,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="">
+		<view >
 			<view class="xunhuan" v-for="(item,index) in list" :key="index">
 				<view class="dshk">
 					{{item.title||""}}

@@ -16,10 +16,10 @@
 		<view class="home">
 			<view class="ccxv">
 				<view class="text">
-					<view class="" @click="tixians(1)">
+					<view @click="tixians(1)">
 						已提现
 					</view>
-					<view class="" @click="tixians(0)">
+					<view @click="tixians(0)">
 						未提现
 					</view>
 				</view>
@@ -85,7 +85,7 @@
 					请上传图片
 					<!-- 或视频 -->
 				</view>
-				<view class="">
+				<view>
 					<u-upload :action="action" max-count="9" width="140" height="140" ref="uUpload"
 						:form-data="formData" @on-success="asdfg" @on-remove="deleteimg" name="image"
 						size-type="compressed" />

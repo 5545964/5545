@@ -32,7 +32,7 @@
 			</view>
 			<view @click="show = true"
 				style="margin:25px 0;wxcs_style_margin:50rpx 0;display:flex;justify-content:space-between;align-items:center;">
-				<view class="">
+				<view>
 					常用理由
 				</view>
 				<view class="sdadsa">
@@ -80,7 +80,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="" style="height: 110rpx;">
+		<view style="height: 110rpx;">
 
 		</view>
 		<view class="annui cet" @click="fa">

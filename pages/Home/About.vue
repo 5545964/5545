@@ -3,7 +3,7 @@
 		<view style="height: 40rpx;">
 			<u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		</view>
-		<view class="">
+		<view >
 			<swiper :style="'height: '+heigth+'px;'" :circular="true" :duration="300" @change="lun_change"
 				:current="current">
 				<swiper-item v-for="(item,index) in lists" :key="index">
@@ -39,7 +39,7 @@
 								<view
 									style="width: 100%;text-align: center;height: 60rpx;line-height: 60rpx;display: flex;align-items: center;justify-content: center;"
 									@click="show = true">
-									<view class="">
+									<view >
 										{{xuanzhe}}
 									</view>
 									<image src="../../static/icon_home_sanjiao.png"
@@ -128,7 +128,7 @@
 								<view class="xian"></view>
 								<view style="height: 20rpx;"></view>
 								<view class="hahah" @click="shouURl(item)" v-for="(item,index) in xinxi" :key="index">
-									<view class="">
+									<view >
 										<view class="hnjh">
 											{{item.title||""}}
 										</view>
@@ -136,7 +136,7 @@
 											{{item.refreshtime_text||""}}
 										</view>
 									</view>
-									<view class="">
+									<view >
 										<image class="imghjk" :src="imgPath+item.simage" mode="aspectFit">
 										</image>
 									</view>
@@ -237,7 +237,7 @@
 					<view class="textsss">
 						{{huxing||""}}
 					</view>
-					<view class="" v-if="!cduan">
+					<view  v-if="!cduan">
 						<view class="llll" @click="llll()">
 							楼盘设计
 						</view>
@@ -245,7 +245,7 @@
 							户型攻略
 						</view>
 					</view>
-					<view class="" v-else>
+					<view  v-else>
 						<view class="llll" @click="duan(0)">
 							成为设计师
 						</view>

@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view>
 		<u-navbar :is-back="false">
 			<view class="sssss">
 				<image src="../../../static/icon_home_logo.png" mode="aspectFit"></image>
@@ -25,7 +25,7 @@
 						{{desinger.username||''}}
 					</view>
 				</view>
-				<view class="" style="width: 60%;margin-right: 40rpx;">
+				<view style="width: 60%;margin-right: 40rpx;">
 					<view class="type_list">
 						<view class="type_item" v-for="(item,index) in list1" :key="index">
 							{{item||""}}

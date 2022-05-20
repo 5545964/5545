@@ -17,13 +17,13 @@
 		<!-- 填写基础资料 -->
 		<view class="write_msg">
 			<view class="write_item">
-				<view class="">
+				<view>
 					姓名
 				</view>
 				<input style="text-align: right;" v-model="names" type="text" value="" placeholder="请输入姓名" />
 			</view>
 			<view class="write_item">
-				<view class="">
+				<view>
 					性别
 				</view>
 				<u-radio-group v-model="value" @change="radioGroupChange" activeColor="#007399">
@@ -33,13 +33,13 @@
 				</u-radio-group>
 			</view>
 			<view class="write_item">
-				<view class="">
+				<view>
 					手机号
 				</view>
 				<input style="text-align: right;" v-model="phone" type="number" value="" placeholder="请输入手机号" />
 			</view>
 			<view class="write_item" v-if="phone!=''">
-				<view class="">
+				<view>
 					验证码
 				</view>
 				<view class="cet" style="justify-content: space-between;width: 60%;">
@@ -51,32 +51,32 @@
 				</view>
 			</view>
 			<view class="write_item">
-				<view class="">
+				<view>
 					身份证号码
 				</view>
 				<input style="text-align: right;" v-model="idcard" type="text" value="" placeholder="请输入身份证号码" />
 			</view>
 			<view class="write_item">
-				<view class="">
+				<view>
 					电子邮箱
 				</view>
 				<input style="text-align: right;" v-model="emal" type="text" value="" placeholder="请输入电子邮箱" />
 			</view>
 			<view class="write_item" @click="show = true">
-				<view class="">
+				<view>
 					所在地区
 				</view>
 				<input style="text-align: right;" disabled v-model="address" type="text" value=""
 					placeholder="请选择所在地区" />
 			</view>
 			<view class="write_item">
-				<view class="">
+				<view>
 					详细地址
 				</view>
 				<input style="text-align: right;" v-model="addressxq" type="text" value="" placeholder="请输入详细地址" />
 			</view>
 		</view>
-		<view class="" style="height: 100rpx;">
+		<view style="height: 100rpx;">
 
 		</view>
 		<!-- 底部提交按钮 -->

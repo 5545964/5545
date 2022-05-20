@@ -47,7 +47,7 @@
 								</view>
 								<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc"
 									@click="goods(items)">
-									<view class="">
+									<view >
 										<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 									</view>
 									<view style="margin-left: 10rpx;">
@@ -162,7 +162,7 @@
 			</view>
 			<u-heigth />
 		</view>
-		<view class="">
+		<view >
 			<!-- 查看安装详情 -->
 			<u-popup width="500" border-radius="30" v-model="anzhuang" mode="center">
 				<view class="yueduwo">
@@ -170,22 +170,22 @@
 						安装详情
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view class="">
+						<view >
 							姓名
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
 								placeholder="请填写快递公司" />
 						</view>
-						<view class="">
+						<view >
 							电话
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
 								v-model="bzxq.aphone" placeholder="请填写快递单号" type="number" />
 						</view>
-						<view v-if="bzxq.abh" class="">
-							<view class="">
+						<view v-if="bzxq.abh" >
+							<view >
 								安装人员编号
 							</view>
 							<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -193,7 +193,7 @@
 									v-model="bzxq.abh" placeholder="请填写快递单号" type="number" />
 							</view>
 						</view>
-						<view class="">
+						<view >
 							预计上门时间
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -218,14 +218,14 @@
 						填写快递单号
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view class="">
+						<view >
 							快递公司
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
 								placeholder="请填写快递公司" />
 						</view>
-						<view class="">
+						<view >
 							快递单号
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -360,7 +360,7 @@
 					<view class="top"> 提示 </view>
 					<view class="cets">
 
-						<view class="">
+						<view >
 							是否需要安装？
 						</view>
 						<view style="font-size:24rpx;margin-top:40rpx;">

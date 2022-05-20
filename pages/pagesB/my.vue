@@ -30,7 +30,7 @@
 					<view class="cxz">
 						{{items.name||""}}
 					</view>
-					<view class="">
+					<view >
 						<u-input style="width: 100%;height: 100%;" v-model="items.inp" type="text" disabled="" />
 					</view>
 				</view>
@@ -42,7 +42,7 @@
 					</view>
 					<view class="asd">
 						<template>
-							<view class="" style="text-align: right;" v-if="items.id==9">
+							<view  style="text-align: right;" v-if="items.id==9">
 								{{items.inp||""}}
 							</view>
 							<u-input v-else style="width: 100%;height: 100%;" v-model="items.inp" type="text"
@@ -59,7 +59,7 @@
 						</view>
 						<view class="asd">
 							<template>
-								<view class="" style="text-align: right;" v-if="items.id==9">
+								<view  style="text-align: right;" v-if="items.id==9">
 									{{items.inp||""}}
 								</view>
 								<u-input v-else style="width: 100%;height: 100%;" v-model="items.inp" type="text"
@@ -145,7 +145,7 @@
 							请选择
 						</view>
 					</view>
-					<!-- <view class="">
+					<!-- <view >
 						<u-input style="width: 100%;height: 100%;" inputAlign="left" v-model="items.text" type="text" :disabled="true" />
 					</view> -->
 				</view>

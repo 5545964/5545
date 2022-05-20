@@ -18,17 +18,17 @@
 		<view class="write_msg">
 			<block v-for="item in inpList" :key="item.id">
 				<view class="write_item" v-if="item.aa != 'phone' &&item.aa != 'sex'">
-					<view class="">
+					<view>
 						{{item.name||""}}
 					</view>
 					<input v-if="item.id!=5" style="text-align: right;" v-model="item.text" type="text" value=""
 						:placeholder="item.placeholder" />
-					<view class="" @click="show=true" v-if="item.id==5" style="text-align: right;">
+					<view @click="show=true" v-if="item.id==5" style="text-align: right;">
 						{{item.text||"请选择地区"}}
 					</view>
 				</view>
 				<view class="write_item" v-if="item.aa == 'sex'">
-					<view class="">
+					<view>
 						{{item.name||""}}
 					</view>
 					<u-radio-group v-model="value" @change="radioGroupChange" activeColor="#007399">
@@ -38,17 +38,17 @@
 					</u-radio-group>
 				</view>
 				<view class="write_item" v-if="item.aa == 'phone'">
-					<view class="">
+					<view>
 						{{item.name||""}}
 					</view>
 					<input v-if="item.id!=4" style="text-align: right;" v-model="item.text" type="text" value=""
 						:placeholder="item.placeholder" />
-					<view class="" @click="show=true" v-if="item.id==4" style="text-align: right;">
+					<view @click="show=true" v-if="item.id==4" style="text-align: right;">
 						{{item.text||"请选择地区"}}
 					</view>
 				</view>
 				<view class="write_item" v-if="item.aa == 'phone'">
-					<view class="">
+					<view>
 						验证码
 					</view>
 					<view class="cet" style="justify-content: space-between;width: 60%;">
@@ -73,7 +73,7 @@
 				</u-upload>
 			</view>
 		</view>
-		<view class="" style="height: 100rpx;" />
+		<view style="height: 100rpx;" />
 		<!-- 底部提交按钮 -->
 		<view class="foot_reg">
 			<view class="submit" @click="submit">
@@ -97,13 +97,13 @@
 			// 驳回后修改信息
 			let info = uni.getStorageSync("inpList");
 			if (info) {
-				this.inpList[0].text = info[0].text;//姓名
-				this.inpList[1].text = info[1].text;//性别
-				this.inpList[2].text = info[2].text;//身份证号码
-				this.inpList[3].text = info[3].text;//手机号码
-				this.inpList[4].text = info[4].text;//电子邮箱
-				this.inpList[5].text = info[5].text;//所在地区
-				this.inpList[6].text = info[6].text;//详细地址
+				this.inpList[0].text = info[0].text; //姓名
+				this.inpList[1].text = info[1].text; //性别
+				this.inpList[2].text = info[2].text; //身份证号码
+				this.inpList[3].text = info[3].text; //手机号码
+				this.inpList[4].text = info[4].text; //电子邮箱
+				this.inpList[5].text = info[5].text; //所在地区
+				this.inpList[6].text = info[6].text; //详细地址
 				if (info[1].text == 0) {
 					this.value = "男"
 				} else {

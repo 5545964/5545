@@ -15,7 +15,7 @@
 			</u-navbar>
 		</view>
 		<!-- 设计师 -->
-		<view class="" style="margin-top: 20rpx;">
+		<view  style="margin-top: 20rpx;">
 			<u-designDet :info="desInfo" :disabled="disabled" :current="current" @click="guanzhu" @dianzhan="dianzhan"
 				@pinglun="pinglun" @xuanxinxin="xuanxinxin" />
 		</view>
@@ -36,21 +36,21 @@
 		</view>
 		<!-- 最新评论 -->
 		<view class="newpl" v-if="desInfo.pl.length>0">
-			<view class="" style="color: #000000;margin-bottom: 40rpx;">
+			<view  style="color: #000000;margin-bottom: 40rpx;">
 				最新评论
 			</view>
 			<view class="pl_detail">
 				<view class="pl_user">
-					<view class="">
+					<view >
 						<image :src="desInfo.pl[0].head" style="width: 70rpx;height: 70rpx;border-radius: 50%;"
 							mode="aspectFit">
 						</image>
 					</view>
-					<view class="" style="margin-left: 20rpx;">
-						<view class="" style="font-size: 24rpx;color: #303133;">
+					<view  style="margin-left: 20rpx;">
+						<view  style="font-size: 24rpx;color: #303133;">
 							{{desInfo.pl[0].name||""}}
 						</view>
-						<view class="" style="font-size: 20rpx;color: #909399;">
+						<view  style="font-size: 20rpx;color: #909399;">
 							{{desInfo.pl[0].create_at||""}}
 						</view>
 					</view>
@@ -78,14 +78,14 @@
 				</view>
 			</view>
 			<view class="design_list">
-				<view class="" v-for="(item,index) in tuijian" :key="index">
+				<view  v-for="(item,index) in tuijian" :key="index">
 					<u-design-card :list="item" />
 				</view>
 			</view>
 		</view>
 		<!-- 编辑楼盘 -->
 		<!-- <view class="edithouse" v-if="isDesign">
-			<view class="" @click="editHouse">
+			<view  @click="editHouse">
 				编辑楼盘
 			</view>
 		</view> -->

@@ -27,7 +27,7 @@
 						<view class="status" v-show="items.state == 17"> 已安装 </view>
 					</view>
 					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
-						<view class="">
+						<view>
 							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
 						<view style="margin-left: 10rpx;">
@@ -57,8 +57,7 @@
 						<view class="button" @click="baozhuangpngji(1, items)" v-if="items.state == 17">
 							报装评价
 						</view>
-						<view class="button" v-if="items.state == 16&&items.bz==1"
-							@click="lookdetails(items)">
+						<view class="button" v-if="items.state == 16&&items.bz==1" @click="lookdetails(items)">
 							查看安装详情
 						</view>
 					</view>
@@ -73,7 +72,7 @@
 						<view class="status" v-show="items.state == 17"> 已安装 </view>
 					</view>
 					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
-						<view class="">
+						<view>
 							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
 						<view style="margin-left: 10rpx;">
@@ -109,7 +108,7 @@
 						<view class="status" v-show="items.state == 17"> 已安装 </view>
 					</view>
 					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
-						<view class="">
+						<view>
 							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
 						<view style="margin-left: 10rpx;">
@@ -133,8 +132,7 @@
 						<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
 							完成安装
 						</view>
-						<view class="button" v-if="items.state == 16&&items.bz==1"
-							@click="lookdetails(items)">
+						<view class="button" v-if="items.state == 16&&items.bz==1" @click="lookdetails(items)">
 							查看安装详情
 						</view>
 					</view>
@@ -149,7 +147,7 @@
 						<view class="status" v-show="items.state == 17"> 已安装 </view>
 					</view>
 					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
-						<view class="">
+						<view>
 							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
 						<view style="margin-left: 10rpx;">
@@ -197,30 +195,30 @@
 					安装详情
 				</view>
 				<view style="padding: 0 30rpx;">
-					<view class="">
+					<view>
 						姓名
 					</view>
 					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
 							placeholder="请填写快递公司" />
 					</view>
-					<view class="">
+					<view>
 						电话
 					</view>
 					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-						<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
-							v-model="bzxq.aphone" placeholder="请填写快递单号" type="number" />
+						<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aphone"
+							placeholder="请填写快递单号" type="number" />
 					</view>
-					<view v-if="bzxq.abh" class="">
-						<view class="">
+					<view v-if="bzxq.abh">
+						<view>
 							安装人员编号
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
-							<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
-								v-model="bzxq.abh" placeholder="请填写快递单号" type="number" />
+							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.abh"
+								placeholder="请填写快递单号" type="number" />
 						</view>
 					</view>
-					<view class="">
+					<view>
 						预计上门时间
 					</view>
 					<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -491,31 +489,31 @@
 <style lang="scss" scoped>
 	.yueduwo {
 		background-color: #FFFFFF;
-	
+
 		.jjhgj {
 			color: #2979ff;
 			font-size: 30rpx;
 			font-weight: bold;
 			border-left: 1px solid #b9b9b9;
 		}
-	
+
 		.hkhnij {
 			width: 100%;
 			height: 100%;
 			padding: 26rpx 0;
 			text-align: center;
-	
+
 		}
-	
+
 		.anniusss {
 			display: flex;
 			border-top: 1px solid #b9b9b9;
 		}
-	
+
 		.mingcheng {
 			color: #2979ff;
 		}
-	
+
 		.yuan {
 			width: 30rpx;
 			height: 30rpx;
@@ -526,14 +524,14 @@
 			align-items: center;
 			overflow: hidden;
 		}
-	
+
 		.textss {
 			padding: 0 26rpx;
 			text-align: center;
 			font-weight: bold;
 			font-size: 30rpx;
 		}
-	
+
 		.text {
 			text-align: center;
 			line-height: 100rpx;
@@ -541,6 +539,7 @@
 			font-size: 30rpx;
 		}
 	}
+
 	.popup {
 		.xcvb {
 			height: 100%;

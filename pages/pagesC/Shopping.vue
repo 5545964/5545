@@ -19,7 +19,7 @@
 		</view>
 		<!-- 轮播 -->
 		<view class="datas">
-			<view class="">
+			<view>
 				<view class="cet" style="justify-content: space-between;">
 					<view style="width: 90%;">
 						<view class="title">
@@ -29,7 +29,7 @@
 							{{alls.set||""}}
 						</view>
 					</view>
-					<view class="">
+					<view>
 						<button type="default"
 							style="background-color: #FFFFFF;padding: 0;margin: 0;display: flex;flex-direction: column;"
 							open-type="share">
@@ -107,13 +107,13 @@
 			<view class="pingluns">
 				最新评价
 			</view>
-			<view class="" v-if="pinglun_list.length !=0" style="padding: 30rpx 0;">
+			<view v-if="pinglun_list.length !=0" style="padding: 30rpx 0;">
 				<view class="dsaascc">
 					<image class="img" v-if="pinglun_list[0].head != ''" :src="pinglun_list[0].head" mode="aspectFit">
 					</image>
 					<image class="img" v-else src="../../static/icon_me_avatar.png" mode="aspectFit"></image>
 					<view class="skfksdfsd">
-						<view class="">
+						<view>
 							<view class="name">
 								{{pinglun_list[0].name||""}}
 							</view>
@@ -124,7 +124,7 @@
 						<view class="text">
 							{{pinglun_list[0].content||""}}
 						</view>
-						<block class="" v-for="(item,index) in pinglun_list[0].image" :key="index">
+						<block v-for="(item,index) in pinglun_list[0].image" :key="index">
 							<image @click="kan(item)" style="width: 100rpx;height: 100rpx;margin: 20rpx;"
 								:src="img+item" mode="aspectFit"></image>
 						</block>
@@ -137,7 +137,7 @@
 					<image class="scsfd" src="../../static/icon_shop_lamsemore.png" mode="aspectFit"></image>
 				</view>
 			</view>
-			<view class="" v-else style="padding: 30rpx 0;">
+			<view v-else style="padding: 30rpx 0;">
 				<view class="dsaascc">
 					<view class="skfksdfsd">
 						<view class="name" style="font-size: 30rpx;text-align: center;">
@@ -161,7 +161,7 @@
 			<view class="xian"></view>
 			<view class="bai"></view>
 			<view class="content">
-				<view class="" v-for="(item,index) in alls.content" :key="index">
+				<view v-for="(item,index) in alls.content" :key="index">
 					<image style="height: 600rpx;" :src="img+item" mode="widthFix"></image>
 				</view>
 			</view>
@@ -170,7 +170,7 @@
 		<view class="kjshfjsdk" v-if="jifen==0">
 			<view class="tijiao">
 				<view class="cet">
-					<view class="" @click="soucang">
+					<view @click="soucang">
 						<view class="img">
 							<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode="aspectFit"></image>
 							<image v-else src="../../static/icon_shop_shoucang.png" mode="aspectFit"></image>
@@ -252,8 +252,8 @@
 							</view>
 						</view>
 					</view>
-					<view class="">
-						<view class="" style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
+					<view>
+						<view style="font-size: 24rpx;font-weight: 800;margin-top: 40rpx;">
 							规格
 						</view>
 						<view class="color_ul">
@@ -284,7 +284,7 @@
 				<view class="kjshfjsdk" v-if="jifen==0">
 					<view class="tijiao">
 						<view class="cet">
-							<view class="" @click="soucang">
+							<view @click="soucang">
 								<view class="img">
 									<image v-if="sc" src="../../static/icon_shop_act_shoucang.png" mode="aspectFit">
 									</image>
@@ -338,7 +338,7 @@
 			</u-popup>
 			<u-popup v-model="show[2]" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 				<view class="klks">保障</view>
-				<view class="">
+				<view>
 
 				</view>
 				<view class="clos">

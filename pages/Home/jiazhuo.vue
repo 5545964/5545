@@ -35,7 +35,7 @@
 				@collection="collection" @pinglun="pinglunaa" @dianzhan="dianzhan"></u-video>
 			<u-empty v-else></u-empty>
 		</view>
-		<view class="">
+		<view>
 			<!-- 弹窗 -->
 			<u-popup v-model="show" @close="guan" mode="bottom" length="60%" :closeable="true" border-radius="8">
 				<view class="klks">全部筛选</view>

@@ -32,7 +32,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="">
+			<view>
 				<!-- <u-tabs :list="list" :weizhi="false" :is-scroll="false" :current="current" @change="change"></u-tabs>
 				<swiper :duration="500" :style="'height:'+heigth+'px;'" :circular="true" :current="current"
 					:disable-touch="true" @change="lun_change">
@@ -41,7 +41,7 @@
 							<view class="swiper-item" v-for="(items,indexs) in userList" :key="indexs">
 								<view class="cet">
 									<image class="img" :src="items.users.avatar" mode="aspectFit"></image>
-									<view class="">
+									<view >
 										<view class="name">
 											<text
 												v-if="items.users.username != ''">{{items.users.username||""}}</text><text
@@ -66,7 +66,7 @@
 				<view class="swiper-item" v-for="(items,indexs) in userList" :key="indexs">
 					<view class="cet">
 						<image class="img" :src="items.users.avatar" mode="aspectFit"></image>
-						<view class="">
+						<view>
 							<view class="name">
 								<text v-if="items.users.username != ''">{{items.users.username||""}}</text><text
 									v-else>未知昵称</text>
@@ -130,7 +130,7 @@
 				this.mony = []
 				if (this.shejishi == 0) {
 					this.$api.myteam({
-						user_id:uni.getStorageSync("user_info").id,
+						user_id: uni.getStorageSync("user_info").id,
 						// user_id: 5,
 						state: index
 					}).then(data => {
@@ -148,7 +148,7 @@
 					})
 				} else {
 					this.$api.desmyteam({
-						user_id:uni.getStorageSync("user_info").id,
+						user_id: uni.getStorageSync("user_info").id,
 						// user_id: 5,
 						state: index
 					}).then(data => {

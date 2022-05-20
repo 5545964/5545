@@ -19,7 +19,7 @@
 			</view>
 			<view class="swiper">
 				<view class="swiper-item" v-for="(items,indexs) in list" :key="indexs">
-					<view class="top"  @click="goods(items)">
+					<view class="top" @click="goods(items)">
 						<view class="text"> 订单编号：{{ items.orderid ||""}} </view>
 						<block
 							v-if="items.state == 10 || items.state == 11 || items.state == 12 || items.state == 13 || items.state == 14 || items.state == 15">
@@ -30,7 +30,7 @@
 						</block>
 					</view>
 					<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc" @click="goods(items)">
-						<view class="">
+						<view>
 							<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 						</view>
 						<view style="margin-left: 10rpx;">
@@ -104,7 +104,7 @@
 			</view>
 		</view>
 		<u-heigth />
-		<view class="">
+		<view>
 			<u-popup width="640" :closeable="true" border-radius="10" v-model="showa" mode="center">
 				<view class="popup">
 					<view class="top">
@@ -114,7 +114,7 @@
 						确认取消退款？
 					</view>
 					<view class="xian">
-			
+
 					</view>
 					<view class="bottoms">
 						<view class="sdasas" @click="xuanzhea(0)">
@@ -133,14 +133,14 @@
 						填写快递单号
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view class="">
+						<view>
 							快递公司
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
 								placeholder="请填写快递公司" />
 						</view>
-						<view class="">
+						<view>
 							快递单号
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -167,7 +167,7 @@
 	export default {
 		data() {
 			return {
-				kuaidi:false,
+				kuaidi: false,
 				imgtitle: this.$imgPath,
 				showa: false,
 				title: "我的售后",
@@ -479,7 +479,9 @@
 			font-weight: 400;
 			color: #FEFEFE;
 		}
-	}.yueduwo {
+	}
+
+	.yueduwo {
 		background-color: #FFFFFF;
 
 		.jjhgj {

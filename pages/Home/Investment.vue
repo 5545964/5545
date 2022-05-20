@@ -4,7 +4,7 @@
 			@change="changes" />
 		<view v-show="currents == 0">
 			<!-- 切换 -->
-			<view class="">
+			<view>
 				<u-tabss :list="list" :weizhi="false" :show-bar="false" :is-scroll="true" :current="current"
 					@change="change"></u-tabss>
 			</view>
@@ -34,7 +34,7 @@
 							style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFit"></image>
 					</view>
 				</view>
-				<view class="" style="position: relative;z-index: 2;" v-if="designerList.length !=0">
+				<view style="position: relative;z-index: 2;" v-if="designerList.length !=0">
 					<u-club @navgate="navgepage" :rows="designerList"></u-club>
 				</view>
 				<u-empty text="数据更新中，敬请期待！" v-else></u-empty>
@@ -88,11 +88,11 @@
 				<!-- 驳回 -->
 				<view class="reject" v-if="state==2">
 					<image src="../../static/icon_me_reject.png" class="imgrej" mode="aspectFit"></image>
-					<view class="">
+					<view>
 						你的申请已驳回
 					</view>
 					<view class="reason">
-						<view class="">
+						<view>
 							驳回原因：
 						</view>
 						<view class="reason_text">
@@ -106,14 +106,14 @@
 				<!-- 审核中 -->
 				<view class="reject" v-if="state==0">
 					<image src="../../static/icon_me_review.png" class="imgrej" mode="aspectFit"></image>
-					<view class="">
+					<view>
 						你的资料平台正在加紧审核中，请留意站内信或电话
 					</view>
 				</view>
 				<!-- 审核成功 -->
 				<view class="reject" v-if="state==1">
 					<image src="../../static/icon_me_success.png" class="imgrej" mode="aspectFit"></image>
-					<view class="">
+					<view>
 						恭喜你，你已成为设计师
 					</view>
 					<view class="resest" @click="lookcont" style="margin-top: 250rpx;">
@@ -162,7 +162,7 @@
 			<u-popup v-model="showContract" mode="center" :closeable="true" border-radius="8">
 				<view class="contract_main">
 					<!-- 合同pdf -->
-					<view class="" style="height: 700rpx; width: 100%;">
+					<view style="height: 700rpx; width: 100%;">
 						<scroll-view @scrolltolower="rre" scroll-y="true" style="height: 100%;">
 							<image style="width: 100%;" :src="tupianwo" mode="widthFix">
 							</image>
@@ -379,6 +379,13 @@
 					this.current = 16
 				}, 1000)
 			}
+			this.list = uni.getStorageSync('icon').wanghong
+			this.list.forEach(item => {
+				if (item.id == 16) {
+					this.mmmmmm = item.image
+				}
+			})
+			this.change(this.list[0].id)
 		},
 		onReachBottom(ev) {
 			if (this.current == 12) {
@@ -402,15 +409,15 @@
 			// this.enjoy()
 			this.enjoys()
 			this.getdesproMoenys()
-			this.list = uni.getStorageSync('icon').wanghong
-			this.list.forEach(item => {
-				if (item.id == 16) {
-					this.mmmmmm = item.image
-				}
-			})
+			// this.list = uni.getStorageSync('icon').wanghong
+			// this.list.forEach(item => {
+			// 	if (item.id == 16) {
+			// 		this.mmmmmm = item.image
+			// 	}
+			// })
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
-			this.change(uni.getStorageSync("ggug"))
+			// this.change(uni.getStorageSync("ggug"))
 			let aa = uni.getStorageSync("xieyi")
 			this.xieyi = []
 			aa.forEach(item => {
@@ -954,7 +961,7 @@
 			change(index) {
 				this.pages = 1
 				this.current = index
-				uni.setStorageSync("ggug", index)
+				// uni.setStorageSync("ggug", index)
 				if (index == 12) {
 					this.enjoy()
 				}

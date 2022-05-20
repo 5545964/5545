@@ -22,7 +22,7 @@
 			<view class="dawdad" v-if="current ==0">
 				<view class="top" v-for="(item,index) in datas" :key="index">
 					<view v-if="dispro==0">
-						<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
+						<view v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
 							<view class="top-top">
 								<view class="cet">
 									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
@@ -55,7 +55,8 @@
 						</view>
 					</view>
 					<view v-else>
-						<view v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1&&item.statess.state >= 3">
+						<view
+							v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1&&item.statess.state >= 3">
 							<view class="top-top">
 								<view class="cet">
 									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
@@ -105,7 +106,7 @@
 			<view class="dawdad" v-if="current ==1">
 				<view class="top" v-for="(item,index) in datas" :key="index">
 					<view v-if="dispro==0">
-						<view class="" v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
+						<view v-if="item.money==0&&item.type==current&&item.tixian == currents&&item.state==1">
 							<view class="top-top">
 								<view class="cet">
 									<view :class="[item.checked ? 'active' : 'yuan']" @click="xuanzhe(index)"
@@ -117,12 +118,12 @@
 								</view>
 							</view>
 							<view class="top-bottom">
-								<view class="">
+								<view>
 									<view class="text">
 										获得佣金：￥{{item.cjprice||""}}
 									</view>
 								</view>
-								<view class="">
+								<view>
 									<view class="text">
 										可提佣金：￥{{item.price||""}}
 									</view>
@@ -131,7 +132,7 @@
 						</view>
 					</view>
 					<view v-else>
-						<view class=""
+						<view
 							v-if="item.dipro.type==current&&item.dipro.tixian == currents&&item.dipro.state==1&&item.statess.state >= 3">
 							<view class="top-top">
 								<view class="cet">
@@ -144,12 +145,12 @@
 								</view>
 							</view>
 							<view class="top-bottom">
-								<view class="">
+								<view>
 									<view class="text">
 										获得佣金：￥{{item.dipro.cjprice||""}}
 									</view>
 								</view>
-								<view class="">
+								<view>
 									<view class="text">
 										可提佣金：￥{{item.dipro.price||""}}
 									</view>
@@ -186,8 +187,8 @@
 	export default {
 		data() {
 			return {
-				zjmoney:0,
-				zjgeshi:0,
+				zjmoney: 0,
+				zjgeshi: 0,
 				dispro: 0,
 				yinghangka: false,
 				datas: [],
@@ -365,10 +366,10 @@
 				this.datas[ev].checked = !this.datas[ev].checked;
 				this.zjgeshi = 0
 				this.zjmoney = 0
-				this.datas.forEach(item=>{
-					if(item.checked){
-						this.zjgeshi = this.zjgeshi+1
-						this.zjmoney = this.zjmoney+Number(item.price)
+				this.datas.forEach(item => {
+					if (item.checked) {
+						this.zjgeshi = this.zjgeshi + 1
+						this.zjmoney = this.zjmoney + Number(item.price)
 					}
 				})
 			},

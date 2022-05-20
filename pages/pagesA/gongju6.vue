@@ -28,7 +28,7 @@
 						<view class="commentContent">
 							{{item.content}}
 						</view>
-						<block class="" v-for="(items,indexs) in item.image" :key="indexs" v-if="item.image !=='0'">
+						<block v-for="(items,indexs) in item.image" :key="indexs" v-if="item.image !=='0'">
 							<image v-if="items != '#'" style="width: 100rpx;height: 100rpx;margin: 20rpx;" :src="items"
 								mode="aspectFit" @click="kan(items)"></image>
 						</block>

@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view >
 		<!-- 导航 -->
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">

@@ -13,12 +13,12 @@
 				</view>
 			</u-navbar>
 		</view>
-		<view style="padding: 30rpx;" class="">
-			<view v-if="list.length<=0" style="margin-top: 50rpx;" class="">
+		<view style="padding: 30rpx;">
+			<view v-if="list.length<=0" style="margin-top: 50rpx;">
 				<view class="aass">
 					请手动查询<text style="color: #999;">(长按复制)</text>
 				</view>
-				<view class="">
+				<view>
 					<view class="aass" style="color: #999;">
 						快递公司:
 					</view>
@@ -26,7 +26,7 @@
 						{{express||""}}
 					</view>
 				</view>
-				<view class="">
+				<view>
 					<view class="aass" style="color: #999;">
 						快递编号:
 					</view>
@@ -48,10 +48,10 @@
 								{{item.time||""}}
 							</view>
 							<view class="toutiao_item">
-								<view style="font-size: 32rpx;margin-bottom: 10rpx;font-weight: 800;" class="">
+								<view style="font-size: 32rpx;margin-bottom: 10rpx;font-weight: 800;">
 									{{item.status||""}}
 								</view>
-								<view style="color: #999999;width: 470rpx;" class="">
+								<view style="color: #999999;width: 470rpx;">
 									{{item.context||""}}
 								</view>
 							</view>
@@ -99,7 +99,7 @@
 					success: () => {
 						uni.showToast({
 							title: '复制成功',
-							icon:"none"
+							icon: "none"
 						})
 					}
 				});
@@ -118,7 +118,7 @@
 				}
 			}
 		},
-		
+
 	}
 </script>
 

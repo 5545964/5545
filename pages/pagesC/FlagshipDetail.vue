@@ -105,7 +105,7 @@
 				预约设计
 			</view>
 		</view>
-		<view class="" style="height: 110rpx;" />
+		<view  style="height: 110rpx;" />
 	</view>
 </template>
 <script>

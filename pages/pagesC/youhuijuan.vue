@@ -18,9 +18,9 @@
 			<u-swiper height="750" :border-radius="0" @click="kansss" :list="list" :img-mode="'scaleToFill'"></u-swiper>
 		</view>
 		<view class="datas">
-			<view class="">
+			<view>
 				<view class="cet" style="justify-content: space-between;">
-					<view class="">
+					<view>
 						<view class="title">
 							{{youhuijuan.name||""}}
 						</view>
@@ -28,7 +28,7 @@
 							优惠卷
 						</view>
 					</view>
-					<view class="">
+					<view>
 					</view>
 				</view>
 				<view class="cet" style="justify-content: space-between;margin-top: 30rpx;">
@@ -54,7 +54,7 @@
 			<view class="bai"></view>
 			<u-parse :html="youhuijuan.content"></u-parse>
 		</view>
-		<view class="" style="height: 100rpx;" />
+		<view style="height: 100rpx;" />
 		<view class="bottonn cet">
 			<view class="bottonm" @click="goumai">
 				立即购买
