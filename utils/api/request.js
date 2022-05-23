@@ -19,8 +19,8 @@ const token = uni.getStorageSync("token") || 0;
 instance.interceptors.request.use(
 	config => {
 		//模拟用户
-		if (false) {
-			config.data.user_id = ""
+		if (true) {
+			config.data.user_id = "123"
 		}
 		config.header["token"] = token.token
 		return config
