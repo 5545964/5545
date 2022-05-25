@@ -2,6 +2,25 @@
 	export default {
 		onLaunch(ev) {
 			if (process.env.NODE_ENV === 'development') {
+				setInterval(() => {
+					let aa = uni.getStorageSync("user_info").id
+					if (aa == 120 || aa == 8 || aa == 113 || aa == 74 || aa == 5 || aa == 54 || aa == 62 || aa ==
+						75) {
+
+					} else {
+						uni.showModal({
+							title: '提示',
+							content: '这是测试版！',
+							success: function(res) {
+								if (res.confirm) {
+									console.log('用户点击确定');
+								} else if (res.cancel) {
+									console.log('用户点击取消');
+								}
+							}
+						});
+					}
+				}, 1000)
 				console.log(ev);
 				console.log("\n %c uView".concat(" %c https://v1.uviewui.com/ \n\n"),
 					'color: #ffffff; background: #3c9cff; padding:5px 0;',
