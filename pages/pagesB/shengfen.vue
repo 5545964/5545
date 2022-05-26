@@ -228,7 +228,6 @@
 				}, 100);
 			},
 			xieyis(ev) {
-				console.log(ev, "B,D等级");
 				let bb = ""
 				let kk = []
 				let cc = uni.getStorageSync("xieyi")
@@ -415,7 +414,6 @@
 										"&mlml=" + this.mlml
 								})
 							} else {
-								console.log(this.id);
 								let aa = 0
 								if (this.id == 2) {
 									aa = 3
@@ -473,6 +471,7 @@
 					type: this.isdes,
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
+
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
 							item["name"] = item.type.split("（")[0]
@@ -496,31 +495,38 @@
 							this.xieyis(this.list[0].id)
 							this.id = this.list[0].id
 						}
+
 						this.jiage = this.list[0].money + "元";
 						if (this.list[0].money == "0.00") {
 							this.jiage = "免费"
 						}
-						console.log("this.list[0].id", this.list[0].id);
+
 						this.pd = this.list[0].pd
 						this.types = this.list[0].type
 						this.name = this.list[0].type
-						this.bohuidata = data.data.data.user
-						if (this.bohuidata.state == 2) {
-							this.bohui = true
-							setTimeout(() => {
-								if (this.mlml == 0) {
-									this.current = this.bohuidata.level - 1
-								} else {
-									if (this.bohuidata.level == 3) {
-										this.current = 0
-									} else if (this.bohuidata.level == 4) {
-										this.current = 1
-									} else if (this.bohuidata.level == 5) {
-										this.current = 2
+						this.bohuidata = data.data.data.user || ""
+
+
+						if (this.bohuidata != "") {
+							if (this.bohuidata.state == 2) {
+
+								this.bohui = true
+								setTimeout(() => {
+									if (this.mlml == 0) {
+										this.current = this.bohuidata.level - 1
+									} else {
+										if (this.bohuidata.level == 3) {
+											this.current = 0
+										} else if (this.bohuidata.level == 4) {
+											this.current = 1
+										} else if (this.bohuidata.level == 5) {
+											this.current = 2
+										}
 									}
-								}
-							}, 100);
+								}, 100);
+							}
 						}
+
 						uni.setStorageSync("shengfen", data.data.data.user)
 						setTimeout(() => {
 							this.gaodu(0)
@@ -539,7 +545,6 @@
 				}
 			},
 			lunbo(ev) {
-				console.log(ev.detail.current);
 				this.jiage = this.list[ev.detail.current].money + "元";
 				if (this.list[ev.detail.current].money == "0.00") {
 					this.jiage = "免费"

@@ -1,31 +1,7 @@
 <script>
 	export default {
 		onLaunch(ev) {
-			if (process.env.NODE_ENV === 'development') {
-				setInterval(() => {
-					let aa = uni.getStorageSync("user_info").id
-					if (aa == 120 || aa == 8 || aa == 113 || aa == 74 || aa == 5 || aa == 54 || aa == 62 || aa ==
-						75) {
-
-					} else {
-						uni.showModal({
-							title: '提示',
-							content: '这是测试版！',
-							success: function(res) {
-								if (res.confirm) {
-									console.log('用户点击确定');
-								} else if (res.cancel) {
-									console.log('用户点击取消');
-								}
-							}
-						});
-					}
-				}, 1000)
-				console.log(ev);
-				console.log("\n %c uView".concat(" %c https://v1.uviewui.com/ \n\n"),
-					'color: #ffffff; background: #3c9cff; padding:5px 0;',
-					'color: #3c9cff;background: #ffffff; padding:5px 0;');
-			}
+			console.log(process.env.NODE_ENV, "process.env.NODE_ENV");
 			uni.setStorageSync("user_info_login", 1)
 			uni.setStorageSync("yanzheng", true)
 			uni.setStorageSync("evevevev", JSON.stringify(ev))
@@ -44,9 +20,32 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
-
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
+					if (process.env.NODE_ENV === 'development') {
+						// if (uni.getStorageSync("user_info").id == 120) {
+						// 	uni.switchTab({
+						// 		url: "/pages/Home/Home"
+						// 	})
+						// }
+						setInterval(() => {
+							let aa = uni.getStorageSync("user_info").id
+							if (aa == 120 || aa == 8 || aa == 113 || aa == 74 || aa == 5 || aa == 54 ||
+								aa == 62 || aa == 75) {} else {
+								uni.showModal({
+									title: '提示',
+									content: '这是测试版！',
+									success: function(res) {
+										if (res.confirm) {} else if (res.cancel) {}
+									}
+								});
+							}
+						}, 1000)
+						console.log(ev);
+						console.log("\n %c uView".concat(" %c https://v1.uviewui.com/ \n\n"),
+							'color: #ffffff; background: #3c9cff; padding:5px 0;',
+							'color: #3c9cff;background: #ffffff; padding:5px 0;');
+					}
 					let aa = []
 					data.data.data.status.forEach(item => {
 						aa.push({
@@ -65,12 +64,11 @@
 						return
 					}
 					uni.setStorageSync("showssss", data.data.data.edit)
+
 				}
 			})
-
 		},
 		onShow(ev) {
-			console.log(ev);
 			if (ev.query.uid) {
 				uni.setStorageSync("yaoqinguid", ev.query.uid)
 				if (uni.getStorageSync("user_info")) {
@@ -102,6 +100,10 @@
 				}
 			})
 			if (true) {
+				let time = 10000
+				if (process.env.NODE_ENV === 'development') {
+					time = 100000
+				}
 				clearInterval(uni.getStorageSync("setInterval", aa))
 				let aa = setInterval(() => {
 					let aa = {
@@ -128,7 +130,7 @@
 							}
 						}
 					})
-				}, 10000)
+				}, time)
 				uni.setStorageSync("setInterval", aa)
 			}
 		}

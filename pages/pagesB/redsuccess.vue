@@ -150,6 +150,8 @@
 			}
 		},
 		methods: {
+
+
 			radioGroupChange(ev) {
 				if (ev == "男") {
 					this.sex = "0";
@@ -205,8 +207,40 @@
 					default:
 				}
 			},
+			// 判断是否移动手机
+			isMobile(e) {
+				if (null == e || "" == e) return false;
+				return /^1[3456789][0-9]{9}$/.test(e);
+			},
+			// 判断邮箱
+			checkEmail(e) {
+				return;
+			},
 			submit() {
-				if (this.code == "" || this.idcard == "" || this.address == "" || this.emal == "" || this.phone == "" ||
+				console.log(321321);
+				if (!/^1[3456789][0-9]{9}$/.test(this.phone)) {
+					return uni.showToast({
+						title: "请检查手机号",
+						icon: "none"
+					})
+				}
+				if (!/^\w+((-\w+)|(\.\w+))*@\w+(\.\w{2,3}){1,3}$/.test(this.emal)) {
+					return uni.showToast({
+						title: "请检查邮箱",
+						icon: "none"
+					})
+				}
+				let _IDRe18 =
+					/^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+				let _IDre15 = /^([1-6][1-9]|50)\d{4}\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}$/
+				if (_IDRe18.test(this.idcard) || _IDre15.test(this.idcard)) {} else {
+					return uni.showToast({
+						title: "请检查身份证号码",
+						icon: "none"
+					})
+				}
+				console.log("pppppppp");
+				if (this.code == "" || this.address == "" ||
 					this.addressxq == "" || this.level == "" || this.name == "" || this.sex === "") {
 					return uni.showToast({
 						title: "请检查资料",
