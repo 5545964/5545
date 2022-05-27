@@ -718,7 +718,7 @@
 				.type_list {
 					display: flex;
 					align-items: center;
-					justify-content: end;
+					justify-content: flex-start;
 					flex-wrap: wrap;
 				}
 
@@ -974,7 +974,7 @@
 		.type_list {
 			display: flex;
 			align-items: center;
-			justify-content: end;
+			justify-content: flex-start;
 			flex-wrap: wrap;
 		}
 
