@@ -20,7 +20,7 @@ instance.interceptors.request.use(
 	config => {
 		//模拟用户
 		if (false) {
-			config.data.user_id = "74"
+			config.data.user_id = "120"
 		}
 		config.header["token"] = token.token
 		return config

@@ -67,7 +67,7 @@
 				上传设计师资质
 			</view>
 			<view class="allimg">
-				<u-upload width="160" :fileList="kanimg" height="160" :action="action" max-count="9" :header="header"
+				<u-upload width="160" :fileList="kanimg" height="160" :action="action" max-count="8" :header="header"
 					@on-success="shangchuan" @on-remove="deleteimg" :form-data="formData" name="image"
 					size-type="compressed">
 				</u-upload>

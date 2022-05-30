@@ -26,8 +26,7 @@
 				content: "",
 				title: "富文本",
 				style: {
-					// 字符串的形式
-					image:'width: 300rpx;'
+					image: 'width: 300rpx;'
 				}
 			};
 		},
@@ -35,9 +34,24 @@
 			if (ev.title) {
 				this.title = ev.title;
 			}
-			let aa = uni.getStorageSync("fuwenbeng")
-			if (aa) {
-				this.content = aa
+			if (ev.id) {
+				this.$api.myag({
+					userid: uni.getStorageSync("user_info").id,
+					id: ev.id
+				}).then(data => {
+					if (data.data.code == 1) {
+						if (data.data.data.status[0].content != "" && data.data.data.status[0].content != null) {
+							this.content = data.data.data.status[0].content
+						} else {
+							this.content = data.data.data.status[0].ag.content
+						}
+					}
+				})
+			} else {
+				let aa = uni.getStorageSync("fuwenbeng")
+				if (aa) {
+					this.content = aa
+				}
 			}
 		},
 		methods: {

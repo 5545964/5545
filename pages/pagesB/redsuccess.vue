@@ -217,8 +217,7 @@
 				return;
 			},
 			submit() {
-				console.log(321321);
-				if (!/^1[3456789][0-9]{9}$/.test(this.phone)) {
+				if (!/^1[3-9]\d{9}$/.test(this.phone)) {
 					return uni.showToast({
 						title: "请检查手机号",
 						icon: "none"

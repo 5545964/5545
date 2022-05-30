@@ -44,15 +44,9 @@
 			}
 		},
 		onShow() {
-			// this.alls = []
-			// uni.getStorageSync("des_info").contrins.split(",").forEach((item,index) => {
-			// 	this.alls.push({
-			// 		type: "合同"+(index+1),
-			// 		doc_url: this.$imgPath + item
-			// 	})
-			// })
 			this.$api.myag({
-				userid: uni.getStorageSync("user_info").id
+				userid: uni.getStorageSync("user_info").id,
+				id: 0
 			}).then(data => {
 				if (data.data.code == 1) {
 					this.alls = data.data.data.status
@@ -62,28 +56,14 @@
 		},
 		methods: {
 			kan(ev) {
-
 				if (ev.content != "" && ev.content != null) {
-					console.log(111);
 					uni.setStorageSync("fuwenbeng", ev.content)
 				} else {
-					console.log(22222);
 					uni.setStorageSync("fuwenbeng", ev.ag.content)
 				}
 				uni.navigateTo({
-					url: "../pagesC/fuwenben?title=" + ev.ag.name
+					url: "../pagesC/fuwenben?title=" + ev.ag.name + "&id=" + ev.id
 				})
-				// uni.downloadFile({
-				// 	url: ev.doc_url,
-				// 	success(res) {
-				// 		uni.openDocument({
-				// 			filePath:res.tempFilePath,
-				// 			success(res) {
-
-				// 			}
-				// 		})
-				// 	}
-				// })
 			},
 			back(ev) {
 				switch (ev) {

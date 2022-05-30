@@ -49,7 +49,7 @@
 					<view class="be_designer" />
 					<image style="width: 100%;" :src="dasdsdas+mmmmmm" @click="kan()" mode="widthFix" />
 					<view v-if="edit">
-						<view class="be_foot" v-if="yanzhengtanchaung">
+						<view class="be_foot">
 							<view class="pay" @click="ananana(0)">
 								成为1级设计师会员
 							</view>
@@ -57,29 +57,13 @@
 								成为2级设计师会员
 							</view>
 						</view>
-						<view class="be_foot" v-else>
-							<view class="pay" @click="getcontein(0)">
-								成为1级设计师会员
-							</view>
-							<view class="pay" @click="getcontein(1)">
-								成为2级设计师会员
-							</view>
-						</view>
 					</view>
 					<view v-else>
-						<view class="be_foot" v-if="yanzhengtanchaung">
+						<view class="be_foot">
 							<view class="pay" @click="ananana(1)">
 								成为2级设计师会员
 							</view>
 							<view class="pay" @click="ananana(2)">
-								成为3级设计师会员
-							</view>
-						</view>
-						<view class="be_foot" v-else>
-							<view class="pay" @click="getcontein(1)">
-								成为2级设计师会员
-							</view>
-							<view class="pay" @click="getcontein(2)">
 								成为3级设计师会员
 							</view>
 						</view>
@@ -233,37 +217,18 @@
 						感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下几项条款了解详细信息。如您同意，请勾选以下几项条款并点击”同意”开始接受我们的服务。
 					</view>
 					<view style="padding:20rpx 0;">
-						<view class="cet" style="margin:10rpx 0;justify-content: end;" v-for="(item,index) in xieyi"
-							:key="index">
-
-
-
-
-							<!-- <view style="width:30%;display:flex;justify-content: flex-end;">
+						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
+							<view style="display:flex;justify-content: flex-end;align-items:center;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 								</view>
 							</view>
-							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name||""}}》
-							</view> -->
-							<view style="width:30%;display:flex;justify-content: flex-end;align-items:center;">
-								<view class="yuan" @click="hahaha(item)">
-									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
-								</view>
-							</view>
-							<view style="width:70%;padding: 0 10rpx;">
+							<view style="padding: 0 10rpx;">
 								<view class="mingcheng" @click="fuwenben(item)">
 									《{{item.name||""}}》
 								</view>
 							</view>
-
-
-
-
 						</view>
-
-
 					</view>
 					<view class="anniusss">
 						<view class="hkhnij" @click="xieyitongyi(0)">
@@ -307,7 +272,6 @@
 					}
 				],
 				tupianwo: "",
-				yanzhengtanchaung: true,
 				yuedu: false,
 				xieyi: [],
 				timea: 0,
@@ -326,7 +290,7 @@
 				recruit_all: [],
 				tit: "综合排序",
 				fenleideid: "",
-				allssssss: [],
+				allssssss: [], //价格
 				indexdas: "",
 				pinglun_list: [],
 				video: [],
@@ -334,7 +298,7 @@
 				dianzhansssss: false,
 				active: 0,
 				desinfo: {},
-				state: -1,
+				state: -1, //成为设计师状态
 				showContract: false,
 				pay: "",
 				value1: "",
@@ -406,34 +370,26 @@
 		},
 		onShow() {
 			this.getstate();
-			// this.enjoy()
 			this.enjoys()
 			this.getdesproMoenys()
-			// this.list = uni.getStorageSync('icon').wanghong
-			// this.list.forEach(item => {
-			// 	if (item.id == 16) {
-			// 		this.mmmmmm = item.image
-			// 	}
-			// })
 			this.jkl = this.jkl + uni.getStorageSync('bottomheigth')
 			this.tupianwo = this.$imgPath + "/uploads/20220216/bffc5626e75b83e170690335b0fec8fb.png"
-			// this.change(uni.getStorageSync("ggug"))
-			let aa = uni.getStorageSync("xieyi")
-			this.xieyi = []
-			aa.forEach(item => {
-				if (item.state == 1) {
-					this.xieyi.push(item)
-				}
-			})
-			if (this.xieyi.length > 0) {
-				this.yanzhengtanchaung = true;
-			} else {
-				this.yanzhengtanchaung = false;
-			}
-
-
 		},
 		methods: {
+			zxcv(ev, ev1) {
+				let aa = uni.getStorageSync("xieyi")
+				this.xieyi = []
+				aa.forEach(item => {
+					if (item.state == ev) {
+						this.xieyi.push(item)
+					}
+				})
+				if (this.xieyi.length > 0) {
+					this.yuedu = true
+				} else {
+					this.getcontein(ev1)
+				}
+			},
 			gkgk() {
 				uni.navigateTo({
 					url: "../pagesD/designPage/designPage",
@@ -490,14 +446,6 @@
 			},
 			hahaha(item) {
 				item.check = !item.check
-			},
-			tongyixieyi(ev) {
-				if (this.xieyi.length > 0) {
-					this.yuedu = true;
-				} else {
-					this.shoujiyanzheng = false;
-					this.yuedu = false;
-				}
 			},
 			tongyis(ev) {
 				if (ev == 1) {
@@ -570,7 +518,15 @@
 			},
 			ananana(ev) {
 				this.diandedijige = ev
-				this.yuedu = true
+				let aa = 0
+				if (ev == 0) {
+					aa = 1
+				} else if (ev == 1) {
+					aa = 10
+				} else if (ev == 2) {
+					aa = 11
+				}
+				this.zxcv(aa, ev)
 			},
 			zhongzhi(ev) {
 				if (ev == 0) {
@@ -646,7 +602,6 @@
 									this.allssssss.push(item)
 								}
 							})
-							// this.allssssss = data.data.data.status
 							uni.stopPullDownRefresh();
 						}
 					}

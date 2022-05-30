@@ -23,24 +23,10 @@
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					if (process.env.NODE_ENV === 'development') {
-						// if (uni.getStorageSync("user_info").id == 120) {
-						// 	uni.switchTab({
-						// 		url: "/pages/Home/Home"
-						// 	})
-						// }
-						// setInterval(() => {
-						// 	let aa = uni.getStorageSync("user_info").id
-						// 	if (aa == 120 || aa == 8 || aa == 113 || aa == 74 || aa == 5 || aa == 54 ||
-						// 		aa == 62 || aa == 75) {} else {
-						// 		uni.showModal({
-						// 			title: '提示',
-						// 			content: '这是测试版！',
-						// 			success: function(res) {
-						// 				if (res.confirm) {} else if (res.cancel) {}
-						// 			}
-						// 		});
-						// 	}
-						// }, 1000)
+						uni.showToast({
+							title: "这是测试版！",
+							icon: "error"
+						})
 						console.log(ev);
 						console.log("\n %c uView".concat(" %c https://v1.uviewui.com/ \n\n"),
 							'color: #ffffff; background: #3c9cff; padding:5px 0;',
@@ -94,44 +80,67 @@
 						item["check"] = false
 					})
 					uni.setStorageSync("xieyi", data.data.data.status)
-					// uni.setStorageSync("xieyi", [])
 				} else {
 					uni.setStorageSync("xieyi", [])
 				}
 			})
 			if (true) {
-				let time = 10000
+				let timeaa = 10000
+				let timebb = 800000
 				if (process.env.NODE_ENV === 'development') {
-					time = 100000
+					timeaa = 5000
+					timebb = 5000
 				}
-				clearInterval(uni.getStorageSync("setInterval", aa))
+				clearInterval(uni.getStorageSync("setIntervalaa", aa))
 				let aa = setInterval(() => {
-					let aa = {
+					this.$api.qzqy({
 						user_id: uni.getStorageSync("user_info").id || 0
-					}
-					this.$api.qzqy(aa).then(data => {
+					}).then(data => {
+						if (data.data.code == 1) {
+							if (uni.getStorageSync("yanzheng")) {
+								let routes = getCurrentPages()
+								let curRoute = routes[routes.length - 1].route
+								if (curRoute != "pages/pagesB/tanchuang") {
+									this.$api.agreements().then(datas => {
+										if (datas.data.code == 1) {
+											datas.data.data.status.forEach(item => {
+												item["check"] = false
+											})
+											uni.setStorageSync("xieyi", datas.data.data.status)
+											uni.reLaunch({
+												url: "/pages/pagesB/tanchuang?agid=" + data
+													.data.data.status.agid +
+													"&tongyi=11111&lpid=" + data
+													.data.data.status.lpid
+											})
+										} else {
+											uni.setStorageSync("xieyi", [])
+										}
+									})
+								}
+							}
+						}
+					})
+				}, timeaa)
+				uni.setStorageSync("setIntervalaa", aa)
+
+				clearInterval(uni.getStorageSync("setIntervalbb", bb))
+				let bb = setInterval(() => {
+					this.$api.timeout({
+						user_id: uni.getStorageSync("user_info").id || 0
+					}).then(data => {
 						if (data.data.code == 1) {
 							if (uni.getStorageSync("yanzheng")) {
 								uni.reLaunch({
 									url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
-										.agid + "&lpid=11111"
+										.agid + "&tongyi=22222&lpid=" + data.data.data.status
+										.lpid
 								})
 							}
 						}
 					})
-					this.$api.timeout(aa).then(data => {
-						if (data.data.code == 1) {
-							if (uni.getStorageSync("yanzheng")) {
-								uni.reLaunch({
-									url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
-										.agid + "&lpid=22222"
-									// + "&lpid=" + data.data.data.status.lpid
-								})
-							}
-						}
-					})
-				}, time)
-				uni.setStorageSync("setInterval", aa)
+				}, timebb)
+				uni.setStorageSync("setIntervalbb", bb)
 			}
 		}
 	}

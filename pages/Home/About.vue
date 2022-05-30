@@ -3,7 +3,7 @@
 		<view style="height: 40rpx;">
 			<u-tabs :list="list" :is-scroll="false" :current="current" @change="change"></u-tabs>
 		</view>
-		<view >
+		<view>
 			<swiper :style="'height: '+heigth+'px;'" :circular="true" :duration="300" @change="lun_change"
 				:current="current">
 				<swiper-item v-for="(item,index) in lists" :key="index">
@@ -39,8 +39,8 @@
 								<view
 									style="width: 100%;text-align: center;height: 60rpx;line-height: 60rpx;display: flex;align-items: center;justify-content: center;"
 									@click="show = true">
-									<view >
-										{{xuanzhe}}
+									<view>
+										{{XuanZhongDeSheng}}
 									</view>
 									<image src="../../static/icon_home_sanjiao.png"
 										style="width: 30rpx;height: 20rpx;margin-left: 20rpx;" />
@@ -48,7 +48,9 @@
 
 								<view style="height: 30rpx;width: 100%;" />
 								<view style="height: 100%;">
-									<!-- <view class="papapa" v-if="lickc.length!=0"
+
+
+									<view class="papapa" v-if="lickc.length!=0"
 										style="margin-bottom:30rpx;border-bottom: 1px solid #007399;padding-bottom:10rpx;">
 										<view class="mian_left">
 											<scroll-view scroll-y="true" style="height: 100%;">
@@ -87,7 +89,8 @@
 											<scroll-view scroll-y="true" style="height: 100%;">
 												<view style="margin-bottom:20rpx;" v-for="(item,index) in lickc[3]"
 													:key="index" @click="lidsadsa(index,item)">
-													<view :class="active22==index?'mian_left_item':'mian_left_item1'"
+													<view
+														:class="items.active==index?'mian_left_item':'mian_left_item1'"
 														class="cet">
 														<view style="width:100rpx;text-align: left;line-height:35rpx;">
 															{{item.title||""}}
@@ -96,7 +99,9 @@
 												</view>
 											</scroll-view>
 										</view>
-									</view> -->
+									</view>
+
+
 									<view class="papapa" style="height: 100%;">
 										<view class="mian_left" v-for="(item,index) in datalist" :key="index">
 											<scroll-view scroll-y="true" style="height: 100%;">
@@ -128,7 +133,7 @@
 								<view class="xian"></view>
 								<view style="height: 20rpx;"></view>
 								<view class="hahah" @click="shouURl(item)" v-for="(item,index) in xinxi" :key="index">
-									<view >
+									<view>
 										<view class="hnjh">
 											{{item.title||""}}
 										</view>
@@ -136,7 +141,7 @@
 											{{item.refreshtime_text||""}}
 										</view>
 									</view>
-									<view >
+									<view>
 										<image class="imghjk" :src="imgPath+item.simage" mode="aspectFit">
 										</image>
 									</view>
@@ -208,17 +213,17 @@
 				</view>
 			</u-popup>
 			<!-- b1推广权 -->
-			<u-popup width="500" border-radius="30" v-model="shengqings" mode="center">
+			<u-popup width="500" border-radius="30" v-model="B1TuiGuang" mode="center">
 				<view class="yueduwo">
 					<view class="text">
 						楼盘推广权申请
 					</view>
 					<view class="textss" style="padding: 30rpx;">
-						是否申请<text class="mingcheng">{{shengqing}}</text>的推广权
+						是否申请<text class="mingcheng">{{tanchaung.names}}</text>的推广权
 					</view>
 
 					<view class="anniusss">
-						<view class="hkhnij" @click="shengqings = false">
+						<view class="hkhnij" @click="B1TuiGuang = false">
 							否
 						</view>
 						<view class="hkhnij jjhgj" @click="tuihuang(tanchaung)">
@@ -232,12 +237,12 @@
 			<u-popup width="500" border-radius="30" v-model="yuedus" mode="center">
 				<view class="yueduwo">
 					<view class="texts">
-						{{qianyue||""}}
+						{{QianYue||""}}
 					</view>
 					<view class="textsss">
-						{{huxing||""}}
+						{{HuXin||""}}
 					</view>
-					<view  v-if="!cduan">
+					<view v-if="!ChengWeiHuiYuan">
 						<view class="llll" @click="llll()">
 							楼盘设计
 						</view>
@@ -245,7 +250,7 @@
 							户型攻略
 						</view>
 					</view>
-					<view  v-else>
+					<view v-else>
 						<view class="llll" @click="duan(0)">
 							成为设计师
 						</view>
@@ -259,10 +264,10 @@
 			<u-popup width="500" border-radius="30" v-model="shenghe" mode="center" :maskCloseAble="false">
 				<view class="yueduwo">
 					<view class="texts">
-						{{mnmn||""}}
+						{{TanKuangBiaoTi||""}}
 					</view>
 					<view class="textsss" style="margin:30px 0;">
-						{{nmnm||""}}
+						{{TanKuangNeiRong||""}}
 					</view>
 					<view class="lllls" v-if="shenghebut" @click="shenghe = false">
 						确定
@@ -282,10 +287,10 @@
 			<u-popup width="500" border-radius="30" v-model="shenghevv" mode="center">
 				<view class="yueduwo">
 					<view class="texts">
-						{{mnmn||""}}
+						{{TanKuangBiaoTi||""}}
 					</view>
 					<view class="textsss" style="margin:30px 0;">
-						{{nmnm||""}}
+						{{TanKuangNeiRong||""}}
 					</view>
 					<view class="lllls" v-if="shenghebutvv" @click="shenghevv = false">
 						确定
@@ -312,24 +317,24 @@
 	export default {
 		data() {
 			return {
-				shengqings: "",
-				shengqing: false,
+				YuanLaiDeIndexs: 0,
+				YuanLaiDeIndex: 0,
+				B1TuiGuang: "", //B1推广权
 				user_infos: "",
 				des_infos: "",
-				mm: [],
-				zhuangtai: 0,
-				xuanzhe: "",
-				show: false,
-				columns: [],
-				cduan: false,
-				nmnm: "",
-				mnmn: "",
+				// zhuangtai: 0,
+				XuanZhongDeSheng: "",
+				show: false, //选省
+				columns: [], //选省的数据
+				ChengWeiHuiYuan: false, //都不是B，D端会员
+				TanKuangNeiRong: "", //弹框内容
+				TanKuangBiaoTi: "", //弹框标题
+				yuedus: false,
+				QianYue: "",
+				HuXin: "",
 				shenghe: false,
 				shenghevv: false,
 				loupanid: "",
-				qianyue: "",
-				huxing: "",
-				yuedus: false,
 				yuedu: false,
 				xieyi: [],
 				keyword: "",
@@ -383,19 +388,14 @@
 				imgsss: '<img src=\"' + this.$imgPath,
 				active: 0,
 				datalist: [],
-				active0: 0,
 				datalist0: [],
-				active1: 0,
-				datalist1: [],
-				active2: 0,
-				active22: 0,
-				datalist2: [],
+				lickc: [],
 				tanchaung: {},
 				agid: "",
-				lickc: [],
 				klklkl: 0,
 				lickid: 0,
-				jiji: "",
+				loupanxieyi: "", //楼盘协议
+				desidid: 0, //B1D3情况切换idid
 				idid: 0, //0B端，1D端，2区域
 				idids: 0, //0B端，1D端
 				shenghebut: true, //重新申请按钮
@@ -406,7 +406,7 @@
 			};
 		},
 		onPullDownRefresh() {
-			this.xuanzhe = ""
+			this.XuanZhongDeSheng = ""
 			this.columns = []
 			this.current = 0
 			this.alls()
@@ -426,11 +426,12 @@
 				this.current = 4
 			}
 			this.columns = []
-			this.xuanzhe = ""
+			this.XuanZhongDeSheng = ""
 			this.allls()
 			this.alls()
 		},
 		onShow() {
+			// this.current = 3
 			this.user_infos = uni.getStorageSync("user_info")
 			this.des_infos = uni.getStorageSync("des_info")
 			this.idid = 0
@@ -449,7 +450,7 @@
 						title: data.data.msg,
 						icon: "none"
 					})
-					this.shengqings = false
+					this.B1TuiGuang = false
 				})
 			},
 			// 成为设计师
@@ -475,10 +476,9 @@
 							item["check"] = false
 							item["name"] = item.title + "的相关协议"
 						})
-						this.datalist2 = data.data.data.status
-						this.active2 = 0
+						this.lickc = data.data.data.status
 					} else {
-						this.datalist2 = []
+						this.lickc = []
 						uni.showToast({
 							title: "暂无数据",
 							icon: "none"
@@ -593,8 +593,20 @@
 			},
 			// 切换选项，签约区县
 			changeTokens(index, indexs) {
+				console.log(index, indexs, this.YuanLaiDeIndex, this.YuanLaiDeIndexs,this.idid,this.desidid);
+				console.log(index != this.YuanLaiDeIndex && indexs != this.YuanLaiDeIndexs);
+				if (index == this.YuanLaiDeIndex && indexs == this.YuanLaiDeIndexs) {
+					console.log("点的相同的");
+				} else {
+					console.log("点的不同的");
+					this.idid = 0
+					this.desidid = 0
+					this.YuanLaiDeIndex = index
+					this.YuanLaiDeIndexs = indexs
+				}
+				console.log(index, indexs, this.YuanLaiDeIndex, this.YuanLaiDeIndexs,this.idid,this.desidid);
 				let data = this.datalist[index][indexs]
-				// console.log(data, "第" + index + "排第" + indexs + "个");
+				console.log(data, "第" + index + "排第" + indexs + "个");
 				// 选中颜色
 				this.datalist[index].forEach(item => {
 					item.active = indexs
@@ -617,39 +629,54 @@
 			},
 			// 楼盘签约
 			async changeTokens2(item) {
-				// console.log(item, this.idid);
+				console.log(item);
 				this.lickc = []
 				this.shenghebut = true;
 				if (await this.$login()) {
 					this.loupanid = item.id
 					item.check = false
 					this.tanchaung = item
-					let aa = this.user_infos
-					if (!aa.bbs.id && aa.des == 0) {
-						this.qianyue = "您还不是设计师或美居会员"
-						this.huxing = "点击前往成为美居设计师或美居会员"
-						this.cduan = true
+					if (!this.user_infos.bbs.id && this.user_infos.des == 0) {
+						this.QianYue = "您还不是设计师或美居会员"
+						this.HuXin = "点击前往成为美居设计师或美居会员"
+						this.ChengWeiHuiYuan = true
 						this.yuedus = true
 					}
+					// B3点省市
+					if (this.user_infos.bbs.id == 3 && item.level < 3) {
+						return
+					}
+					// B1B2点省市区
+					if (this.user_infos.bbs.id != 3 && !item.address) {
+						return
+					}
+					// D3点楼盘判断是否签约楼盘
+					if (this.user_infos.bbs.id == 1 && item.address) {
+						if (this.user_infos.des == 4) {
+							if (this.desidid == 0) {
+								this.idid = 1
+							} else {
+								this.idid = 0
+							}
+						} else {
+							this.idid = 0
+						}
+					}
+					// B3,D3点楼盘判断
 					if (this.user_infos.bbs.id == 3 && item.address) {
-						if (aa.des == 4) {
+						if (this.user_infos.des == 4) {
 							this.idid = 1
 						} else {
 							return;
 						}
 					}
-					if (this.user_infos.bbs.id == 3 && item.level < 3) {
-						return
-					}
-					if (this.user_infos.bbs.id != 3 && !item.address) {
-						return
-					}
+					// 点区域
 					if (!item.address) {
 						this.idid = 2
 					}
 					uni.setStorageSync("idid", this.idid)
 					this.$api.mapstation({
-						user_id: aa.id,
+						user_id: this.user_infos.id,
 						bid: item.id,
 						type: this.idid //0B端，1D端，2区域
 					}).then(data => {
@@ -671,11 +698,11 @@
 							console.log("------------------------------------");
 						}
 						if (false) {
-							console.log("11");
+							console.log("");
 						} else if (data.data.code == 0) {
 							// 设计师审核中
-							this.mnmn = data.data.msg
-							this.nmnm = data.data.data
+							this.TanKuangBiaoTi = data.data.msg
+							this.TanKuangNeiRong = data.data.data
 							this.idid = 0
 							this.shenghe = true;
 						} else if (data.data.code == 1) {
@@ -688,54 +715,55 @@
 						} else if (data.data.code == 3) {
 							// 设计师签约通过
 							this.idid = 0
+							this.desidid = 1
 							this.klklkl = 1
-							this.qianyue = data.data.msg
-							this.huxing = data.data.data
+							this.QianYue = data.data.msg
+							this.HuXin = data.data.data
 							this.yuedus = true;
 						} else if (data.data.code == 4) {
 							// 设计师申请驳回
 							this.idid = 1
-							this.mnmn = data.data.msg
-							this.nmnm = data.data.data
+							this.TanKuangBiaoTi = data.data.msg
+							this.TanKuangNeiRong = data.data.data
 							this.shenghe = true;
 							this.shenghebut = false;
 							this.shenghebuts = false;
 						} else if (data.data.code == 5) {
 							// B1签约推广权
-							if (aa.des == 4) {
-								this.idid = 1
+							// D3点楼盘判断是否签约楼盘
+							if (this.user_infos.des == 4) {
+								this.desidid = 0
 							}
-							this.shengqing = this.tanchaung.names
-							this.shengqings = true
+							this.B1TuiGuang = true
 						} else if (data.data.code == 7) {
 							// B2申请审核中
-							this.mnmn = data.data.msg
-							this.nmnm = data.data.data
+							this.TanKuangBiaoTi = data.data.msg
+							this.TanKuangNeiRong = data.data.data
 							this.shenghe = true;
-							if (aa.des == 4) {
+							if (this.user_infos.des == 4) {
 								this.idid = 1
 							}
 						} else if (data.data.code == 8) {
 							// B2审核通过
 							this.klklkl = 0
-							this.qianyue = data.data.msg
-							this.huxing = data.data.data
+							this.QianYue = data.data.msg
+							this.HuXin = data.data.data
 							this.yuedus = true;
-							if (aa.des == 4) {
+							if (this.user_infos.des == 4) {
 								this.idid = 1
 							}
 						} else if (data.data.code == 9) {
 							// B2审核拒绝
-							this.mnmn = data.data.msg
-							this.nmnm = data.data.data
+							this.TanKuangBiaoTi = data.data.msg
+							this.TanKuangNeiRong = data.data.data
 							this.shenghe = true;
 							this.shenghebut = false;
 							this.shenghebuts = false;
 
 						} else if (data.data.code == 10) {
 							// B2签约
-							if (this.idid == 0 && item.sign_bid == 0 && aa.bbs.id == 2) {
-								if (aa.des == 4) {
+							if (this.idid == 0 && item.sign_bid == 0 && this.user_infos.bbs.id == 2) {
+								if (this.user_infos.des == 4) {
 									this.idid = 1
 								}
 								// 签约时候的协议ID
@@ -746,7 +774,7 @@
 								return
 							}
 							// 设计师
-							if (this.idid == 1 && item.sign_did == 0 && aa.des == 4) {
+							if (this.idid == 1 && item.sign_did == 0 && this.user_infos.des == 4) {
 								// 签约时候的协议ID
 								this.idids = 1
 								this.idid = 0
@@ -757,14 +785,15 @@
 							}
 							if (item.sign_bid != 0 || item.sign_did != 0) {
 								// B2,D2签约楼盘状态
-								if (aa.bbs.id != 1 && aa.bbs.id != 3) {
-									this.qianyue = "该楼盘已被签约"
-									if (item.sign_bid == aa.id || item.sign_did == aa.id) {
-										this.huxing = "该楼盘已被您签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+								if (this.user_infos.bbs.id != 1 && this.user_infos.bbs.id != 3) {
+									this.QianYue = "该楼盘已被签约"
+									if (item.sign_bid == this.user_infos.id || item.sign_did == this.user_infos
+										.id) {
+										this.HuXin = "该楼盘已被您签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
 									} else {
-										this.huxing = "该楼盘已被其他人签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
+										this.HuXin = "该楼盘已被其他人签约，您可签约其他楼盘或查看楼盘设计和户型攻略。"
 									}
-									if (aa.des == 4) {
+									if (this.user_infos.des == 4) {
 										this.idid = 1
 									}
 									this.yuedus = true;
@@ -786,8 +815,8 @@
 							})
 						} else if (data.data.code == 13) {
 							// B3审核拒绝
-							this.mnmn = data.data.msg
-							this.nmnm = data.data.data
+							this.TanKuangBiaoTi = data.data.msg
+							this.TanKuangNeiRong = data.data.data
 							this.shenghebutvv = false
 							this.shenghevv = true;
 
@@ -806,7 +835,7 @@
 							})
 							this.xieyi = [...cc]
 							this.yuedu = true
-							if (aa.des == 4) {
+							if (this.user_infos.des == 4) {
 								this.idid = 1
 							}
 						} else if (data.data.code == 20) {
@@ -879,7 +908,7 @@
 							this.datalist0[index] = [...data.data.data.status]
 							this.datalist = [...this.datalist0]
 							this.mao(this.datalist[index][0].id, index + 1, 0)
-							this.zhuangtai = index + 1
+							// this.zhuangtai = index + 1
 						} else {
 							let bb = this.datalist.length
 							this.lp(ev, index)
@@ -954,7 +983,7 @@
 							item["active"] = 0
 						})
 						this.columns = [...data.data.data.status]
-						this.xuanzhe = this.columns[0].title
+						this.XuanZhongDeSheng = this.columns[0].title
 						this.mao(this.columns[0].id, 0, 0)
 						uni.stopPullDownRefresh();
 					}
@@ -967,10 +996,10 @@
 				}).then(data => {
 					if (data.data.code == 1) {
 						if (index == 0) {
-							this.jiji = data.data.data.status.dcontents
+							this.loupanxieyi = data.data.data.status.dcontents
 						}
 						if (index == 1) {
-							this.jiji = data.data.data.status.bcontents
+							this.loupanxieyi = data.data.data.status.bcontents
 						}
 					}
 				})
@@ -990,7 +1019,7 @@
 						url: "../pagesC/fuwenben?title=" + ev.name
 					})
 				} else {
-					uni.setStorageSync("fuwenbeng", this.jiji)
+					uni.setStorageSync("fuwenbeng", this.loupanxieyi)
 					uni.navigateTo({
 						url: "../pagesC/fuwenben?title=" + ev.title
 					})

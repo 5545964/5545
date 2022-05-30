@@ -12,8 +12,7 @@
 					感谢您使用宝芸邸，您的合约已到期， 请续约
 				</view>
 				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi"
-						:key="index">
+					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
 						<view style="display:flex;justify-content: flex-end;align-items:center;">
 							<view class="yuan" @click="hahaha(item)" v-if="goumai">
 								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
@@ -33,7 +32,7 @@
 					<navigator class="hkhnij" target="miniProgram" open-type="exit" @click="clea" v-if="goumai">
 						退出小程序
 					</navigator>
-					<view class="hkhnij" target="miniProgram" open-type="exit" @click="quxiao" v-else>
+					<view class="hkhnij" target="miniProgram" open-type="exit" @click="quxiao()" v-else>
 						取消
 					</view>
 					<view class="hkhnij jjhgj" @click="tongyixieyi()" v-if="goumai">
@@ -68,13 +67,11 @@
 			let aa = uni.getStorageSync("xieyi")
 			aa.forEach(item => {
 				if (item.id == this.agid) {
-					if (this.lpid == 22222) {
-						this.state = item.state
-					}
+					this.state = item.state
 					this.xieyi.push(item)
 				}
 			})
-			if (this.lpid == 22222) {
+			if (ev.tongyi == 22222) {
 				this.goumai = false
 			}
 		},
