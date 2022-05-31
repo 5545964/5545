@@ -33,11 +33,6 @@
 				</swiper>
 			</view>
 			<u-adata :list="data_list" @click="go_shop"></u-adata>
-			<!-- <u-popup v-model="showssss" mode="center" borderRadius="10">
-				<view>
-					邀请代码是：{{kklk}}
-				</view>
-			</u-popup> -->
 			<u-kehu :showsss='show'></u-kehu>
 			<u-logins :showssss="showssss" @budenglu="budenglu()" @denglu="denglu()"></u-logins>
 			<u-back-top :bottom="200" :scroll-top="scrollTop"></u-back-top>

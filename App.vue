@@ -98,26 +98,23 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							if (uni.getStorageSync("yanzheng")) {
-								let routes = getCurrentPages()
-								let curRoute = routes[routes.length - 1].route
-								if (curRoute != "pages/pagesB/tanchuang") {
-									this.$api.agreements().then(datas => {
-										if (datas.data.code == 1) {
-											datas.data.data.status.forEach(item => {
-												item["check"] = false
-											})
-											uni.setStorageSync("xieyi", datas.data.data.status)
-											uni.reLaunch({
-												url: "/pages/pagesB/tanchuang?agid=" + data
-													.data.data.status.agid +
-													"&tongyi=11111&lpid=" + data
-													.data.data.status.lpid
-											})
-										} else {
-											uni.setStorageSync("xieyi", [])
-										}
-									})
-								}
+								uni.setStorageSync("tanchuang", data.data.data.status)
+								uni.reLaunch({
+									url: "/pages/pagesB/tanchuang?agid=" + data
+										.data.data.status.agid +
+										"&tongyi=qzqy&lpid=" + data
+										.data.data.status.lpid
+								})
+								this.$api.agreements().then(datas => {
+									if (datas.data.code == 1) {
+										datas.data.data.status.forEach(item => {
+											item["check"] = false
+										})
+										uni.setStorageSync("xieyi", datas.data.data.status)
+									} else {
+										uni.setStorageSync("xieyi", [])
+									}
+								})
 							}
 						}
 					})
@@ -131,9 +128,10 @@
 					}).then(data => {
 						if (data.data.code == 1) {
 							if (uni.getStorageSync("yanzheng")) {
+								uni.setStorageSync("tanchuang", data.data.data.status)
 								uni.reLaunch({
 									url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
-										.agid + "&tongyi=22222&lpid=" + data.data.data.status
+										.agid + "&tongyi=timeout&lpid=" + data.data.data.status
 										.lpid
 								})
 							}

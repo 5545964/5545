@@ -18,11 +18,9 @@ const instance = ajax.create({
 const token = uni.getStorageSync("token") || 0;
 instance.interceptors.request.use(
 	config => {
-		//模拟用户
-		if (false) {
-			config.data.user_id = "120"
-		}
 		config.header["token"] = token.token
+		//模拟用户
+		// config.data.user_id = "120"
 		return config
 	},
 	error => {

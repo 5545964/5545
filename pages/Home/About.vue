@@ -172,10 +172,9 @@
 										</u-icon>
 									</view>
 								</view>
-								<view style="padding: 0 10rpx;">
-									<view class="mingcheng" @click="shouURls(item)">
-										《{{item.name||""}}》
-									</view>
+								<!-- 	<view style="padding: 0 10rpx;">								</view> -->
+								<view class="mingcheng" @click="shouURls(item)">
+									《{{item.name||""}}》
 								</view>
 							</view>
 						</view>
@@ -189,10 +188,9 @@
 										</u-icon>
 									</view>
 								</view>
-								<view style="padding: 0 10rpx;">
-									<view class="mingcheng" @click="shouURls(tanchaung)">
-										《{{tanchaung.name||""}}》
-									</view>
+								<!-- 	<view style="padding: 0 10rpx;">								</view> -->
+								<view class="mingcheng" @click="shouURls(tanchaung)">
+									《{{tanchaung.name||""}}》
 								</view>
 							</view>
 						</view>
@@ -593,8 +591,6 @@
 			},
 			// 切换选项，签约区县
 			changeTokens(index, indexs) {
-				console.log(index, indexs, this.YuanLaiDeIndex, this.YuanLaiDeIndexs,this.idid,this.desidid);
-				console.log(index != this.YuanLaiDeIndex && indexs != this.YuanLaiDeIndexs);
 				if (index == this.YuanLaiDeIndex && indexs == this.YuanLaiDeIndexs) {
 					console.log("点的相同的");
 				} else {
@@ -604,7 +600,6 @@
 					this.YuanLaiDeIndex = index
 					this.YuanLaiDeIndexs = indexs
 				}
-				console.log(index, indexs, this.YuanLaiDeIndex, this.YuanLaiDeIndexs,this.idid,this.desidid);
 				let data = this.datalist[index][indexs]
 				console.log(data, "第" + index + "排第" + indexs + "个");
 				// 选中颜色
@@ -629,7 +624,7 @@
 			},
 			// 楼盘签约
 			async changeTokens2(item) {
-				console.log(item);
+				// console.log(item);
 				this.lickc = []
 				this.shenghebut = true;
 				if (await this.$login()) {
@@ -653,14 +648,16 @@
 					// D3点楼盘判断是否签约楼盘
 					if (this.user_infos.bbs.id == 1 && item.address) {
 						if (this.user_infos.des == 4) {
-							if (this.desidid == 0) {
-								this.idid = 1
-							} else {
-								this.idid = 0
-							}
-						} else {
-							this.idid = 0
+							// 需要审核取消注释
+							// if (this.desidid == 0) {
+							// this.idid = 1
+							// } else {
+							// 	this.idid = 0
+							// }
 						}
+						//  else {
+						// 	this.idid = 0
+						// }
 					}
 					// B3,D3点楼盘判断
 					if (this.user_infos.bbs.id == 3 && item.address) {
@@ -733,6 +730,7 @@
 							// D3点楼盘判断是否签约楼盘
 							if (this.user_infos.des == 4) {
 								this.desidid = 0
+								this.idid = 1 //sa
 							}
 							this.B1TuiGuang = true
 						} else if (data.data.code == 7) {

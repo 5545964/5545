@@ -118,16 +118,16 @@
 					}
 				],
 				value: '',
-				des: 0
+				// des: 0
 			};
 		},
 		onLoad(ev) {
 			this.level = ev.level
 			this.name = ev.name
-			if (ev.mlml == 1) {
-				this.des = 1
-				this.title = "注册设计师合伙人"
-			}
+			// if (ev.mlml == 1) {
+			// 	this.des = 1
+			// 	this.title = "注册设计师合伙人"
+			// }
 			let aa = uni.getStorageSync("user_info")
 			if (aa) {
 				this.phone = aa.mobile
@@ -251,33 +251,33 @@
 					yzm: this.code
 				}).then(data => {
 					if (data.data.code == 1) {
-						if (this.des == 0) {
-							this.$api.sqb({
-								user_id: uni.getStorageSync("user_info").id,
-								idcart: this.idcard,
-								address: this.address,
-								email: this.emal,
-								mobile: this.phone,
-								level: this.level,
-								levelname: this.name,
-								addressxq: this.addressxq,
-								name: this.names,
-								sex: this.sex
-							}).then(data => {
-								uni.showToast({
-									title: data.data.msg,
-									duration: 1000,
-									icon: "none"
-								})
-								if (data.data.code == 1) {
-									setTimeout(() => {
-										uni.reLaunch({
-											url: "/pages/Home/User"
-										})
-									}, 1000)
-								}
+						// if (this.des == 0) {
+						this.$api.sqb({
+							user_id: uni.getStorageSync("user_info").id,
+							idcart: this.idcard,
+							address: this.address,
+							email: this.emal,
+							mobile: this.phone,
+							level: this.level,
+							levelname: this.name,
+							addressxq: this.addressxq,
+							name: this.names,
+							sex: this.sex
+						}).then(data => {
+							uni.showToast({
+								title: data.data.msg,
+								duration: 1000,
+								icon: "none"
 							})
-						}
+							if (data.data.code == 1) {
+								setTimeout(() => {
+									uni.reLaunch({
+										url: "/pages/Home/User"
+									})
+								}, 1000)
+							}
+						})
+						// }
 
 					} else {
 						uni.showToast({
@@ -346,40 +346,6 @@
 			justify-content: space-between;
 			font-size: 32rpx;
 			color: #333;
-		}
-	}
-
-	// 上传设计师资质
-	.upload_des {
-		width: 100%;
-		background-color: #FFFFFF;
-		padding: 40rpx 30rpx;
-		box-sizing: border-box;
-
-		.upload_title {
-			font-size: 30rpx;
-			color: #333;
-		}
-
-		.imgs {
-			width: 160rpx;
-			height: 160rpx;
-			margin-top: 40rpx;
-			margin-left: 12rpx;
-		}
-
-		.allimg {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-		}
-
-		.closeImg {
-			width: 28rpx;
-			height: 28rpx;
-			position: absolute;
-			top: 0;
-			right: 0;
 		}
 	}
 

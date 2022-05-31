@@ -46,97 +46,112 @@
 				申请提交，请等待审核
 			</view>
 		</view>
-		<view class="boyyty cet" v-if="usershengfen < id && pd==0">
-			<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
-				￥{{jiage||""}}升级
-			</view>
-			<view class="tetx" @click="topay" v-else>
-				￥{{jiage||""}}升级
+		<view v-if="!xuyue">
+			<view class="boyyty cet" v-if="usershengfen < id && pd==0">
+				<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
+					￥{{jiage||""}}升级
+				</view>
+				<view class="tetx" @click="topay" v-else>
+					￥{{jiage||""}}升级
+				</view>
 			</view>
 		</view>
-		<!-- 确保是你本人操作 -->
-		<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					确保是你本人操作
+		<view v-else>
+			<view class="boyyty cet">
+				<view class="tetx" @click="shoujiyanzheng=true" v-if="buyanzheng">
+					￥{{jiage||""}}续约
 				</view>
-				<view class="textss">
-					<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
-				</view>
-				<view class="yanzhengma">
-					<view class="cet" style="justify-content: space-around;width: 100%;">
-						<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-							<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码" type="number" />
-						</view>
-						<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
-					</view>
-				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="tongyis(0)">
-						取消
-					</view>
-					<view class="hkhnij jjhgj" @click="tongyis(1)">
-						同意
-					</view>
+				<view class="tetx" @click="topay" v-else>
+					￥{{jiage||""}}续约
 				</view>
 			</view>
-		</u-popup>
-		<!-- 服务协议和隐私政策 -->
-		<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					服务协议和隐私政策
-				</view>
-				<view class="textss">
-					感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下几项条款了解详细信息。如您同意，请勾选以下几项条款并点击”同意”开始接受我们的服务。
-				</view>
-				<view style="padding:20rpx 0;">
-					<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
-						<view style="display:flex;justify-content: flex-end;align-items:center;">
-							<view class="yuan" @click="hahaha(item)">
-								<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+		</view>
+		<view class="">
+			<!-- 确保是你本人操作 -->
+			<u-popup width="500" border-radius="30" v-model="shoujiyanzheng" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						确保是你本人操作
+					</view>
+					<view class="textss">
+						<input type="number" value="" @blur="hahahaa" placeholder="请输入手机号" v-model="shoujihao" />
+					</view>
+					<view class="yanzhengma">
+						<view class="cet" style="justify-content: space-around;width: 100%;">
+							<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+								<u-input inputAlign="left" size="200" v-model="code" placeholder="请输入验证码"
+									type="number" />
 							</view>
-						</view>
-						<view style="padding: 0 10rpx;">
-							<view class="mingcheng" @click="fuwenben(item)">
-								《{{item.name||""}}》
-							</view>
+							<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 						</view>
 					</view>
-				</view>
-				<view class="anniusss">
-					<view class="hkhnij" @click="tongyi(0)">
-						暂不使用
+					<view class="anniusss">
+						<view class="hkhnij" @click="tongyis(0)">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="tongyis(1)">
+							同意
+						</view>
 					</view>
-					<view class="hkhnij jjhgj" @click="tanchuanbaozhuang()">
-						同意
+				</view>
+			</u-popup>
+			<!-- 服务协议和隐私政策 -->
+			<u-popup width="500" border-radius="30" v-model="yuedu" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						服务协议和隐私政策
+					</view>
+					<view class="textss">
+						感谢您使用宝芸邸，我们会严格按照法律规定存储和使用您的个人信息。您可以阅读以下几项条款了解详细信息。如您同意，请勾选以下几项条款并点击”同意”开始接受我们的服务。
+					</view>
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
+							<view style="display:flex;justify-content: flex-end;align-items:center;">
+								<view class="yuan" @click="hahaha(item)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
+							</view>
+							<view style="padding: 0 10rpx;">
+								<view class="mingcheng" @click="fuwenben(item)">
+									《{{item.name||""}}》
+								</view>
+							</view>
+						</view>
+					</view>
+					<view class="anniusss">
+						<view class="hkhnij" @click="tongyi(0)">
+							暂不使用
+						</view>
+						<view class="hkhnij jjhgj" @click="tanchuanbaozhuang()">
+							同意
+						</view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
-		<!-- 驳回原因 -->
-		<u-popup width="500" border-radius="30" v-model="bohui" mode="center">
-			<view class="yueduwo">
-				<view class="text">
-					驳回原因
-				</view>
-				<view class="textss" style="padding:30rpx;" v-if="mlml==0">
-					{{bohuidata.bhly}}
-				</view>
-				<view class="textss" style="padding:30rpx;" v-else>
-					{{bohuidata.bhnew}}
-				</view>
+			</u-popup>
+			<!-- 驳回原因 -->
+			<u-popup width="500" border-radius="30" v-model="bohui" mode="center">
+				<view class="yueduwo">
+					<view class="text">
+						驳回原因
+					</view>
+					<view class="textss" style="padding:30rpx;" v-if="mlml==0">
+						{{bohuidata.bhly}}
+					</view>
+					<view class="textss" style="padding:30rpx;" v-else>
+						{{bohuidata.bhnew}}
+					</view>
 
-				<view class="anniusss">
-					<view class="hkhnij" @click="bohui=false">
-						取消
-					</view>
-					<view class="hkhnij jjhgj" @click="chongxin">
-						重新申请
+					<view class="anniusss">
+						<view class="hkhnij" @click="bohui=false">
+							取消
+						</view>
+						<view class="hkhnij jjhgj" @click="chongxin">
+							重新申请
+						</view>
 					</view>
 				</view>
-			</view>
-		</u-popup>
+			</u-popup>
+		</view>
 		<u-toast ref="uToast" />
 	</view>
 </template>
@@ -167,42 +182,78 @@
 				//
 				//
 				id: "",
+				desid: "",
 				jiage: 0,
 				hei: 10000,
 				list: [],
 				title: "身份专区",
 				userinfo: {},
-				isdes: 0,
 				usershengfen: "",
 				types: "",
 				mlml: 0, //0销售员1是设计师
-				pd: 0
+				pd: 0,
+				agid: "",
+				xuyue: false,
+				xuyuestate: "",
+				xuyuecontent: ""
 			};
 		},
 		onLoad(ev) {
 			if (ev.title) {
 				this.title = ev.title
 			}
-			let aa = "0"
 			if (ev.isdes) {
-				this.isdes = 1
-				aa = "1"
 				this.mlml = 1
 			}
-			if (uni.getStorageSync("user_info").bbs != '' && uni.getStorageSync("user_info").bbs != null) {
-				if (this.isdes == 0) {
-					this.usershengfen = uni.getStorageSync("user_info").bbs.id || 0
+			if (ev.agid) {
+				this.agid = ev.agid
+				this.xuyue = true
+				let aa = uni.getStorageSync("xieyi")
+				aa.forEach(item => {
+					if (this.agid == item.id) {
+						this.xuyuestate = item.state
+					}
+				})
+				if (this.xuyuestate == 0) {
+					this.xuyuecontent = 0
+				}
+				if (this.xuyuestate == 8) {
+					this.xuyuecontent = 1
+				}
+				if (this.xuyuestate == 9) {
+					this.xuyuecontent = 2
+				}
+				if (this.xuyuestate == 1) {
+					this.xuyuecontent = 2
+				}
+				if (this.xuyuestate == 10) {
+					this.xuyuecontent = 0
+				}
+				if (this.xuyuestate == 11) {
+					this.xuyuecontent = 1
+				}
+				console.log(this.xuyuestate, this.xuyuecontent);
+				if (this.xuyuestate == 0 || this.xuyuestate == 8 || this.xuyuestate == 9) {
+					this.mlml = 0
+				} else if (this.xuyuestate == 1 || this.xuyuestate == 11 || this.xuyuestate == 10) {
+					this.mlml = 1
 				}
 			}
-			if (uni.getStorageSync("des_info").bbs != '' && uni.getStorageSync("des_info").bbs != null) {
-				if (this.isdes != 0) {
-					if (uni.getStorageSync("des_info").bbs.id == 5) {
+			let user_info = uni.getStorageSync("user_info").bbs
+			let des_info = uni.getStorageSync("des_info").bbs
+			if (this.mlml == 0) {
+				if (user_info != '' && user_info != null) {
+					this.usershengfen = user_info.id || 0
+				}
+			} else {
+				if (des_info != '' && des_info != null) {
+					if (des_info.id == 5) {
 						this.usershengfen = 1
 					}
-					if (uni.getStorageSync("des_info").bbs.id == 3) {
+					if (des_info.id == 3) {
 						this.usershengfen = 2
 					}
-					if (uni.getStorageSync("des_info").bbs.id == 4) {
+					if (des_info.id == 4) {
 						this.usershengfen = 3
 					}
 				}
@@ -397,10 +448,18 @@
 			//
 			//
 			topay() {
+				let id = ""
+				if (this.mlml == 0) {
+					id = this.id
+				}
+				if (this.mlml == 1) {
+					id = this.desid
+				}
 				this.$api.buylevel({
-					id: this.id,
+					id: id,
 					user_id: uni.getStorageSync("user_info").id,
-					level: this.mlml
+					level: this.mlml,
+					type: this.xuyue
 				}).then(res => {
 					if (res.data.code == 1) {
 						uni.showToast({
@@ -414,19 +473,10 @@
 										"&mlml=" + this.mlml
 								})
 							} else {
-								let aa = 0
-								if (this.id == 2) {
-									aa = 3
-								} else if (this.id == 3) {
-									aa = 4
-								} else if (this.id == 1) {
-									aa = 5
-								}
-								uni.navigateTo({
-									url: "../pagesD/regDesigner/regDesigner?nageid=" + aa
+								uni.navigateBack({
+									delta: 1
 								})
 							}
-
 						}, 1000)
 					}
 					if (res.data.code == 200) {
@@ -438,22 +488,22 @@
 							signType: res.data.data.signType, //签名算法，暂支持 MD5。
 							paySign: res.data.data.paySign, //签名
 							success: function(res) {
-								// uni.showToast({
-								// 	title: "购买" + that.types + "成功",
-								// 	icon: "none"
-								// })
 								that.$refs.uToast.show({
 									title: "购买" + that.types + "成功",
 									type: 'default'
 								})
 								uni.setStorageSync("yanzheng", true)
-								if (that.mlml != 1) {
+								if (that.mlml == 0) {
 									setTimeout(() => {
 										uni.navigateTo({
 											url: "./redsuccess?level=" + that.id +
 												"&name=" + that.name
 										})
 									}, 1000)
+								} else {
+									uni.navigateBack({
+										delta: 1
+									})
 								}
 							},
 							fail: function(err) {
@@ -468,48 +518,44 @@
 			},
 			getdata() {
 				this.$api.shenfen({
-					type: this.isdes,
+					type: this.mlml,
 					id: uni.getStorageSync("user_info").id
 				}).then(data => {
-
 					if (data.data.code == 1) {
 						data.data.data.status.forEach(item => {
 							item["name"] = item.type.split("（")[0]
 						})
 						this.list = [...data.data.data.status]
-
 						if (this.mlml == 1) {
 							if (this.list[0].id == 5) {
 								this.xieyis(1)
 								this.id = 1
+								this.desid = 5
 							}
 							if (this.list[0].id == 3) {
 								this.xieyis(2)
 								this.id = 2
+								this.desid = 3
 							}
 							if (this.list[0].id == 4) {
 								this.xieyis(3)
 								this.id = 3
+								this.desid = 4
 							}
 						} else {
 							this.xieyis(this.list[0].id)
 							this.id = this.list[0].id
 						}
-
 						this.jiage = this.list[0].money + "元";
 						if (this.list[0].money == "0.00") {
 							this.jiage = "免费"
 						}
-
 						this.pd = this.list[0].pd
 						this.types = this.list[0].type
 						this.name = this.list[0].type
 						this.bohuidata = data.data.data.user || ""
-
-
 						if (this.bohuidata != "") {
 							if (this.bohuidata.state == 2) {
-
 								this.bohui = true
 								setTimeout(() => {
 									if (this.mlml == 0) {
@@ -526,7 +572,12 @@
 								}, 100);
 							}
 						}
-
+						if (this.xuyue) {
+							console.log(11111111111111111111);
+							setTimeout(() => {
+								this.current = this.xuyuecontent
+							}, 100);
+						}
 						uni.setStorageSync("shengfen", data.data.data.user)
 						setTimeout(() => {
 							this.gaodu(0)
@@ -552,12 +603,15 @@
 				if (this.mlml == 1) {
 					if (this.list[ev.detail.current].id == 5) {
 						this.id = 1;
+						this.desid = 5
 					}
 					if (this.list[ev.detail.current].id == 3) {
 						this.id = 2;
+						this.desid = 3
 					}
 					if (this.list[ev.detail.current].id == 4) {
 						this.id = 3;
+						this.desid = 4
 					}
 				} else {
 					this.id = this.list[ev.detail.current].id;

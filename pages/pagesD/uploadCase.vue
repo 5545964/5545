@@ -15,24 +15,15 @@
 			</u-navbar>
 		</view>
 		<!-- 选择分类 -->
-		<!-- <button type="default" @click="selectImg">1234</button>
-		<button type="default" @click="gossss">456</button> -->
 		<view class="choose">
 			<view style="display: flex;align-items: center;justify-content: space-between;flex-wrap: wrap;">
 				<view :class="index%2==0? 'drop_item1':'drop_item'" v-for="(item,index) in dropList" :key="item.id">
-					<!-- <u-input v-if="index == 0" @click="open()" input-align="left" :disabled="true" v-model="item.value"
-						:placeholder="item.name" type="text" /> -->
-					<view v-if="index == 0" @click="open()" style="height:100%;width:100%;line-height:105rpx;">
+					<view v-if="index == 0" @click="open()"
+						style="height:100%;width:100%;line-height:52px;white-space: nowrap;overflow:hidden;text-overflow:ellipsis;">
 						{{item.name||""}}
 					</view>
 					<u-input v-else @blur="fcun" v-model="item.value" input-align="left" :placeholder="item.name"
 						type="text" />
-					<!-- {{item.name||""}} -->
-					<!-- <image src="../../static/icon_home_heisexiala.png" style="width: 22rpx;height: 12rpx;" mode="aspectFit">
-					</image> -->
-					<!-- <u-dropdown :border-bottom="true">
-						<u-dropdown-item v-model="value1" :title="item.name" :options="options1"></u-dropdown-item>
-					</u-dropdown> -->
 				</view>
 			</view>
 		</view>

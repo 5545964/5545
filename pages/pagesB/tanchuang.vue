@@ -60,20 +60,22 @@
 			};
 		},
 		onLoad(ev) {
-			this.yuedu = true
 			uni.setStorageSync("yanzheng", false)
 			this.agid = ev.agid;
 			this.lpid = ev.lpid;
 			let aa = uni.getStorageSync("xieyi")
+			let bb = uni.getStorageSync("tanchuang")
 			aa.forEach(item => {
 				if (item.id == this.agid) {
 					this.state = item.state
 					this.xieyi.push(item)
 				}
 			})
-			if (ev.tongyi == 22222) {
+			this.xieyi[0].content = bb.content
+			if (ev.tongyi == "timeout") {
 				this.goumai = false
 			}
+			this.yuedu = true
 		},
 		methods: {
 			//合约到期
@@ -99,48 +101,54 @@
 				})
 			},
 			go() {
-				uni.reLaunch({
-					url: "/pages/pagesB/shengfen"
+				this.$api.myuser({
+					user_id: uni.getStorageSync("user_info").id || 0
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("user_info", data.data.data.myuser)
+						uni.navigateTo({
+							url: "./shengfen?agid=" + this.agid
+						})
+					}
 				})
+
 			},
+
+
+
+
+
+
+
 			clea() {
 				uni.clearStorageSync()
 			},
 			tongyixieyi() {
-				let mm = 0
-				let aa = []
-				this.xieyi.forEach(item => {
-					if (item.check) {
-						mm++
-						aa.push(item)
-					}
-				})
-				if (this.xieyi.length != mm) {
+				if (!this.xieyi[0].check) {
 					return uni.showToast({
 						title: "请阅读并同意协议",
 						icon: "none"
 					})
 				}
-				aa.forEach(item => {
-					this.$api.userag({
-						userid: uni.getStorageSync("user_info").id,
-						agid: item.id,
-						lpid: this.lpid
-					})
-				})
-				uni.setStorageSync("yanzheng", true)
-				this.yuedu = false
-				uni.reLaunch({
-					url: "/pages/Home/Home"
+				this.$api.userag({
+					userid: uni.getStorageSync("user_info").id,
+					agid: this.agid,
+					lpid: this.lpid
+				}).then(data => {
+					if (data.data.code == 1) {
+						uni.setStorageSync("yanzheng", true)
+						this.yuedu = false
+						uni.reLaunch({
+							url: "/pages/Home/Home"
+						})
+					}
 				})
 			},
-			tongyi(ev) {
-				if (ev == 1) {
-					this.yuedu = true;
-				} else {
-					this.yuedu = false;
-				}
-			},
+
+
+
+
+
 			hahaha(item) {
 				item.check = !item.check
 			},

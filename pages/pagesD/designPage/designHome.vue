@@ -19,7 +19,8 @@
 			<view class="designer">
 				<view class="designer_left">
 					<view class="asdfghjkl">
-						<image :src="imgtitle+desinger.avatar" class="imgs" mode=""></image>
+						<!-- imgtitle+desinger.avatar -->
+						<image :src="$imgs(desinger.avatar)" class="imgs" mode=""></image>
 					</view>
 					<view style="text-align: center;">
 						{{desinger.username||''}}
@@ -43,7 +44,8 @@
 			<!-- 设计列表 -->
 			<view class="design_list">
 				<view class="card" style="position: relative;" v-for="(item,index) in desinger.zp" :key="index">
-					<image @click="todetails(item)" :src="imgtitle+item.simage" style="border-radius: 20rpx;"
+					<!-- imgtitle+item.simage -->
+					<image @click="todetails(item)" :src="$imgs(item.simage)" style="border-radius: 20rpx;"
 						mode="aspectFit"></image>
 					<view @click="todetails(item)" class="gghGG" style="margin-top: 24rpx;">
 						{{item.name||""}}
