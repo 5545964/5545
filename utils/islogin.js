@@ -4,11 +4,15 @@ function log() {
 	return new Promise((resolve, reject) => {
 		let level = 0;
 		let pid = 0;
+		let ewm = 0;
 		if (uni.getStorageSync("yaoqinglevel")) {
 			level = uni.getStorageSync("yaoqinglevel")
 		}
 		if (uni.getStorageSync("yaoqinguid")) {
 			pid = uni.getStorageSync("yaoqinguid")
+		}
+		if (uni.getStorageSync("yaoqingewm")) {
+			ewm = uni.getStorageSync("yaoqingewm")
 		}
 		if (!uni.getStorageSync("user_info")) {
 			uni.getUserProfile({
@@ -22,7 +26,8 @@ function log() {
 								iv: data.iv,
 								encryptedData: data.encryptedData,
 								level,
-								pid
+								pid,
+								ewm
 							}).then(data => {
 								if (data.data.code == 1) {
 									uni.setStorageSync("token", data.data.data);

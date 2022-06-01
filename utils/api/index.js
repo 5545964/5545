@@ -1,5 +1,14 @@
 import request from "./request.js"
 export default {
+	yqpeople(params = {}) {
+		return request.post("/api/byd_user/yqpeople", params);
+	},
+	likeuser(params = {}) {
+		return request.post("/api/byd_user/likeuser", params);
+	},
+	allpeople(params = {}) {
+		return request.post("/api/byd_user/allpeople", params);
+	},
 	lpagreement(params = {}) {
 		return request.post("/api/bydshop/lpagreement", params);
 	},
@@ -450,7 +459,7 @@ export default {
 	idlikelp(params = {}) {
 		return request.post("/api/bydidentity/likelp", params);
 	}
-	
+
 
 
 

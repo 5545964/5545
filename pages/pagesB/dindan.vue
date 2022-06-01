@@ -47,7 +47,7 @@
 								</view>
 								<view class="centre" v-for="(itemc, indexc) in items.shop" :key="indexc"
 									@click="goods(items)">
-									<view >
+									<view>
 										<image class="img" :src="imgtitle + itemc.simage" mode="aspectFit"></image>
 									</view>
 									<view style="margin-left: 10rpx;">
@@ -162,7 +162,7 @@
 			</view>
 			<u-heigth />
 		</view>
-		<view >
+		<view>
 			<!-- 查看安装详情 -->
 			<u-popup width="500" border-radius="30" v-model="anzhuang" mode="center">
 				<view class="yueduwo">
@@ -170,22 +170,22 @@
 						安装详情
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view >
+						<view>
 							姓名
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input disabled inputAlign="left" placeholder-style="color: #999999;" v-model="bzxq.aname"
 								placeholder="请填写快递公司" />
 						</view>
-						<view >
+						<view>
 							电话
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input disabled inputAlign="left" placeholder-style="color: #999999;"
 								v-model="bzxq.aphone" placeholder="请填写快递单号" type="number" />
 						</view>
-						<view v-if="bzxq.abh" >
-							<view >
+						<view v-if="bzxq.abh">
+							<view>
 								安装人员编号
 							</view>
 							<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -193,7 +193,7 @@
 									v-model="bzxq.abh" placeholder="请填写快递单号" type="number" />
 							</view>
 						</view>
-						<view >
+						<view>
 							预计上门时间
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -218,14 +218,14 @@
 						填写快递单号
 					</view>
 					<view style="padding: 0 30rpx;">
-						<view >
+						<view>
 							快递公司
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
 							<u-input inputAlign="left" placeholder-style="color: #999999;" v-model="kuaidigongsi"
 								placeholder="请填写快递公司" />
 						</view>
-						<view >
+						<view>
 							快递单号
 						</view>
 						<view style="background:#f6f6f6;border-radius:10rpx;margin: 10rpx;">
@@ -325,7 +325,7 @@
 								</view>
 							</view>
 							<view style="padding: 0 10rpx;">
-								<view class="mingcheng" @click="fuwenben(item)">
+								<view class="mingcheng" @click="xiaoshouqindan(item)">
 									《{{item.name||""}}》
 								</view>
 							</view>
@@ -360,7 +360,7 @@
 					<view class="top"> 提示 </view>
 					<view class="cets">
 
-						<view >
+						<view>
 							是否需要安装？
 						</view>
 						<view style="font-size:24rpx;margin-top:40rpx;">
@@ -380,7 +380,47 @@
 			<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
 				<view class="popup">
 					<view class="top"> 提示 </view>
-					<view class="cets"> 确认签收该订单商品？ </view>
+					<view class="cets" style="padding: 50rpx 0 0 0;"> 确认签收该订单商品？ </view>
+
+
+
+
+
+
+
+
+
+
+
+
+					<view class="cet" style="padding: 50rpx;">
+						<view style="display:flex;justify-content: flex-end;align-items:center;">
+							<view class="yuan" @click="xiaoshouqeihuan()">
+								<u-icon v-if="xiaoshoufalse" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+							</view>
+						</view>
+						<view style="padding: 0 10rpx;">
+							<view class="mingcheng" @click="xiaoshoufuwenben()">
+								销售清单
+							</view>
+						</view>
+					</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					<view class="xian"> </view>
 					<view class="bottoms">
 						<view class="sdasas" @click="shows = false"> 取消 </view>
@@ -399,6 +439,7 @@
 	export default {
 		data() {
 			return {
+				xiaoshoufalse: false,
 				jifen: 0,
 				shouhouitem: "",
 				quxiaoshouhou: false,
@@ -435,7 +476,7 @@
 				hahahaxuanzhe: {},
 				imgtitle: this.$imgPath,
 				show: false,
-				shows: false,
+				shows: false, //签收
 				showa: false,
 				height: 0,
 				current: 0,
@@ -600,6 +641,17 @@
 			}
 		},
 		methods: {
+			xiaoshoufuwenben() {
+				console.log(this.mnbv);
+				let aa = {
+					content: this.mnbv.qd,
+					name: "销售清单"
+				}
+				this.fuwenben(aa)
+			},
+			xiaoshouqeihuan() {
+				this.xiaoshoufalse = !this.xiaoshoufalse
+			},
 			//积分确认收货
 			jfquerenshouhuo(ev) {
 				this.$api.sureorder({
@@ -646,8 +698,15 @@
 			},
 			// 切换协议内容
 			dakaishouji(ev) {
+				console.log(ev);
 				this.zhuangtai = ev
 				if (ev == 0) {
+					if (!this.xiaoshoufalse) {
+						return uni.showToast({
+							title: "请同意销售清单",
+							icon: "none",
+						});
+					}
 					this.xieyi = this.querenqianshouxieyi
 					this.buyanzheng = this.querenqianshoukaiguan
 					this.shows = false
@@ -752,6 +811,12 @@
 			},
 			//确认收货
 			querenshouhuo() {
+				if (!this.xiaoshoufalse) {
+					return uni.showToast({
+						title: "请同意销售清单",
+						icon: "none",
+					});
+				}
 				this.shows = false
 				this.$api.sureorder({
 					id: this.order_id
@@ -1179,6 +1244,17 @@
 </script>
 
 <style lang="scss" scoped>
+	.yuan {
+		width: 30rpx;
+		height: 30rpx;
+		border: 1px solid #000000;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+	}
+
 	.popup {
 		.xcvb {
 			height: 100%;

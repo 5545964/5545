@@ -86,6 +86,7 @@
 									:style="'left: '+items.fzb[0]+'px;top: '+items.fzb[1]+'px;'" class="imhjk"
 									v-if="items.fzb[0] && items.fzb[1] && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit" />
+									{{items.shop.photo}}
 								<image :lazy-load="true" :src="img+items.shop.photo" mode="widthFix" />
 								<!-- <image
 									src="https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/98a44083ef6cb32e2b60fa83d0309f900ba6843f.jpg"

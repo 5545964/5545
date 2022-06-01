@@ -684,7 +684,6 @@
 		"selectedColor": "#3cc51f",
 		"borderStyle": "white",
 		"backgroundColor": "#f4f5f7",
-		"custom": true,
 		"list": [{
 				"pagePath": "pages/Home/Home",
 				"text": "首页"

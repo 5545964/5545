@@ -1,6 +1,6 @@
 <template>
 	<view style="width: 100%;height: 100%;">
-		<u-popup v-model="show" mode="center" :maskCloseAble="false" border-radius="20">
+		<u-popup v-model="show" mode="center" :maskCloseAble="false" border-radius="20" @close="budenglu()">
 			<view class="popimgsss cet">
 				<view class="">
 					<view class="tetx-cet cde">
@@ -9,10 +9,10 @@
 					<view class="tetx-cet">
 						请登录后在进行操作
 					</view>
-					<view @click="denglu" class="tetx-cet login">
+					<view @click="denglu()" class="tetx-cet login">
 						立即登录
 					</view>
-					<view @click="budenglu" class="tetx-cet" style="color: #c2c2c2;">
+					<view @click="budenglu()" class="tetx-cet" style="color: #c2c2c2;">
 						暂不登录
 					</view>
 				</view>
@@ -28,6 +28,36 @@
 				<view class="bottoms">
 					<view class="sdasas" @click="xuanzhe()"> 取消 </view>
 					<button class="czcxc" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">确定</button>
+				</view>
+			</view>
+		</u-popup>
+		<u-popup :maskCloseAble="false" width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">
+			<view class="popup">
+				<view class="top"> 请输入邀请人 </view>
+				<view style="padding:40rpx 0 20rpx 0;">
+					<u-input v-model="popetext" inputAlign="center" placeholder="请输入" />
+				</view>
+				<scroll-view scroll-y="true" style="max-height:500rpx;" @scrolltolower="dibu" v-if="pepepe">
+					<!-- 	<view v-for="item in peoplelist" :key="item.id">
+						{{item.username}}
+					</view> -->
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in peoplelist" :key="index">
+							<view class="quanquan">
+								<view class="yuan" @click="hahaha(index)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
+							</view>
+							<view class="cccc">
+								{{item.username||""}}
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="tan=false"> 取消 </view>
+					<button class="czcxc" @click="pope()">确定</button>
 				</view>
 			</view>
 		</u-popup>
@@ -50,28 +80,92 @@
 		data() {
 			return {
 				show: this.showssss,
-				phone: false
+				phone: false,
+				tan: false,
+				popetext: "",
+				pages: 1,
+				peoplelist: [],
+				pepepe: true,
 			};
 		},
 		watch: {
 			showssss(e, v) {
 				this.show = e
+			},
+			popetext(ev) {
+				if (ev == "") {
+					this.pepepe = true
+				}
+				this.pages = 1
+				this.likeall()
 			}
 		},
 
 		methods: {
+			dibu(ev) {
+				console.log(ev);
+				this.pages++
+				this.likeall()
+			},
+			likeall(ev) {
+				this.$api.likeuser({
+					name: this.popetext,
+					page: this.pages
+				}).then(data => {
+					if (data.data.code == 1) {
+						data.data.data.status.data.forEach(item => {
+							item["check"] = false
+						})
+						this.peoplelist = [...this.peoplelist, ...data.data.data.status.data]
+					}
+					console.log(this.peoplelist);
+				})
+			},
+			hahaha(item) {
+				this.peoplelist[item].check = true
+				this.popetext = this.peoplelist[item].username
+				this.pepepe = false
+			},
+			pope() {
+				this.$api.yqpeople({
+					user_id: uni.getStorageSync("user_info").id,
+					name: this.popetext
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.tan = false
+					}
+				})
+			},
 			getPhoneNumber(e) {
+				console.log(e);
+				if (e.detail.errMsg == "getPhoneNumber:fail user deny") {
+					this.phone = false
+					uni.showToast({
+						title: "获取失败",
+						icon: "none"
+					})
+					setTimeout(() => {
+						this.tans()
+					}, 1000);
+					return
+				}
 				let key = uni.getStorageSync("key")
 				let WXBizDataCrypt = require("@/utils/cryptojs/RdWXBizDataCrypt.js")
 				var pc = new WXBizDataCrypt(key)
+				console.log(11111);
 				var data = pc.decryptData(e.detail.encryptedData, e.detail.iv)
+				console.log(222222);
 				let datas = JSON.parse(data)
+				console.log(33333);
 				if (uni.getStorageSync("user_info").mobile == datas.phoneNumber) {
 					this.phone = false
 					uni.showToast({
 						title: "获取成功",
 						icon: "none"
 					})
+					setTimeout(() => {
+						this.tans()
+					}, 1000);
 					return
 				}
 				this.$api.mobile({
@@ -84,17 +178,35 @@
 							title: "获取成功",
 							icon: "none"
 						})
-					}else{
+						setTimeout(() => {
+							this.tans()
+						}, 1000);
+					} else {
 						uni.showToast({
 							title: data.data.msg,
 							icon: "none"
 						})
 					}
-					
+
 				})
+			},
+			tans() {
+				// console.log("tantantan", uni.getStorageSync("token").tan);
+				if (uni.getStorageSync("token").tan == 1) {
+					// this.$api.allpeople({
+					// 	page: this.pages
+					// }).then(data => {
+					// 	uni.setStorageSync("people", data)
+					// 	if (data.data.code == 1) {
+					// 		this.peoplelist = [...this.peoplelist, ...data.data.data.status.data]
+					// 	}
+					// })
+					this.tan = true;
+				}
 			},
 			xuanzhe() {
 				this.phone = false;
+				this.tans()
 			},
 			async denglu() {
 				if (await this.$login()) {
@@ -118,6 +230,29 @@
 </script>
 
 <style lang="scss" scoped>
+	.cccc {
+		padding: 0 10rpx;
+		width: 70%;
+	}
+
+	.quanquan {
+		width: 30%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	.yuan {
+		width: 30rpx;
+		height: 30rpx;
+		border: 1px solid #000000;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+	}
+
 	.popup {
 		.xcvb {
 			height: 100%;

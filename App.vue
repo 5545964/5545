@@ -20,6 +20,9 @@
 				}
 				uni.setStorageSync("yaoqinglevel", ev.query.level)
 			}
+			if (ev.query.ewm) {
+				uni.setStorageSync("yaoqingewm", ev.query.ewm)
+			}
 			this.$api.indexbar().then(data => {
 				if (data.data.code == 1) {
 					if (process.env.NODE_ENV === 'development') {
