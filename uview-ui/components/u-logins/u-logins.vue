@@ -31,7 +31,7 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-popup :maskCloseAble="false" width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">
+		<u-popup  width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">
 			<view class="popup">
 				<view class="top"> 请输入邀请人 </view>
 				<view style="padding:40rpx 0 20rpx 0;">

@@ -161,9 +161,8 @@
 			<view class="xian"></view>
 			<view class="bai"></view>
 			<view class="content">
-				<view v-for="(item,index) in alls.content" :key="index">
-					<image style="height: 600rpx;" :src="img+item" mode="widthFix"></image>
-				</view>
+				<image :src="img+item" mode="widthFix" v-for="(item,index) in alls.content"
+					:key="index"/>
 			</view>
 		</view>
 		<view style="height: 110rpx;margin-top: 20rpx;"></view>
@@ -1200,7 +1199,7 @@
 	}
 
 	.content {
-		padding: 0rpx;
-		font-size: 0rpx;
+		padding: 0;
+		font-size: 0;
 	}
 </style>
