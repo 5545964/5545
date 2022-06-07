@@ -31,16 +31,13 @@
 				</view>
 			</view>
 		</u-popup>
-		<u-popup  width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">
+		<u-popup width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">
 			<view class="popup">
 				<view class="top"> 请输入邀请人 </view>
 				<view style="padding:40rpx 0 20rpx 0;">
 					<u-input v-model="popetext" inputAlign="center" placeholder="请输入" />
 				</view>
 				<scroll-view scroll-y="true" style="max-height:500rpx;" @scrolltolower="dibu" v-if="pepepe">
-					<!-- 	<view v-for="item in peoplelist" :key="item.id">
-						{{item.username}}
-					</view> -->
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in peoplelist" :key="index">
 							<view class="quanquan">
@@ -118,7 +115,6 @@
 						})
 						this.peoplelist = [...this.peoplelist, ...data.data.data.status.data]
 					}
-					console.log(this.peoplelist);
 				})
 			},
 			hahaha(item) {
@@ -144,28 +140,25 @@
 						title: "获取失败",
 						icon: "none"
 					})
-					setTimeout(() => {
-						this.tans()
-					}, 1000);
+					// setTimeout(() => {
+					// 	this.tans()
+					// }, 1000);
 					return
 				}
 				let key = uni.getStorageSync("key")
 				let WXBizDataCrypt = require("@/utils/cryptojs/RdWXBizDataCrypt.js")
 				var pc = new WXBizDataCrypt(key)
-				console.log(11111);
 				var data = pc.decryptData(e.detail.encryptedData, e.detail.iv)
-				console.log(222222);
 				let datas = JSON.parse(data)
-				console.log(33333);
 				if (uni.getStorageSync("user_info").mobile == datas.phoneNumber) {
 					this.phone = false
 					uni.showToast({
 						title: "获取成功",
 						icon: "none"
 					})
-					setTimeout(() => {
-						this.tans()
-					}, 1000);
+					// setTimeout(() => {
+					// 	this.tans()
+					// }, 1000);
 					return
 				}
 				this.$api.mobile({
@@ -178,9 +171,9 @@
 							title: "获取成功",
 							icon: "none"
 						})
-						setTimeout(() => {
-							this.tans()
-						}, 1000);
+						// setTimeout(() => {
+						// 	this.tans()
+						// }, 1000);
 					} else {
 						uni.showToast({
 							title: data.data.msg,
@@ -191,22 +184,13 @@
 				})
 			},
 			tans() {
-				// console.log("tantantan", uni.getStorageSync("token").tan);
 				if (uni.getStorageSync("token").tan == 1) {
-					// this.$api.allpeople({
-					// 	page: this.pages
-					// }).then(data => {
-					// 	uni.setStorageSync("people", data)
-					// 	if (data.data.code == 1) {
-					// 		this.peoplelist = [...this.peoplelist, ...data.data.data.status.data]
-					// 	}
-					// })
 					this.tan = true;
 				}
 			},
 			xuanzhe() {
 				this.phone = false;
-				this.tans()
+				// this.tans()
 			},
 			async denglu() {
 				if (await this.$login()) {

@@ -53,7 +53,6 @@
 						return
 					}
 					uni.setStorageSync("showssss", data.data.data.edit)
-
 				}
 			})
 		},
@@ -123,7 +122,6 @@
 					})
 				}, timeaa)
 				uni.setStorageSync("setIntervalaa", aa)
-
 				clearInterval(uni.getStorageSync("setIntervalbb", bb))
 				let bb = setInterval(() => {
 					this.$api.timeout({

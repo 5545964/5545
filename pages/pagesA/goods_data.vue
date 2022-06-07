@@ -439,6 +439,19 @@
 								</view>
 							</view>
 						</view>
+						<view class="cet">
+							<view style="display:flex;justify-content: flex-end;align-items:center;width:30%;">
+								<view class="yuan" @click="xiaoshouqeihuan()">
+									<u-icon v-if="xiaoshoufalse" name="checkbox-mark" color="#2979ff" size="28">
+									</u-icon>
+								</view>
+							</view>
+							<view style="width: 70%;">
+								<view class="mingcheng" @click="xiaoshoufuwenben()">
+									《产品清单》
+								</view>
+							</view>
+						</view>
 					</view>
 					<view class="anniusss">
 						<view class="hkhnij" @click="tongyi(0)">
@@ -499,7 +512,7 @@
 			<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
 				<view class="popup">
 					<view class="top"> 提示 </view>
-					<view class="cets"> 确认收到该订单商品？ </view>
+					<view class="cets"> 确认签收该订单商品？ </view>
 					<view class="xian"> </view>
 					<view class="bottoms">
 						<view class="sdasas" @click="xuanzhes(0)"> 取消 </view>
@@ -518,6 +531,7 @@
 	export default {
 		data() {
 			return {
+				xiaoshoufalse: false,
 				jifen: 0,
 				fdsa: false,
 				lklklklk: true,
@@ -654,6 +668,16 @@
 			}
 		},
 		methods: {
+			xiaoshoufuwenben() {
+				let aa = {
+					content: this.data_list.qd,
+					name: "产品清单"
+				}
+				this.fuwenben(aa)
+			},
+			xiaoshouqeihuan() {
+				this.xiaoshoufalse = !this.xiaoshoufalse
+			},
 			fou() {
 				this.$api.fou({
 					orderid: this.data_list.orderid
@@ -775,6 +799,12 @@
 					if (this.xieyi.length != mm) {
 						return uni.showToast({
 							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					if (!this.xiaoshoufalse) {
+						return uni.showToast({
+							title: "请同意产品清单",
 							icon: "none"
 						})
 					}
@@ -1226,6 +1256,7 @@
 				}
 			},
 			go_code() {
+				this.xiaoshoufalse = false
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,

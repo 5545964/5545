@@ -120,7 +120,8 @@
 									</view>
 									<view class="button"
 										v-if="items.state == 4 || items.state == 3 || items.states == 2 && items.cl == 0"
-										@click="baozhaung(items)">
+										@click="shifouanzhuangdsadas(items,9)">
+										<!-- baozhaung -->
 										是否安装
 									</view>
 									<view class="button" v-if="items.state == 16" @click="jiesubaozhaung(items)">
@@ -319,14 +320,27 @@
 					</view>
 					<view style="padding:20rpx 0;">
 						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in xieyi" :key="index">
-							<view style="display:flex;justify-content: flex-end;align-items:center;">
+							<view style="display:flex;justify-content: flex-end;align-items:center;width:30%;">
 								<view class="yuan" @click="hahaha(item)">
 									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
 								</view>
 							</view>
-							<view style="padding: 0 10rpx;">
-								<view class="mingcheng" @click="xiaoshouqindan(item)">
+							<view style="width: 70%;">
+								<view class="mingcheng" @click="fuwenben(item)">
 									《{{item.name||""}}》
+								</view>
+							</view>
+						</view>
+						<view class="cet">
+							<view style="display:flex;justify-content: flex-end;align-items:center;width:30%;">
+								<view class="yuan" @click="xiaoshouqeihuan()">
+									<u-icon v-if="xiaoshoufalse" name="checkbox-mark" color="#2979ff" size="28">
+									</u-icon>
+								</view>
+							</view>
+							<view style="width: 70%;">
+								<view class="mingcheng" @click="xiaoshoufuwenben()">
+									《产品清单》
 								</view>
 							</view>
 						</view>
@@ -371,8 +385,9 @@
 					<view class="xian"> </view>
 					<view class="bottoms">
 						<view class="sdasas" @click="fou()"> 否 </view>
-						<view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
-						<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view>
+						<!-- <view class="czcxc" @click="dakaishouji(1)" v-if="shifouanzhaungkaiguan"> 是 </view>
+						<view class="czcxc" @click="shifouanzhuangdsadas" v-else> 是</view> -->
+						<view class="czcxc" @click="shifouanzhuangdsadas()"> 是 </view>
 					</view>
 				</view>
 			</u-popup>
@@ -380,7 +395,7 @@
 			<u-popup width="640" :closeable="true" border-radius="10" v-model="shows" mode="center">
 				<view class="popup">
 					<view class="top"> 提示 </view>
-					<view class="cets" style="padding: 50rpx 0 0 0;"> 确认签收该订单商品？ </view>
+					<view class="cets" style="padding: 50rpx 0 50rpx 0;"> 确认签收该订单商品？ </view>
 
 
 
@@ -393,7 +408,7 @@
 
 
 
-					<view class="cet" style="padding: 50rpx;">
+					<!-- <view class="cet" style="padding: 50rpx;">
 						<view style="display:flex;justify-content: flex-end;align-items:center;">
 							<view class="yuan" @click="xiaoshouqeihuan()">
 								<u-icon v-if="xiaoshoufalse" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
@@ -401,10 +416,10 @@
 						</view>
 						<view style="padding: 0 10rpx;">
 							<view class="mingcheng" @click="xiaoshoufuwenben()">
-								销售清单
+								产品清单
 							</view>
 						</view>
-					</view>
+					</view> -->
 
 
 
@@ -645,7 +660,7 @@
 				console.log(this.mnbv);
 				let aa = {
 					content: this.mnbv.qd,
-					name: "销售清单"
+					name: "产品清单"
 				}
 				this.fuwenben(aa)
 			},
@@ -701,12 +716,12 @@
 				console.log(ev);
 				this.zhuangtai = ev
 				if (ev == 0) {
-					if (!this.xiaoshoufalse) {
-						return uni.showToast({
-							title: "请同意销售清单",
-							icon: "none",
-						});
-					}
+					// if (!this.xiaoshoufalse) {
+					// 	return uni.showToast({
+					// 		title: "请同意销售清单",
+					// 		icon: "none",
+					// 	});
+					// }
 					this.xieyi = this.querenqianshouxieyi
 					this.buyanzheng = this.querenqianshoukaiguan
 					this.shows = false
@@ -762,6 +777,7 @@
 			},
 			// 完成安装
 			jiesubaozhaung(ev) {
+				this.mnbv = ev
 				this.qurrsaen = ev
 				this.qurren = true
 			},
@@ -779,6 +795,12 @@
 					if (this.xieyi.length != mm) {
 						return uni.showToast({
 							title: "请阅读并同意协议",
+							icon: "none"
+						})
+					}
+					if (!this.xiaoshoufalse) {
+						return uni.showToast({
+							title: "请同意产品清单",
 							icon: "none"
 						})
 					}
@@ -802,7 +824,10 @@
 				}
 			},
 			// 去报装
-			shifouanzhuangdsadas() {
+			shifouanzhuangdsadas(ev, index) {
+				if (index == 9) {
+					this.mnbv = ev
+				}
 				this.baozhuangshow = false
 				uni.setStorageSync("baozhaung", this.mnbv.shop)
 				uni.navigateTo({
@@ -811,12 +836,12 @@
 			},
 			//确认收货
 			querenshouhuo() {
-				if (!this.xiaoshoufalse) {
-					return uni.showToast({
-						title: "请同意销售清单",
-						icon: "none",
-					});
-				}
+				// if (!this.xiaoshoufalse) {
+				// 	return uni.showToast({
+				// 		title: "请同意销售清单",
+				// 		icon: "none",
+				// 	});
+				// }
 				this.shows = false
 				this.$api.sureorder({
 					id: this.order_id
@@ -1207,6 +1232,7 @@
 			},
 			// 获取验证码
 			go_code() {
+				this.xiaoshoufalse = false
 				if (this.timea == 0) {
 					this.$api.emsphone({
 						phone: this.shoujihao,

@@ -1,5 +1,8 @@
 import request from "./request.js"
 export default {
+	puser(params = {}) {
+		return request.post("/api/byd_user/puser", params);
+	},
 	yqpeople(params = {}) {
 		return request.post("/api/byd_user/yqpeople", params);
 	},

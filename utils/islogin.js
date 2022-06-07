@@ -27,7 +27,7 @@ function log() {
 								encryptedData: data.encryptedData,
 								level,
 								pid,
-								ewm
+								// ewm
 							}).then(data => {
 								if (data.data.code == 1) {
 									uni.setStorageSync("token", data.data.data);

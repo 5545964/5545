@@ -1,5 +1,5 @@
 <template>
-	<view >
+	<view>
 		<!-- 导航 -->
 		<view class="navbar">
 			<u-navbar :is-back="false" :title="title">
@@ -53,6 +53,7 @@
 				</view>
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 		<u-heigth />
 	</view>
 </template>
@@ -65,44 +66,50 @@
 				allSel: false,
 				carList: [],
 				img: this.$imgPath,
-				orderid:"",
-				tiao:0
+				orderid: "",
+				tiao: 0
 			}
 		},
 		onLoad(ev) {
 			this.orderid = ev.orderid
 			let aa = uni.getStorageSync("baozhaung")
-			aa.forEach(item=>{
+			aa.forEach(item => {
 				item["selected"] = false
 			})
 			this.carList = aa
-			if(ev.tiao){
+			if (ev.tiao) {
 				this.tiao = ev.tiao
 			}
 		},
 		methods: {
 			jsCars() {
 				let shopid = [];
-				this.carList.forEach(item=>{
-					if(item.selected){
+				this.carList.forEach(item => {
+					if (item.selected) {
 						shopid.push(item.id)
 					}
 				})
 				this.$api.sqlading({
-					shopid:shopid,
-					orderid:this.orderid,
-					userid:uni.getStorageSync("user_info").id
-				}).then(data=>{
-					uni.showToast({
-						title:"提交成功",
-						icon:"success"
-					})
-					if(data.data.code == 1){
+					shopid: shopid,
+					orderid: this.orderid,
+					userid: uni.getStorageSync("user_info").id
+				}).then(data => {
+					if (data.data.code == 1) {
+						this.$refs.uToast.show({
+							title: '提交成功，请耐心等待！',
+							duration:1000
+						})
 						uni.removeStorageSync("baozhaung")
 						let that = this;
-						
-						uni.navigateBack({
-							delta:Number(that.tiao)
+						setTimeout(function() {
+							uni.navigateBack({
+								delta: Number(that.tiao)
+							})
+						}, 1000);
+					} else {
+						uni.showToast({
+							title: "提交失败",
+							icon: "success",
 						})
 					}
 				})

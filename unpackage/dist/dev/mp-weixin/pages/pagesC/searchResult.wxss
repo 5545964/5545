@@ -1,0 +1,47 @@
+.navbar .sssss.data-v-7e20c98c {
+  border: 1px solid #e5e5e5;
+  overflow: hidden;
+  width: 166rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.navbar .sssss .dsds.data-v-7e20c98c {
+  padding: 20rpx;
+}
+.navbar .sssss .hang.data-v-7e20c98c {
+  width: 2rpx;
+  height: 26rpx;
+  background-color: #e5e5e5;
+}
+.navbar .sssss .fanhui.data-v-7e20c98c {
+  width: 12rpx;
+  height: 22rpx;
+}
+.navbar .sssss .souye.data-v-7e20c98c {
+  width: 26rpx;
+  height: 24rpx;
+}
+.u-search-box.data-v-7e20c98c {
+  padding: 18rpx 30rpx;
+  background-color: #FFFFFF;
+  margin-bottom: 20rpx;
+}
+.u-menu-wrap.data-v-7e20c98c {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+.seath.data-v-7e20c98c {
+  width: 100%;
+}
+.u-search-inner.data-v-7e20c98c {
+  border-radius: 100rpx;
+  display: flex;
+  align-items: center;
+  height: 70rpx;
+}
+

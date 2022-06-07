@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-design": "/uview-ui/components/u-design/u-design",
+    "u-flagship-suite": "/uview-ui/components/u-FlagshipSuite/u-FlagshipSuite",
+    "u-house-type": "/uview-ui/components/u-HouseType/u-HouseType",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "u-heigth": "/uview-ui/components/u-heigth/u-heigth"
+  }
+}

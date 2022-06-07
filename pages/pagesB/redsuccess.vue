@@ -52,6 +52,15 @@
 			</view>
 			<view class="write_item">
 				<view>
+					推荐人
+				</view>
+				<input v-if="yaoqing" style="text-align: right;" disabled @click="tan=true" v-model="yqr" type="text"
+					value="" placeholder="请选择推荐人" />
+				<input v-else style="text-align: right;" disabled v-model="yqr" type="text" value=""
+					placeholder="请选择推荐人" />
+			</view>
+			<view class="write_item">
+				<view>
 					身份证号码
 				</view>
 				<input style="text-align: right;" v-model="idcard" type="text" value="" placeholder="请输入身份证号码" />
@@ -76,9 +85,34 @@
 				<input style="text-align: right;" v-model="addressxq" type="text" value="" placeholder="请输入详细地址" />
 			</view>
 		</view>
-		<view style="height: 100rpx;">
-
-		</view>
+		<u-popup width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">
+			<view class="popup">
+				<view class="top"> 请选择推荐人 </view>
+				<view style="padding:40rpx 0 20rpx 0;">
+					<u-input v-model="yqr" disabled inputAlign="center" placeholder="请选择" />
+				</view>
+				<scroll-view scroll-y="true" style="max-height:500rpx;">
+					<view style="padding:20rpx 0;">
+						<view class="cet" style="margin:10rpx 0;" v-for="(item,index) in peoplelist" :key="index">
+							<view class="quanquan">
+								<view class="yuan" @click="hahaha(index)">
+									<u-icon v-if="item.check" name="checkbox-mark" color="#2979ff" size="28"></u-icon>
+								</view>
+							</view>
+							<view class="cccc">
+								{{item.nickname||""}}
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+				<view class="xian"> </view>
+				<view class="bottoms">
+					<view class="sdasas" @click="quxiao()"> 取消 </view>
+					<button class="czcxc" @click="pope()">确定</button>
+				</view>
+			</view>
+		</u-popup>
+		<view style="height: 100rpx;" />
 		<!-- 底部提交按钮 -->
 		<view class="foot_reg">
 			<view class="submit" @click="submit">
@@ -93,6 +127,13 @@
 	export default {
 		data() {
 			return {
+				popetext: "",
+				yaoqing: true,
+				peoplelist: [],
+				pepepe: true,
+				pages: 1,
+				tan: false,
+				yqr: "",
 				user: "",
 				sex: "",
 				names: "",
@@ -118,16 +159,11 @@
 					}
 				],
 				value: '',
-				// des: 0
 			};
 		},
 		onLoad(ev) {
 			this.level = ev.level
 			this.name = ev.name
-			// if (ev.mlml == 1) {
-			// 	this.des = 1
-			// 	this.title = "注册设计师合伙人"
-			// }
 			let aa = uni.getStorageSync("user_info")
 			if (aa) {
 				this.phone = aa.mobile
@@ -148,10 +184,44 @@
 				this.address = this.user.address
 				this.addressxq = this.user.addressxq
 			}
+			this.$api.puser({
+				user_id: uni.getStorageSync("user_info").id,
+			}).then(data => {
+				if (data.data.code == 1) {
+					this.yaoqing = false
+					this.yqr = data.data.data.status.nickname
+				}
+			})
+			this.$api.yqpeople().then(data => {
+				if (data.data.code == 1) {
+					data.data.data.status.forEach(item => {
+						item["check"] = false
+					})
+					this.peoplelist = data.data.data.status
+				}
+			})
 		},
 		methods: {
-
-
+			quxiao() {
+				this.yqr = ""
+				this.peoplelist.forEach((items, index) => {
+					items.check = false
+				})
+				this.pope()
+			},
+			pope() {
+				this.tan = false
+			},
+			hahaha(item) {
+				this.yqr = this.peoplelist[item].nickname
+				this.peoplelist.forEach((items, index) => {
+					if (item == index) {
+						items.check = true
+					} else {
+						items.check = false
+					}
+				})
+			},
 			radioGroupChange(ev) {
 				if (ev == "男") {
 					this.sex = "0";
@@ -238,7 +308,6 @@
 						icon: "none"
 					})
 				}
-				console.log("pppppppp");
 				if (this.code == "" || this.address == "" ||
 					this.addressxq == "" || this.level == "" || this.name == "" || this.sex === "") {
 					return uni.showToast({
@@ -251,7 +320,9 @@
 					yzm: this.code
 				}).then(data => {
 					if (data.data.code == 1) {
-						// if (this.des == 0) {
+						if (this.yqr == "") {
+							this.yqr = "无"
+						}
 						this.$api.sqb({
 							user_id: uni.getStorageSync("user_info").id,
 							idcart: this.idcard,
@@ -262,7 +333,8 @@
 							levelname: this.name,
 							addressxq: this.addressxq,
 							name: this.names,
-							sex: this.sex
+							sex: this.sex,
+							pname: this.yqr
 						}).then(data => {
 							uni.showToast({
 								title: data.data.msg,
@@ -277,8 +349,6 @@
 								}, 1000)
 							}
 						})
-						// }
-
 					} else {
 						uni.showToast({
 							title: "验证码错误",
@@ -294,6 +364,87 @@
 </script>
 
 <style lang="scss" scoped>
+	.cccc {
+		padding: 0 10rpx;
+		width: 70%;
+	}
+
+	.quanquan {
+		width: 30%;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	.yuan {
+		width: 30rpx;
+		height: 30rpx;
+		border: 1px solid #000000;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.popup {
+		.xcvb {
+			height: 100%;
+			width: 2rpx;
+			background: #efefef;
+		}
+
+		.czcxc {
+			background: #ffffff;
+			border: 0;
+			text-align: center;
+			width: 50%;
+			padding: 25rpx;
+			font-size: 28rpx;
+			font-weight: 400;
+			color: #007399;
+		}
+
+		.sdasas {
+			border-right: 1px solid #efefef;
+			text-align: center;
+			width: 50%;
+			padding: 25rpx;
+			font-size: 28rpx;
+			font-weight: 400;
+			color: #333333;
+		}
+
+		.xian {
+			height: 2rpx;
+			background: #efefef;
+		}
+
+		.bottoms {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		.cets {
+			text-align: center;
+			padding: 50rpx;
+			font-size: 26rpx;
+			font-weight: 400;
+			color: #333333;
+		}
+
+		.top {
+			height: 90rpx;
+			line-height: 90rpx;
+			text-align: center;
+			background: #007399;
+			font-size: 30rpx;
+			font-weight: 400;
+			color: #fefefe;
+		}
+	}
+
 	// 导航
 	.navbar {
 		.sssss {
