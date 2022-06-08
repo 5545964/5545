@@ -563,9 +563,7 @@
 							})
 						}
 					});
-
 				}
-
 			},
 			async changeDesign() {
 				if (await this.$login()) {
@@ -576,10 +574,22 @@
 			},
 			async go(ev) {
 				if (await this.$login()) {
-					uni.navigateTo({
-						url: "../pagesB/dindan?title=" + ev.name + "&current=" + ev.id
-					})
+					let that = this
+					uni.requestSubscribeMessage({
+						provider: 'weixin',
+						tmplIds: that.mobanid,
+						complete: function(e) {
+							uni.navigateTo({
+								url: "../pagesB/dindan?title=" + ev.name + "&current=" + ev.id
+							})
+						}
+					});
 				}
+				// if (await this.$login()) {
+				// 	uni.navigateTo({
+				// 		url: "../pagesB/dindan?title=" + ev.name + "&current=" + ev.id
+				// 	})
+				// }
 
 			},
 			async gongju_go(ev, title) {

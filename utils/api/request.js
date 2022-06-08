@@ -4,7 +4,7 @@ let CSbaseURL = ""
 if (process.env.NODE_ENV === 'production') {
 	CSbaseURL = "https://bao.scwushen.com/index.php"
 } else {
-	CSbaseURL = "https://bao.scwushen.com/index.php"
+	CSbaseURL = "https://tbao.scwushen.com/index.php"
 }
 const instance = ajax.create({
 	baseURL: CSbaseURL,

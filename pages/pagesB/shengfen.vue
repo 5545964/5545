@@ -193,7 +193,7 @@
 				mlml: 0, //0销售员1是设计师
 				pd: 0,
 				agid: "",
-				xuyue: false,
+				xuyue: false, //false升级，true续约
 				xuyuestate: "",
 				xuyuecontent: ""
 			};
