@@ -184,6 +184,27 @@
 				this.address = this.user.address
 				this.addressxq = this.user.addressxq
 			}
+			this.$api.qsj({
+				user_id: uni.getStorageSync("user_info").id,
+			}).then(data => {
+				if (data.data.code == 1) {
+					this.yaoqing = false
+					let aa = data.data.data.status
+					this.yqr = aa.pname
+					this.names = aa.name
+					if (aa.sex == 0) {
+						this.sex = 0
+						this.value = "男"
+					} else if (this.user.sex == 1) {
+						this.sex = 1
+						this.value = "女"
+					}
+					this.idcard = aa.idcart
+					this.emal = aa.email
+					this.address = aa.address
+					this.addressxq = aa.addressxq
+				}
+			})
 			this.$api.puser({
 				user_id: uni.getStorageSync("user_info").id,
 			}).then(data => {

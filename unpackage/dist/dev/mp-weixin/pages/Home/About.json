@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "关于宝芸邸",
+  "enablePullDownRefresh": true,
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-tabs": "/uview-ui/components/u-tabs/u-tabs",
+    "u-parse": "/uview-ui/components/u-parse/u-parse",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-select": "/uview-ui/components/u-select/u-select",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-kehu": "/uview-ui/components/u-kehu/u-kehu",
+    "u-toast": "/uview-ui/components/u-toast/u-toast",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "u-dianji": "/uview-ui/components/u-dianji/u-dianji"
+  }
+}
