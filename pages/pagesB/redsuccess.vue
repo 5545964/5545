@@ -34,24 +34,6 @@
 			</view>
 			<view class="write_item">
 				<view>
-					手机号
-				</view>
-				<input style="text-align: right;" v-model="phone" type="number" value="" placeholder="请输入手机号" />
-			</view>
-			<view class="write_item" v-if="phone!=''">
-				<view>
-					验证码
-				</view>
-				<view class="cet" style="justify-content: space-between;width: 60%;">
-					<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
-						<u-input inputAlign="left" size="200" v-model="code" maxlength="6" placeholder="请输入验证码"
-							type="number" />
-					</view>
-					<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
-				</view>
-			</view>
-			<view class="write_item">
-				<view>
 					推荐人
 				</view>
 				<input v-if="yaoqing" style="text-align: right;" disabled @click="tan=true" v-model="yqr" type="text"
@@ -83,6 +65,24 @@
 					详细地址
 				</view>
 				<input style="text-align: right;" v-model="addressxq" type="text" value="" placeholder="请输入详细地址" />
+			</view>
+			<view class="write_item">
+				<view>
+					手机号
+				</view>
+				<input style="text-align: right;" v-model="phone" type="number" value="" placeholder="请输入手机号" />
+			</view>
+			<view class="write_item" v-if="phone!=''">
+				<view>
+					验证码
+				</view>
+				<view class="cet" style="justify-content: space-between;width: 60%;">
+					<view class="djkshfks" style="background-color: #e5e5e5;padding: 0 30rpx;">
+						<u-input inputAlign="left" size="200" v-model="code" maxlength="6" placeholder="请输入验证码"
+							type="number" />
+					</view>
+					<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
+				</view>
 			</view>
 		</view>
 		<u-popup width="640" border-radius="20" @close="tan=false" v-model="tan" mode="center">

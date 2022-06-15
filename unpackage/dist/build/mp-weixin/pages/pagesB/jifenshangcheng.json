@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "积分商城",
+  "enablePullDownRefresh": false,
+  "onReachBottomDistance": 400,
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-adata": "/uview-ui/components/u-adata/u-adata"
+  }
+}

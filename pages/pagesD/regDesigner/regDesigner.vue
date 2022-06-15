@@ -21,12 +21,14 @@
 					<view>
 						{{item.name||""}}
 					</view>
-					<input v-if="item.id!=5" style="text-align: right;" v-model="item.text" type="text" value=""
+					<input v-if="item.id!=4" style="text-align: right;" v-model="item.text" type="text" value=""
 						:placeholder="item.placeholder" />
-					<view @click="show=true" v-if="item.id==5" style="text-align: right;">
+					<view @click="show=true" v-if="item.id==4" style="text-align: right;">
 						{{item.text||"请选择地区"}}
 					</view>
 				</view>
+				
+				
 				<view class="write_item" v-if="item.aa == 'sex'">
 					<view>
 						{{item.name||""}}
@@ -37,6 +39,8 @@
 						</u-radio>
 					</u-radio-group>
 				</view>
+				
+				
 				<view class="write_item" v-if="item.aa == 'phone'">
 					<view>
 						{{item.name||""}}
@@ -47,6 +51,8 @@
 						{{item.text||"请选择地区"}}
 					</view>
 				</view>
+				
+				
 				<view class="write_item" v-if="item.aa == 'phone'">
 					<view>
 						验证码
@@ -59,6 +65,9 @@
 						<button class="annuyt" @click="go_code">{{huoqu||""}}</button>
 					</view>
 				</view>
+				
+				
+				
 			</block>
 		</view>
 		<!-- 上传设计师资质 -->
@@ -92,7 +101,7 @@
 			} else {
 				this.ididiidid = uni.getStorageSync("level")
 			}
-			this.inpList[3].text = uni.getStorageSync("user_info").mobile
+			this.inpList[6].text = uni.getStorageSync("user_info").mobile
 			this.action = this.$shangchuan + '/api/byd_user/addpostspic'
 			// 驳回后修改信息
 			let info = uni.getStorageSync("inpList");
@@ -100,10 +109,10 @@
 				this.inpList[0].text = info[0].text; //姓名
 				this.inpList[1].text = info[1].text; //性别
 				this.inpList[2].text = info[2].text; //身份证号码
-				this.inpList[3].text = info[3].text; //手机号码
-				this.inpList[4].text = info[4].text; //电子邮箱
-				this.inpList[5].text = info[5].text; //所在地区
-				this.inpList[6].text = info[6].text; //详细地址
+				this.inpList[3].text = info[4].text; //电子邮箱
+				this.inpList[4].text = info[5].text; //所在地区
+				this.inpList[5].text = info[6].text; //详细地址
+				this.inpList[6].text = info[3].text; //手机号码
 				if (info[1].text == 0) {
 					this.value = "男"
 				} else {
@@ -156,33 +165,34 @@
 						text: "",
 						aa: ""
 					},
+					
 					{
 						id: 3,
-						name: "手机号码",
-						placeholder: "请输入您的手机号码",
-						text: "",
-						aa: "phone"
-					},
-					{
-						id: 4,
 						name: "电子邮箱",
 						placeholder: "请输入您的电子邮箱",
 						text: "",
 						aa: ""
 					},
 					{
-						id: 5,
+						id: 4,
 						name: "所在地区",
 						placeholder: "请选择您的所在地区",
 						text: "请选择您的所在地区",
 						aa: ""
 					},
 					{
-						id: 6,
+						id: 5,
 						name: "详细地址",
 						placeholder: "街道、小区门牌等详细地址",
 						text: "",
 						aa: ""
+					},
+					{
+						id: 6,
+						name: "手机号码",
+						placeholder: "请输入您的手机号码",
+						text: "",
+						aa: "phone"
 					}
 				],
 				imgList: [],
@@ -211,7 +221,7 @@
 			go_code() {
 				if (this.timea == 0) {
 					this.$api.emsphone({
-						phone: this.inpList[3].text,
+						phone: this.inpList[6].text,
 						user_id: uni.getStorageSync("user_info").id
 					}).then(data => {
 						if (data.data.code == 1) {
@@ -243,7 +253,7 @@
 				this.upimgs.push(ev.data.status)
 			},
 			cityChange(e) {
-				this.inpList[5].text = e.province.label + e.city.label + e.area.label;
+				this.inpList[4].text = e.province.label + e.city.label + e.area.label;
 			},
 			back(ev) {
 				switch (ev) {
@@ -269,7 +279,7 @@
 				if (this.code != "") {
 					// 验证验证码
 					this.$api.emsyzphone({
-						phone: this.inpList[3].text,
+						phone: this.inpList[6].text,
 						yzm: this.code
 					}).then(data => {
 						console.log(this.inpList);
@@ -310,11 +320,11 @@
 							user_id: uni.getStorageSync("user_info").id,
 							username: this.inpList[0].text,
 							idcart: this.inpList[2].text,
-							address: this.inpList[5].text,
-							email: this.inpList[4].text,
-							mobile: this.inpList[3].text,
+							address: this.inpList[4].text,
+							email: this.inpList[3].text,
+							mobile: this.inpList[6].text,
 							desimage: this.upimgs,
-							addressxq: this.inpList[6].text,
+							addressxq: this.inpList[5].text,
 							sex: this.inpList[1].text,
 							level: this.ididiidid
 						}).then(data => {
