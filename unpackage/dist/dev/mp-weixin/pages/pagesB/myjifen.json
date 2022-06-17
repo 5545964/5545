@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "我的积分",
-  "enablePullDownRefresh": false,
-  "onReachBottomDistance": 400,
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "u-navbar": "/uview-ui/components/u-navbar/u-navbar"
-  }
-}
