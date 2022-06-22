@@ -612,7 +612,7 @@
 						// 	this.alls.content = this.alls.content.replace(/\<img src=\"/gi,
 						// 		'<img src=\"' + this.$imgPath);
 						// }
-						let pp = this.alls.content.split(",");
+						let pp = this.alls.content.split(",")||[""];
 						this.alls.content = []
 						pp.forEach(item => {
 							this.alls.content.push(item)
