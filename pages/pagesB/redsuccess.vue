@@ -329,6 +329,13 @@
 						icon: "none"
 					})
 				}
+				
+				if (this.yqr == "") {
+					return uni.showToast({
+						title: "请选择推荐人",
+						icon: "none"
+					})
+				}
 				if (this.code == "" || this.address == "" ||
 					this.addressxq == "" || this.level == "" || this.name == "" || this.sex === "") {
 					return uni.showToast({
@@ -341,9 +348,9 @@
 					yzm: this.code
 				}).then(data => {
 					if (data.data.code == 1) {
-						if (this.yqr == "") {
-							this.yqr = "无"
-						}
+						// if (this.yqr == "") {
+						// 	this.yqr = "无"
+						// }
 						this.$api.sqb({
 							user_id: uni.getStorageSync("user_info").id,
 							idcart: this.idcard,
