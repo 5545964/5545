@@ -36,8 +36,7 @@ function log() {
 									uni.setStorageSync("showssss", false)
 									uni.removeStorageSync('yaoqinglevel')
 									api.myuser({
-										user_id: data.data.data.status
-											.id
+										user_id: data.data.data.status.id
 									}).then(data => {
 										if (data.data.code == 1) {
 											uni.setStorageSync(

@@ -380,7 +380,7 @@
 						content: ""
 					}
 				],
-				current: 0,
+				current: 3,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -838,6 +838,12 @@
 							}
 						} else if (data.data.code == 20) {
 							// B3点击其他区域
+							this.$refs.uToast.show({
+								title: data.data.msg,
+								type: 'default',
+								duration: "3000"
+							})
+						}else{
 							this.$refs.uToast.show({
 								title: data.data.msg,
 								type: 'default',

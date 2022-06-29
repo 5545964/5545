@@ -159,11 +159,13 @@
 					}
 				],
 				value: '',
+				mm:"",
 			};
 		},
 		onLoad(ev) {
 			this.level = ev.level
 			this.name = ev.name
+			this.mm = ev.mm
 			let aa = uni.getStorageSync("user_info")
 			if (aa) {
 				this.phone = aa.mobile
@@ -362,7 +364,8 @@
 							addressxq: this.addressxq,
 							name: this.names,
 							sex: this.sex,
-							pname: this.yqr
+							pname: this.yqr,
+							type:this.mm
 						}).then(data => {
 							uni.showToast({
 								title: data.data.msg,

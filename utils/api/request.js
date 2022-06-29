@@ -4,7 +4,7 @@ let CSbaseURL = ""
 if (process.env.NODE_ENV === 'production') {
 	CSbaseURL = "https://bao.scwushen.com/index.php"
 } else {
-	CSbaseURL = "https://bao.scwushen.com/index.php"
+	CSbaseURL = "https://tbao.scwushen.com/index.php"
 }
 const instance = ajax.create({
 	baseURL: CSbaseURL,
@@ -20,7 +20,7 @@ instance.interceptors.request.use(
 	config => {
 		config.header["token"] = token.token
 		//模拟用户
-		config.data.user_id = "175"
+		// config.data.user_id = "175"
 		return config
 	},
 	error => {

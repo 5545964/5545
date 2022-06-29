@@ -81,66 +81,65 @@
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
-					uni.setStorageSync("xieyi", data.data.data.status)
+					// uni.setStorageSync("xieyi", data.data.data.status)
+					uni.setStorageSync("xieyi", [])
 				} else {
 					uni.setStorageSync("xieyi", [])
 				}
 			})
-			if (true) {
-				let timeaa = 10000
-				let timebb = 800000
-				if (process.env.NODE_ENV === 'development') {
-					timeaa = 5000
-					timebb = 5000
-				}
-				clearInterval(uni.getStorageSync("setIntervalaa", aa))
-				let aa = setInterval(() => {
-					this.$api.qzqy({
-						user_id: uni.getStorageSync("user_info").id || 0
-					}).then(data => {
-						if (data.data.code == 1) {
-							if (uni.getStorageSync("yanzheng")) {
-								uni.setStorageSync("tanchuang", data.data.data.status)
-								uni.reLaunch({
-									url: "/pages/pagesB/tanchuang?agid=" + data
-										.data.data.status.agid +
-										"&tongyi=qzqy&lpid=" + data
-										.data.data.status.lpid
-								})
-								this.$api.agreements().then(datas => {
-									if (datas.data.code == 1) {
-										datas.data.data.status.forEach(item => {
-											item["check"] = false
-										})
-										uni.setStorageSync("xieyi", datas.data.data.status)
-									} else {
-										uni.setStorageSync("xieyi", [])
-									}
-								})
-							}
-						}
-					})
-				}, timeaa)
-				uni.setStorageSync("setIntervalaa", aa)
-				clearInterval(uni.getStorageSync("setIntervalbb", bb))
-				let bb = setInterval(() => {
-					this.$api.timeout({
-						user_id: uni.getStorageSync("user_info").id || 0
-					}).then(data => {
-						if (data.data.code == 1) {
-							if (uni.getStorageSync("yanzheng")) {
-								uni.setStorageSync("tanchuang", data.data.data.status)
-								uni.reLaunch({
-									url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
-										.agid + "&tongyi=timeout&lpid=" + data.data.data.status
-										.lpid
-								})
-							}
-						}
-					})
-				}, timebb)
-				uni.setStorageSync("setIntervalbb", bb)
+			let timeaa = 10000
+			let timebb = 100000
+			if (process.env.NODE_ENV === 'development') {
+				timeaa = 500000
+				timebb = 500000
 			}
+			clearInterval(uni.getStorageSync("setIntervalaa", aa))
+			let aa = setInterval(() => {
+				this.$api.qzqy({
+					user_id: uni.getStorageSync("user_info").id || 0
+				}).then(data => {
+					if (data.data.code == 1) {
+						if (uni.getStorageSync("yanzheng")) {
+							uni.setStorageSync("tanchuang", data.data.data.status)
+							uni.reLaunch({
+								url: "/pages/pagesB/tanchuang?agid=" + data
+									.data.data.status.agid +
+									"&tongyi=qzqy&lpid=" + data
+									.data.data.status.lpid
+							})
+							this.$api.agreements().then(datas => {
+								if (datas.data.code == 1) {
+									datas.data.data.status.forEach(item => {
+										item["check"] = false
+									})
+									uni.setStorageSync("xieyi", datas.data.data.status)
+								} else {
+									uni.setStorageSync("xieyi", [])
+								}
+							})
+						}
+					}
+				})
+			}, timeaa)
+			uni.setStorageSync("setIntervalaa", aa)
+			clearInterval(uni.getStorageSync("setIntervalbb", bb))
+			let bb = setInterval(() => {
+				this.$api.timeout({
+					user_id: uni.getStorageSync("user_info").id || 0
+				}).then(data => {
+					if (data.data.code == 1) {
+						if (uni.getStorageSync("yanzheng")) {
+							uni.setStorageSync("tanchuang", data.data.data.status)
+							uni.reLaunch({
+								url: "/pages/pagesB/tanchuang?agid=" + data.data.data.status
+									.agid + "&tongyi=timeout&lpid=" + data.data.data.status
+									.lpid
+							})
+						}
+					}
+				})
+			}, timebb)
+			uni.setStorageSync("setIntervalbb", bb)
 		}
 	}
 </script>

@@ -160,6 +160,7 @@
 	export default {
 		data() {
 			return {
+				mnmn: 0,
 				current: 0,
 				bohuidata: {},
 				bohui: false,
@@ -170,7 +171,6 @@
 				mnbv: "",
 				jshdsfdfs: false,
 				shoujihao: uni.getStorageSync("user_info").mobile,
-				baozhuangshow: false,
 				code: "",
 				buyanzheng: true,
 				timea: 0,
@@ -441,7 +441,6 @@
 					this.shoujiyanzheng = false;
 					this.yuedu = false
 				}
-				this.baozhuangshow = false
 				this.topay()
 			},
 			//
@@ -459,7 +458,8 @@
 					id: id,
 					user_id: uni.getStorageSync("user_info").id,
 					level: this.mlml,
-					type: this.xuyue
+					type: this.xuyue,
+					mm: this.mnmn
 				}).then(res => {
 					if (res.data.code == 1) {
 						uni.showToast({
@@ -470,7 +470,7 @@
 							if (this.mlml == 0) {
 								uni.navigateTo({
 									url: "./redsuccess?level=" + this.id + "&name=" + this.name +
-										"&mlml=" + this.mlml
+										"&mlml=" + this.mlml + "&mm=" + this.mnmn
 								})
 							} else {
 								uni.navigateBack({
@@ -497,7 +497,8 @@
 									setTimeout(() => {
 										uni.navigateTo({
 											url: "./redsuccess?level=" + that.id +
-												"&name=" + that.name
+												"&name=" + that.name + "&mm=" + this
+												.mnmn
 										})
 									}, 1000)
 								} else {
@@ -525,7 +526,18 @@
 						data.data.data.status.forEach(item => {
 							item["name"] = item.type.split("（")[0]
 						})
-						this.list = [...data.data.data.status]
+						data.data.data.status.forEach(item => {
+							this.list.push(item)
+							if (item.id == 1 || item.id == 2) {
+								this.list.push({
+									...item,
+									type: item.oneb,
+									money: item.bmoney,
+									name: item.oneb,
+									mm: 1
+								})
+							}
+						})
 						if (this.mlml == 1) {
 							if (this.list[0].id == 5) {
 								this.xieyis(1)
@@ -559,7 +571,23 @@
 								this.bohui = true
 								setTimeout(() => {
 									if (this.mlml == 0) {
-										this.current = this.bohuidata.level - 1
+										if (this.bohuidata.type == 1) {
+											if (this.bohuidata.level == 1) {
+												this.current = 1
+											} else if (this.bohuidata.level == 2) {
+												this.current = 3
+											}
+										} else {
+											if (this.bohuidata.level == 1) {
+												this.current = 0
+											}
+											if (this.bohuidata.level == 2) {
+												this.current = 2
+											}
+											if (this.bohuidata.level == 3) {
+												this.current = 4
+											}
+										}
 									} else {
 										if (this.bohuidata.level == 3) {
 											this.current = 0
@@ -573,7 +601,6 @@
 							}
 						}
 						if (this.xuyue) {
-							console.log(11111111111111111111);
 							setTimeout(() => {
 								this.current = this.xuyuecontent
 							}, 100);
@@ -616,10 +643,11 @@
 				} else {
 					this.id = this.list[ev.detail.current].id;
 				}
-				this.xieyis(this.id)
+				this.mnmn = this.list[ev.detail.current].mm
 				this.pd = this.list[ev.detail.current].pd;
 				this.types = this.list[ev.detail.current].type;
 				this.name = this.list[ev.detail.current].name;
+				this.xieyis(this.id)
 				this.gaodu(ev.detail.current)
 			},
 			back(ev) {
