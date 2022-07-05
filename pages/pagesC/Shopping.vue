@@ -258,7 +258,7 @@
 						<view class="color_ul">
 							<view :class="isSize==index?'color_li':'.color_li1'" @click="chooseSize(index)"
 								v-for="(item,index) in alls.son" :key="item.id">
-								{{item.spections||""}}{{item.good_code||""}}
+								{{item.spections||""}}<text v-if="item.good_code" style="margin-left: 20rpx;">{{item.good_code||""}}</text>
 							</view>
 						</view>
 					</view>
