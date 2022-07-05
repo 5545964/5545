@@ -20,7 +20,7 @@ instance.interceptors.request.use(
 	config => {
 		config.header["token"] = token.token
 		//模拟用户
-		// config.data.user_id = "175"
+		// config.data.user_id = "13"
 		return config
 	},
 	error => {

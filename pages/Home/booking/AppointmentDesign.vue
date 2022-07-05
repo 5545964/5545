@@ -209,7 +209,8 @@
 										</view>
 									</view>
 									<view class="cet">
-										<u-input type="number" @click="nianopen(indexc)" disabled
+										<!-- @click="nianopen(indexc)" disabled -->
+										<u-input type="number" 
 											v-model="man_data[indexc].age" placeholder="输入年龄" />
 										<view style="padding-left: 10rpx;">
 											岁
@@ -1329,8 +1330,6 @@
 
 		.type_item {
 			padding: 0 25rpx;
-
-
 			background: #F6F6F6;
 			border-radius: 35rpx;
 			font-size: 26rpx;
@@ -1346,7 +1345,6 @@
 			background: #007399;
 			padding: 0 25rpx;
 
-
 			border-radius: 35rpx;
 			font-size: 26rpx;
 			color: #FFFFFF;
@@ -1358,6 +1356,7 @@
 		}
 
 		.dkjshkdsf {
+			width: 33.33%;
 			display: flex;
 			flex-flow: column;
 			justify-content: center;

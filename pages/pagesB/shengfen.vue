@@ -526,18 +526,19 @@
 						data.data.data.status.forEach(item => {
 							item["name"] = item.type.split("（")[0]
 						})
-						data.data.data.status.forEach(item => {
-							this.list.push(item)
-							if (item.id == 1 || item.id == 2) {
-								this.list.push({
-									...item,
-									type: item.oneb,
-									money: item.bmoney,
-									name: item.oneb,
-									mm: 1
-								})
-							}
-						})
+						this.list = [...data.data.data.status]
+						// data.data.data.status.forEach(item => {
+						// 	this.list.push(item)
+						// 	if (item.id == 1 || item.id == 2) {
+						// 		this.list.push({
+						// 			...item,
+						// 			type: item.oneb,
+						// 			money: item.bmoney,
+						// 			name: item.oneb,
+						// 			mm: 1
+						// 		})
+						// 	}
+						// })
 						if (this.mlml == 1) {
 							if (this.list[0].id == 5) {
 								this.xieyis(1)
@@ -571,23 +572,24 @@
 								this.bohui = true
 								setTimeout(() => {
 									if (this.mlml == 0) {
-										if (this.bohuidata.type == 1) {
-											if (this.bohuidata.level == 1) {
-												this.current = 1
-											} else if (this.bohuidata.level == 2) {
-												this.current = 3
-											}
-										} else {
-											if (this.bohuidata.level == 1) {
-												this.current = 0
-											}
-											if (this.bohuidata.level == 2) {
-												this.current = 2
-											}
-											if (this.bohuidata.level == 3) {
-												this.current = 4
-											}
-										}
+										this.current = this.bohuidata.level - 1
+										// if (this.bohuidata.type == 1) {
+										// 	if (this.bohuidata.level == 1) {
+										// 		this.current = 1
+										// 	} else if (this.bohuidata.level == 2) {
+										// 		this.current = 3
+										// 	}
+										// } else {
+										// 	if (this.bohuidata.level == 1) {
+										// 		this.current = 0
+										// 	}
+										// 	if (this.bohuidata.level == 2) {
+										// 		this.current = 2
+										// 	}
+										// 	if (this.bohuidata.level == 3) {
+										// 		this.current = 4
+										// 	}
+										// }
 									} else {
 										if (this.bohuidata.level == 3) {
 											this.current = 0

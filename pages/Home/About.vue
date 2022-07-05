@@ -380,7 +380,7 @@
 						content: ""
 					}
 				],
-				current: 3,
+				current: 0,
 				xinxi: [],
 				imgPath: this.$imgPath,
 				imgsss: '<img src=\"' + this.$imgPath,
@@ -410,8 +410,8 @@
 			this.alls()
 			this.shenghebuts = true
 			this.Bsan = false
-			this.user_infos = uni.getStorageSync("user_info")
-			this.des_infos = uni.getStorageSync("des_info")
+			this.user_infos = uni.getStorageSync("user_info")||""
+			this.des_infos = uni.getStorageSync("des_info")||""
 			this.idid = 0
 			uni.setStorageSync("idid", this.idid)
 			const res = uni.getSystemInfoSync();
@@ -430,8 +430,8 @@
 		},
 		onShow() {
 			// this.current = 3
-			this.user_infos = uni.getStorageSync("user_info")
-			this.des_infos = uni.getStorageSync("des_info")
+			this.user_infos = uni.getStorageSync("user_info")||""
+			this.des_infos = uni.getStorageSync("des_info")||""
 			this.idid = 0
 			uni.setStorageSync("idid", this.idid)
 			const res = uni.getSystemInfoSync();
