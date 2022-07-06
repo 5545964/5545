@@ -86,7 +86,7 @@
 									:style="'left: '+items.fzb[0]+'px;top: '+items.fzb[1]+'px;'" class="imhjk"
 									v-if="items.fzb[0] && items.fzb[1] && shouzhi == 0" src="../../static/gif.gif"
 									mode="aspectFit" />
-									{{items.shop.photo}}
+								{{items.shop.photo}}
 								<image :lazy-load="true" :src="img+items.shop.photo" mode="widthFix" />
 								<!-- <image
 									src="https://wawu-house.oss-cn-shenzhen.aliyuncs.com/api/98a44083ef6cb32e2b60fa83d0309f900ba6843f.jpg"
@@ -97,16 +97,15 @@
 				</view>
 			</scroll-view>
 		</view>
-		<u-heigth />
 		<u-toast ref="uToast" />
 		<!-- 底部 -->
-		<view class="flag_foot">
+		<view class="flag_foot" :style="'height: '+heights+'rpx;'">
 			<button class="reset" open-type="contact">咨询客服</button>
 			<view class="on" @click="gosheji">
 				预约设计
 			</view>
 		</view>
-		<view  style="height: 110rpx;" />
+		<view :style="'height: '+heights+'rpx;'" />
 	</view>
 </template>
 <script>
@@ -120,6 +119,7 @@
 				videoContext: "",
 				desdesdesdesde: 0,
 				shouzhi: uni.getStorageSync("shouzhi"),
+				heights: "",
 				img: this.$imgPath,
 				desInfo: {},
 				video: "",
@@ -148,6 +148,7 @@
 			}
 		},
 		onLoad(ev) {
+			this.heights = uni.getStorageSync("bottomheigth") +110
 			this.shenme_id = ev.id
 			this.allss(this.shenme_id)
 			this.videoContext = uni.createVideoContext('video')
@@ -593,7 +594,7 @@
 		.mian_left_item {
 			font-size: 26rpx;
 			color: #FFFFFF;
-			padding: 20rpx;
+			// padding: 20rpx;
 			box-sizing: border-box;
 			width: 100rpx;
 			background: #305166;
@@ -603,7 +604,7 @@
 		.mian_left_item1 {
 			font-size: 26rpx;
 			color: #FFFFFF;
-			padding: 20rpx;
+			// padding: 20rpx;
 			box-sizing: border-box;
 			width: 100rpx;
 			background: #376379;
@@ -620,7 +621,6 @@
 	}
 
 	.u-tab-item {
-		height: 110rpx;
 		background: #f6f6f6;
 		box-sizing: border-box;
 		display: flex;
@@ -629,7 +629,8 @@
 		font-size: 26rpx;
 		color: #444;
 		font-weight: 400;
-		line-height: 1;
+		padding: 20rpx;
+		word-break: break-all;
 	}
 
 	.u-tab-item-active {
