@@ -209,7 +209,7 @@
 					}
 				],
 				title: "提现申请",
-				tiao: true,
+				tiao: false,
 			};
 		},
 		onLoad(ev) {
@@ -239,7 +239,8 @@
 					uni.stopPullDownRefresh();
 				}
 			})
-			if (uni.getStorageSync("user_info").freelance_id != "0") {
+			// 去签约
+			if (uni.getStorageSync("user_info").freelance_id != "0" && uni.getStorageSync("user_info").rw != 0) {
 				return this.tiao = true
 			}
 			// 智慧型查询是否签约
@@ -295,6 +296,8 @@
 				}).then(data => {
 					if (data.data.code != 1) {
 						this.rw()
+					}else{
+						this.tiao = true
 					}
 				})
 			},
