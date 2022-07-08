@@ -168,7 +168,7 @@
 					if (data.data.code == 1) {
 						let list = {
 							title: "提交成功",
-							text: "你的提佣申请已提交成功",
+							text: "你的实名信息已提交成功",
 							botton: "我知道了",
 							navbar: "提交成功"
 						}
@@ -203,6 +203,7 @@
 						})
 					}
 					if (data.data.code == 1) {
+						console.log("验证码通过");
 						uni.showLoading({
 							title: '上传中',
 							mask: true
@@ -213,7 +214,7 @@
 							user_id: user_id
 						}).then(data => {
 							if (data.data.code == 1) {
-								
+								console.log("注册成功");
 								
 								
 								// 上传身份证正面
@@ -223,7 +224,7 @@
 									type: 0
 								}).then(data => {
 									if (data.data.code == 1) {
-										
+										console.log("上传身份证正面成功");
 										
 										
 										
@@ -234,7 +235,7 @@
 											type: 1
 										}).then(data => {
 											if (data.data.code == 1) {
-												
+												console.log("上传身份证背面成功");
 												
 												
 												
@@ -252,6 +253,7 @@
 													
 													uni.hideLoading();
 													if (data.data.code == 1) {
+														console.log("上传银行卡信息成功");
 														this.dsada()
 													} else {
 														this.$refs.uToast.show({
@@ -279,14 +281,6 @@
 								this.$refs.uToast.show({
 									title: data.data.data.data+",请修改信息重试!"
 								})
-								this.yinghangka == ""
-								this.kaihuhang == ""
-								this.card_id == ""
-								this.name == ""
-								this.pgone == ""
-								this.zhen == ""
-								this.bei == ""
-								this.code == ""
 							}
 						})
 					}
