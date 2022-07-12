@@ -109,8 +109,8 @@
 					data.data.data.status.forEach(item => {
 						item["check"] = false
 					})
-					// uni.setStorageSync("xieyi", data.data.data.status)
-					uni.setStorageSync("xieyi", [])
+					uni.setStorageSync("xieyi", data.data.data.status)
+					// uni.setStorageSync("xieyi", [])
 				} else {
 					uni.setStorageSync("xieyi", [])
 				}
