@@ -4,6 +4,9 @@ export default {
 		return request.post("/api/byd_user/qsj", params);
 	},
 	puser(params = {}) {
+
+
+		
 		return request.post("/api/byd_user/puser", params);
 	},
 	yqpeople(params = {}) {
