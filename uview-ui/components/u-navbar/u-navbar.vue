@@ -21,9 +21,18 @@
 						{{ title }}
 					</view>
 				</view>
-				<view class="u-slot-content">
+
+
+
+				<view v-if="isHome" class="u-slot-content" style="width:100%;height:100%;">
 					<slot></slot>
 				</view>
+				<view v-else class="u-slot-content">
+					<slot></slot>
+				</view>
+
+
+
 				<view class="u-slot-right">
 					<slot name="right"></slot>
 				</view>
@@ -131,6 +140,10 @@
 			isBack: {
 				type: [Boolean, String],
 				default: true
+			},
+			isHome: {
+				type: [Boolean, String],
+				default: false
 			},
 			// 对象形式，因为用户可能定义一个纯色，或者线性渐变的颜色
 			background: {

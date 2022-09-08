@@ -7,7 +7,7 @@ export default {
 		return {
 			title: '宝芸邸家居',
 			path: '/pages/Home/start?uid=' + uni.getStorageSync("user_info").id + "&level=" + aa,
-			imageUrl: 'https://bao.scwushen.com/uploads/20220518/b3e5fcf6950318229cc046a5532e368d.png',
+			imageUrl: 'https://baoyundi.jiangshanchuan.cn/uploads/20220518/b3e5fcf6950318229cc046a5532e368d.png',
 		}
 	},
 	onShareTimeline(res) { //分享到朋友圈
@@ -17,7 +17,7 @@ export default {
 		}
 		return {
 			title: '宝芸邸家居',
-			imageUrl: 'https://bao.scwushen.com/uploads/20220518/b3e5fcf6950318229cc046a5532e368d.png',
+			imageUrl: 'https://baoyundi.jiangshanchuan.cn/uploads/20220518/b3e5fcf6950318229cc046a5532e368d.png',
 			query: {
 				uid: uni.getStorageSync("user_info").id,
 				level: aa

@@ -45,10 +45,11 @@
 				title: "上传二维码",
 				order_id: "",
 				imgs: "",
-				action: 'http://bao.scwushen.com/index.php/api/byd_user/addpostspic',
+				action: "",
 			};
 		},
 		onLoad(ev) {
+			this.action = this.$shangchuan+'/api/byd_user/addpostspic'
 			if (ev.title) {
 				this.title = ev.title
 			}

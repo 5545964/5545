@@ -456,9 +456,9 @@
 					sourceType: ['album'], //从相册选择
 					success: function(res) {
 						that.fenmian = res.tempFilePaths
-
+						let upd = that.$shangchuan + "/api/byd_user/addpostspic"
 						uni.uploadFile({
-							url: 'http://bao.scwushen.com/index.php/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
+							url: upd, //仅为示例，非真实的接口地址
 							filePath: that.fenmian[0],
 							name: 'image',
 							formData: {},
@@ -481,11 +481,11 @@
 					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
 					sourceType: ['album'], //从相册选择
 					success: function(res) {
-
+						let upd = that.$shangchuan + "/api/byd_user/addpostspic"
 						that.imgList = res.tempFilePaths
 						res.tempFilePaths.forEach(item => {
 							uni.uploadFile({
-								url: 'http://bao.scwushen.com/index.php/api/byd_user/addpostspic', //仅为示例，非真实的接口地址
+								url: upd, //仅为示例，非真实的接口地址
 								filePath: item,
 								name: 'image',
 								formData: {},

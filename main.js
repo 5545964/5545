@@ -24,10 +24,9 @@ import api from 'utils/api'
 Vue.prototype.$api = api
 
 
-Vue.prototype.$imgPath = "https://bao.scwushen.com"
+Vue.prototype.$imgPath = "https://baoyundi.jiangshanchuan.cn"
 
 
-Vue.prototype.$shangchuan = "http://bao.scwushen.com/index.php"
 
 
 Vue.prototype.$imgs = function(url) {
@@ -38,13 +37,13 @@ Vue.prototype.$imgs = function(url) {
 		return url
 	} else {
 		if (url.includes("uploads")) {
-			url = "https://bao.scwushen.com" + url
+			url = "https://baoyundi.jiangshanchuan.cn" + url
 		}
 		return url
 	}
 }
 
-Vue.prototype.$shangchuan = "https://bao.scwushen.com/index.php"
+Vue.prototype.$shangchuan = "https://baoyundi.jiangshanchuan.cn/index.php"
 
 
 const app = new Vue({

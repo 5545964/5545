@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="tabber">
-			<u-navbar id="navbar" :is-back="false">
+			<u-navbar id="navbar" :isHome="true" :isBack="false">
 				<image class="sssss" src="../../static/icon_home_logo.png" mode="widthFix"></image>
 			</u-navbar>
 			<view class="navlist cet" style="justify-content: space-between;">
@@ -201,7 +201,7 @@
 							this.linkOthers(ev.head)
 						} else {
 							uni.previewImage({
-								urls: [this.imgurl+ev.image],
+								urls: [this.imgurl + ev.image],
 								longPressActions: {
 									itemList: ['发送给朋友', '保存图片', '收藏'],
 									success: function(data) {},
@@ -444,7 +444,7 @@
 	}
 
 	.sssss {
-		width: 290rpx;
+		width: 200rpx;
 		padding: 0 30rpx;
 	}
 </style>

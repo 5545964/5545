@@ -1,11 +1,9 @@
 import ajax from "./u-ajax/js_sdk/"
 import api from '@/utils/api'
-let CSbaseURL = ""
-if (process.env.NODE_ENV === 'production') {
-	CSbaseURL = "https://bao.scwushen.com/index.php"
-} else {
-	CSbaseURL = "https://bao.scwushen.com/index.php"
-}
+
+
+const CSbaseURL = "https://baoyundi.jiangshanchuan.cn/index.php"
+
 const instance = ajax.create({
 	baseURL: CSbaseURL,
 	timeout: 60000,
