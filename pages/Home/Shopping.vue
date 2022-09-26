@@ -379,7 +379,7 @@
 			},
 			topage(item) {
 				uni.navigateTo({
-					url: item.page
+					url: item.page+"?title="+item.title
 				})
 			}
 		}
